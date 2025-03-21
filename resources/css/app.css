@@ -1,15 +1,22 @@
 @import 'tailwindcss';
 
 @plugin 'tailwindcss-animate';
-
-@source "../views";
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-    --font-sans:
+    --font-instrument:
         'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-poppins: 'Poppins', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-helvetica: 'Helvetica', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --color-s1: #4bad4e;
+    --color-s2: #388e3b;
+    --color-s3: #237d31;
+    --color-s4: #1b5e1f;
+    --color-black: #263238;
+    --color-silver: #F5F7FA;
 
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
