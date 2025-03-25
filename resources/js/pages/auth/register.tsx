@@ -1,13 +1,15 @@
-import { Head, useForm } from '@inertiajs/react';
+import { Head, Link, useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
 
+import TextLink from '@/components/custom/CustomTextLink';
 import InputError from '@/components/custom/input-error';
-import TextLink from '@/components/custom/text-link';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import AuthLayout from '@/layouts/auth-layout';
+import AuthSplitLayout from '@/layouts/auth/AuthSplitLayout';
+import RegisterImage from '../../../assets/register-side-image.svg';
 
 type RegisterForm = {
     name: string;
@@ -32,12 +34,16 @@ export default function Register() {
     };
 
     return (
-        <AuthLayout title="Create an account" description="Enter your details below to create your account">
+        <AuthSplitLayout
+            title="Get Started Now"
+            description="Register to easily request documents and connect with your barangay!"
+            image={RegisterImage}
+        >
             <Head title="Register" />
-            <form className="flex flex-col gap-6" onSubmit={submit}>
+            <form className="mt-4 flex flex-col gap-5" onSubmit={submit}>
                 <div className="grid gap-6">
                     <div className="grid gap-2">
-                        <Label htmlFor="name">Name</Label>
+                        <Label htmlFor="name">Username</Label>
                         <Input
                             id="name"
                             type="text"
@@ -48,25 +54,9 @@ export default function Register() {
                             value={data.name}
                             onChange={(e) => setData('name', e.target.value)}
                             disabled={processing}
-                            placeholder="Full name"
+                            placeholder="Enter your username"
                         />
                         <InputError message={errors.name} className="mt-2" />
-                    </div>
-
-                    <div className="grid gap-2">
-                        <Label htmlFor="email">Email address</Label>
-                        <Input
-                            id="email"
-                            type="email"
-                            required
-                            tabIndex={2}
-                            autoComplete="email"
-                            value={data.email}
-                            onChange={(e) => setData('email', e.target.value)}
-                            disabled={processing}
-                            placeholder="email@example.com"
-                        />
-                        <InputError message={errors.email} />
                     </div>
 
                     <div className="grid gap-2">
@@ -80,7 +70,7 @@ export default function Register() {
                             value={data.password}
                             onChange={(e) => setData('password', e.target.value)}
                             disabled={processing}
-                            placeholder="Password"
+                            placeholder="Enter your password"
                         />
                         <InputError message={errors.password} />
                     </div>
@@ -96,12 +86,36 @@ export default function Register() {
                             value={data.password_confirmation}
                             onChange={(e) => setData('password_confirmation', e.target.value)}
                             disabled={processing}
-                            placeholder="Confirm password"
+                            placeholder="Confirm your password"
                         />
                         <InputError message={errors.password_confirmation} />
                     </div>
 
-                    <Button type="submit" className="mt-2 w-full" tabIndex={5} disabled={processing}>
+                    <div className="grid gap-2">
+                        <Label htmlFor="ref-num">Reference Number</Label>
+                        <Input
+                            id="ref-num"
+                            type="text"
+                            required
+                            tabIndex={2}
+                            autoComplete="ref-num"
+                            value={data.email}
+                            onChange={(e) => setData('email', e.target.value)}
+                            disabled={processing}
+                            placeholder="Enter your reference number"
+                        />
+                        <Link className="text-s3 flex justify-end text-sm hover:underline">Request Reference Number</Link>
+                        <InputError message={errors.email} />
+                    </div>
+
+                    <div className="mt-4 flex items-center justify-center space-x-3">
+                        <Checkbox id="terms" />
+                        <Label htmlFor="terms" className="text-sm">
+                            I agree to the <TextLink> Terms and Conditions</TextLink>
+                        </Label>
+                    </div>
+
+                    <Button type="submit" className="w-full" variant="primary" tabIndex={5} disabled={processing}>
                         {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
                         Create account
                     </Button>
@@ -114,6 +128,6 @@ export default function Register() {
                     </TextLink>
                 </div>
             </form>
-        </AuthLayout>
+        </AuthSplitLayout>
     );
 }

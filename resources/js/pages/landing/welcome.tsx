@@ -1,35 +1,38 @@
+import CustomActive from '@/components/custom/CustomActive';
 import CustomCard from '@/components/custom/CustomCard';
 import CustomFooter from '@/components/custom/CustomFooter';
-import { Icon } from '@/components/custom/CustomIcon';
-import CustomLogo from '@/components/custom/CustomLogo';
+import { CustomHeader } from '@/components/custom/CustomHeader';
+import CustomIcon from '@/components/custom/CustomIcon';
 import { Button } from '@/components/ui/button';
-import AppHeaderLayout from '@/layouts/shared/AppHeaderLayout';
 import { type NavItem } from '@/types';
 import BarangayClearance from '../../../assets/barangay-clearance.png';
 import BarangayLogo from '../../../assets/barangay-logo.png';
+import DocumentArchive from '../../../assets/document-archive.svg';
 import DocumentRequest from '../../../assets/document-request.svg';
 import Document from '../../../assets/documents.png';
+import Population from '../../../assets/population.svg';
+import Puroks from '../../../assets/puroks.svg';
 
 const Welcome = () => {
     const landingMainNavItems: NavItem[] = [
-        { title: 'Home', href: '/', icon: undefined },
-        { title: 'Services', href: '/services', icon: undefined },
-        { title: 'About', href: '/about', icon: undefined },
-        { title: 'Contact', href: '/contact', icon: undefined },
+        { title: 'Home', href: '/' },
+        { title: 'Services', href: 'services' },
+        { title: 'About', href: 'about' },
+        { title: 'Contact', href: '/contact' },
     ];
 
     const landingRightNavItems: NavItem[] = [
-        { title: 'Login', href: '/login', icon: undefined },
-        { title: 'Register', href: '/register', icon: undefined },
+        { title: 'Login', href: '/login' },
+        { title: 'Register', href: '/register' },
     ];
 
     return (
         <>
-            <AppHeaderLayout mainNavItems={landingMainNavItems} rightNavItems={landingRightNavItems} />
-            <section>
-                <div className="flex h-screen justify-between">
+            <CustomHeader mainNavItems={landingMainNavItems} rightNavItems={landingRightNavItems} />
+            <main className="z-0 flex flex-col">
+                <section className="flex justify-between py-12">
                     {/* Left Div  Text*/}
-                    <div className="mb-40 flex w-1/2 flex-col items-center justify-center">
+                    <div className="flex items-center justify-center pl-25">
                         <div className="flex flex-col gap-y-3">
                             <div className="flex flex-row">
                                 <h1 className="text-5xl font-semibold text-black">
@@ -37,36 +40,25 @@ const Welcome = () => {
                                 </h1>
                             </div>
                             <h1 className="text-5xl font-semibold tracking-wide text-black">Requesting System</h1>
-                            <p className="text-black">Make your document request simple and hassle-free. </p>
-                            <Button variant="customizedWithBG" className="w-36">
+                            <p className="my-3 text-black">Make your document request simple and hassle-free. </p>
+                            <Button variant="primary" className="w-36">
                                 Request
                             </Button>
                         </div>
                     </div>
 
                     {/* Right div or Logo */}
-                    <div className="mb-40 flex w-1/2 items-center justify-center">
-                        <img className="h-4/5" src={Document} alt="Document" />
-                    </div>
-                </div>
-            </section>
+                    <img className="h-2/3" src={Document} alt="Document" />
+                </section>
 
-            <section>
-                <div className="flex h-screen flex-col items-center">
+                <section id="services" className="flex flex-col items-center justify-center py-35">
                     <div className="flex flex-col items-center">
                         <h1 className="text-s3 text-3xl font-bold">Services</h1>
-                        <div className="pt-2">
-                            <ul className="m-0 flex list-none p-0">
-                                <a href="" className="inline-block h-1 w-10 rounded-l-lg bg-green-400/40"></a>
-                                <a href="" className="inline-block h-1 w-10 border-green-600 bg-green-700"></a>
-                                <a href="" className="inline-block h-1 w-10 rounded-r-lg bg-green-400/40"></a>
-                            </ul>
-                        </div>
+                        <CustomActive />
                         <p className="py-2 font-medium text-black">Request. Track. Receive. All in one place!</p>
                     </div>
 
-                    {/* Card here */}
-                    <div className="grid grid-cols-3 gap-x-28 gap-y-22 pt-4">
+                    <div className="grid grid-cols-3 gap-x-42 gap-y-22 pt-4">
                         <CustomCard
                             image={BarangayClearance}
                             alt="Barangay Clearance"
@@ -104,18 +96,19 @@ const Welcome = () => {
                             content="Issued by the barangay confirming a residents good standing and residency and is typically used for employment or legal purposes"
                         />
                     </div>
-                </div>
-            </section>
+                </section>
 
-            <section>
-                <div className="flex h-screen flex-col items-center">
-                    <h1 className="text-s3 mb-6 text-3xl font-bold">About Us</h1>
+                <section id="about" className="flex h-screen flex-col items-center gap-y-10">
+                    <div>
+                        <h1 className="text-s3 text-3xl font-bold">About Us</h1>
+                        <CustomActive />
+                    </div>
 
-                    <div className="flex w-full flex-row items-center p-4">
-                        <div className="flex w-2/5 items-center justify-center">
-                            <CustomLogo logo={BarangayLogo} alt="Barangay Logo" className="h-60" />
+                    <div className="flex w-full items-center px-25">
+                        <div>
+                            <CustomIcon imgSrc={BarangayLogo} className="h-60 pr-20 pl-14" alt="Barangay Logo" />
                         </div>
-                        <div className="ml-10 flex w-3/5 flex-col gap-4">
+                        <div className="flex w-3/5 flex-1 flex-col gap-4">
                             <h1 className="text-4xl font-semibold">Barangay History</h1>
                             <p className="text-justify text-black">
                                 The Barangay Balagunan was once a forested area inhabited by primitive ethnic groups of Mandaya and Aeta. The place
@@ -126,14 +119,14 @@ const Welcome = () => {
                                 appointed barrio captain was Mr. Roberto de Rotas but was not able to function well because when logging concessions
                                 had stopped and withdrawn from the area, he also moved out to the place.
                             </p>
-                            <Button variant="customizedWithBG" className="w-36">
+                            <Button variant="primary" className="w-36">
                                 Learn More
                             </Button>
                         </div>
                     </div>
 
-                    <div className="bg-silver flex h-screen w-full items-center justify-between px-20">
-                        <div className="flex flex-grow flex-col items-start text-start">
+                    <div className="bg-silver flex h-screen w-full items-center justify-between px-25 pb-14">
+                        <div className="flex flex-col items-start">
                             <div className="flex">
                                 <h1 className="text-3xl font-bold">Current</h1>
                                 <h1 className="text-s3 pl-2 text-3xl font-bold">Status</h1>
@@ -146,17 +139,18 @@ const Welcome = () => {
                         </div>
 
                         <div className="grid grid-cols-2 gap-x-50 gap-y-10">
-                            <Icon imgSrc={DocumentRequest} title="100" content="Document Request" className="h-14 w-14" />
-                            <Icon imgSrc={DocumentRequest} title="100" content="Document Request" className="h-14 w-14" />
-                            <Icon imgSrc={DocumentRequest} title="100" content="Document Request" className="h-14 w-14" />
-                            <Icon imgSrc={DocumentRequest} title="100" content="Document Request" className="h-14 w-14" />
+                            <CustomIcon imgSrc={DocumentRequest} title="100" content="Document Request" className="h-14 w-14" />
+                            <CustomIcon imgSrc={DocumentArchive} title="1,000" content="Document Archive" className="h-14 w-14" />
+                            <CustomIcon imgSrc={Puroks} title="12" content="Purok" className="h-14 w-14" />
+                            <CustomIcon imgSrc={Population} title="10,000" content="Population" className="h-14 w-14" />
                         </div>
                     </div>
-                </div>
-            </section>
-            <footer>
-                <CustomFooter />
-            </footer>
+                </section>
+
+                <footer>
+                    <CustomFooter />
+                </footer>
+            </main>
         </>
     );
 };

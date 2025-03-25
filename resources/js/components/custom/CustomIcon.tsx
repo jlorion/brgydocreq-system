@@ -1,6 +1,6 @@
 import { LucideIcon } from 'lucide-react';
 
-interface IconProps {
+interface CustomIconProps extends React.ImgHTMLAttributes<HTMLImageElement> {
     icon?: LucideIcon | null;
     imgSrc?: string;
     className?: string;
@@ -8,18 +8,23 @@ interface IconProps {
     content?: string;
 }
 
-export function Icon({ icon: IconComponent, className, imgSrc, title, content, ...props }: IconProps) {
+import React from 'react'
+
+const CustomIcon = ({ icon: IconComponent, className, imgSrc, title, content, ...props }: CustomIconProps) => {
     if (IconComponent) {
-        return <IconComponent className={className} {...props} />;
+        return <IconComponent className={className} />;
     }
 
     if (imgSrc) {
+        if (!title || !content) {
+            return <img src={imgSrc} className={className} {...props} />;
+        }
         return (
             <>
-                <div className="flex justify-between gap-x-4 h-14">
+                <div className="flex h-14 gap-x-4">
                     <img src={imgSrc} className={className} {...props} />
                     <div className="flex flex-col items-start justify-evenly">
-                        <h1 className="font-bold font-lg text-black">{title}</h1>
+                        <h1 className="font-lg font-bold text-black">{title}</h1>
                         <p className="font-light text-black">{content}</p>
                     </div>
                 </div>
@@ -29,3 +34,5 @@ export function Icon({ icon: IconComponent, className, imgSrc, title, content, .
 
     return null;
 }
+
+export default CustomIcon

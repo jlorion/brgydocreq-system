@@ -5,6 +5,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
+html {
+    scroll-behavior: smooth;
+}
+
 @theme {
     --font-instrument:
         'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
@@ -15,8 +19,10 @@
     --color-s2: #388e3b;
     --color-s3: #237d31;
     --color-s4: #1b5e1f;
+    --color-s5: #1E453E;
     --color-black: #263238;
     --color-silver: #F5F7FA;
+    --color-shamrock-green: #009E60;
 
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
