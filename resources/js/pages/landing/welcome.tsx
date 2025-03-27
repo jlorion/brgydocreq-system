@@ -5,11 +5,17 @@ import { CustomHeader } from '@/components/custom/CustomHeader';
 import CustomIcon from '@/components/custom/CustomIcon';
 import { Button } from '@/components/ui/button';
 import { type NavItem } from '@/types';
+import { Head, Link } from '@inertiajs/react';
+import BarangayCert from '../../../assets/barangay-certificate.png';
 import BarangayClearance from '../../../assets/barangay-clearance.png';
 import BarangayLogo from '../../../assets/barangay-logo.png';
+import Cedula from '../../../assets/cedula.png';
 import DocumentArchive from '../../../assets/document-archive.svg';
 import DocumentRequest from '../../../assets/document-request.svg';
 import Document from '../../../assets/documents.png';
+import CertOfIncome from '../../../assets/income.png';
+import CertOfIndigency from '../../../assets/indigency.png';
+import CertOfLowIncome from '../../../assets/low-income.png';
 import Population from '../../../assets/population.svg';
 import Puroks from '../../../assets/puroks.svg';
 
@@ -28,6 +34,7 @@ const Welcome = () => {
 
     return (
         <>
+            <Head title="Balagunan" />
             <CustomHeader mainNavItems={landingMainNavItems} rightNavItems={landingRightNavItems} />
             <main className="z-0 flex flex-col">
                 <section className="flex justify-between py-12">
@@ -51,14 +58,14 @@ const Welcome = () => {
                     <img className="h-2/3" src={Document} alt="Document" />
                 </section>
 
-                <section id="services" className="flex flex-col items-center justify-center py-35">
+                <section id="services" className="flex flex-col items-center justify-center px-25 py-35">
                     <div className="flex flex-col items-center">
                         <h1 className="text-s3 text-3xl font-bold">Services</h1>
                         <CustomActive />
                         <p className="py-2 font-medium text-black">Request. Track. Receive. All in one place!</p>
                     </div>
 
-                    <div className="grid grid-cols-3 gap-x-42 gap-y-22 pt-4">
+                    <div className="grid grid-cols-3 gap-x-34 gap-y-22 pt-4">
                         <CustomCard
                             image={BarangayClearance}
                             alt="Barangay Clearance"
@@ -66,34 +73,34 @@ const Welcome = () => {
                             content="Issued by the barangay confirming a residents good standing and residency and is typically used for employment or legal purposes"
                         />
                         <CustomCard
-                            image={BarangayClearance}
-                            alt="Barangay Clearance"
-                            title="Barangay Clearance"
-                            content="Issued by the barangay confirming a residents good standing and residency and is typically used for employment or legal purposes"
+                            image={CertOfLowIncome}
+                            alt="Certificate of Low Income"
+                            title="Certificate of Low Income"
+                            content="Verifies a resident's income level falls within the low-income bracket, typically used for scholarships, subsidies, or social benefits"
                         />
                         <CustomCard
-                            image={BarangayClearance}
-                            alt="Barangay Clearance"
-                            title="Barangay Clearance"
-                            content="Issued by the barangay confirming a residents good standing and residency and is typically used for employment or legal purposes"
+                            image={CertOfIncome}
+                            alt="Certificate of Income"
+                            title="Certificate of Income"
+                            content="A formal declaration of a resident’s income, requested for employment, loan applications, or other financial requirements."
                         />
                         <CustomCard
-                            image={BarangayClearance}
-                            alt="Barangay Clearance"
-                            title="Barangay Clearance"
-                            content="Issued by the barangay confirming a residents good standing and residency and is typically used for employment or legal purposes"
+                            image={CertOfIndigency}
+                            alt="Certificate of Indigency"
+                            title="Certificate of Indigency"
+                            content="Vertifies a resident's financial status as being below the poverty line, often required for availing financial assistance or government programs."
                         />
                         <CustomCard
-                            image={BarangayClearance}
-                            alt="Barangay Clearance"
-                            title="Barangay Clearance"
-                            content="Issued by the barangay confirming a residents good standing and residency and is typically used for employment or legal purposes"
+                            image={BarangayCert}
+                            alt="Barangay Certificate"
+                            title="Barangay Certificate"
+                            content="Confirms the residency of an individual within the barangay and may not necessarily state their legal standing."
                         />
                         <CustomCard
-                            image={BarangayClearance}
-                            alt="Barangay Clearance"
-                            title="Barangay Clearance"
-                            content="Issued by the barangay confirming a residents good standing and residency and is typically used for employment or legal purposes"
+                            image={Cedula}
+                            alt="Cedula"
+                            title="Cedula"
+                            content="Also known as a Community Tax Certificate and one of the basic requirements for most government transactions"
                         />
                     </div>
                 </section>
@@ -119,9 +126,11 @@ const Welcome = () => {
                                 appointed barrio captain was Mr. Roberto de Rotas but was not able to function well because when logging concessions
                                 had stopped and withdrawn from the area, he also moved out to the place.
                             </p>
-                            <Button variant="primary" className="w-36">
-                                Learn More
-                            </Button>
+                            <Link href={route('landing.aboutus')}>
+                                <Button variant="primary" className="w-36">
+                                    Learn More
+                                </Button>
+                            </Link>
                         </div>
                     </div>
 

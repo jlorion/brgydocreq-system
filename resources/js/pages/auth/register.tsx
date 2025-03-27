@@ -1,4 +1,4 @@
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
 
@@ -104,7 +104,9 @@ export default function Register() {
                             disabled={processing}
                             placeholder="Enter your reference number"
                         />
-                        <Link className="text-s3 flex justify-end text-sm hover:underline">Request Reference Number</Link>
+                        <TextLink href={route('auth.request-reference')} className="text-s3 flex justify-end text-sm hover:underline">
+                            Request Reference Number
+                        </TextLink>
                         <InputError message={errors.email} />
                     </div>
 

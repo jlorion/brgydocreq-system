@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 
-Route::inertia('/', 'landing/welcome')->name('landing.home');
+Route::inertia('/', 'landing/Welcome')->name('landing.home');
+Route::inertia('/request-reference', 'auth/RequestReference')->name('auth.request-reference');
+Route::inertia('/about-us', 'landing/AboutUs')->name('landing.aboutus');
 
 
 

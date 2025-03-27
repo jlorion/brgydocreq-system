@@ -10,12 +10,12 @@ interface AuthLayoutProps {
 
 export default function AuthSplitLayout({ children, title, image, description }: PropsWithChildren<AuthLayoutProps>) {
     return (
-        <div className="grid h-dvh flex-col items-center justify-center px-8 sm:px-0 lg:max-w-none lg:grid-cols-2 lg:px-0 overflow-hidden">
-            <div className="hidden h-full bg-shamrock-green p-24 lg:flex dark:border-r">
-                <CustomIcon imgSrc={image}/>
+        <div className="grid h-dvh flex-col items-center justify-center overflow-hidden px-8 sm:px-0 lg:max-w-none lg:grid-cols-2 lg:px-0">
+            <div className="bg-shamrock-green hidden h-full p-24 lg:flex dark:border-r">
+                <CustomIcon imgSrc={image} />
             </div>
             <div className="w-full lg:p-8">
-                <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
+                <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-3/5">
                     <Link className="z-20 flex items-center justify-center lg:hidden">
                         <CustomIcon className="h-10 fill-current text-black sm:h-12" />
                     </Link>
