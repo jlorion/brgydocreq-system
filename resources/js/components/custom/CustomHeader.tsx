@@ -6,15 +6,13 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/compon
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList, navigationMenuTriggerStyle } from '@/components/ui/navigation-menu';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { useInitials } from '@/hooks/use-initials';
+import { UseHeaderScroll } from '@/hooks/UseHeaderScroll';
 import { cn } from '@/lib/utils';
 import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { Menu } from 'lucide-react';
-import { useEffect, useState } from 'react';
 import WebLogo from '../../../assets/web-logo.svg';
 import { UserMenuContent } from './user-menu-content';
-
-// const activeItemStyles = 'text-neutral-900 dark:bg-neutral-800 dark:text-neutral-100';
 
 interface CustomHeaderProps {
     breadcrumbs?: BreadcrumbItem[];
@@ -28,99 +26,14 @@ export function CustomHeader({ breadcrumbs = [], mainNavItems = [], rightNavItem
     const { auth } = page.props;
     const getInitials = useInitials();
 
-    const scrollToSection = (id: string, event?: React.MouseEvent) => {
-        if (event) event.preventDefault(); // Prevent default navigation
-        const section = document.getElementById(id);
-        if (section) {
-            section.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-    };
+    const { headerProps, scrollToSection, isVisible, isScrolling, isAtTop } = UseHeaderScroll();
 
-    const [isScrolling, setIsScrolling] = useState(false); // Controls shadow
-    const [isVisible, setIsVisible] = useState(true); // Controls visibility
-    const [isAtTop, setIsAtTop] = useState(true); // Tracks if at top of page
-    const [isInteracting, setIsInteracting] = useState(false); // Tracks user interaction
-    // Handle interactions (e.g., mouse enter/leave, clicks)
-    const [hideTimeout, setHideTimeout] = useState<NodeJS.Timeout | null>(null); // Timeout for
-
-    useEffect(() => {
-        let timeoutId: NodeJS.Timeout;
-
-        const handleScroll = () => {
-            const atTop = window.scrollY === 0;
-            setIsAtTop(atTop);
-
-            // Always show header when at top or interacting
-            if (atTop || isInteracting) {
-                setIsVisible(true);
-                setIsScrolling(false); // No shadow at top
-                clearTimeout(timeoutId);
-                return;
-            }
-
-            // Show header and set scrolling state when not at top
-            setIsVisible(true);
-            setIsScrolling(true);
-
-            // Clear previous timeout
-            clearTimeout(timeoutId);
-
-            // Hide header after 1 second of no scrolling (unless interacting)
-            timeoutId = setTimeout(() => {
-                if (!isInteracting) {
-                    setIsScrolling(false);
-                    setIsVisible(false);
-                }
-            }, 1000); // Adjust delay as needed
-
-            setHideTimeout(timeoutId);
-        };
-
-        // Initial check for top position
-        setIsAtTop(window.scrollY === 0);
-
-        window.addEventListener('scroll', handleScroll);
-
-        // Cleanup
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-            clearTimeout(timeoutId);
-        };
-    }, [isInteracting, hideTimeout]); // Re-run effect if interaction state changes
-
-    // Interaction handlers
-    const handleInteractionStart = () => {
-        if (hideTimeout) clearTimeout(hideTimeout); // Clear any hide timeout
-        setIsInteracting(true);
-        setIsVisible(true); // Show header on interaction
-        setIsScrolling(!isAtTop); // Apply shadow if not at top
-    };
-
-    const handleInteractionEnd = () => {
-        setIsInteracting(false);
-        if (!isAtTop) {
-            // Set timeout to hide header after interaction ends, if not at top
-            const timeoutId = setTimeout(() => {
-                setIsVisible(false);
-                setIsScrolling(false);
-            }, 1000); // Match scroll timeout
-            setHideTimeout(timeoutId);
-        }
-    };
+    // Define which nav items should use scroll functionality
+    const scrollableItems = ['about', 'services'];
 
     return (
         <>
-            <div
-                className={cn(
-                    'mx-full sticky top-0 z-50 flex h-16 items-center bg-white px-20 transition-all duration-300 ease-in-out',
-                    isScrolling && !isAtTop && 'shadow-md', // Shadow only when scrolling and not at top
-                    !isVisible && !isAtTop && '-translate-y-full', // Hide only when not at top and not visible
-                    className,
-                )}
-                onMouseEnter={handleInteractionStart}
-                onMouseLeave={handleInteractionEnd}
-                onClick={handleInteractionStart} // Keep visible during clicks
-            >
+            <div {...headerProps} className={`${className} ${headerProps.className}`}>
                 {/* Mobile Menu */}
                 <div className="lg:hidden">
                     <Sheet>
@@ -175,14 +88,24 @@ export function CustomHeader({ breadcrumbs = [], mainNavItems = [], rightNavItem
                         <NavigationMenuList className="flex h-full items-stretch space-x-2">
                             {mainNavItems.map((item, index) => (
                                 <NavigationMenuItem key={index} className="relative flex h-full items-center">
-                                    <Link
-                                        href={`#${item.href}`}
-                                        onClick={(event) => scrollToSection(item.href, event)}
-                                        className={cn(navigationMenuTriggerStyle(), 'h-9 cursor-pointer px-8')}
-                                    >
-                                        {item.icon && <CustomIcon icon={item.icon} className="mr-2 h-4 w-4" />}
-                                        {item.title}
-                                    </Link>
+                                    {scrollableItems.includes(item.href.toLowerCase()) ? (
+                                        <Link
+                                            href={`#${item.href}`} // Keep the hash for scrollable items
+                                            onClick={() => scrollToSection(item.href)}
+                                            className={cn(navigationMenuTriggerStyle(), 'h-9 cursor-pointer px-8')}
+                                        >
+                                            {item.icon && <CustomIcon icon={item.icon} className="mr-2 h-4 w-4" />}
+                                            {item.title}
+                                        </Link>
+                                    ) : (
+                                        <Link
+                                            href={item.href} // Full URL for non-scrollable items
+                                            className={cn(navigationMenuTriggerStyle(), 'h-9 cursor-pointer px-8')}
+                                        >
+                                            {item.icon && <CustomIcon icon={item.icon} className="mr-2 h-4 w-4" />}
+                                            {item.title}
+                                        </Link>
+                                    )}
                                 </NavigationMenuItem>
                             ))}
                         </NavigationMenuList>
@@ -191,7 +114,6 @@ export function CustomHeader({ breadcrumbs = [], mainNavItems = [], rightNavItem
 
                 <div className="ml-auto flex items-center">
                     {auth.user ? (
-                        // Render Avatar Dropdown if the user is logged in
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button variant="ghost" className="size-10 rounded-full p-1">

@@ -1,0 +1,119 @@
+import InputError from '@/components/custom/input-error';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import AuthSplitLayout from '@/layouts/auth/AuthSplitLayout';
+import MainLayout from '@/layouts/shared/MainLayout';
+import { Head, useForm } from '@inertiajs/react';
+import { LoaderCircle } from 'lucide-react';
+import { FormEventHandler } from 'react';
+import Contact from '../../../assets/contact-us.svg';
+
+type ContactUsForm = {
+    email: string;
+    password: string;
+    remember: boolean;
+};
+
+interface ContactUsProps {
+    status?: string;
+    canResetPassword: boolean;
+}
+
+const ContactUs = ({ status, canResetPassword }: ContactUsProps) => {
+    const { data, setData, post, processing, errors, reset } = useForm<Required<ContactUsForm>>({
+        email: '',
+        password: '',
+        remember: false,
+    });
+
+    const submit: FormEventHandler = (e) => {
+        e.preventDefault();
+        post(route('login'), {
+            onFinish: () => reset('password'),
+        });
+    };
+
+    return (
+        <>
+            <Head title="Contact us" />
+            <MainLayout>
+                <AuthSplitLayout
+                    title="Let's get in Touch"
+                    description="Have a question or need assistance? Fill the form and we’ll call you as soon as possible."
+                    image={Contact}
+                    background="bg-none"
+                >
+                    <form className="mt-4 flex flex-col gap-6" onSubmit={submit}>
+                        <div className="flex flex-col gap-6">
+                            <div className="grid gap-2">
+                                <Label htmlFor="fullname">Full name</Label>
+                                <Input
+                                    id="fullname"
+                                    type="email"
+                                    required
+                                    autoFocus
+                                    tabIndex={1}
+                                    autoComplete="email"
+                                    value={data.email}
+                                    onChange={(e) => setData('email', e.target.value)}
+                                    placeholder="Juan Dela Cruz"
+                                />
+                                <InputError message={errors.email} />
+                            </div>
+                            <div className="grid grid-cols-2 gap-x-5">
+                                <div className="grid gap-2">
+                                    <Label htmlFor="email">Email</Label>
+                                    <Input
+                                        id="email"
+                                        type="email"
+                                        required
+                                        tabIndex={2}
+                                        autoComplete="current-email"
+                                        value={data.email}
+                                        onChange={(e) => setData('email', e.target.value)}
+                                        placeholder="email@example.com"
+                                    />
+
+                                    <InputError message={errors.password} />
+                                </div>
+
+                                <div className="grid gap-2">
+                                    <Label htmlFor="phonenum">Phone number</Label>
+                                    <Input
+                                        id="phonenum"
+                                        type="email"
+                                        required
+                                        autoFocus
+                                        tabIndex={1}
+                                        autoComplete="email"
+                                        value={data.email}
+                                        onChange={(e) => setData('email', e.target.value)}
+                                        placeholder="09074245108"
+                                    />
+                                    <InputError message={errors.email} />
+                                </div>
+                            </div>
+
+                            <div className="grid gap-2">
+                                <Label htmlFor="textarea">Message</Label>
+                                <Textarea id="textarea" className="h-32" required autoFocus tabIndex={1} placeholder="Type your message..." />
+                                <InputError message={errors.email} />
+                            </div>
+
+                            <Button type="submit" variant="primary" className="mt-3 w-full" tabIndex={4} disabled={processing}>
+                                {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
+                                Send
+                            </Button>
+                        </div>
+                    </form>
+
+                    {status && <div className="mb-4 text-center text-sm font-medium text-green-600">{status}</div>}
+                </AuthSplitLayout>
+            </MainLayout>
+        </>
+    );
+};
+
+export default ContactUs;

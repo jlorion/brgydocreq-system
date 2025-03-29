@@ -12,7 +12,7 @@ const landingMainNavItems: NavItem[] = [
     { title: 'Home', href: '/' },
     { title: 'Services', href: 'services' },
     { title: 'About', href: 'about' },
-    { title: 'Contact', href: '/contact' },
+    { title: 'Contact', href: '/contact-us' },
 ];
 
 const landingRightNavItems: NavItem[] = [
