@@ -19,7 +19,7 @@ const CustomCard = ({ image, title, content, alt }: CustomCardProps) => {
                         <CardHeader className="px-4">
                             <CardTitle className="text-s3 text-center text-xl font-semibold">{title}</CardTitle>
                         </CardHeader>
-                        <CardContent className="px-4 text-justify text-[13px] font-bold text-black">{content}</CardContent>
+                        <CardContent className="px-4 text-justify h-20 text-[13px] font-bold text-black">{content}</CardContent>
                     </Card>
                 </div>
             </div>

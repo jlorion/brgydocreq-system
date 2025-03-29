@@ -20,9 +20,10 @@ interface CustomHeaderProps {
     breadcrumbs?: BreadcrumbItem[];
     mainNavItems: NavItem[];
     rightNavItems: NavItem[];
+    className?: string;
 }
 
-export function CustomHeader({ breadcrumbs = [], mainNavItems = [], rightNavItems = [] }: CustomHeaderProps) {
+export function CustomHeader({ breadcrumbs = [], mainNavItems = [], rightNavItems = [], className }: CustomHeaderProps) {
     const page = usePage<SharedData>();
     const { auth } = page.props;
     const getInitials = useInitials();
@@ -114,6 +115,7 @@ export function CustomHeader({ breadcrumbs = [], mainNavItems = [], rightNavItem
                     'mx-full sticky top-0 z-50 flex h-16 items-center bg-white px-20 transition-all duration-300 ease-in-out',
                     isScrolling && !isAtTop && 'shadow-md', // Shadow only when scrolling and not at top
                     !isVisible && !isAtTop && '-translate-y-full', // Hide only when not at top and not visible
+                    className,
                 )}
                 onMouseEnter={handleInteractionStart}
                 onMouseLeave={handleInteractionEnd}

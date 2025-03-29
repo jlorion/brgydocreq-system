@@ -6,12 +6,13 @@ interface AuthLayoutProps {
     title?: string;
     description?: string;
     image?: string;
+    background?: string;
 }
 
-export default function AuthSplitLayout({ children, title, image, description }: PropsWithChildren<AuthLayoutProps>) {
+export default function AuthSplitLayout({ children, title, image, description, background }: PropsWithChildren<AuthLayoutProps>) {
     return (
         <div className="grid h-dvh flex-col items-center justify-center overflow-hidden px-8 sm:px-0 lg:max-w-none lg:grid-cols-2 lg:px-0">
-            <div className="bg-shamrock-green hidden h-full p-24 lg:flex dark:border-r">
+            <div className={`hidden h-full p-24 lg:flex dark:border-r ${background || 'bg-shamrock-green'}`}>
                 <CustomIcon imgSrc={image} />
             </div>
             <div className="w-full lg:p-8">

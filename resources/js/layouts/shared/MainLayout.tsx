@@ -1,14 +1,35 @@
+import CustomFooter from '@/components/custom/CustomFooter';
+import { CustomHeader } from '@/components/custom/CustomHeader';
+import { type NavItem } from '@/types';
 import React from 'react';
 
 interface MainLayoutProps {
     children: React.ReactNode;
-    
+    className?: string;
 }
 
-const MainLayout = ({ children }: MainLayoutProps) => {
+const landingMainNavItems: NavItem[] = [
+    { title: 'Home', href: '/' },
+    { title: 'Services', href: 'services' },
+    { title: 'About', href: 'about' },
+    { title: 'Contact', href: '/contact' },
+];
+
+const landingRightNavItems: NavItem[] = [
+    { title: 'Login', href: '/login' },
+    { title: 'Register', href: '/register' },
+];
+
+const MainLayout = ({ children, className }: MainLayoutProps) => {
     return (
         <>
-            <div className=" box-border h-screen w-full p-4 bg-gray-100">{children}</div>
+            <CustomHeader mainNavItems={landingMainNavItems} rightNavItems={landingRightNavItems} />
+            <div className="box-border h-full w-full">
+                <main className={`flex flex-col flex-grow z-0 ${className}`}>{children}</main>
+                <footer>
+                    <CustomFooter />
+                </footer>
+            </div>
         </>
     );
 };
