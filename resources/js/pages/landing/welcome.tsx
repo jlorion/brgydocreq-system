@@ -1,10 +1,8 @@
 import CustomActive from '@/components/custom/CustomActive';
 import CustomCard from '@/components/custom/CustomCard';
-import CustomFooter from '@/components/custom/CustomFooter';
-import { CustomHeader } from '@/components/custom/CustomHeader';
 import CustomIcon from '@/components/custom/CustomIcon';
 import { Button } from '@/components/ui/button';
-import { type NavItem } from '@/types';
+import MainLayout from '@/layouts/shared/MainLayout';
 import { Head, Link } from '@inertiajs/react';
 import BarangayCert from '../../../assets/barangay-certificate.png';
 import BarangayClearance from '../../../assets/barangay-clearance.png';
@@ -20,23 +18,10 @@ import Population from '../../../assets/population.svg';
 import Puroks from '../../../assets/puroks.svg';
 
 const Welcome = () => {
-    const landingMainNavItems: NavItem[] = [
-        { title: 'Home', href: '/' },
-        { title: 'Services', href: 'services' },
-        { title: 'About', href: 'about' },
-        { title: 'Contact', href: '/contact' },
-    ];
-
-    const landingRightNavItems: NavItem[] = [
-        { title: 'Login', href: '/login' },
-        { title: 'Register', href: '/register' },
-    ];
-
     return (
         <>
             <Head title="Balagunan" />
-            <CustomHeader mainNavItems={landingMainNavItems} rightNavItems={landingRightNavItems} />
-            <main className="z-0 flex flex-col">
+            <MainLayout>
                 <section className="flex justify-between py-12">
                     {/* Left Div  Text*/}
                     <div className="flex items-center justify-center pl-25">
@@ -55,7 +40,7 @@ const Welcome = () => {
                     </div>
 
                     {/* Right div or Logo */}
-                    <img className="h-2/3" src={Document} alt="Document" />
+                    <CustomIcon className="h-2/3" imgSrc={Document} alt="Document" />
                 </section>
 
                 <section id="services" className="flex flex-col items-center justify-center px-25 py-35">
@@ -65,7 +50,7 @@ const Welcome = () => {
                         <p className="py-2 font-medium text-black">Request. Track. Receive. All in one place!</p>
                     </div>
 
-                    <div className="grid grid-cols-3 gap-x-34 gap-y-22 pt-4">
+                    <div className="grid grid-cols-3 gap-x-34 gap-y-24 pt-4">
                         <CustomCard
                             image={BarangayClearance}
                             alt="Barangay Clearance"
@@ -126,7 +111,7 @@ const Welcome = () => {
                                 appointed barrio captain was Mr. Roberto de Rotas but was not able to function well because when logging concessions
                                 had stopped and withdrawn from the area, he also moved out to the place.
                             </p>
-                            <Link href={route('landing.aboutus')}>
+                            <Link href={route('landing.about-us')}>
                                 <Button variant="primary" className="w-36">
                                     Learn More
                                 </Button>
@@ -155,11 +140,7 @@ const Welcome = () => {
                         </div>
                     </div>
                 </section>
-
-                <footer>
-                    <CustomFooter />
-                </footer>
-            </main>
+            </MainLayout>
         </>
     );
 };

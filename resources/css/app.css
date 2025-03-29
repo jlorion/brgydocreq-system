@@ -22,6 +22,7 @@ html {
     --color-s5: #1E453E;
     --color-black: #263238;
     --color-silver: #F5F7FA;
+    --color-light-yellow: #F2F9F2;
     --color-shamrock-green: #009E60;
 
     --radius-lg: var(--radius);
@@ -168,5 +169,6 @@ html {
 
     body {
         @apply bg-background text-foreground;
+        
     }
 }

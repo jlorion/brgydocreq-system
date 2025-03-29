@@ -6,7 +6,8 @@ use Inertia\Inertia;
 
 Route::inertia('/', 'landing/Welcome')->name('landing.home');
 Route::inertia('/request-reference', 'auth/RequestReference')->name('auth.request-reference');
-Route::inertia('/about-us', 'landing/AboutUs')->name('landing.aboutus');
+Route::inertia('/about-us', 'landing/AboutUs')->name('landing.about-us');
+Route::inertia('/contact-us', 'landing/ContactUs')->name('landing.contact-us');
 
 
 
@@ -17,5 +18,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 });
 
-require __DIR__.'/settings.php';
-require __DIR__.'/auth.php';
+require __DIR__ . '/settings.php';
+require __DIR__ . '/auth.php';
