@@ -26,9 +26,9 @@ export function CustomHeader({ breadcrumbs = [], mainNavItems = [], rightNavItem
     const { auth } = page.props;
     const getInitials = useInitials();
 
-    const { headerProps, scrollToSection, isVisible, isScrolling, isAtTop } = UseHeaderScroll();
+    const { headerProps } = UseHeaderScroll();
 
-    // Define which nav items should use scroll functionality
+    const isWelcomePage = route().current('landing.home');
     const scrollableItems = ['about', 'services'];
 
     return (
@@ -86,28 +86,27 @@ export function CustomHeader({ breadcrumbs = [], mainNavItems = [], rightNavItem
                 <div className="hidden h-full flex-grow justify-center lg:flex">
                     <NavigationMenu className="flex h-full items-stretch">
                         <NavigationMenuList className="flex h-full items-stretch space-x-2">
-                            {mainNavItems.map((item, index) => (
-                                <NavigationMenuItem key={index} className="relative flex h-full items-center">
-                                    {scrollableItems.includes(item.href.toLowerCase()) ? (
+                            {mainNavItems.map((item, index) => {
+                                const isScrollable = scrollableItems.includes(item.href.split('#')[0].toLowerCase());
+                                const sectionId = isScrollable ? item.href.split('#')[1] || item.href : null;
+
+                                return (
+                                    <NavigationMenuItem key={index} className="relative flex h-full items-center">
                                         <Link
-                                            href={`#${item.href}`} // Keep the hash for scrollable items
-                                            onClick={() => scrollToSection(item.href)}
+                                            href={item.href}
+                                            onClick={(event) => {
+                                                if (isScrollable && isWelcomePage && sectionId) {
+                                                    event.preventDefault();
+                                                }
+                                            }}
                                             className={cn(navigationMenuTriggerStyle(), 'h-9 cursor-pointer px-8')}
                                         >
                                             {item.icon && <CustomIcon icon={item.icon} className="mr-2 h-4 w-4" />}
                                             {item.title}
                                         </Link>
-                                    ) : (
-                                        <Link
-                                            href={item.href} // Full URL for non-scrollable items
-                                            className={cn(navigationMenuTriggerStyle(), 'h-9 cursor-pointer px-8')}
-                                        >
-                                            {item.icon && <CustomIcon icon={item.icon} className="mr-2 h-4 w-4" />}
-                                            {item.title}
-                                        </Link>
-                                    )}
-                                </NavigationMenuItem>
-                            ))}
+                                    </NavigationMenuItem>
+                                );
+                            })}
                         </NavigationMenuList>
                     </NavigationMenu>
                 </div>
@@ -134,12 +133,11 @@ export function CustomHeader({ breadcrumbs = [], mainNavItems = [], rightNavItem
                         </DropdownMenu>
                     ) : (
                         <div className="space-x-2">
-                            <Link href={route('register')}>
-                                <Button variant="plain">Sign up</Button>
-                            </Link>
-                            <Link href={route('login')}>
-                                <Button variant="plain">Log in</Button>
-                            </Link>
+                            {rightNavItems.map((item, index) => (
+                                <Link href={item.href} key={index}>
+                                    <Button variant="plain">{item.title}</Button>
+                                </Link>
+                            ))}
                         </div>
                     )}
                 </div>

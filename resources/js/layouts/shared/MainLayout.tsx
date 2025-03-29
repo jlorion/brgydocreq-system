@@ -10,14 +10,14 @@ interface MainLayoutProps {
 
 const landingMainNavItems: NavItem[] = [
     { title: 'Home', href: '/' },
-    { title: 'Services', href: 'services' },
-    { title: 'About', href: 'about' },
+    { title: 'Services', href: '/#services' },
+    { title: 'About', href: '/#about' },
     { title: 'Contact', href: '/contact-us' },
 ];
 
 const landingRightNavItems: NavItem[] = [
-    { title: 'Login', href: '/login' },
-    { title: 'Register', href: '/register' },
+    { title: 'Sign up', href: route('auth.register') },
+    { title: 'Login', href: route('auth.login') },
 ];
 
 const MainLayout = ({ children, className }: MainLayoutProps) => {
@@ -25,7 +25,7 @@ const MainLayout = ({ children, className }: MainLayoutProps) => {
         <>
             <CustomHeader mainNavItems={landingMainNavItems} rightNavItems={landingRightNavItems} />
             <div className="box-border h-full w-full">
-                <main className={`flex flex-col flex-grow z-0 ${className}`}>{children}</main>
+                <main className={`z-0 flex flex-grow flex-col ${className}`}>{children}</main>
                 <footer>
                     <CustomFooter />
                 </footer>

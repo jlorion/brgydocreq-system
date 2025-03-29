@@ -6,6 +6,7 @@ use Inertia\Inertia;
 
 Route::inertia('/', 'landing/Welcome')->name('landing.home');
 Route::inertia('/request-reference', 'auth/RequestReference')->name('auth.request-reference');
+Route::inertia('/#about-us', 'landing/about')->name('landing.about-us');
 Route::inertia('/about-us', 'landing/AboutUs')->name('landing.about-us');
 Route::inertia('/contact-us', 'landing/ContactUs')->name('landing.contact-us');
 

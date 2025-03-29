@@ -19,11 +19,11 @@ html {
     --color-s2: #388e3b;
     --color-s3: #237d31;
     --color-s4: #1b5e1f;
-    --color-s5: #1E453E;
+    --color-s5: #1e453e;
     --color-black: #263238;
-    --color-silver: #F5F7FA;
-    --color-light-yellow: #F2F9F2;
-    --color-shamrock-green: #009E60;
+    --color-silver: #f5f7fa;
+    --color-light-yellow: #f2f9f2;
+    --color-shamrock-green: #009e60;
 
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
@@ -169,6 +169,5 @@ html {
 
     body {
         @apply bg-background text-foreground;
-        
     }
 }

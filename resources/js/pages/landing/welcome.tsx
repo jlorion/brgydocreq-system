@@ -4,6 +4,7 @@ import CustomIcon from '@/components/custom/CustomIcon';
 import { Button } from '@/components/ui/button';
 import MainLayout from '@/layouts/shared/MainLayout';
 import { Head, Link } from '@inertiajs/react';
+import { useRef } from 'react';
 import BarangayCert from '../../../assets/barangay-certificate.png';
 import BarangayClearance from '../../../assets/barangay-clearance.png';
 import BarangayLogo from '../../../assets/barangay-logo.png';
@@ -18,6 +19,8 @@ import Population from '../../../assets/population.svg';
 import Puroks from '../../../assets/puroks.svg';
 
 const Welcome = () => {
+    const servicesSection = useRef<HTMLDivElement>(null);
+
     return (
         <>
             <Head title="Balagunan" />
@@ -43,9 +46,11 @@ const Welcome = () => {
                     <CustomIcon className="h-2/3" imgSrc={Document} alt="Document" />
                 </section>
 
-                <section id="services" className="flex flex-col items-center justify-center px-25 py-35">
+                <section className="flex scroll-mt-24 flex-col items-center justify-center px-25 py-35">
                     <div className="flex flex-col items-center">
-                        <h1 className="text-s3 text-3xl font-bold">Services</h1>
+                        <h1 id="services" className="text-s3 text-3xl font-bold">
+                            Services
+                        </h1>
                         <CustomActive />
                         <p className="py-2 font-medium text-black">Request. Track. Receive. All in one place!</p>
                     </div>

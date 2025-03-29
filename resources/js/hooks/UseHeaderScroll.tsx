@@ -1,22 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-interface ScrollOptions {
-    behavior: 'smooth' | 'auto';
-    block: 'start' | 'center' | 'end' | 'nearest';
-}
 
-// Scroll to section utility function
-const scrollToSection = (
-    id: string,
-    event?: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>,
-    options: ScrollOptions = { behavior: 'smooth', block: 'center' },
-): void => {
-    event?.preventDefault();
-    const section = document.getElementById(id);
-    if (section) {
-        section.scrollIntoView(options);
-    }
-};
 
 export const UseHeaderScroll = () => {
     const [isScrolling, setIsScrolling] = useState(false);
@@ -93,7 +77,6 @@ export const UseHeaderScroll = () => {
         onMouseEnter: handleInteractionStart,
         onMouseLeave: handleInteractionEnd,
         onFocus: handleInteractionStart,
-        onBlur: handleInteractionEnd,
         className: `
       ${isScrolling && !isAtTop && 'shadow-md'}
        ${!isVisible && !isAtTop && '-translate-y-full'}
@@ -106,6 +89,5 @@ export const UseHeaderScroll = () => {
         isVisible,
         isScrolling,
         isAtTop,
-        scrollToSection,
     };
 };
