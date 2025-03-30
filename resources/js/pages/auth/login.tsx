@@ -12,7 +12,7 @@ import AuthSplitLayout from '@/layouts/auth/AuthSplitLayout';
 import LoginImage from '../../../assets/login-side-image.svg';
 
 type LoginForm = {
-    email: string;
+    username: string;
     password: string;
     remember: boolean;
 };
@@ -24,7 +24,7 @@ interface LoginProps {
 
 export default function Login({ status, canResetPassword }: LoginProps) {
     const { data, setData, post, processing, errors, reset } = useForm<Required<LoginForm>>({
-        email: '',
+        username: '',
         password: '',
         remember: false,
     });
@@ -45,21 +45,20 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                         <Label htmlFor="username">Username</Label>
                         <Input
                             id="username"
-                            type="email"
+                            type="text"
                             required
                             autoFocus
                             tabIndex={1}
-                            autoComplete="email"
-                            value={data.email}
-                            onChange={(e) => setData('email', e.target.value)}
+                            autoComplete="username"
+                            value={data.username}
+                            onChange={(e) => setData('username', e.target.value)}
                             placeholder="Enter your username"
                         />
-                        <InputError message={errors.email} />
+                        <InputError message={errors.username} />
                     </div>
 
                     <div className="grid gap-2">
                         <Label htmlFor="password">Password</Label>
-
                         <Input
                             id="password"
                             type="password"
@@ -85,7 +84,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
 
                             <div className="flex items-center">
                                 {canResetPassword && (
-                                    <TextLink href={route('password.request')} className="text-sm" tabIndex={5}>
+                                    <TextLink href={route('password.request')} className="text-sm" tabIndex={4}>
                                         Forgot password?
                                     </TextLink>
                                 )}
@@ -95,7 +94,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                         <InputError message={errors.password} />
                     </div>
 
-                    <Button type="submit" variant="primary" className="mt-5 w-full" tabIndex={4} disabled={processing}>
+                    <Button type="submit" variant="primary" className="mt-5 w-full" tabIndex={5} disabled={processing}>
                         {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
                         Log in
                     </Button>
@@ -103,7 +102,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
 
                 <div className="text-muted-foreground text-center text-sm">
                     Don't have an account?{' '}
-                    <TextLink href={route('register')} tabIndex={5}>
+                    <TextLink href={route('auth.register')} tabIndex={6}>
                         Sign up
                     </TextLink>
                 </div>

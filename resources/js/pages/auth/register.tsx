@@ -12,18 +12,18 @@ import AuthSplitLayout from '@/layouts/auth/AuthSplitLayout';
 import RegisterImage from '../../../assets/register-side-image.svg';
 
 type RegisterForm = {
-    name: string;
-    email: string;
+    username: string;
     password: string;
     password_confirmation: string;
+    reference_number: string;
 };
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm<Required<RegisterForm>>({
-        name: '',
-        email: '',
+        username: '',
         password: '',
         password_confirmation: '',
+        reference_number: '',
     });
 
     const submit: FormEventHandler = (e) => {
@@ -43,20 +43,20 @@ export default function Register() {
             <form className="mt-4 flex flex-col gap-5" onSubmit={submit}>
                 <div className="grid gap-6">
                     <div className="grid gap-2">
-                        <Label htmlFor="name">Username</Label>
+                        <Label htmlFor="username">Username</Label>
                         <Input
-                            id="name"
+                            id="username"
                             type="text"
                             required
                             autoFocus
                             tabIndex={1}
-                            autoComplete="name"
-                            value={data.name}
-                            onChange={(e) => setData('name', e.target.value)}
+                            autoComplete="username"
+                            value={data.username}
+                            onChange={(e) => setData('username', e.target.value)}
                             disabled={processing}
                             placeholder="Enter your username"
                         />
-                        <InputError message={errors.name} className="mt-2" />
+                        <InputError message={errors.username} className="mt-2" />
                     </div>
 
                     <div className="grid gap-2">
@@ -65,7 +65,7 @@ export default function Register() {
                             id="password"
                             type="password"
                             required
-                            tabIndex={3}
+                            tabIndex={2}
                             autoComplete="new-password"
                             value={data.password}
                             onChange={(e) => setData('password', e.target.value)}
@@ -81,7 +81,7 @@ export default function Register() {
                             id="password_confirmation"
                             type="password"
                             required
-                            tabIndex={4}
+                            tabIndex={3}
                             autoComplete="new-password"
                             value={data.password_confirmation}
                             onChange={(e) => setData('password_confirmation', e.target.value)}
@@ -97,27 +97,27 @@ export default function Register() {
                             id="ref-num"
                             type="text"
                             required
-                            tabIndex={2}
+                            tabIndex={4}
                             autoComplete="ref-num"
-                            value={data.email}
-                            onChange={(e) => setData('email', e.target.value)}
+                            value={data.reference_number}
+                            onChange={(e) => setData('reference_number', e.target.value)}
                             disabled={processing}
                             placeholder="Enter your reference number"
                         />
-                        <TextLink href={route('auth.request-reference')} className="text-s3 flex justify-end text-sm hover:underline">
+                        <TextLink href={route('auth.request-reference')} tabIndex={5} className="text-s3 flex justify-end text-sm hover:underline">
                             Request Reference Number
                         </TextLink>
-                        <InputError message={errors.email} />
+                        <InputError message={errors.reference_number} />
                     </div>
 
                     <div className="mt-4 flex items-center justify-center space-x-3">
-                        <Checkbox id="terms" />
+                        <Checkbox id="terms" tabIndex={6} />
                         <Label htmlFor="terms" className="text-sm">
-                            I agree to the <TextLink> Terms and Conditions</TextLink>
+                            I agree to the <TextLink tabIndex={7}> Terms and Conditions</TextLink>
                         </Label>
                     </div>
 
-                    <Button type="submit" className="w-full" variant="primary" tabIndex={5} disabled={processing}>
+                    <Button type="submit" className="w-full" variant="primary" tabIndex={8} disabled={processing}>
                         {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
                         Create account
                     </Button>
@@ -125,7 +125,7 @@ export default function Register() {
 
                 <div className="text-muted-foreground text-center text-sm">
                     Already have an account?{' '}
-                    <TextLink href={route('login')} tabIndex={6}>
+                    <TextLink href={route('auth.login')} tabIndex={9}>
                         Log in
                     </TextLink>
                 </div>

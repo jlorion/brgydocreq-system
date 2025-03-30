@@ -1,6 +1,5 @@
 import { Head, useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
-import { FormEventHandler } from 'react';
 
 import TextLink from '@/components/custom/CustomTextLink';
 import InputError from '@/components/custom/input-error';
@@ -11,30 +10,26 @@ import { Label } from '@/components/ui/label';
 import AuthSplitLayout from '@/layouts/auth/AuthSplitLayout';
 import ResidentVerification from '../../../assets/verification-side-image.svg';
 
-type LoginForm = {
+type ResidentVerificationForm = {
+    first_name: string;
+    middle_name: string;
+    last_name: string;
+    birth_date: string;
     email: string;
-    password: string;
-    remember: boolean;
+    phone_number: string;
+    address: string;
 };
 
-interface LoginProps {
-    status?: string;
-    canResetPassword: boolean;
-}
-
-const RequestReference = ({ status, canResetPassword }: LoginProps) => {
-    const { data, setData, post, processing, errors, reset } = useForm<Required<LoginForm>>({
+const RequestReference = () => {
+    const { data, setData, post, processing, errors, reset } = useForm<Required<ResidentVerificationForm>>({
+        first_name: '',
+        middle_name: '',
+        last_name: '',
+        birth_date: '',
         email: '',
-        password: '',
-        remember: false,
+        phone_number: '',
+        address: '',
     });
-
-    const submit: FormEventHandler = (e) => {
-        e.preventDefault();
-        post(route('login'), {
-            onFinish: () => reset('password'),
-        });
-    };
 
     return (
         <AuthSplitLayout
@@ -43,7 +38,7 @@ const RequestReference = ({ status, canResetPassword }: LoginProps) => {
             image={ResidentVerification}
         >
             <Head title="Resident Verification" />
-            <form className="mt-4 flex flex-col gap-6" onSubmit={submit}>
+            <form className="mt-4 flex flex-col gap-6">
                 <div className="grid gap-6">
                     <div className="grid grid-cols-2 gap-x-5">
                         <div className="grid gap-2">
@@ -54,12 +49,12 @@ const RequestReference = ({ status, canResetPassword }: LoginProps) => {
                                 required
                                 autoFocus
                                 tabIndex={1}
-                                autoComplete="email"
-                                value={data.email}
-                                onChange={(e) => setData('email', e.target.value)}
+                                autoComplete="firstname"
+                                value={data.first_name}
+                                onChange={(e) => setData('first_name', e.target.value)}
                                 placeholder="Juan"
                             />
-                            <InputError message={errors.email} />
+                            <InputError message={errors.first_name} />
                         </div>
                         <div className="grid gap-2">
                             <Label htmlFor="middlename">Middle name</Label>
@@ -67,14 +62,13 @@ const RequestReference = ({ status, canResetPassword }: LoginProps) => {
                                 id="middlename"
                                 type="text"
                                 required
-                                autoFocus
-                                tabIndex={1}
+                                tabIndex={2}
                                 autoComplete="middlename"
-                                value={data.email}
-                                onChange={(e) => setData('email', e.target.value)}
+                                value={data.middle_name}
+                                onChange={(e) => setData('middle_name', e.target.value)}
                                 placeholder="Reyes"
                             />
-                            <InputError message={errors.email} />
+                            <InputError message={errors.middle_name} />
                         </div>
                     </div>
                     <div className="grid grid-cols-2 gap-x-5">
@@ -84,28 +78,26 @@ const RequestReference = ({ status, canResetPassword }: LoginProps) => {
                                 id="lastname"
                                 type="text"
                                 required
-                                autoFocus
-                                tabIndex={1}
+                                tabIndex={3}
                                 autoComplete="lastname"
-                                value={data.email}
-                                onChange={(e) => setData('email', e.target.value)}
+                                value={data.last_name}
+                                onChange={(e) => setData('last_name', e.target.value)}
                                 placeholder="Dela Cruz"
                             />
-                            <InputError message={errors.email} />
+                            <InputError message={errors.last_name} />
                         </div>
                         <div className="grid gap-2">
-                            <Label htmlFor="middlename">Birthdate</Label>
-                            <DatePicker />
+                            <Label htmlFor="birthdate">Birthdate</Label>
+                            <DatePicker tabIndex={4} />
                         </div>
                     </div>
                     <div className="grid gap-2">
                         <Label htmlFor="email">Email address</Label>
                         <Input
                             id="email"
-                            type="text"
+                            type="email"
                             required
-                            autoFocus
-                            tabIndex={1}
+                            tabIndex={5}
                             autoComplete="email"
                             value={data.email}
                             onChange={(e) => setData('email', e.target.value)}
@@ -118,35 +110,33 @@ const RequestReference = ({ status, canResetPassword }: LoginProps) => {
                             <Label htmlFor="phonenum">Phone number</Label>
                             <Input
                                 id="phonenum"
-                                type="email"
+                                type="text"
                                 required
-                                autoFocus
-                                tabIndex={1}
-                                autoComplete="email"
-                                value={data.email}
-                                onChange={(e) => setData('email', e.target.value)}
+                                tabIndex={6}
+                                autoComplete="phone_number"
+                                value={data.phone_number}
+                                onChange={(e) => setData('phone_number', e.target.value)}
                                 placeholder="09074245108"
                             />
-                            <InputError message={errors.email} />
+                            <InputError message={errors.phone_number} />
                         </div>
                         <div className="grid gap-2">
-                            <Label htmlFor="purok">Purok</Label>
+                            <Label htmlFor="address">Purok</Label>
                             <Input
-                                id="purok"
-                                type="email"
+                                id="address"
+                                type="text"
                                 required
-                                autoFocus
-                                tabIndex={1}
-                                autoComplete="email"
-                                value={data.email}
-                                onChange={(e) => setData('email', e.target.value)}
+                                tabIndex={7}
+                                autoComplete="address"
+                                value={data.address}
+                                onChange={(e) => setData('address', e.target.value)}
                                 placeholder="Purok 1"
                             />
-                            <InputError message={errors.email} />
+                            <InputError message={errors.address} />
                         </div>
                     </div>
 
-                    <Button type="submit" variant="primary" className="mt-5 w-full" tabIndex={4} disabled={processing}>
+                    <Button type="submit" variant="primary" className="mt-5 w-full" tabIndex={8} disabled={processing}>
                         {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
                         Request Reference Number
                     </Button>
@@ -154,7 +144,7 @@ const RequestReference = ({ status, canResetPassword }: LoginProps) => {
 
                 <div className="text-muted-foreground text-center text-sm">
                     Already have a reference number?{' '}
-                    <TextLink href={route('register')} tabIndex={5}>
+                    <TextLink href={route('auth.register')} tabIndex={9}>
                         Sign up
                     </TextLink>
                 </div>

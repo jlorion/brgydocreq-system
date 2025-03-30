@@ -13,7 +13,11 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
-export function DatePicker() {
+interface DatePickerProps extends React.HTMLAttributes<HTMLDivElement> {
+  tabIndex?: number
+}
+
+export function DatePicker({tabIndex}: DatePickerProps) {
   const [date, setDate] = React.useState<Date>()
 
   return (
@@ -25,6 +29,7 @@ export function DatePicker() {
             "w-full justify-start text-left font-normal rounded-md",
             !date && "text-muted-foreground"
           )}
+          tabIndex={tabIndex}
         >
           <CalendarIcon />
           {date ? format(date, "PPP") : <span>Pick a birthday</span>}
