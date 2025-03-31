@@ -11,29 +11,20 @@ import { FormEventHandler } from 'react';
 import Contact from '../../../assets/contact-us.svg';
 
 type ContactUsForm = {
+    full_name: string;
     email: string;
-    password: string;
-    remember: boolean;
+    phone_number: string;
+    message: string;
 };
 
-interface ContactUsProps {
-    status?: string;
-    canResetPassword: boolean;
-}
 
-const ContactUs = ({ status, canResetPassword }: ContactUsProps) => {
+const ContactUs = () => {
     const { data, setData, post, processing, errors, reset } = useForm<Required<ContactUsForm>>({
+        full_name: '',
         email: '',
-        password: '',
-        remember: false,
+        phone_number: '',
+        message: '',
     });
-
-    const submit: FormEventHandler = (e) => {
-        e.preventDefault();
-        post(route('login'), {
-            onFinish: () => reset('password'),
-        });
-    };
 
     return (
         <>
@@ -45,7 +36,7 @@ const ContactUs = ({ status, canResetPassword }: ContactUsProps) => {
                     image={Contact}
                     background="bg-none"
                 >
-                    <form className="mt-4 flex flex-col gap-6" onSubmit={submit}>
+                    <form className="mt-4 flex flex-col gap-6">
                         <div className="flex flex-col gap-6">
                             <div className="grid gap-2">
                                 <Label htmlFor="fullname">Full name</Label>
@@ -55,12 +46,12 @@ const ContactUs = ({ status, canResetPassword }: ContactUsProps) => {
                                     required
                                     autoFocus
                                     tabIndex={1}
-                                    autoComplete="email"
-                                    value={data.email}
-                                    onChange={(e) => setData('email', e.target.value)}
+                                    autoComplete="full_name"
+                                    value={data.full_name}
+                                    onChange={(e) => setData('full_name', e.target.value)}
                                     placeholder="Juan Dela Cruz"
                                 />
-                                <InputError message={errors.email} />
+                                <InputError message={errors.full_name} />
                             </div>
                             <div className="grid grid-cols-2 gap-x-5">
                                 <div className="grid gap-2">
@@ -76,7 +67,7 @@ const ContactUs = ({ status, canResetPassword }: ContactUsProps) => {
                                         placeholder="email@example.com"
                                     />
 
-                                    <InputError message={errors.password} />
+                                    <InputError message={errors.email} />
                                 </div>
 
                                 <div className="grid gap-2">
@@ -85,24 +76,23 @@ const ContactUs = ({ status, canResetPassword }: ContactUsProps) => {
                                         id="phonenum"
                                         type="email"
                                         required
-                                        autoFocus
-                                        tabIndex={1}
-                                        autoComplete="email"
-                                        value={data.email}
-                                        onChange={(e) => setData('email', e.target.value)}
+                                        tabIndex={3}
+                                        autoComplete="phone_number"
+                                        value={data.phone_number}
+                                        onChange={(e) => setData('phone_number', e.target.value)}
                                         placeholder="09074245108"
                                     />
-                                    <InputError message={errors.email} />
+                                    <InputError message={errors.phone_number} />
                                 </div>
                             </div>
 
                             <div className="grid gap-2">
                                 <Label htmlFor="textarea">Message</Label>
-                                <Textarea id="textarea" className="h-32" required autoFocus tabIndex={1} placeholder="Type your message..." />
-                                <InputError message={errors.email} />
+                                <Textarea id="textarea" className="h-32" required tabIndex={4} placeholder="Type your message..." />
+                                <InputError message={errors.message} />
                             </div>
 
-                            <Button type="submit" variant="primary" className="mt-3 w-full" tabIndex={4} disabled={processing}>
+                            <Button type="submit" variant="primary" className="mt-3 w-full" tabIndex={5} disabled={processing}>
                                 {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
                                 Send
                             </Button>

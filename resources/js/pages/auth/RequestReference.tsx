@@ -4,7 +4,7 @@ import { LoaderCircle } from 'lucide-react';
 import TextLink from '@/components/custom/CustomTextLink';
 import InputError from '@/components/custom/input-error';
 import { Button } from '@/components/ui/button';
-import { DatePicker } from '@/components/ui/datepicker';
+import { DatePicker } from '@/components/ui/date-picker';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthSplitLayout from '@/layouts/auth/AuthSplitLayout';
@@ -36,6 +36,7 @@ const RequestReference = () => {
             title="Resident Verification"
             description="Enter your personal details to verify your residency and receive your reference number"
             image={ResidentVerification}
+
         >
             <Head title="Resident Verification" />
             <form className="mt-4 flex flex-col gap-6">
