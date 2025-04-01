@@ -46,7 +46,7 @@ const Welcome = () => {
                     <CustomIcon className="h-2/3" imgSrc={Document} alt="Document" />
                 </section>
 
-                <section className="flex scroll-mt-24 flex-col items-center justify-center px-25 py-35">
+                <section className="flex flex-col items-center justify-center px-25 py-35">
                     <div className="flex flex-col items-center">
                         <h1 id="services" className="text-s3 text-3xl font-bold">
                             Services
@@ -55,12 +55,12 @@ const Welcome = () => {
                         <p className="py-2 font-medium text-black">Request. Track. Receive. All in one place!</p>
                     </div>
 
-                    <div className="grid grid-cols-3 gap-x-34 gap-y-24 pt-4">
+                    <div className="grid grid-cols-3 gap-x-34 gap-y-8 pt-4">
                         <CustomCard
                             image={BarangayClearance}
                             alt="Barangay Clearance"
                             title="Barangay Clearance"
-                            content="Issued by the barangay confirming a residents good standing and residency and is typically used for employment or legal purposes"
+                            content="Issued by the barangay confirming the residents good standing and residency and is typically used for employment or legal purposes"
                         />
                         <CustomCard
                             image={CertOfLowIncome}
@@ -78,7 +78,7 @@ const Welcome = () => {
                             image={CertOfIndigency}
                             alt="Certificate of Indigency"
                             title="Certificate of Indigency"
-                            content="Vertifies a resident's financial status as being below the poverty line, often required for availing financial assistance or government programs."
+                            content="A document certifying that a resident falls below the poverty line, typically required for financial aid, government programs, or social services."
                         />
                         <CustomCard
                             image={BarangayCert}
@@ -107,7 +107,7 @@ const Welcome = () => {
                         </div>
                         <div className="flex w-3/5 flex-1 flex-col gap-4">
                             <h1 className="text-4xl font-semibold">Barangay History</h1>
-                            <p className="text-justify text-black">
+                            <article className="text-justify text-black">
                                 The Barangay Balagunan was once a forested area inhabited by primitive ethnic groups of Mandaya and Aeta. The place
                                 was named “Balagunan” after a particular plant called “Balagun” also popularly known as rattan, which was very
                                 abundant on the place during that time which used to be a source of income for some natives.The Barangay was one of
@@ -115,7 +115,7 @@ const Welcome = () => {
                                 virtue of Executive Order No. 352 signed by the late President Carlos P. Garcia on August 14, 1959. The first
                                 appointed barrio captain was Mr. Roberto de Rotas but was not able to function well because when logging concessions
                                 had stopped and withdrawn from the area, he also moved out to the place.
-                            </p>
+                            </article>
                             <Link href={route('landing.about-us')}>
                                 <Button variant="primary" className="w-36">
                                     Learn More
