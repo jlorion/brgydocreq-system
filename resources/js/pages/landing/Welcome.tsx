@@ -19,7 +19,7 @@ import Population from '../../../assets/population.svg';
 import Puroks from '../../../assets/puroks.svg';
 
 const Welcome = () => {
-    const servicesSection = useRef<HTMLDivElement>(null);
+    const servicesSection = useRef<HTMLDivElement>(null); 
 
     return (
         <>
