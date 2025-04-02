@@ -1,7 +1,8 @@
 import CustomFooter from '@/components/custom/CustomFooter';
 import { CustomHeader } from '@/components/custom/CustomHeader';
 import { type NavItem } from '@/types';
-import React from 'react';
+import { usePage } from '@inertiajs/react';
+import React, { useEffect } from 'react';
 
 interface MainLayoutProps {
     children: React.ReactNode;

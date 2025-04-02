@@ -7,6 +7,7 @@ import Send from '../../../assets/send.svg';
 import WebLogo from '../../../assets/web-logo-light.svg';
 import Website from '../../../assets/website.svg';
 import CustomIcon from './CustomIcon';
+import { Link } from '@inertiajs/react';
 
 const CustomFooter = () => {
     const currentYear = new Date().getFullYear();
@@ -25,10 +26,12 @@ const CustomFooter = () => {
                             </p>
                         </div>
                         <div>
-                            <Button className="bg-s2 hover:bg-s3" variant="primary">
-                                Tell us about your project
-                                <CustomIcon className="pl-2" imgSrc={Send} alt="Send Icon" />
-                            </Button>
+                            <Link href={route('landing.contact-us')} prefetch>
+                                <Button className="bg-s2 hover:bg-s3" variant="primary">
+                                    Tell us about our project
+                                    <CustomIcon className="pl-2" imgSrc={Send} alt="Send Icon" />
+                                </Button>
+                            </Link>
                         </div>
                     </div>
                 </section>

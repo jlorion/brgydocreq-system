@@ -4,7 +4,6 @@ import CustomIcon from '@/components/custom/CustomIcon';
 import { Button } from '@/components/ui/button';
 import MainLayout from '@/layouts/shared/MainLayout';
 import { Head, Link } from '@inertiajs/react';
-import { useRef } from 'react';
 import BarangayCert from '../../../assets/barangay-certificate.png';
 import BarangayClearance from '../../../assets/barangay-clearance.png';
 import BarangayLogo from '../../../assets/barangay-logo.png';
@@ -19,7 +18,6 @@ import Population from '../../../assets/population.svg';
 import Puroks from '../../../assets/puroks.svg';
 
 const Welcome = () => {
-    const servicesSection = useRef<HTMLDivElement>(null);
 
     return (
         <>

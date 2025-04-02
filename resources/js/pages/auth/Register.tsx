@@ -113,7 +113,7 @@ export default function Register() {
                     <div className="mt-4 flex items-center justify-center space-x-3">
                         <Checkbox id="terms" tabIndex={6} />
                         <Label htmlFor="terms" className="text-sm">
-                            I agree to the <TextLink href='' tabIndex={7}> Terms and Conditions</TextLink>
+                            I agree to the <TextLink href='' tabIndex={7}>Terms and Conditions</TextLink>
                         </Label>
                     </div>
 

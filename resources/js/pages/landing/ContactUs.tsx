@@ -5,9 +5,9 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import AuthSplitLayout from '@/layouts/auth/AuthSplitLayout';
 import MainLayout from '@/layouts/shared/MainLayout';
-import { Head, useForm } from '@inertiajs/react';
+import { Head, useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
-import { FormEventHandler } from 'react';
+import { FormEventHandler, useEffect } from 'react';
 import Contact from '../../../assets/contact-us.svg';
 
 type ContactUsForm = {
