@@ -1,5 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import CustomActive from '@/components/custom/CustomActive';
 import CustomCard from '@/components/custom/CustomCard';
+import CustomDialog from '@/components/custom/CustomDialog';
+import CustomForm from '@/components/custom/CustomForm';
 import CustomIcon from '@/components/custom/CustomIcon';
 import { Button } from '@/components/ui/button';
 import MainLayout from '@/layouts/shared/MainLayout';
@@ -20,6 +23,7 @@ import Puroks from '../../../assets/puroks.svg';
 
 const Welcome = () => {
     const servicesSection = useRef<HTMLDivElement>(null);
+    const isLoggedIn = true;
 
     return (
         <>
@@ -55,43 +59,223 @@ const Welcome = () => {
                         <p className="py-2 font-medium text-black">Request. Track. Receive. All in one place!</p>
                     </div>
 
-                    <div className="grid grid-cols-3 gap-x-34 gap-y-8 pt-4">
-                        <CustomCard
-                            image={BarangayClearance}
-                            alt="Barangay Clearance"
-                            title="Barangay Clearance"
-                            content="Issued by the barangay confirming the residents good standing and residency and is typically used for employment or legal purposes"
-                        />
-                        <CustomCard
-                            image={CertOfLowIncome}
-                            alt="Certificate of Low Income"
-                            title="Certificate of Low Income"
-                            content="Verifies a resident's income level falls within the low-income bracket, typically used for scholarships, subsidies, or social benefits"
-                        />
-                        <CustomCard
-                            image={CertOfIncome}
-                            alt="Certificate of Income"
-                            title="Certificate of Income"
-                            content="A formal declaration of a resident’s income, requested for employment, loan applications, or other financial requirements."
-                        />
-                        <CustomCard
-                            image={CertOfIndigency}
-                            alt="Certificate of Indigency"
-                            title="Certificate of Indigency"
-                            content="A document certifying that a resident falls below the poverty line, typically required for financial aid, government programs, or social services."
-                        />
-                        <CustomCard
-                            image={BarangayCert}
-                            alt="Barangay Certificate"
-                            title="Barangay Certificate"
-                            content="Confirms the residency of an individual within the barangay and may not necessarily state their legal standing."
-                        />
-                        <CustomCard
-                            image={Cedula}
-                            alt="Cedula"
-                            title="Cedula"
-                            content="Also known as a Community Tax Certificate and one of the basic requirements for most government transactions"
-                        />
+                    <div className="grid w-full grid-cols-3 gap-x-34 gap-y-8 pt-4">
+                        <form action="">
+                            {isLoggedIn ? (
+                                <CustomDialog
+                                    title="Barangay Clearance"
+                                    description="Personal Details"
+                                    trigger={
+                                        <CustomCard
+                                            image={BarangayClearance}
+                                            alt="Barangay Clearance"
+                                            title="Barangay Clearance"
+                                            content="Issued by the barangay confirming the residents good standing and residency and is typically used for employment or legal purposes"
+                                        />
+                                    }
+                                >
+                                    <CustomForm
+                                        firstName="Reignear"
+                                        middleName="Berador"
+                                        lastName="Magallanes"
+                                        suffix="N/A"
+                                        gender="Male"
+                                        birthday="June 3, 2003"
+                                        precinct="A2032"
+                                        email="reignearm@gmail.com"
+                                        phoneNumber="09123456789"
+                                    />
+                                </CustomDialog>
+                            ) : (
+                                <CustomCard
+                                    image={BarangayClearance}
+                                    alt="Barangay Clearance"
+                                    title="Barangay Clearance"
+                                    content="Issued by the barangay confirming the residents good standing and residency and is typically used for employment or legal purposes"
+                                    onClick={() => (window.location.href = '/login')}
+                                />
+                            )}
+                        </form>
+                        <form action="">
+                            {isLoggedIn ? (
+                                <CustomDialog
+                                    title="Certificate of Low Income"
+                                    description="Personal Details"
+                                    trigger={
+                                        <CustomCard
+                                            image={CertOfLowIncome}
+                                            alt="Certificate of Low Income"
+                                            title="Certificate of Low Income"
+                                            content="Verifies a resident's income level falls within the low-income bracket, typically used for scholarships, subsidies, or social benefits"
+                                        />
+                                    }
+                                >
+                                    <CustomForm
+                                        firstName="Reignear"
+                                        middleName="Berador"
+                                        lastName="Magallanes"
+                                        suffix="N/A"
+                                        gender="Male"
+                                        birthday="June 3, 2003"
+                                        precinct="A2032"
+                                        email="reignearm@gmail.com"
+                                        phoneNumber="09123456789"
+                                    />
+                                </CustomDialog>
+                            ) : (
+                                <CustomCard
+                                    image={CertOfLowIncome}
+                                    alt="Certificate of Low Income"
+                                    title="Certificate of Low Income"
+                                    content="Verifies a resident's income level falls within the low-income bracket, typically used for scholarships, subsidies, or social benefits"
+                                    onClick={() => (window.location.href = '/login')}
+                                />
+                            )}
+                        </form>
+                        <form action="">
+                            {isLoggedIn ? (
+                                <CustomDialog
+                                    title="Certificate of Income"
+                                    description="Personal Details"
+                                    trigger={
+                                        <CustomCard
+                                            image={CertOfIncome}
+                                            alt="Certificate of Income"
+                                            title="Certificate of Income"
+                                            content="A formal declaration of a resident’s income, requested for employment, loan applications, or other financial requirements."
+                                        />
+                                    }
+                                >
+                                    <CustomForm
+                                        firstName="Reignear"
+                                        middleName="Berador"
+                                        lastName="Magallanes"
+                                        suffix="N/A"
+                                        gender="Male"
+                                        birthday="June 3, 2003"
+                                        precinct="A2032"
+                                        email="reignearm@gmail.com"
+                                        phoneNumber="09123456789"
+                                    />
+                                </CustomDialog>
+                            ) : (
+                                <CustomCard
+                                    image={CertOfIncome}
+                                    alt="Certificate of Income"
+                                    title="Certificate of Income"
+                                    content="A formal declaration of a resident’s income, requested for employment, loan applications, or other financial requirements."
+                                    onClick={() => (window.location.href = '/login')}
+                                />
+                            )}
+                        </form>
+                        <form action="">
+                            {isLoggedIn ? (
+                                <CustomDialog
+                                    title="Certificate of Indigency"
+                                    description="Personal Details"
+                                    trigger={
+                                        <CustomCard
+                                            image={CertOfIndigency}
+                                            alt="Certificate of Indigency"
+                                            title="Certificate of Indigency"
+                                            content="A document certifying that a resident falls below the poverty line, typically required for financial aid, government programs, or social services."
+                                        />
+                                    }
+                                >
+                                    <CustomForm
+                                        firstName="Reignear"
+                                        middleName="Berador"
+                                        lastName="Magallanes"
+                                        suffix="N/A"
+                                        gender="Male"
+                                        birthday="June 3, 2003"
+                                        precinct="A2032"
+                                        email="reignearm@gmail.com"
+                                        phoneNumber="09123456789"
+                                    />
+                                </CustomDialog>
+                            ) : (
+                                <CustomCard
+                                    image={CertOfIndigency}
+                                    alt="Certificate of Indigency"
+                                    title="Certificate of Indigency"
+                                    content="A document certifying that a resident falls below the poverty line, typically required for financial aid, government programs, or social services."
+                                    onClick={() => (window.location.href = '/login')}
+                                />
+                            )}
+                        </form>
+                        <form action="">
+                            {isLoggedIn ? (
+                                <CustomDialog
+                                    title="Barangay Certificate"
+                                    description="Personal Details"
+                                    trigger={
+                                        <CustomCard
+                                            image={BarangayCert}
+                                            alt="Barangay Certificate"
+                                            title="Barangay Certificate"
+                                            content="Confirms the residency of an individual within the barangay and may not necessarily state their legal standing."
+                                        />
+                                    }
+                                >
+                                    <CustomForm
+                                        firstName="Reignear"
+                                        middleName="Berador"
+                                        lastName="Magallanes"
+                                        suffix="N/A"
+                                        gender="Male"
+                                        birthday="June 3, 2003"
+                                        precinct="A2032"
+                                        email="reignearm@gmail.com"
+                                        phoneNumber="09123456789"
+                                    />
+                                </CustomDialog>
+                            ) : (
+                                <CustomCard
+                                    image={BarangayCert}
+                                    alt="Barangay Certificate"
+                                    title="Barangay Certificate"
+                                    content="Confirms the residency of an individual within the barangay and may not necessarily state their legal standing."
+                                    onClick={() => (window.location.href = '/login')}
+                                />
+                            )}
+                        </form>
+                        <form action="">
+                            {isLoggedIn ? (
+                                <CustomDialog
+                                    title="Cedula"
+                                    description="Personal Details"
+                                    trigger={
+                                        <CustomCard
+                                            image={Cedula}
+                                            alt="Cedula"
+                                            title="Cedula"
+                                            content="Also known as a Community Tax Certificate and one of the basic requirements for most government transactions"
+                                        />
+                                    }
+                                >
+                                    <CustomForm
+                                        firstName="Reignear"
+                                        middleName="Berador"
+                                        lastName="Magallanes"
+                                        suffix="N/A"
+                                        gender="Male"
+                                        birthday="June 3, 2003"
+                                        precinct="A2032"
+                                        email="reignearm@gmail.com"
+                                        phoneNumber="09123456789"
+                                    />
+                                </CustomDialog>
+                            ) : (
+                                <CustomCard
+                                    image={Cedula}
+                                    alt="Cedula"
+                                    title="Cedula"
+                                    content="Also known as a Community Tax Certificate and one of the basic requirements for most government transactions"
+                                    onClick={() => (window.location.href = '/login')}
+                                />
+                            )}
+                        </form>
                     </div>
                 </section>
 
