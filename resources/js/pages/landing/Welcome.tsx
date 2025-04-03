@@ -1,5 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import CustomActive from '@/components/custom/CustomActive';
 import CustomCard from '@/components/custom/CustomCard';
+import CustomDialog from '@/components/custom/CustomDialog';
+import CustomForm from '@/components/custom/CustomForm';
 import CustomIcon from '@/components/custom/CustomIcon';
 import { Button } from '@/components/ui/button';
 import MainLayout from '@/layouts/shared/MainLayout';
@@ -16,8 +19,31 @@ import CertOfIndigency from '../../../assets/indigency.png';
 import CertOfLowIncome from '../../../assets/low-income.png';
 import Population from '../../../assets/population.svg';
 import Puroks from '../../../assets/puroks.svg';
+import { personalDetails, contactDetails, attachmentDetail, purposeDetail } from '@/data/FormFields';
+
 
 const Welcome = () => {
+
+    const renderFormFields = () => {
+        return (
+            <>
+                <div>
+                    <CustomForm fields={personalDetails} title='Personal Details' className='grid grid-cols-4 gap-x-4' />
+                </div>
+                <div className='flex gap-x-5 pr-5'>
+                    <div className='w-1/2'>
+                        <CustomForm fields={contactDetails} title='Contact Details' className='grid grid-cols-2 gap-x-4' />
+                    </div>
+                    <div className='flex-grow'>
+                        <CustomForm fields={attachmentDetail} title='Attachment' className='grid grid-cols-1 gap-x-4' />
+                    </div>
+                </div>
+                <div className='flex-grow'>
+                    <CustomForm fields={purposeDetail} title='Purpose' className='grid grid-cols-1 gap-x-4' />
+                </div>
+            </>
+        )
+    }
 
     return (
         <>
@@ -53,13 +79,20 @@ const Welcome = () => {
                         <p className="py-2 font-medium text-black">Request. Track. Receive. All in one place!</p>
                     </div>
 
-                    <div className="grid grid-cols-3 gap-x-34 gap-y-8 pt-4">
-                        <CustomCard
-                            image={BarangayClearance}
-                            alt="Barangay Clearance"
-                            title="Barangay Clearance"
-                            content="Issued by the barangay confirming the residents good standing and residency and is typically used for employment or legal purposes"
+                    <div className="grid w-full grid-cols-3 gap-x-34 gap-y-8 pt-4">
+                        <CustomDialog
+                            title='Barangay Clearance'
+                            trigger={<CustomCard
+                                image={BarangayClearance}
+                                alt="Barangay Clearance"
+                                title="Barangay Clearance"
+                                content="Issued by the barangay confirming the residents good standing and residency and is typically used for employment or legal purposes"
+                            />
+                            }
+                            buttonName='Submit'
+                            children={renderFormFields()}
                         />
+
                         <CustomCard
                             image={CertOfLowIncome}
                             alt="Certificate of Low Income"
@@ -90,6 +123,7 @@ const Welcome = () => {
                             title="Cedula"
                             content="Also known as a Community Tax Certificate and one of the basic requirements for most government transactions"
                         />
+
                     </div>
                 </section>
 

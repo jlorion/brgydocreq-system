@@ -4,7 +4,7 @@ import LoadFBSdk from '@/hooks/LoadFBSdk';
 import MainLayout from '@/layouts/shared/MainLayout';
 import { Head } from '@inertiajs/react';
 import BarangayLogo from '../../../assets/barangay-logo.png';
-import BarangayOfficial from '../../../assets/json/BarangayOfficials.json';
+import { BarangayOfficials } from '@/data/BarangayOfficials';
 import Mission from '../../../assets/mission.svg';
 import Road from '../../../assets/road.png';
 import Vision from '../../../assets/vision.svg';
@@ -150,7 +150,7 @@ const AboutUs = () => {
                             <h1 className="text-3xl font-semibold">Barangay Officials 2023 - 2025</h1>
                             <Table>
                                 <TableBody>
-                                    {BarangayOfficial.map((official, index) => (
+                                    {BarangayOfficials.map((official, index) => (
                                         <TableRow key={index}>
                                             <TableCell className="max-w-60 border-2 text-start">{official.position}</TableCell>
                                             <TableCell className="max-w-60 border-2 text-start">{official.name}</TableCell>

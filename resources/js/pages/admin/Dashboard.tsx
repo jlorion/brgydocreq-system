@@ -1,35 +1,44 @@
-import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
-import HeaderLayout from '@/layouts/shared/HeaderLayout';
-import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/react';
-
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Dashboard',
-        href: '/dashboard',
-    },
+import { AppSidebar } from '@/components/custom/AppSidebar';
+import { Separator } from '@/components/ui/separator';
+import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import { Home } from 'lucide-react';
+const navItems = [
+    { icon: Home, title: 'Dashboard', href: '/docs/getting-started' },
+    { icon: Home, title: 'Documents', href: '/docs/data-fetching' },
+    { icon: Home, title: 'On Process', href: '/docs/routing' },
+    { icon: Home, title: 'Archives', href: '/docs/layouts' },
+    { icon: Home, title: 'Residents', href: '/docs/authentication' },
+    { icon: Home, title: 'Admins', href: '/docs/api-routes' },
+    { icon: Home, title: 'Document Request', href: '/docs/deployment' },
 ];
+const navTitle = 'Barangay Balagunan';
 
-export default function Dashboard() {
+export default function Page() {
     return (
-        <HeaderLayout breadcrumbs={breadcrumbs}>
-            <Head title="Dashboard" />
-            <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-                <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-                    <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
+        <SidebarProvider>
+            <AppSidebar navItems={navItems} navTitle={navTitle} />
+            <SidebarInset>
+                <header className="flex h-16 shrink-0 items-center gap-2 border-b">
+                    <div className="flex w-full flex-row items-center justify-between gap-2 px-3 pr-5">
+                        <div className="flex flex-row items-center gap-2">
+                            <SidebarTrigger />
+                            <h1>Dashboard tentative</h1>
+                        </div>
+
+                        <Separator orientation="vertical" className="mr-2 h-4" />
+                        <h1>User here</h1>
                     </div>
-                    <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
+                </header>
+                <div className="flex flex-1 flex-col gap-4 p-4">
+                    <div className="grid auto-rows-min gap-4 md:grid-cols-4">
+                        <div className="bg-muted/50 aspect-video rounded-xl">Helo</div>
+                        <div className="bg-muted/50 aspect-video rounded-xl">Helo</div>
+                        <div className="bg-muted/50 aspect-video rounded-xl">Helo</div>
+                        <div className="bg-muted/50 aspect-video rounded-xl">Helo</div>
                     </div>
-                    <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
+                    <div className="bg-muted/50 min-h-[100vh] flex-1 rounded-xl md:min-h-min" />
                 </div>
-                <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border md:min-h-min">
-                    <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                </div>
-            </div>
-        </HeaderLayout>
+            </SidebarInset>
+        </SidebarProvider>
     );
 }

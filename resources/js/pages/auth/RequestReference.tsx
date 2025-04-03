@@ -2,7 +2,7 @@ import { Head, useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 
 import TextLink from '@/components/custom/CustomTextLink';
-import InputError from '@/components/custom/input-error';
+import InputError from '@/components/custom/InputError';
 import { Button } from '@/components/ui/button';
 import { DatePicker } from '@/components/ui/date-picker';
 import { Input } from '@/components/ui/input';

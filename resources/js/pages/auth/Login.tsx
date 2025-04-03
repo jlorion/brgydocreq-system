@@ -3,7 +3,7 @@ import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
 
 import TextLink from '@/components/custom/CustomTextLink';
-import InputError from '@/components/custom/input-error';
+import InputError from '@/components/custom/InputError';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';

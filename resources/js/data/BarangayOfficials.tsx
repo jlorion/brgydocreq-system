@@ -1,4 +1,5 @@
-[
+
+export const BarangayOfficials = [
   {
     "position": "Punong Barangay",
     "name": "MAGALLANES, ALLAN ALGOPERA"

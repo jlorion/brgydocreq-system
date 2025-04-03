@@ -1,4 +1,4 @@
-import InputError from '@/components/custom/input-error';
+import InputError from '@/components/custom/InputError';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
