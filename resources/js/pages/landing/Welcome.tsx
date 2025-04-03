@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import CustomActive from '@/components/custom/CustomActive';
 import CustomCard from '@/components/custom/CustomCard';
@@ -5,6 +6,7 @@ import CustomDialog from '@/components/custom/CustomDialog';
 import CustomForm from '@/components/custom/CustomForm';
 import CustomIcon from '@/components/custom/CustomIcon';
 import { Button } from '@/components/ui/button';
+import { attachments, contactDetails, personalDetails, purposeDetail } from '@/data/FormFields';
 import MainLayout from '@/layouts/shared/MainLayout';
 import { Head, Link } from '@inertiajs/react';
 import BarangayCert from '../../../assets/barangay-certificate.png';
@@ -19,31 +21,28 @@ import CertOfIndigency from '../../../assets/indigency.png';
 import CertOfLowIncome from '../../../assets/low-income.png';
 import Population from '../../../assets/population.svg';
 import Puroks from '../../../assets/puroks.svg';
-import { personalDetails, contactDetails, attachments, purposeDetail } from '@/data/FormFields';
-
 
 const Welcome = () => {
-
-    const renderFormFields = () => {
+    const renderFormFields = (attachmentFields: any) => {
         return (
             <>
                 <div>
-                    <CustomForm fields={personalDetails} title='Personal Details' className='grid grid-cols-4 gap-x-4' />
+                    <CustomForm fields={personalDetails} title="Personal Details" className="grid grid-cols-4 gap-x-4" />
                 </div>
-                <div className='flex gap-x-5 pr-5'>
-                    <div className='w-1/2'>
-                        <CustomForm fields={contactDetails} title='Contact Details' className='grid grid-cols-2 gap-x-4' />
+                <div className="flex gap-x-5 pr-5">
+                    <div className="w-1/2">
+                        <CustomForm fields={contactDetails} title="Contact Details" className="grid grid-cols-2 gap-x-4" />
                     </div>
-                    <div className='flex-grow'>
-                        <CustomForm fields={attachments.indigencyAttachment} title='Attachment' className='grid grid-cols-1 gap-x-4' />
+                    <div className="flex-grow">
+                        <CustomForm fields={attachmentFields} title="Attachment" className="grid grid-cols-1 gap-x-4" />
                     </div>
                 </div>
-                <div className='flex-grow'>
-                    <CustomForm fields={purposeDetail} title='Purpose' className='grid grid-cols-1 gap-x-4' />
+                <div className="flex-grow">
+                    <CustomForm fields={purposeDetail} title="Purpose" className="grid grid-cols-1 gap-x-4" />
                 </div>
             </>
-        )
-    }
+        );
+    };
 
     return (
         <>
@@ -81,49 +80,87 @@ const Welcome = () => {
 
                     <div className="grid w-full grid-cols-3 gap-x-34 gap-y-8 pt-4">
                         <CustomDialog
-                            title='Barangay Clearance'
-                            trigger={<CustomCard
-                                image={BarangayClearance}
-                                alt="Barangay Clearance"
-                                title="Barangay Clearance"
-                                content="Issued by the barangay confirming the residents good standing and residency and is typically used for employment or legal purposes"
-                            />
+                            title="Barangay Clearance"
+                            trigger={
+                                <CustomCard
+                                    image={BarangayClearance}
+                                    alt="Barangay Clearance"
+                                    title="Barangay Clearance"
+                                    content="Issued by the barangay confirming the residents good standing and residency and is typically used for employment or legal purposes"
+                                />
                             }
-                            buttonName='Submit'
-                            children={renderFormFields()}
+                            buttonName="Submit"
+                            children={renderFormFields(attachments.barangayClearanceAttachment)}
                         />
 
-                        <CustomCard
-                            image={CertOfLowIncome}
-                            alt="Certificate of Low Income"
+                        <CustomDialog
                             title="Certificate of Low Income"
-                            content="Verifies a resident's income level falls within the low-income bracket, typically used for scholarships, subsidies, or social benefits"
-                        />
-                        <CustomCard
-                            image={CertOfIncome}
-                            alt="Certificate of Income"
-                            title="Certificate of Income"
-                            content="A formal declaration of a resident’s income, requested for employment, loan applications, or other financial requirements."
-                        />
-                        <CustomCard
-                            image={CertOfIndigency}
-                            alt="Certificate of Indigency"
-                            title="Certificate of Indigency"
-                            content="A document certifying that a resident falls below the poverty line, typically required for financial aid, government programs, or social services."
-                        />
-                        <CustomCard
-                            image={BarangayCert}
-                            alt="Barangay Certificate"
-                            title="Barangay Certificate"
-                            content="Confirms the residency of an individual within the barangay and may not necessarily state their legal standing."
-                        />
-                        <CustomCard
-                            image={Cedula}
-                            alt="Cedula"
-                            title="Cedula"
-                            content="Also known as a Community Tax Certificate and one of the basic requirements for most government transactions"
+                            trigger={
+                                <CustomCard
+                                    image={CertOfLowIncome}
+                                    alt="Certificate of Low Income"
+                                    title="Certificate of Low Income"
+                                    content="Verifies a resident's income level falls within the low-income bracket, typically used for scholarships, subsidies, or social benefits"
+                                />
+                            }
+                            buttonName="submit"
+                            children={renderFormFields(attachments.lowIncomeAttachment)}
                         />
 
+                        <CustomDialog
+                            title="Certificate of Income"
+                            trigger={
+                                <CustomCard
+                                    image={CertOfIncome}
+                                    alt="Certificate of Income"
+                                    title="Certificate of Income"
+                                    content="A formal declaration of a resident’s income, requested for employment, loan applications, or other financial requirements."
+                                />
+                            }
+                            buttonName="submit"
+                            children={renderFormFields(attachments.incomeAttachment)}
+                        />
+
+                        <CustomDialog
+                            title="Certificate of Indigency"
+                            trigger={
+                                <CustomCard
+                                    image={CertOfIndigency}
+                                    alt="Certificate of Indigency"
+                                    title="Certificate of Indigency"
+                                    content="A document certifying that a resident falls below the poverty line, typically required for financial aid, government programs, or social services."
+                                />
+                            }
+                            buttonName="submit"
+                            children={renderFormFields(attachments.indigencyAttachment)}
+                        />
+
+                        <CustomDialog
+                            title="Barangay Certificate"
+                            trigger={
+                                <CustomCard
+                                    image={BarangayCert}
+                                    alt="Barangay Certificate"
+                                    title="Barangay Certificate"
+                                    content="Confirms the residency of an individual within the barangay and may not necessarily state their legal standing."
+                                />
+                            }
+                            buttonName="submit"
+                            children={renderFormFields(attachments.barangayCertificateAttachment)}
+                        />
+                        <CustomDialog
+                            title="Cedula"
+                            trigger={
+                                <CustomCard
+                                    image={Cedula}
+                                    alt="Cedula"
+                                    title="Cedula"
+                                    content="Also known as a Community Tax Certificate and one of the basic requirements for most government transactions"
+                                />
+                            }
+                            buttonName="submit"
+                            children={renderFormFields(attachments.cedulaAttachment)}
+                        />
                     </div>
                 </section>
 
