@@ -132,7 +132,7 @@ export function CustomHeader({ breadcrumbs = [], mainNavItems = [], rightNavItem
                             </DropdownMenuContent>
                         </DropdownMenu>
                     ) : (
-                        <div className="space-x-2">
+                        <div className="space-x-2 hidden lg:flex">
                             {rightNavItems.map((item, index) => (
                                 <Link href={item.href} key={index}>
                                     <Button variant="plain">{item.title}</Button>

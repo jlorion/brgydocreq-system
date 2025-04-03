@@ -14,8 +14,7 @@ const CustomFooter = () => {
 
     return (
         <>
-            <div className="bg-s5 grid w-full grid-cols-4 gap-10 p-10 px-20 text-white">
-                {/* First col */}
+            <div className="bg-s5 grid w-full gap-10 p-10 px-5 lg:px-20 text-white md:grid-cols-2 lg:grid-cols-4">
                 <section>
                     <div className="space-y-10">
                         <CustomIcon imgSrc={WebLogo} className="h-14" alt="Webpage logo" />
@@ -35,7 +34,7 @@ const CustomFooter = () => {
                         </div>
                     </div>
                 </section>
-                {/* Second col */}
+
                 <section>
                     <div className="space-y-10">
                         <div>
@@ -60,7 +59,6 @@ const CustomFooter = () => {
                     </div>
                 </section>
 
-                {/* Third col */}
                 <section>
                     <div className="space-y-10">
                         <div>
@@ -79,7 +77,6 @@ const CustomFooter = () => {
                     </div>
                 </section>
 
-                {/* Fourth Col */}
                 <div className="space-y-10">
                     <div>
                         <h1 className="text-2xl font-bold">Contact</h1>

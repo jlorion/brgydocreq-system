@@ -48,29 +48,37 @@ const Welcome = () => {
         <>
             <Head title="Balagunan" />
             <MainLayout>
-                <section className="flex justify-between py-12">
+                <section className="flex items-center justify-center py-12 lg:justify-between">
                     {/* Left Div  Text*/}
-                    <div className="flex items-center justify-center pl-25">
+                    <div className="flex items-center justify-center pl-2 lg:pl-25">
                         <div className="flex flex-col gap-y-3">
-                            <div className="flex flex-row">
-                                <h1 className="text-5xl font-semibold text-black">
+                            <div className="flex flex-row justify-center gap-2">
+                                <h1 className="text-3xl font-bold text-black md:text-5xl lg:justify-start">
                                     Barangay <span className="text-s3">Document</span>
                                 </h1>
                             </div>
-                            <h1 className="text-5xl font-semibold tracking-wide text-black">Requesting System</h1>
-                            <p className="my-3 text-black">Make your document request simple and hassle-free. </p>
-                            <Button variant="primary" className="w-36">
-                                Request
-                            </Button>
+                            <h1 className="flex justify-center text-3xl font-bold tracking-wide text-black md:text-5xl lg:justify-start">
+                                Requesting System
+                            </h1>
+                            <div className="flex flex-col items-center justify-center lg:items-start">
+                                <p className="my-3 flex text-center text-black lg:text-justify">Make your document request simple and hassle-free.</p>
+                            </div>
+
+                            <div className="flex justify-center lg:justify-start">
+                                <Button variant="primary" className="w-36">
+                                    Request
+                                </Button>
+                            </div>
                         </div>
                     </div>
 
                     {/* Right div or Logo */}
-                    <CustomIcon className="h-2/3" imgSrc={Document} alt="Document" />
+
+                    <CustomIcon className="hidden h-2/3 lg:flex" imgSrc={Document} alt="Document" />
                 </section>
 
-                <section className="flex flex-col items-center justify-center px-25 py-35">
-                    <div className="flex flex-col items-center">
+                <section className="flex flex-col items-center justify-center px-5 pt-15 pb-5 md:px-10 lg:px-20">
+                    <div className="flex flex-col items-center justify-center">
                         <h1 id="services" className="text-s3 text-3xl font-bold">
                             Services
                         </h1>
@@ -78,7 +86,7 @@ const Welcome = () => {
                         <p className="py-2 font-medium text-black">Request. Track. Receive. All in one place!</p>
                     </div>
 
-                    <div className="grid w-full grid-cols-3 gap-x-34 gap-y-8 pt-4">
+                    <div className="grid w-full justify-center gap-y-8 pt-4 md:grid-cols-2 md:gap-x-10 md:gap-y-10 lg:grid-cols-3 lg:gap-x-12">
                         <CustomDialog
                             title="Barangay Clearance"
                             trigger={
@@ -170,12 +178,12 @@ const Welcome = () => {
                         <CustomActive />
                     </div>
 
-                    <div className="flex w-full items-center px-25">
-                        <div>
+                    <div className="flex w-full flex-col items-center lg:flex-row lg:px-25">
+                        <div className="flex justify-center">
                             <CustomIcon imgSrc={BarangayLogo} className="h-60 pr-20 pl-14" alt="Barangay Logo" />
                         </div>
                         <div className="flex w-3/5 flex-1 flex-col gap-4">
-                            <h1 className="text-4xl font-semibold">Barangay History</h1>
+                            <h1 className="text-center text-4xl font-semibold lg:text-start">Barangay History</h1>
                             <article className="text-justify text-black">
                                 The Barangay Balagunan was once a forested area inhabited by primitive ethnic groups of Mandaya and Aeta. The place
                                 was named “Balagunan” after a particular plant called “Balagun” also popularly known as rattan, which was very
@@ -193,11 +201,11 @@ const Welcome = () => {
                         </div>
                     </div>
 
-                    <div className="bg-silver flex h-screen w-full items-center justify-between px-25 pb-14">
-                        <div className="flex flex-col items-start">
-                            <div className="flex">
+                    <div className="bg-silver mt-5 flex h-screen w-full flex-col items-center px-5 lg:flex-row lg:justify-between lg:px-25">
+                        <div className="flex flex-col items-center justify-center text-center lg:items-start lg:justify-start lg:text-left">
+                            <div className="flex flex-row items-center justify-center gap-2">
                                 <h1 className="text-3xl font-bold">Current</h1>
-                                <h1 className="text-s3 pl-2 text-3xl font-bold">Status</h1>
+                                <h1 className="text-s3 text-3xl font-bold">Status</h1>
                             </div>
 
                             <p className="pt-5 text-black">
@@ -206,7 +214,7 @@ const Welcome = () => {
                             </p>
                         </div>
 
-                        <div className="grid grid-cols-2 gap-x-50 gap-y-10">
+                        <div className="grid grid-cols-2 gap-x-20 gap-y-10 md:gap-x-35 lg:gap-x-50">
                             <CustomIcon imgSrc={DocumentRequest} title="100" content="Document Request" className="h-14 w-14" />
                             <CustomIcon imgSrc={DocumentArchive} title="1,000" content="Document Archive" className="h-14 w-14" />
                             <CustomIcon imgSrc={Puroks} title="12" content="Purok" className="h-14 w-14" />
