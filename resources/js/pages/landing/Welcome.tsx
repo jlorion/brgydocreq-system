@@ -19,7 +19,7 @@ import CertOfIndigency from '../../../assets/indigency.png';
 import CertOfLowIncome from '../../../assets/low-income.png';
 import Population from '../../../assets/population.svg';
 import Puroks from '../../../assets/puroks.svg';
-import { personalDetails, contactDetails, attachmentDetail, purposeDetail } from '@/data/FormFields';
+import { personalDetails, contactDetails, attachments, purposeDetail } from '@/data/FormFields';
 
 
 const Welcome = () => {
@@ -35,7 +35,7 @@ const Welcome = () => {
                         <CustomForm fields={contactDetails} title='Contact Details' className='grid grid-cols-2 gap-x-4' />
                     </div>
                     <div className='flex-grow'>
-                        <CustomForm fields={attachmentDetail} title='Attachment' className='grid grid-cols-1 gap-x-4' />
+                        <CustomForm fields={attachments.indigencyAttachment} title='Attachment' className='grid grid-cols-1 gap-x-4' />
                     </div>
                 </div>
                 <div className='flex-grow'>

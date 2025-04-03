@@ -103,21 +103,35 @@ export const contactDetails = [
 	},
 ]
 
-export const attachmentDetail = [
+export const attachments = {
+	barangayClearanceAttachment: [
 
-	{
-		label: 'Purok clearance',
-		id: 'purok-clearance',
-		type: 'file',
-		value: '',
-		tabIndex: 10,
-		autoComplete: 'purok-clearance',
-		onChange: (value: string) => console.log('Purok clearance:', value),
-		errorMessage: 'purok-clearance',
-	},
+		{
+			label: 'Barangay Clearance Form',
+			id: 'barangay-clearance-form',
+			type: 'file',
+			value: '',
+			tabIndex: 10,
+			autoComplete: 'barangay-clearance-form',
+			onChange: (value: string) => console.log('Barangay Clearance Form:', value),
+			errorMessage: 'barangay-clearance-form',
+		},
+	],
+	indigencyAttachment:
+		[
+			{
+				label: 'Proof of Indigency, avifidafit of niggas',
+				id: 'proof-of-indigency',
+				type: 'file',
+				value: '',
+				tabIndex: 10,
+				autoComplete: 'proof-of-indigency',
+				onChange: (value: string) => console.log('Proof of Indigency:', value),
+				errorMessage: 'proof-of-indigency',
+			},
+		],
 
-
-]
+};
 export const purposeDetail = [
 	{
 		label: 'Purpose of Filing',
