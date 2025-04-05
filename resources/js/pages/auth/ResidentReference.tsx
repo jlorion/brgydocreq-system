@@ -39,9 +39,6 @@ const ResidentReference = () => {
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
         post(route('auth.resident-reference.store'), {
-            onSuccess: () => {
-                console.log('success');
-            },
             onError: (errors) => {
                 console.error('Form submission failed. Validation errors:');
                 Object.entries(errors).forEach(([field, message]) => {

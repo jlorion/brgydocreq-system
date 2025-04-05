@@ -17,12 +17,15 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+    protected $primaryKey = 'user_id';
+
     protected $fillable = [
         'username',
         'user_email',
         'user_password',
         'user_phonenum',
         'user_photopath',
+        'resident_id',
     ];
 
     /**
@@ -46,5 +49,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function getAuthPassword()
+    {
+        return $this->user_password;
     }
 }

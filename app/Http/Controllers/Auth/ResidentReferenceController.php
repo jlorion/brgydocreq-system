@@ -38,7 +38,6 @@ class ResidentReferenceController extends Controller
                 ['resident_firstname', $validated['resident_firstname']],
                 ['resident_middlename', $validated['resident_middlename']],
                 ['resident_lastname', $validated['resident_lastname']],
-                ['resident_suffix', $validated['resident_suffix']],
                 ['resident_birthdate', $validated['resident_birthdate']],
             ])->whereHas('address', function ($query) use ($validated) {
                 $query->where('purok', $validated['resident_address']);
@@ -65,7 +64,6 @@ class ResidentReferenceController extends Controller
                 'message' => 'Reference number successfully sent bitch',
                 'reference_number' => $refNumber,
             ], 200);
-            
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 500);
         }

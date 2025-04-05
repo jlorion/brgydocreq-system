@@ -11,19 +11,19 @@ import { cn } from '@/lib/utils';
 import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { Menu } from 'lucide-react';
-import WebLogo from '../../../assets/web-logo.svg';
 import { UserMenuContent } from './user-menu-content';
+import React from 'react';
 
 interface CustomHeaderProps {
     breadcrumbs?: BreadcrumbItem[];
-    mainNavItems: NavItem[];
-    rightNavItems: NavItem[];
+    mainNavItems?: NavItem[];
+    rightNavItems?: NavItem[];
+    leftNavItems?: React.ReactElement;
     className?: string;
 }
 
-export function CustomHeader({ breadcrumbs = [], mainNavItems = [], rightNavItems = [], className }: CustomHeaderProps) {
-    const page = usePage<SharedData>();
-    const { auth } = page.props;
+export function CustomHeader({ breadcrumbs = [], mainNavItems = [], rightNavItems = [], leftNavItems, className }: CustomHeaderProps) {
+    const { auth } = usePage<SharedData>().props;
     const getInitials = useInitials();
 
     const { headerProps } = UseHeaderScroll();
@@ -45,7 +45,7 @@ export function CustomHeader({ breadcrumbs = [], mainNavItems = [], rightNavItem
                         <SheetContent side="left" className="bg-sidebar flex h-full w-64 flex-col items-stretch justify-between">
                             <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
                             <SheetHeader className="flex justify-start text-left">
-                                <CustomIcon imgSrc={WebLogo} className="h-9" />
+                                {leftNavItems}
                             </SheetHeader>
                             <div className="flex h-full flex-1 flex-col space-y-4 p-4">
                                 <div className="flex h-full flex-col justify-between text-sm">
@@ -79,7 +79,7 @@ export function CustomHeader({ breadcrumbs = [], mainNavItems = [], rightNavItem
                 </div>
 
                 <Link href="/" prefetch className="flex items-center space-x-2">
-                    <CustomIcon imgSrc={WebLogo} className="h-9 px-5" />
+                    {leftNavItems}
                 </Link>
 
                 {/* Desktop Navigation */}
@@ -117,13 +117,10 @@ export function CustomHeader({ breadcrumbs = [], mainNavItems = [], rightNavItem
                             <DropdownMenuTrigger asChild>
                                 <Button variant="ghost" className="size-10 rounded-full p-1">
                                     <Avatar className="size-8 overflow-hidden rounded-full">
-                                        {auth.user.avatar ? (
-                                            <AvatarImage src={auth.user.avatar} alt={auth.user.name || 'User'} />
-                                        ) : (
-                                            <AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
-                                                {getInitials(auth.user.name || 'User')}
-                                            </AvatarFallback>
-                                        )}
+                                        <AvatarImage src={auth.user.avatar} alt={auth.user.username} />
+                                        <AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
+                                            {getInitials(auth.user.username)}
+                                        </AvatarFallback>
                                     </Avatar>
                                 </Button>
                             </DropdownMenuTrigger>
@@ -132,6 +129,7 @@ export function CustomHeader({ breadcrumbs = [], mainNavItems = [], rightNavItem
                             </DropdownMenuContent>
                         </DropdownMenu>
                     ) : (
+
                         <div className="space-x-2 hidden lg:flex">
                             {rightNavItems.map((item, index) => (
                                 <Link href={item.href} key={index}>
@@ -139,7 +137,8 @@ export function CustomHeader({ breadcrumbs = [], mainNavItems = [], rightNavItem
                                 </Link>
                             ))}
                         </div>
-                    )}
+                    )
+                    }
                 </div>
             </div>
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\ResidentReference;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -30,16 +31,27 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
+
+        $validated = $request->validate([
+            'username' => 'required|string|max:255|unique:users',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'reference_number' => 'required|string|max:255|exists:resident_references,reference_number',
         ]);
 
+        $residentReference = ResidentReference::where('reference_number', $validated['reference_number'])->where('expires_at', '>', now())->first();
+
+        if (!$residentReference || $residentReference->used) {
+            return back()->withErrors([
+                'reference_number' => 'The reference number is invalid or has expired.',
+            ]);
+        }
+
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'username' => $validated['username'],
+            'resident_id' => $residentReference->resident_id,
+            'user_email' => $residentReference->email,
+            'user_phonenum' => $residentReference->phone_number,
+            'user_password' => Hash::make($validated['password']),
         ]);
 
         event(new Registered($user));
@@ -47,5 +59,7 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         return to_route('dashboard');
+
+        $residentReference->update(['used' => true]);
     }
 }

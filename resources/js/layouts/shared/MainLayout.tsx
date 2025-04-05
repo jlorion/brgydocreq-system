@@ -1,8 +1,11 @@
 import CustomFooter from '@/components/custom/CustomFooter';
 import { CustomHeader } from '@/components/custom/CustomHeader';
+import CustomIcon from '@/components/custom/CustomIcon';
 import { type NavItem } from '@/types';
 import { usePage } from '@inertiajs/react';
 import React, { useEffect } from 'react';
+import WebLogo from '../../../assets/web-logo.svg';
+
 
 interface MainLayoutProps {
     children: React.ReactNode;
@@ -21,10 +24,16 @@ const landingRightNavItems: NavItem[] = [
     { title: 'Login', href: route('auth.login') },
 ];
 
+const leftNavItems = () => {
+    return (
+        <CustomIcon imgSrc={WebLogo} className="h-9 px-5" />
+    );
+}
+
 const MainLayout = ({ children, className }: MainLayoutProps) => {
     return (
         <>
-            <CustomHeader mainNavItems={landingMainNavItems} rightNavItems={landingRightNavItems} />
+            <CustomHeader mainNavItems={landingMainNavItems} rightNavItems={landingRightNavItems} leftNavItems={leftNavItems()} />
             <div className="box-border h-full w-full">
                 <main className={`z-0 flex flex-grow flex-col ${className}`}>{children}</main>
                 <footer>

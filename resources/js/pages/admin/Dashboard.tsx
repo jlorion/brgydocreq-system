@@ -1,4 +1,5 @@
 import { AppSidebar } from '@/components/custom/AppSidebar';
+import { CustomHeader } from '@/components/custom/CustomHeader';
 import { Separator } from '@/components/ui/separator';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { Home } from 'lucide-react';
@@ -13,7 +14,7 @@ const navItems = [
 ];
 const navTitle = 'Barangay Balagunan';
 
-export default function Page() {
+export default function Dashboard() {
     return (
         <SidebarProvider>
             <AppSidebar navItems={navItems} navTitle={navTitle} />
@@ -26,7 +27,7 @@ export default function Page() {
                         </div>
 
                         <Separator orientation="vertical" className="mr-2 h-4" />
-                        <h1>User here</h1>
+                        <CustomHeader/>
                     </div>
                 </header>
                 <div className="flex flex-1 flex-col gap-4 p-4">
