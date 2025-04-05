@@ -1,5 +1,6 @@
+// DatePicker.tsx
 import * as React from "react"
-import { format, getMonth, set, setMonth, setYear } from "date-fns"
+import { format, getMonth, setMonth, setYear } from "date-fns"
 import { CalendarIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -19,40 +20,30 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-interface DatePickerProps extends React.HTMLAttributes<HTMLDivElement> {
+interface DatePickerProps {
+  value: Date | null
+  onChange: (date: Date | null) => void
   tabIndex?: number
 }
 
-export function DatePicker({ tabIndex }: DatePickerProps) {
-  const [date, setDate] = React.useState<Date | null>(null)
+export function DatePicker({ value, onChange, tabIndex }: DatePickerProps) {
+  const date = value
 
   const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
   ]
   const years = Array.from({ length: 100 }, (_, i) => new Date().getFullYear() - i)
 
   const handleMonthChange = (month: string) => {
     const newDate = setMonth(date ?? new Date(), months.indexOf(month))
-    setDate(newDate)
-
+    onChange(newDate)
   }
 
   const handleYearChange = (year: string) => {
     const newDate = setYear(date ?? new Date(), parseInt(year))
-    setDate(newDate)
+    onChange(newDate)
   }
-
 
   return (
     <Popover>
@@ -65,13 +56,16 @@ export function DatePicker({ tabIndex }: DatePickerProps) {
           )}
           tabIndex={tabIndex}
         >
-          <CalendarIcon />
+          <CalendarIcon className="mr-2 h-4 w-4" />
           {date ? format(date, "PPP") : <span>Pick a birthday</span>}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
         <div className="flex p-3 gap-x-2">
-          <Select onValueChange={handleMonthChange} value={date ? months[getMonth(date)] : undefined}>
+          <Select
+            onValueChange={handleMonthChange}
+            value={date ? months[getMonth(date)] : undefined}
+          >
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Month" />
             </SelectTrigger>
@@ -80,12 +74,14 @@ export function DatePicker({ tabIndex }: DatePickerProps) {
                 {months.map((month, index) => (
                   <SelectItem key={index} value={month}>{month}</SelectItem>
                 ))}
-
               </SelectGroup>
             </SelectContent>
           </Select>
+
           <Select
-            onValueChange={handleYearChange} value={date ? date.getFullYear().toString() : ""}>
+            onValueChange={handleYearChange}
+            value={date ? date.getFullYear().toString() : ""}
+          >
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Year" />
             </SelectTrigger>
@@ -94,7 +90,6 @@ export function DatePicker({ tabIndex }: DatePickerProps) {
                 {years.map((year, index) => (
                   <SelectItem key={index} value={year.toString()}>{year}</SelectItem>
                 ))}
-
               </SelectGroup>
             </SelectContent>
           </Select>
@@ -103,11 +98,10 @@ export function DatePicker({ tabIndex }: DatePickerProps) {
         <Calendar
           mode="single"
           selected={date || undefined}
-          onSelect={(date) => date && setDate(date)}
+          onSelect={(d) => onChange(d ?? null)}
           initialFocus
           month={date ?? undefined}
-          className="max-h-70"
-          onMonthChange={setDate}
+          onMonthChange={(d) => onChange(d)}
         />
       </PopoverContent>
     </Popover>

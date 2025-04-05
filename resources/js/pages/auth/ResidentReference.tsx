@@ -9,27 +9,49 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthSplitLayout from '@/layouts/auth/AuthSplitLayout';
 import ResidentVerification from '../../../assets/verification-side-image.svg';
+import { FormEventHandler, useEffect } from 'react';
+import { useState } from 'react';
+import { format } from 'date-fns';
 
 type ResidentVerificationForm = {
-    first_name: string;
-    middle_name: string;
-    last_name: string;
-    birth_date: string;
+    resident_firstname: string;
+    resident_middlename: string;
+    resident_lastname: string;
+    resident_suffix: string;
+    resident_birthdate: string;
     email: string;
     phone_number: string;
-    address: string;
+    resident_address: string;
 };
 
-const RequestReference = () => {
-    const { data, setData, post, processing, errors, reset } = useForm<Required<ResidentVerificationForm>>({
-        first_name: '',
-        middle_name: '',
-        last_name: '',
-        birth_date: '',
+const ResidentReference = () => {
+    const { data, setData, post, processing, errors } = useForm<Required<ResidentVerificationForm>>({
+        resident_firstname: '',
+        resident_middlename: '',
+        resident_lastname: '',
+        resident_birthdate: '',
+        resident_suffix: '',
         email: '',
         phone_number: '',
-        address: '',
+        resident_address: '',
     });
+
+    const submit: FormEventHandler = (e) => {
+        e.preventDefault();
+        post(route('auth.resident-reference.store'), {
+            onSuccess: () => {
+                console.log('success');
+            },
+            onError: (errors) => {
+                console.error('Form submission failed. Validation errors:');
+                Object.entries(errors).forEach(([field, message]) => {
+                    console.error(`Field: ${field}, Error: ${message}`);
+                });
+            },
+        })
+    }
+
+    const [birthDate, setBirthDate] = useState<Date | null>(null)
 
     return (
         <AuthSplitLayout
@@ -39,7 +61,7 @@ const RequestReference = () => {
 
         >
             <Head title="Resident Verification" />
-            <form className="mt-4 flex flex-col gap-6">
+            <form className="mt-4 flex flex-col gap-6" onSubmit={submit}>
                 <div className="grid gap-6">
                     <div className="grid grid-cols-2 gap-x-5">
                         <div className="grid gap-2">
@@ -51,11 +73,11 @@ const RequestReference = () => {
                                 autoFocus
                                 tabIndex={1}
                                 autoComplete="firstname"
-                                value={data.first_name}
-                                onChange={(e) => setData('first_name', e.target.value)}
+                                value={data.resident_firstname}
+                                onChange={(e) => setData('resident_firstname', e.target.value)}
                                 placeholder="Juan"
                             />
-                            <InputError message={errors.first_name} />
+                            <InputError message={errors.resident_firstname} />
                         </div>
                         <div className="grid gap-2">
                             <Label htmlFor="middlename">Middle name</Label>
@@ -65,11 +87,11 @@ const RequestReference = () => {
                                 required
                                 tabIndex={2}
                                 autoComplete="middlename"
-                                value={data.middle_name}
-                                onChange={(e) => setData('middle_name', e.target.value)}
+                                value={data.resident_middlename}
+                                onChange={(e) => setData('resident_middlename', e.target.value)}
                                 placeholder="Reyes"
                             />
-                            <InputError message={errors.middle_name} />
+                            <InputError message={errors.resident_middlename} />
                         </div>
                     </div>
                     <div className="grid grid-cols-2 gap-x-5">
@@ -81,15 +103,19 @@ const RequestReference = () => {
                                 required
                                 tabIndex={3}
                                 autoComplete="lastname"
-                                value={data.last_name}
-                                onChange={(e) => setData('last_name', e.target.value)}
+                                value={data.resident_lastname}
+                                onChange={(e) => setData('resident_lastname', e.target.value)}
                                 placeholder="Dela Cruz"
                             />
-                            <InputError message={errors.last_name} />
+                            <InputError message={errors.resident_lastname} />
                         </div>
                         <div className="grid gap-2">
                             <Label htmlFor="birthdate">Birthdate</Label>
-                            <DatePicker tabIndex={4} />
+                            <DatePicker tabIndex={4} aria-required value={birthDate} onChange={(date) => {
+                                setBirthDate(date);
+                                setData('resident_birthdate', date ? format(date, 'yyyy-MM-dd') : '');
+                            }} />
+
                         </div>
                     </div>
                     <div className="grid gap-2">
@@ -129,11 +155,11 @@ const RequestReference = () => {
                                 required
                                 tabIndex={7}
                                 autoComplete="address"
-                                value={data.address}
-                                onChange={(e) => setData('address', e.target.value)}
+                                value={data.resident_address}
+                                onChange={(e) => setData('resident_address', e.target.value)}
                                 placeholder="Purok 1"
                             />
-                            <InputError message={errors.address} />
+                            <InputError message={errors.resident_address} />
                         </div>
                     </div>
 
@@ -145,7 +171,7 @@ const RequestReference = () => {
 
                 <div className="text-muted-foreground text-center text-sm">
                     Already have a reference number?{' '}
-                    <TextLink href={route('auth.register')} tabIndex={9}>
+                    <TextLink href={route('auth.register')} tabIndex={9} >
                         Sign up
                     </TextLink>
                 </div>
@@ -156,4 +182,4 @@ const RequestReference = () => {
     );
 };
 
-export default RequestReference;
+export default ResidentReference;

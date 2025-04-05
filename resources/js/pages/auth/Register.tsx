@@ -104,7 +104,7 @@ export default function Register() {
                             disabled={processing}
                             placeholder="Enter your reference number"
                         />
-                        <TextLink href={route('auth.request-reference')} tabIndex={5} className="text-s3 flex justify-end text-sm hover:underline">
+                        <TextLink href={route('auth.resident-reference')} tabIndex={5} className="text-s3 flex justify-end text-sm hover:underline">
                             Request Reference Number
                         </TextLink>
                         <InputError message={errors.reference_number} />
