@@ -1,35 +1,31 @@
-import React from 'react'; 
+import React from 'react';
 
-type TermsModalProps = {
+type termsModal = {
     isOpen: boolean;
     onClose: () => void;
 };
 
-export default function TermsModal({ isOpen, onClose }: TermsModalProps) {
+export default function TermsModal({ isOpen, onClose }: termsModal) {
     if (!isOpen) return null;
 
     return (
-
         <div
             className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center inset-0 bg-black/80"
             aria-hidden={!isOpen}
         >
-            {/* Body */}
             <div className="relative w-full max-w-xl p-2 bg-white rounded-lg shadow dark:bg-gray-700">
 
-                {/* Title */}
                 <div className="flex flex-col text-center sm:text-left justify-between p-4 space-y-1.5 border-b border-gray-200 dark:border-gray-600 bg-opacity-50">
                     <h2 className="text-s3 text-2xl font-semibold">
                         Terms & Conditions
                     </h2>
-                    <p id="radix-:rf:" className="text-sm text-gray-500 dark:text-gray-400"> {/* Reduced from text-muted-foreground */}
+                    <p id="radix-:rf:" className="text-sm text-gray-500 dark:text-gray-400">
                         Barangay Document Request - Barangay Balagunan
                     </p>
                 </div>
 
-                {/* Text */}
                 <div className="p-4 space-y-4">
-                    <p className="text-sm leading-relaxed text-gray-500 dark:text-gray-400 text-justify"> {/* Reduced from text-justify */}
+                    <p className="text-sm leading-relaxed text-gray-500 dark:text-gray-400 text-justify">
                         By registering with the Barangay Document Request System, you agree to provide accurate information for document requests and communication. Use of the system requires adherence to its guidelines, with violations leading to possible suspension or termination of access.
                         <br />
 
@@ -51,7 +47,6 @@ export default function TermsModal({ isOpen, onClose }: TermsModalProps) {
                     </p>
                 </div>
 
-                {/* Footer */}
                 <div className="flex items-center p-4 border-t border-gray-200 dark:border-gray-600">
                     <button
                         type="button"
