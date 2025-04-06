@@ -1,6 +1,7 @@
 import { Head, useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
+import { useState } from 'react';
 
 import TextLink from '@/components/custom/CustomTextLink';
 import InputError from '@/components/custom/InputError';
@@ -10,6 +11,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthSplitLayout from '@/layouts/auth/AuthSplitLayout';
 import RegisterImage from '../../../assets/register-side-image.svg';
+import TermsModal from '@/components/ui/termModal';
 
 type RegisterForm = {
     username: string;
@@ -25,6 +27,11 @@ export default function Register() {
         password_confirmation: '',
         reference_number: '',
     });
+
+    const [isTermsModalOpen, setTermsModalOpen] = useState(false);
+
+    const openTermsModal = () => setTermsModalOpen(true);
+    const closeTermsModal = () => setTermsModalOpen(false);
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
@@ -113,7 +120,17 @@ export default function Register() {
                     <div className="mt-4 flex items-center justify-center space-x-3">
                         <Checkbox id="terms" tabIndex={6} />
                         <Label htmlFor="terms" className="text-sm">
-                            I agree to the <TextLink href='' tabIndex={7}>Terms and Conditions</TextLink>
+                            I agree to the{' '}
+                            <TextLink
+                                href="#"
+                                tabIndex={7}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    openTermsModal();
+                                }}
+                            >
+                                Terms & Conditions and Privacy Policy
+                            </TextLink>
                         </Label>
                     </div>
 
@@ -130,6 +147,8 @@ export default function Register() {
                     </TextLink>
                 </div>
             </form>
+
+            <TermsModal isOpen={isTermsModalOpen} onClose={closeTermsModal} />
         </AuthSplitLayout>
     );
 }
