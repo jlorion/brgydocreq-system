@@ -11,7 +11,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthSplitLayout from '@/layouts/auth/AuthSplitLayout';
 import RegisterImage from '../../../assets/register-side-image.svg';
-import TermsModal from '@/components/custom/TermsCondition';
 import TermsCondition from '@/components/custom/TermsCondition';
 
 type RegisterForm = {
