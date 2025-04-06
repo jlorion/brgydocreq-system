@@ -71,9 +71,6 @@ const Welcome = () => {
                             </div>
                         </div>
                     </div>
-
-                    {/* Right div or Logo */}
-
                     <CustomIcon className="hidden h-2/3 lg:flex" imgSrc={Document} alt="Document" />
                 </section>
 
@@ -97,7 +94,8 @@ const Welcome = () => {
                                     content="Issued by the barangay confirming the residents good standing and residency and is typically used for employment or legal purposes"
                                 />
                             }
-                            buttonName="Submit"
+                            contentClassName='flex flex-col gap-3 mt-4'
+                            button={<Button variant="primary">Submit</Button>}
                             children={renderFormFields(attachments.barangayClearanceAttachment)}
                         />
 
@@ -111,7 +109,8 @@ const Welcome = () => {
                                     content="Verifies a resident's income level falls within the low-income bracket, typically used for scholarships, subsidies, or social benefits"
                                 />
                             }
-                            buttonName="submit"
+                            contentClassName='flex flex-col gap-3 mt-4'
+                            button={<Button variant="primary">Submit</Button>}
                             children={renderFormFields(attachments.lowIncomeAttachment)}
                         />
 
@@ -125,7 +124,8 @@ const Welcome = () => {
                                     content="A formal declaration of a resident’s income, requested for employment, loan applications, or other financial requirements."
                                 />
                             }
-                            buttonName="submit"
+                            contentClassName='flex flex-col gap-3 mt-4'
+                            button={<Button variant="primary">Submit</Button>}
                             children={renderFormFields(attachments.incomeAttachment)}
                         />
 
@@ -139,8 +139,9 @@ const Welcome = () => {
                                     content="A document certifying that a resident falls below the poverty line, typically required for financial aid, government programs, or social services."
                                 />
                             }
-                            buttonName="submit"
+                            button={<Button variant="primary">Submit</Button>}
                             children={renderFormFields(attachments.indigencyAttachment)}
+                            contentClassName='flex flex-col gap-3 mt-4'
                         />
 
                         <CustomDialog
@@ -153,7 +154,8 @@ const Welcome = () => {
                                     content="Confirms the residency of an individual within the barangay and may not necessarily state their legal standing."
                                 />
                             }
-                            buttonName="submit"
+                            button={<Button variant="primary">Submit</Button>}
+                            contentClassName='flex flex-col gap-3 mt-4'
                             children={renderFormFields(attachments.barangayCertificateAttachment)}
                         />
                         <CustomDialog
@@ -166,7 +168,8 @@ const Welcome = () => {
                                     content="Also known as a Community Tax Certificate and one of the basic requirements for most government transactions"
                                 />
                             }
-                            buttonName="submit"
+                            button={<Button variant="primary">Submit</Button>}
+                            contentClassName='flex flex-col gap-3 mt-4'
                             children={renderFormFields(attachments.cedulaAttachment)}
                         />
                     </div>

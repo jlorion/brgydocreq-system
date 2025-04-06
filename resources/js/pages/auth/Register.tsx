@@ -11,7 +11,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthSplitLayout from '@/layouts/auth/AuthSplitLayout';
 import RegisterImage from '../../../assets/register-side-image.svg';
-import TermsModal from '@/components/ui/termModal';
+import TermsModal from '@/components/custom/TermsCondition';
+import TermsCondition from '@/components/custom/TermsCondition';
 
 type RegisterForm = {
     username: string;
@@ -28,10 +29,7 @@ export default function Register() {
         reference_number: '',
     });
 
-    const [isTermsModalOpen, setTermsModalOpen] = useState(false);
 
-    const openTermsModal = () => setTermsModalOpen(true);
-    const closeTermsModal = () => setTermsModalOpen(false);
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
@@ -119,18 +117,11 @@ export default function Register() {
 
                     <div className="mt-4 flex items-center justify-center space-x-3">
                         <Checkbox id="terms" tabIndex={6} />
-                        <Label htmlFor="terms" className="text-sm">
-                            I agree to the{' '}
-                            <TextLink
-                                href="#"
-                                tabIndex={7}
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    openTermsModal();
-                                }}
-                            >
+                        <Label htmlFor="terms" className="text-sm flex items-center justify-start">
+                            <span>I agree to the</span>
+                            <TermsCondition trigger={<Button variant='link' tabIndex={7} className='pl-1 pr-0 m-0 gap-0'>
                                 Terms & Conditions and Privacy Policy
-                            </TextLink>
+                            </Button>} />
                         </Label>
                     </div>
 
@@ -148,7 +139,6 @@ export default function Register() {
                 </div>
             </form>
 
-            <TermsModal isOpen={isTermsModalOpen} onClose={closeTermsModal} />
-        </AuthSplitLayout>
+        </AuthSplitLayout >
     );
 }

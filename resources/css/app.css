@@ -9,6 +9,16 @@ html {
     scroll-behavior: smooth;
 }
 
+.scroll-invisible {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-behavior: smooth; /* Smooth scrolling */
+}
+
+.scroll-invisible::-webkit-scrollbar {
+    display: none;
+}
+
 @theme {
     --font-instrument:
         'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
