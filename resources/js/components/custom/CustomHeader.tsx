@@ -78,9 +78,9 @@ export function CustomHeader({ breadcrumbs = [], mainNavItems = [], rightNavItem
                     </Sheet>
                 </div>
 
-                <Link href="/" prefetch className="flex items-center space-x-2">
+                <div className="flex items-center space-x-2">
                     {leftNavItems}
-                </Link>
+                </div>
 
                 {/* Desktop Navigation */}
                 <div className="hidden h-full flex-grow justify-center lg:flex">

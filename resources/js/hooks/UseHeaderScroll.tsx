@@ -80,7 +80,7 @@ export const UseHeaderScroll = () => {
         className: `
       ${isScrolling && !isAtTop && 'shadow-md'}
        ${!isVisible && !isAtTop && '-translate-y-full'}
-     mx-full sticky top-0 z-50 flex h-16 items-center bg-white px-20 transition-all duration-300 ease-in-out
+     mx-full sticky top-0 z-50 flex h-16 items-center bg-white transition-all duration-300 ease-in-out
     `,
     };
 

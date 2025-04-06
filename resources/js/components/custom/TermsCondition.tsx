@@ -11,25 +11,26 @@ export default function TermsCondition({ trigger }: CustomDialogProps) {
         <CustomDialog trigger={trigger} subtitle='Terms & Conditions and Privacy Policy' title='Barangay Balagunan, Santo Tomas, Davao del Norte' children={
             <>
                 <h2 className="text-s3 font-semibold pb-3">Terms & Conditions</h2>
-                <article className="text-sm leading-relaxed text-gray-500 text-justify">
-                   
-                    These Terms & Conditions govern your use of the Barangay Document Request System. By accessing or using the system, you agree to comply with these Terms.
-                    <br />
-                    <br />
-                    1. Acceptance of Terms
-                    By using the Barangay Document Request System, you agree to abide by these Terms and any applicable rules, guidelines, or policies. If you do not agree, please refrain from using the system.
-                    <br />
-                    <br />
-                    2. User Obligations
-                    <br />
-                    You agree to:
-                    <br />
-                    - Provide accurate and complete information during registration and document request processes.
-                    <br />
-                    - Keep your login credentials and reference number confidential.
-                    <br />
-                    - Notify Barangay Balagunan immediately if you suspect unauthorized access to your account.
-                    <br />
+                <article className="text-sm leading-relaxed text-gray-500 text-justify flex flex-col gap-y-3">
+                    <div>
+                        These Terms & Conditions govern your use of the Barangay Document Request System. By accessing or using the system, you agree to comply with these Terms.
+                    </div>
+
+                    <div>
+                        1. Acceptance of Terms
+                        <p>By using the Barangay Document Request System, you agree to abide by these Terms and any applicable rules, guidelines, or policies. If you do not agree, please refrain from using the system.</p>
+                    </div>
+
+                    <div>
+                        2. User Obligations
+                        <br />
+                        You agree to:
+                        <div className='pl-4'>
+                            <p>2.1 Provide accurate and complete information during registration and document request processes.</p>
+                            <p>2.2 Keep your login credentials and reference number confidential.</p>
+                            <p>2.3 Notify Barangay Balagunan immediately if you suspect unauthorized access to your account.</p>
+                        </div>
+                    </div>
                     <br />
                     3. Prohibited Use
                     <br />
@@ -97,8 +98,8 @@ export default function TermsCondition({ trigger }: CustomDialogProps) {
                     <br />
                     3. Data Sharing
                     <br />
-                    We do not share your personal data with third parties unless:  
-                    <br /> 
+                    We do not share your personal data with third parties unless:
+                    <br />
                     - You have provided explicit consent.
                     <br />
                     - It is required by law or government authorities.
