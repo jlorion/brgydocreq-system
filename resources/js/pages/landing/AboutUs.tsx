@@ -1,10 +1,10 @@
 import CustomIcon from '@/components/custom/CustomIcon';
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
+import { BarangayOfficials } from '@/data/BarangayOfficials';
 import LoadFBSdk from '@/hooks/LoadFBSdk';
 import MainLayout from '@/layouts/shared/MainLayout';
 import { Head } from '@inertiajs/react';
 import BarangayLogo from '../../../assets/barangay-logo.png';
-import { BarangayOfficials } from '@/data/BarangayOfficials';
 import Mission from '../../../assets/mission.svg';
 import Road from '../../../assets/road.png';
 import Vision from '../../../assets/vision.svg';
@@ -15,16 +15,16 @@ const AboutUs = () => {
     return (
         <>
             <Head title="About us" />
-            <MainLayout className="px-25 py-10">
+            <MainLayout className="px-10 py-10 md:px-25">
                 <header>
                     <h1 className="text-s3 pb-20 text-center text-3xl font-semibold">About Barangay</h1>
                 </header>
 
                 <div className="flex flex-col gap-y-20 text-black">
                     <section className="flex h-auto items-center">
-                        <CustomIcon imgSrc={Road} alt="Road" className="max-h-[500px] min-h-[100px] object-cover" />
-                        <div className="flex flex-col pl-25 text-start">
-                            <h1 className="pb-4 text-2xl font-semibold">Barangay History</h1>
+                        <CustomIcon imgSrc={Road} alt="Road" className="hidden max-h-[500px] min-h-[100px] object-cover lg:block" />
+                        <div className="flex flex-col text-start lg:pl-25">
+                            <h1 className="pb-4 text-center text-2xl font-semibold md:text-start">Barangay History</h1>
                             <article className="text-justify">
                                 Once a forested area inhabited by the Mandaya and Aeta tribes, Balagunan derived its name from the “Balagun” plant, or
                                 rattan, which was abundant in the area. Officially part of the Municipality of Sto. Tomas since 1959, Balagunan has
@@ -46,13 +46,13 @@ const AboutUs = () => {
                     </section>
 
                     <section className="relative flex h-auto items-center justify-between text-black">
-                        <div className="-mx-25 bg-light-yellow">
+                        <div className="bg-light-yellow -mx-25">
                             <div className="flex h-auto flex-col gap-y-10 px-25">
                                 <div className="flex flex-col gap-5 pt-10">
-                                    <div>
+                                    <div className="flex items-center justify-center md:justify-start">
                                         <CustomIcon imgSrc={Mission} alt="mission" className="h-12" />
                                     </div>
-                                    <h1 className="text-start text-2xl font-semibold">Our Mission</h1>
+                                    <h1 className="text-center text-2xl font-semibold md:text-start">Our Mission</h1>
                                     <article className="text-justify">
                                         Enact ordinance on agriculture programs and services geared towards the improvement of the quality of life of
                                         the people; Support Cooperatives to foster unity, promote sustainable livelihood programs and to achieve total
@@ -63,11 +63,11 @@ const AboutUs = () => {
                                         mga lumulupyo;
                                     </article>
                                 </div>
-                                <div className="flex flex-col gap-5 pb-10">
-                                    <div>
+                                <div className="w-full flex-col gap-5 pb-10">
+                                    <div className="flex justify-center md:justify-start">
                                         <CustomIcon imgSrc={Vision} alt="vision" className="h-12" />
                                     </div>
-                                    <h1 className="text-start text-2xl font-semibold">Our Vision</h1>
+                                    <h1 className="pb-3 text-center text-2xl font-semibold md:text-start">Our Vision</h1>
                                     <article className="text-justify font-normal">
                                         With empowered, sincere, and dedicated barangay officials and citizenry, we envision Barangay Balagunan as a
                                         Progressive and Peaceful Community achieving sustainable development.
@@ -84,10 +84,10 @@ const AboutUs = () => {
                         </div>
                     </section>
 
-                    <section className="flex pb-10">
+                    <section className="flex flex-col pb-10 lg:flex-row">
                         {/* Left side */}
-                        <div className="flex flex-col gap-y-7">
-                            <div className="box-border justify-center rounded-sm border border-gray-300 p-4">
+                        <div className="mx-auto flex flex-col gap-y-7">
+                            <div className="box-border flex w-full items-center justify-center rounded-sm border border-gray-300 p-4">
                                 <div
                                     className="fb-page"
                                     data-href="https://www.facebook.com/profile.php?id=61556343104505"
@@ -105,7 +105,7 @@ const AboutUs = () => {
                                 </div>
                             </div>
 
-                            <div className="box-border justify-center rounded-sm border border-gray-300 p-4">
+                            <div className="box-border flex w-full items-center justify-center rounded-sm border border-gray-300 p-4">
                                 <div
                                     className="fb-page"
                                     data-href="https://www.facebook.com/SBOStoTomas"
@@ -123,7 +123,7 @@ const AboutUs = () => {
                                 </div>
                             </div>
 
-                            <div className="box-border justify-center rounded-sm border border-gray-300 p-4">
+                            <div className="box-border flex w-full items-center justify-center rounded-sm border border-gray-300 p-4">
                                 <div
                                     className="fb-page"
                                     data-href="https://www.facebook.com/mpdosantotomas"
@@ -144,7 +144,7 @@ const AboutUs = () => {
                             </div>
                         </div>
                         {/* Right side */}
-                        <div className="flex flex-1 flex-col items-center gap-5 pl-20 text-center">
+                        <div className="flex flex-1 flex-col items-center gap-5 p-2 text-center lg:pl-20">
                             {/* Text here regarding Santo Tomas */}
                             <CustomIcon imgSrc={BarangayLogo} alt="Barangay Logo" />
                             <h1 className="text-3xl font-semibold">Barangay Officials 2023 - 2025</h1>
@@ -152,8 +152,12 @@ const AboutUs = () => {
                                 <TableBody>
                                     {BarangayOfficials.map((official, index) => (
                                         <TableRow key={index}>
-                                            <TableCell className="max-w-60 border-2 text-start">{official.position}</TableCell>
-                                            <TableCell className="max-w-60 border-2 text-start">{official.name}</TableCell>
+                                            <TableCell className="border-2 text-start text-[11px] md:max-w-60 md:text-base">
+                                                {official.position}
+                                            </TableCell>
+                                            <TableCell className="border-2 text-start text-[11px] md:max-w-60 md:text-base">
+                                                {official.name}
+                                            </TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
