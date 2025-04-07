@@ -12,7 +12,7 @@ const AdminLayout = ({ children, className }: AdminLayoutProps) => {
 		<div className='box-border h-full w-full'>
 			<CustomHeader className='px-5' leftNavItems={
 				<> <SidebarTrigger />
-					<h1>Dashboard tentative</h1>
+					<h1>Dashboard</h1>
 				</>}
 			/>
 			<main className={`z-0 flex flex-grow flex-col ${className}`}>

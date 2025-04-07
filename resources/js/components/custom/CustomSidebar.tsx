@@ -9,13 +9,15 @@ import {
     SidebarRail,
 } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
+import CustomIcon from './CustomIcon';
+import { Separator } from '../ui/separator';
 
-interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
+interface CustomSidebarProps extends React.ComponentProps<typeof Sidebar> {
     navItems: NavItem[];
     navTitle?: string;
 }
 
-export function AppSidebar({ navItems, navTitle, ...props }: AppSidebarProps) {
+export function CustomSidebar({ navItems, navTitle, ...props }: CustomSidebarProps) {
     return (
         <Sidebar {...props}>
             <SidebarHeader>
@@ -23,7 +25,7 @@ export function AppSidebar({ navItems, navTitle, ...props }: AppSidebarProps) {
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
                             <div className="flex w-full flex-col items-center justify-center">
-                                <h1 className="text-xl font-bold text-[#237D31]">{navTitle}</h1>
+                                <CustomIcon imgSrc={navTitle} />
                             </div>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
