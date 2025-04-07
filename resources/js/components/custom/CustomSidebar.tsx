@@ -11,6 +11,7 @@ import {
 import { type NavItem } from '@/types';
 import CustomIcon from './CustomIcon';
 import { Separator } from '../ui/separator';
+import { Link } from '@inertiajs/react';
 
 interface CustomSidebarProps extends React.ComponentProps<typeof Sidebar> {
     navItems: NavItem[];
@@ -37,10 +38,10 @@ export function CustomSidebar({ navItems, navTitle, ...props }: CustomSidebarPro
                         {navItems.map((item) => (
                             <SidebarMenuItem key={item.title}>
                                 <SidebarMenuButton asChild>
-                                    <a href={item.href} className="flex items-center gap-5 font-medium">
+                                    <Link prefetch href={item.href} className="flex items-center gap-5 font-medium">
                                         {item.icon && <item.icon className="ml-5 h-5 w-5" />}
                                         {item.title}
-                                    </a>
+                                    </Link>
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
                         ))}
