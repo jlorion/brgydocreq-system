@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Mail;
 // });
 
 
-
 Route::inertia('/', 'landing/Welcome')->name('landing.home');
 Route::inertia('/#about-us', 'landing/about')->name('landing.about-us');
 Route::inertia('/about-us', 'landing/AboutUs')->name('landing.about-us');
@@ -23,12 +22,16 @@ Route::inertia('/contact-us', 'landing/ContactUs')->name('landing.contact-us');
 
 
 
-
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', function () {
-        return Inertia::render('admin/Dashboard');
-    })->name('dashboard');
+    Route::inertia('/dashboard', 'admin/Dashboard')->name('admin.dashboard');
+    Route::inertia('/archives', 'admin/Archives')->name('admin.archives');
+    Route::inertia('/admins', 'admin/Admins')->name('admin.admins');
+    Route::inertia('/documents', 'admin/Documents')->name('admin.documents');
+    Route::inertia('/document-request', 'admin/DocumentRequest')->name('admin.document-request');
+    Route::inertia('/on-process', 'admin/OnProcess')->name('admin.on-process');
+    Route::inertia('/residents', 'admin/Residents')->name('admin.residents');
 });
+
 
 require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';
