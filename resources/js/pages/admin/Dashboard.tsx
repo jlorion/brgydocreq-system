@@ -10,13 +10,13 @@ import { CustomDataCard } from '@/components/custom/CustomDataCard';
 
 
 const navItems = [
-    { icon: Home, title: 'Dashboard', href: '/docs/getting-started' },
-    { icon: Home, title: 'Documents', href: '/docs/data-fetching' },
-    { icon: Home, title: 'On Process', href: '/docs/routing' },
-    { icon: Home, title: 'Archives', href: '/docs/layouts' },
-    { icon: Home, title: 'Residents', href: '/docs/authentication' },
-    { icon: Home, title: 'Admins', href: '/docs/api-routes' },
-    { icon: Home, title: 'Document Request', href: '/docs/deployment' },
+    { icon: Home, title: 'Dashboard', href: route('admin.dashboard') },
+    { icon: Home, title: 'Documents', href: route('admin.documents') },
+    { icon: Home, title: 'On Process', href: route('admin.on-process') },
+    { icon: Home, title: 'Archives', href: route('admin.archives') },
+    { icon: Home, title: 'Residents', href: route('admin.residents') },
+    { icon: Home, title: 'Admins', href: route('admin.admins') },
+    { icon: Home, title: 'Document Request', href: route('admin.document-request') },
 ];
 
 
