@@ -51,7 +51,7 @@ export function CustomHeader({ breadcrumbs = [], mainNavItems = [], rightNavItem
                                 <div className="flex h-full flex-col justify-between text-sm">
                                     <div className="flex flex-col space-y-4">
                                         {mainNavItems.map((item, index) => (
-                                            <Link key={index} href={item.href} className="flex items-center space-x-2 font-medium">
+                                            <Link prefetch key={index} href={item.href} className="flex items-center space-x-2 font-medium">
                                                 {item.icon && <CustomIcon icon={item.icon} className="h-5 w-5" />}
                                                 <span>{item.title}</span>
                                             </Link>
@@ -60,7 +60,7 @@ export function CustomHeader({ breadcrumbs = [], mainNavItems = [], rightNavItem
 
                                     <div className="flex flex-col space-y-4">
                                         {rightNavItems.map((item) => (
-                                            <a
+                                            <Link prefetch
                                                 key={item.title}
                                                 href={item.href}
                                                 target="_blank"
@@ -69,7 +69,7 @@ export function CustomHeader({ breadcrumbs = [], mainNavItems = [], rightNavItem
                                             >
                                                 {item.icon && <CustomIcon icon={item.icon} className="h-5 w-5" />}
                                                 <span>{item.title}</span>
-                                            </a>
+                                            </Link>
                                         ))}
                                     </div>
                                 </div>
@@ -93,6 +93,7 @@ export function CustomHeader({ breadcrumbs = [], mainNavItems = [], rightNavItem
                                 return (
                                     <NavigationMenuItem key={index} className="relative flex h-full items-center">
                                         <Link
+                                            prefetch
                                             href={item.href}
                                             onClick={(event) => {
                                                 if (isScrollable && isWelcomePage && sectionId) {
@@ -132,7 +133,7 @@ export function CustomHeader({ breadcrumbs = [], mainNavItems = [], rightNavItem
 
                         <div className="space-x-2 hidden lg:flex">
                             {rightNavItems.map((item, index) => (
-                                <Link href={item.href} key={index}>
+                                <Link prefetch href={item.href} key={index}>
                                     <Button variant="plain">{item.title}</Button>
                                 </Link>
                             ))}
