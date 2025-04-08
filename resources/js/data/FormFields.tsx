@@ -76,6 +76,7 @@ export const personalDetails = [
         onChange: (value: string) => console.log('Precint:', value),
         errorMessage: 'precint',
     },
+    
 ];
 export const contactDetails = [
     {
@@ -100,6 +101,7 @@ export const contactDetails = [
         onChange: (value: string) => console.log('Phone number:', value),
         errorMessage: 'phone-number',
     },
+
 ];
 
 export const attachments = {

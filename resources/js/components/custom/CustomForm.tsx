@@ -1,16 +1,15 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { DatePicker } from '../ui/date-picker';
-import { Input } from '../ui/input';
 import { Label } from '../ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { Textarea } from '../ui/textarea';
 import InputError from './InputError';
+import CustomSelect from './CustomSelect';
+import { DatePicker } from '../ui/date-picker';
+import { Input } from '../ui/input';
+
 interface CustomFormField {
     id?: string;
     label: string;
     type: string;
-    placeholder?: string;
+    placeholder: string;
     value: string;
     tabIndex?: number;
     autoComplete?: string;
@@ -19,6 +18,7 @@ interface CustomFormField {
     autofocus?: boolean;
     options?: { label: string; value: string }[];
     additionalProps?: Record<string, any>;
+    selectItems?: { value: string; label: string }[];
 }
 
 interface CustomFormProps {
@@ -42,21 +42,20 @@ const CustomForm = ({ fields, className, title }: CustomFormProps) => {
                     />
                 );
             case 'date':
-                return <DatePicker id={field.id} tabIndex={field.tabIndex} {...field.additionalProps} />;
+                return (
+                    <DatePicker
+                        id={field.id}
+                        tabIndex={field.tabIndex}
+                        {...field.additionalProps}
+                    />
+                );
             case 'select':
                 return (
-                    <Select {...field}>
-                        <SelectTrigger id={field.id} className="w-[180px]">
-                            <SelectValue placeholder={field.placeholder || 'Select an option'} />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {field.options?.map((option) => (
-                                <SelectItem key={option.value} value={option.value}>
-                                    {option.label}
-                                </SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
+                    <CustomSelect
+                        placeholder={field.placeholder}
+                        items={field.selectItems || []}
+                        {...field.additionalProps}
+                    />
                 );
             default:
                 return (
@@ -93,3 +92,4 @@ const CustomForm = ({ fields, className, title }: CustomFormProps) => {
 };
 
 export default CustomForm;
+export type { CustomFormField };
