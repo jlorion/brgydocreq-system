@@ -63,11 +63,11 @@ export function CustomDataTable<Data>({ data, columns, filterColumn }: CustomDat
 		pageSize: 10,
 	})
 
-
+	const safeColumns = Array.isArray(columns) ? columns : [];
 
 	const table = useReactTable({
 		data,
-		columns,
+		columns: safeColumns,
 		onSortingChange: setSorting,
 		onColumnFiltersChange: setColumnFilters,
 		getCoreRowModel: getCoreRowModel(),
@@ -86,7 +86,9 @@ export function CustomDataTable<Data>({ data, columns, filterColumn }: CustomDat
 		},
 	})
 
-
+	if (!safeColumns.length) {
+		return <div>No columns defined for the table.</div>;
+	}
 	return (
 		<div className="w-full px-4">
 

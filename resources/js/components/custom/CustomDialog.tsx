@@ -25,7 +25,7 @@ const CustomDialog = ({ title, subtitle, children, trigger, button, width = 'w-5
                     <h1 className={subTitleClassName}>{subtitle}</h1>
                     {children}
                 </div>
-                <DialogFooter>
+                <DialogFooter className='w-full'>
                     {button}
                 </DialogFooter>
             </DialogContent>

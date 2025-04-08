@@ -1,10 +1,12 @@
-import AdminLayout from '@/layouts/admin/AdminLayout'
-import React from 'react'
+
+import AdminLayout from '@/layouts/admin/AdminLayout';
 
 const Admins = () => {
-  return (
-<AdminLayout>niggs</AdminLayout>
-  )
-}
+    return (
+        <AdminLayout>
+           admin
+        </AdminLayout>
+    );
+};
 
-export default Admins
+export default Admins;

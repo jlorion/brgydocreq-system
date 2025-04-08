@@ -1,12 +1,9 @@
-import React, { ReactNode } from 'react';
 import { Label } from '../ui/label';
-import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
-import { DatePicker } from '../ui/date-picker';
 import InputError from './InputError';
-import { useForm } from '@inertiajs/react';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '../ui/select';
 import CustomSelect from './CustomSelect';
+import { DatePicker } from '../ui/date-picker';
+import { Input } from '../ui/input';
 
 interface CustomFormField {
     id?: string;
@@ -19,6 +16,7 @@ interface CustomFormField {
     onChange: (value: string) => void;
     errorMessage?: string;
     autofocus?: boolean;
+    options?: { label: string; value: string }[];
     additionalProps?: Record<string, any>;
     selectItems?: { value: string; label: string }[];
 }
@@ -30,7 +28,6 @@ interface CustomFormProps {
 }
 
 const CustomForm = ({ fields, className, title }: CustomFormProps) => {
-
     const renderField = (field: CustomFormField) => {
         switch (field.type) {
             case 'textarea':
@@ -78,11 +75,13 @@ const CustomForm = ({ fields, className, title }: CustomFormProps) => {
 
     return (
         <form className="flex flex-col" action="">
-            <h1 className='pb-1'>{title}</h1>
+            <h1 className="pb-1">{title}</h1>
             <div className={className}>
                 {fields.map((field, index) => (
-                    <div key={index} className='pb-2'>
-                        <Label htmlFor={field.id} className='text-xs'>{field.label}</Label>
+                    <div key={index} className="pb-2">
+                        <Label htmlFor={field.id} className="text-xs">
+                            {field.label}
+                        </Label>
                         {renderField(field)}
                         <InputError message={undefined} />
                     </div>
