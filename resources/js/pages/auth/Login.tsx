@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import AuthSplitLayout from '@/layouts/auth/AuthSplitLayout';
+import AuthSplitLayout from '@/layouts/shared/AuthSplitLayout';
 import LoginImage from '../../../assets/login-side-image.svg';
 
 type LoginForm = {

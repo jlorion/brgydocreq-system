@@ -8,7 +8,7 @@ import InputError from '@/components/custom/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import AuthSplitLayout from '@/layouts/auth/AuthSplitLayout';
+import AuthSplitLayout from '@/layouts/shared/AuthSplitLayout';
 import ForgotPass from '../../../assets/forgot-password.svg';
 
 export default function ForgotPassword({ status }: { status?: string }) {

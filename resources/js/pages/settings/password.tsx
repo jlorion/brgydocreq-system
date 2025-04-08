@@ -1,6 +1,6 @@
 import InputError from '@/components/custom/input-error';
 import AppLayout from '@/layouts/landing/landing-layout';
-import SettingsLayout from '@/layouts/settings/layout';
+import SettingsLayout from '@/layouts/settings/SettingsLayout';
 import { type BreadcrumbItem } from '@/types';
 import { Transition } from '@headlessui/react';
 import { Head, useForm } from '@inertiajs/react';
