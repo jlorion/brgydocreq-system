@@ -10,6 +10,7 @@ import WebLogo from '../../../assets/web-logo.svg';
 interface AdminLayoutProps {
 	children: React.ReactNode;
 	className?: string;
+	title?: string;
 }
 
 
@@ -24,7 +25,7 @@ const navItems = [
 ];
 
 
-const AdminLayout = ({ children, className }: AdminLayoutProps) => {
+const AdminLayout = ({ children, className, title }: AdminLayoutProps) => {
 	return (
 		<div className='box-border h-full w-full'>
 			<SidebarProvider>
@@ -32,7 +33,7 @@ const AdminLayout = ({ children, className }: AdminLayoutProps) => {
 				<SidebarInset>
 					<CustomHeader className='px-5' leftNavItems={
 						<> <SidebarTrigger />
-							<h1>Dashboard</h1>
+							<h1>{title}</h1>
 						</>}
 					/>
 					<main className={`z-0 flex flex-grow flex-col ${className}`}>
