@@ -21,12 +21,13 @@ import {
 } from "@/components/ui/select"
 
 interface DatePickerProps {
-  value: Date | null
-  onChange: (date: Date | null) => void
+  value?: Date | null
+  onChange?: (date: Date | null) => void
   tabIndex?: number
+  id?: string
 }
 
-export function DatePicker({ value, onChange, tabIndex }: DatePickerProps) {
+export function DatePicker({ value, onChange, tabIndex, id }: DatePickerProps) {
   const date = value
 
   const months = [
@@ -37,12 +38,12 @@ export function DatePicker({ value, onChange, tabIndex }: DatePickerProps) {
 
   const handleMonthChange = (month: string) => {
     const newDate = setMonth(date ?? new Date(), months.indexOf(month))
-    onChange(newDate)
+    onChange?.(newDate)
   }
 
   const handleYearChange = (year: string) => {
     const newDate = setYear(date ?? new Date(), parseInt(year))
-    onChange(newDate)
+    onChange?.(newDate)
   }
 
   return (
@@ -96,12 +97,13 @@ export function DatePicker({ value, onChange, tabIndex }: DatePickerProps) {
         </div>
 
         <Calendar
+          id={id}
           mode="single"
           selected={date || undefined}
-          onSelect={(d) => onChange(d ?? null)}
+          onSelect={(d) => onChange?.(d ?? null)}
           initialFocus
           month={date ?? undefined}
-          onMonthChange={(d) => onChange(d)}
+          onMonthChange={(d) => onChange?.(d)}
         />
       </PopoverContent>
     </Popover>

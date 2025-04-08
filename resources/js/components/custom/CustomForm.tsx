@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { ReactNode } from 'react';
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';
@@ -7,12 +5,14 @@ import { Textarea } from '../ui/textarea';
 import { DatePicker } from '../ui/date-picker';
 import InputError from './InputError';
 import { useForm } from '@inertiajs/react';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '../ui/select';
+import CustomSelect from './CustomSelect';
 
 interface CustomFormField {
     id?: string;
     label: string;
     type: string;
-    placeholder?: string;
+    placeholder: string;
     value: string;
     tabIndex?: number;
     autoComplete?: string;
@@ -20,6 +20,7 @@ interface CustomFormField {
     errorMessage?: string;
     autofocus?: boolean;
     additionalProps?: Record<string, any>;
+    selectItems?: { value: string; label: string }[];
 }
 
 interface CustomFormProps {
@@ -48,6 +49,14 @@ const CustomForm = ({ fields, className, title }: CustomFormProps) => {
                     <DatePicker
                         id={field.id}
                         tabIndex={field.tabIndex}
+                        {...field.additionalProps}
+                    />
+                );
+            case 'select':
+                return (
+                    <CustomSelect
+                        placeholder={field.placeholder}
+                        items={field.selectItems || []}
                         {...field.additionalProps}
                     />
                 );
@@ -84,3 +93,4 @@ const CustomForm = ({ fields, className, title }: CustomFormProps) => {
 };
 
 export default CustomForm;
+export type { CustomFormField };
