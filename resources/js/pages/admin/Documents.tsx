@@ -64,7 +64,7 @@ const renderDocumentForm = () => {
     return (
         <>
             <div className="mt-5">
-                <CustomForm fields={documentDetails} title="Complete details" className="font-base grid grid-cols-3 gap-x-4 pt-5" />
+                <CustomForm fields={documentDetails} title="Complete the details" className="font-base grid grid-cols-3 gap-x-4 pt-5" />
             </div>
             <div className="mt-5">
                 <CustomForm fields={documentImage} className="grid grid-cols-3" />
@@ -77,18 +77,18 @@ const renderDocumentForm = () => {
 };
 
 const renderEditDocumentForm = () => {
-    return(
-    <>
-        <div className="mt-5">
-            <CustomForm fields={editDocumentDetails} title="Complete details" className="font-base grid grid-cols-3 gap-x-4 pt-5" />
-        </div>
-        <div className="mt-5">
-            <CustomForm fields={editDocumentImage} className="grid grid-cols-3" />
-        </div>
-        <div className="mt-5">
-            <CustomForm fields={editDocumentDescription} className="grid grid-cols-1 gap-x-4" />
-        </div>
-    </>
+    return (
+        <>
+            <div className="mt-5">
+                <CustomForm fields={editDocumentDetails} title="Complete the details" className="font-base grid grid-cols-3 gap-x-4 pt-5" />
+            </div>
+            <div className="mt-5">
+                <CustomForm fields={editDocumentImage} className="grid grid-cols-3" />
+            </div>
+            <div className="mt-5">
+                <CustomForm fields={editDocumentDescription} className="grid grid-cols-1 gap-x-4" />
+            </div>
+        </>
     );
 };
 
@@ -109,7 +109,7 @@ export default function Documents() {
                         button={
                             <>
                                 <div className="flex w-full justify-center">
-                                    <Button variant="primary" className="w-2xs">
+                                    <Button variant="primary" className="rounded-none w-2xs">
                                         Add
                                     </Button>
                                 </div>
@@ -136,7 +136,7 @@ export default function Documents() {
                                 <CustomDialog
                                     title="Edit Document"
                                     trigger={
-                                        <Button variant="primary" className="w-[120px]" key={doc.id}>
+                                        <Button variant="primary" className="mt-2 w-[120px] rounded-sm" key={doc.id}>
                                             Edit
                                         </Button>
                                     }
