@@ -192,3 +192,73 @@ export const purposeDetail = [
         },
     },
 ];
+
+export const documentDetails = [
+    {
+        label: 'Document name',
+        id: 'document-name',
+        type: 'text',
+        placeholder: 'Business Permit',
+        value: '',
+        tabIndex: 12,
+        autoComplete: 'document-name',
+        onChange: (value: string) => console.log('Document Name:', value),
+        errorMessage: 'document-name',
+    },
+
+    {
+        label: 'Price',
+        id: 'price',
+        type: 'text',
+        placeholder: '₱ 100.00',
+        value: '',
+        tabIndex: 13,
+        autoComplete: 'price',
+        onChange: (value: string) => console.log('Price:', value),
+        errorMessage: 'price',
+    },
+    {
+        label: 'Status',
+        id: 'status',
+        type: 'select',
+        placeholder: 'Select Status',
+        value: '',
+        tabIndex: 14,
+        autoComplete: 'status',
+        onChange: (value: string) => console.log('Status:', value),
+        errorMessage: 'status',
+        options: [
+            { label: 'Available', value: 'available' },
+            { label: 'Unavailable', value: 'unavailable' },
+        ],
+    },
+];
+export const documentImage = [
+    {
+        label: 'Document Image',
+        id: 'document-image',
+        type: 'file',
+        placeholder: 'Upload Document Image',
+        value: '',
+        tabIndex: 15,
+        autoComplete: 'document-image',
+        onChange: (value: string) => console.log('Document Image:', value),
+        errorMessage: 'document-image',
+    },
+];
+export const documentDescription = [
+    {
+        label: 'Description',
+        id: 'description',
+        type: 'textarea',
+        placeholder: "Verifies a resident's financial...",
+        value: '',
+        tabIndex: 16,
+        autoComplete: 'description',
+        onChange: (value: string) => console.log('Description:', value),
+        errorMessage: 'description',
+        additionalProps: {
+            className: 'h-32',
+        },
+    },
+];

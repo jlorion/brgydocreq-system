@@ -7,7 +7,7 @@ import { Textarea } from '../ui/textarea';
 import { DatePicker } from '../ui/date-picker';
 import InputError from './InputError';
 import { useForm } from '@inertiajs/react';
-
+import {Select} from '../ui/select';
 interface CustomFormField {
     id?: string;
     label: string;
@@ -19,6 +19,7 @@ interface CustomFormField {
     onChange: (value: string) => void;
     errorMessage?: string;
     autofocus?: boolean;
+    options?: { label: string; value: string }[];
     additionalProps?: Record<string, any>;
 }
 
@@ -48,6 +49,17 @@ const CustomForm = ({ fields, className, title }: CustomFormProps) => {
                     <DatePicker
                         id={field.id}
                         tabIndex={field.tabIndex}
+                        {...field.additionalProps}
+                    />
+                );
+            case 'select':
+                return (
+                    <Select
+                        id={field.id}
+                        placeholder={field.placeholder}
+                        value={field.value}
+                        tabIndex={field.tabIndex}
+                        onChange={(value: string) => field.onChange(value)} 
                         {...field.additionalProps}
                     />
                 );
