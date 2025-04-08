@@ -2,7 +2,14 @@ import CustomDialog from '@/components/custom/CustomDialog';
 import CustomForm from '@/components/custom/CustomForm';
 import { Button } from '@/components/ui/button';
 import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
-import { documentDescription, documentDetails, documentImage } from '@/data/FormFields';
+import {
+    documentDescription,
+    documentDetails,
+    documentImage,
+    editDocumentDescription,
+    editDocumentDetails,
+    editDocumentImage,
+} from '@/data/FormFields';
 import AdminLayout from '@/layouts/admin/AdminLayout';
 import AddIcon from '../../../assets/add-icon.png';
 import BarangayCert from '../../../assets/barangay-certificate.png';
@@ -53,17 +60,6 @@ const documents = [
     },
 ];
 
-// const transformedFields = documentDetails.map((field) => {
-//     if (field.options) {
-//         return {
-//             ...field,
-//             options: field.options.map((option) => ({
-//                 label: option.label, // Keep the label
-//                 value: option.value, // Keep the value
-//             })),
-//         };
-//     }
-// });
 const renderDocumentForm = () => {
     return (
         <>
@@ -77,6 +73,22 @@ const renderDocumentForm = () => {
                 <CustomForm fields={documentDescription} className="grid grid-cols-1 gap-x-4" />
             </div>
         </>
+    );
+};
+
+const renderEditDocumentForm = () => {
+    return(
+    <>
+        <div className="mt-5">
+            <CustomForm fields={editDocumentDetails} title="Complete details" className="font-base grid grid-cols-3 gap-x-4 pt-5" />
+        </div>
+        <div className="mt-5">
+            <CustomForm fields={editDocumentImage} className="grid grid-cols-3" />
+        </div>
+        <div className="mt-5">
+            <CustomForm fields={editDocumentDescription} className="grid grid-cols-1 gap-x-4" />
+        </div>
+    </>
     );
 };
 
@@ -96,7 +108,11 @@ export default function Documents() {
                         contentClassName="mt-5"
                         button={
                             <>
-                                <Button variant="primary">Add</Button>
+                                <div className="flex w-full justify-center">
+                                    <Button variant="primary" className="w-2xs">
+                                        Add
+                                    </Button>
+                                </div>
                             </>
                         }
                         children={renderDocumentForm()}
@@ -117,9 +133,25 @@ export default function Documents() {
                                 <p className="text-center text-base">{doc.description}</p>
                             </div>
                             <div className="flex w-full justify-end p-2">
-                                <Button variant="primary" className="w-[120px]" key={doc.id}>
-                                    Edit
-                                </Button>
+                                <CustomDialog
+                                    title="Edit Document"
+                                    trigger={
+                                        <Button variant="primary" className="w-[120px]" key={doc.id}>
+                                            Edit
+                                        </Button>
+                                    }
+                                    contentClassName="mt-5"
+                                    button={
+                                        <>
+                                            <div className="flex w-full justify-center">
+                                                <Button variant="primary" className="w-2xs">
+                                                    Edit
+                                                </Button>
+                                            </div>
+                                        </>
+                                    }
+                                    children={renderEditDocumentForm()}
+                                />
                             </div>
                         </div>
                     ))}
