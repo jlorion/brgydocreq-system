@@ -107,27 +107,41 @@ const ResidentReference = () => {
                             <InputError message={errors.resident_lastname} />
                         </div>
                         <div className="grid gap-2">
+                            <Label htmlFor="suffix">Suffix</Label>
+                            <Input
+                                id="suffix"
+                                type="text"
+                                tabIndex={4}
+                                autoComplete="suffix"
+                                value={data.resident_suffix}
+                                onChange={(e) => setData('resident_suffix', e.target.value)}
+                                placeholder="Sr."
+                            />
+                            <InputError message={errors.resident_suffix} />
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-x-5">
+                        <div className="grid gap-2">
+                            <Label htmlFor="email">Email address</Label>
+                            <Input
+                                id="email"
+                                type="email"
+                                required
+                                tabIndex={5}
+                                autoComplete="email"
+                                value={data.email}
+                                onChange={(e) => setData('email', e.target.value)}
+                                placeholder="email@example.com"
+                            />
+                            <InputError message={errors.email} />
+                        </div>
+                        <div className="grid gap-2">
                             <Label htmlFor="birthdate">Birthdate</Label>
                             <DatePicker tabIndex={4} aria-required value={birthDate} onChange={(date) => {
                                 setBirthDate(date);
                                 setData('resident_birthdate', date ? format(date, 'yyyy-MM-dd') : '');
                             }} />
-
                         </div>
-                    </div>
-                    <div className="grid gap-2">
-                        <Label htmlFor="email">Email address</Label>
-                        <Input
-                            id="email"
-                            type="email"
-                            required
-                            tabIndex={5}
-                            autoComplete="email"
-                            value={data.email}
-                            onChange={(e) => setData('email', e.target.value)}
-                            placeholder="email@example.com"
-                        />
-                        <InputError message={errors.email} />
                     </div>
                     <div className="grid grid-cols-2 gap-x-5">
                         <div className="grid gap-2">

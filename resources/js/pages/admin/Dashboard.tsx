@@ -15,6 +15,7 @@ export default function Dashboard() {
                         <CustomDataCard />
                         <div className="px-4 lg:px-6">
                             <CustomChart />
+
                         </div>
                         <CustomDataTable data={AdminDataSample} />
                     </div>
