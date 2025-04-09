@@ -45,6 +45,7 @@ import { Badge } from "../ui/badge"
 import CustomSheet from "./CustomSheet"
 import { OnProcessFields } from '@/data/OnProcessFields'
 import { Separator } from "@radix-ui/react-select"
+import { formatText } from "@/lib/utils"
 
 
 type CustomDataTableProps<Data> = {
@@ -124,7 +125,7 @@ export function CustomDataTable<Data>({ data, columns, filterColumn, searchPlace
 									checked={column.getIsVisible()}
 									onCheckedChange={(value) => column.toggleVisibility(!!value)}
 								>
-									{column.id}
+									{formatText(column.id)}
 								</DropdownMenuCheckboxItem>
 							))}
 					</DropdownMenuContent>

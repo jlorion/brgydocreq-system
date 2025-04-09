@@ -118,7 +118,7 @@ const columns: ColumnDef<OnProcess>[] = [
 
       return (
         <div className='flex justify-center items-center'>
-          <div className={`rounded w-3/4 py-1 capitalize text-center ${statusCode}`}>
+          <div className={`rounded w-3/5 py-1 capitalize text-center ${statusCode}`}>
             {formatText(status)}
           </div>
         </div>

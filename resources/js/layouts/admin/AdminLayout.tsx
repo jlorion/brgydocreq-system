@@ -16,12 +16,12 @@ interface AdminLayoutProps {
 
 const navItems = [
 	{ icon: Home, title: 'Dashboard', href: route('admin.dashboard') },
-	{ icon: Home, title: 'Documents', href: route('admin.documents') },
+	{ icon: Home, title: 'Document Request', href: route('admin.document-request') },
 	{ icon: Home, title: 'On Process', href: route('admin.on-process') },
 	{ icon: Home, title: 'Archives', href: route('admin.archives') },
+	{ icon: Home, title: 'Documents', href: route('admin.documents') },
 	{ icon: Home, title: 'Residents', href: route('admin.residents') },
 	{ icon: Home, title: 'Admins', href: route('admin.admins') },
-	{ icon: Home, title: 'Document Request', href: route('admin.document-request') },
 ];
 
 
