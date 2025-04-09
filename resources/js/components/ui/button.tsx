@@ -21,10 +21,9 @@ const buttonVariants = cva(
           "border border-input bg-background shadow-xs hover:bg-accent hover:text-accent-foreground",
         secondary:
           "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
+        ghost: "text-foreground hover:text-foreground/80",
         link: "text-s3 hover:underline",
-        search: "border-1 bg-blue-200 rounded-sm hover:bg-blue-300", 
-        empty: ''
+        search: "border-1 bg-blue-200 rounded-sm hover:bg-blue-300",
       },
       size: {
         default: "h-9 rounded-2xl px-5 py-2 has-[>svg]:px-3",

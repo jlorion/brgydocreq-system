@@ -13,7 +13,7 @@ class StatusSeeder extends Seeder
      */
     public function run(): void
     {
-        $statuses = ['Active', 'Inactive', 'Deceased', 'Retired', 'Employed', 'Unemployed'];
+        $statuses = ['Rejected', 'Claimed', 'Active', 'Inactive', 'Under Review', 'Processing', 'For Pickup'];
         foreach ($statuses as $status) {
             Status::create([
                 'status_name' => $status

@@ -13,7 +13,7 @@ import {
 	getSortedRowModel,
 	useReactTable,
 } from "@tanstack/react-table"
-import { ArrowUpDown, CheckCircle2Icon, ChevronDown, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, LoaderIcon } from "lucide-react"
+import { ArrowUpDown, CheckCircle2Icon, ChevronDown, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, LoaderIcon, Search } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -44,15 +44,17 @@ import {
 import { Badge } from "../ui/badge"
 import CustomSheet from "./CustomSheet"
 import { OnProcessFields } from '@/data/OnProcessFields'
+import { Separator } from "@radix-ui/react-select"
 
 
 type CustomDataTableProps<Data> = {
 	data: Data[];
 	columns: ColumnDef<Data, any>[]
 	filterColumn: string
+	searchPlaceHolder: string
 }
 
-export function CustomDataTable<Data>({ data, columns, filterColumn }: CustomDataTableProps<Data>) {
+export function CustomDataTable<Data>({ data, columns, filterColumn, searchPlaceHolder }: CustomDataTableProps<Data>) {
 
 	const [sorting, setSorting] = React.useState<SortingState>([])
 	const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
@@ -77,6 +79,7 @@ export function CustomDataTable<Data>({ data, columns, filterColumn }: CustomDat
 		onColumnVisibilityChange: setColumnVisibility,
 		onRowSelectionChange: setRowSelection,
 		onPaginationChange: setPagination,
+
 		state: {
 			sorting,
 			columnFilters,
@@ -94,8 +97,10 @@ export function CustomDataTable<Data>({ data, columns, filterColumn }: CustomDat
 
 			{/* Search button and Adjustable columns */}
 			<div className="flex items-center py-4">
+
 				<Input
-					placeholder="Filter emails..."
+
+					placeholder={searchPlaceHolder}
 					value={(table.getColumn(filterColumn)?.getFilterValue() as string) ?? ""}
 					onChange={(event) =>
 						table.getColumn(filterColumn)?.setFilterValue(event.target.value)
@@ -129,11 +134,11 @@ export function CustomDataTable<Data>({ data, columns, filterColumn }: CustomDat
 			{/* Table */}
 			<div className="rounded-md border">
 				<Table>
-					<TableHeader>
+					<TableHeader className="h-13  bg-[#F1F4F9]">
 						{table.getHeaderGroups().map((headerGroup) => (
-							<TableRow key={headerGroup.id}>
+							<TableRow key={headerGroup.id} className="hover:bg-transparent ">
 								{headerGroup.headers.map((header) => (
-									<TableHead key={header.id}>
+									<TableHead key={header.id} className="">
 										{header.isPlaceholder
 											? null
 											: flexRender(header.column.columnDef.header, header.getContext())}
