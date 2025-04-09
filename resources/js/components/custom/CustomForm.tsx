@@ -4,6 +4,8 @@ import InputError from './InputError';
 import CustomSelect from './CustomSelect';
 import { DatePicker } from '../ui/date-picker';
 import { Input } from '../ui/input';
+import TextLink from './CustomTextLink';
+import { attachments } from '@/data/FormFields';
 
 interface CustomFormField {
     id?: string;
@@ -13,12 +15,13 @@ interface CustomFormField {
     value?: string;
     tabIndex?: number;
     autoComplete?: string;
-    onChange?: (value: string) => void;
+    onChange: (value: string) => void;
     errorMessage?: string;
     autofocus?: boolean;
     options?: { label: string; value: string }[];
     additionalProps?: Record<string, any>;
     selectItems?: { value: string; label: string }[];
+    disabled?: boolean;
 }
 
 
@@ -38,6 +41,7 @@ const CustomForm = ({ fields, className, title }: CustomFormProps) => {
                         placeholder={field.placeholder}
                         value={field.value}
                         tabIndex={field.tabIndex}
+                        disabled={field.disabled}
                         onChange={(e) => field.onChange(e.target.value)}
                         {...field.additionalProps}
                     />
@@ -58,6 +62,12 @@ const CustomForm = ({ fields, className, title }: CustomFormProps) => {
                         {...field.additionalProps}
                     />
                 );
+            case 'link':
+                return (
+                    <TextLink className='text-sm'>
+                        {field.value}
+                    </TextLink >
+                );
 
             default:
                 return (
@@ -66,9 +76,12 @@ const CustomForm = ({ fields, className, title }: CustomFormProps) => {
                         placeholder={field.placeholder}
                         value={field.value}
                         autoFocus={field.autofocus}
+                        disabled={field.disabled}
                         autoComplete={field.autoComplete}
                         tabIndex={field.tabIndex}
                         onChange={(e) => field.onChange(e.target.value)}
+                        className={`
+                            disabled:text-black disabled:border-shamrock-green`}
                         {...field.additionalProps}
                     />
                 );

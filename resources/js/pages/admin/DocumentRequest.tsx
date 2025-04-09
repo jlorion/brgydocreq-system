@@ -1,10 +1,147 @@
+import { CustomDataTable } from '@/components/custom/CustomDataTable'
+import CustomSheet from '@/components/custom/CustomSheet'
+import { Button } from '@/components/ui/button'
 import AdminLayout from '@/layouts/admin/AdminLayout'
-import React from 'react'
+import { formatText } from '@/lib/utils'
+import { ColumnDef } from '@tanstack/react-table'
+import { ArrowUpDown } from 'lucide-react'
+import { DocumentRequestFields } from '@/data/DocumentRequestFields'
+import { PurposeofRequestField } from '@/data/DocumentRequestFields'
+import { ViewAttachment } from '@/data/DocumentRequestFields'
+import CustomForm from '@/components/custom/CustomForm'
 
-const DocumentRequest = () => {
+
+type DocumentRequeset = {
+  id: string
+  applicant_name: string
+  status: "claimed" | "processing" | "rejected" | "under_review" | "for_pickup"
+  date_requested: string
+  type_of_document: string
+}
+
+const data: DocumentRequeset[] = [
+  {
+    id: "1",
+    applicant_name: "Mark John",
+    status: "claimed",
+    date_requested: "April 30, 2024",
+    type_of_document: "Barangay Clearance",
+  },
+  {
+    id: "2",
+    applicant_name: "Mark Jefferson",
+    status: "processing",
+    date_requested: "April 30, 2024",
+    type_of_document: "Barangay Certificate",
+  },
+  {
+    id: "3",
+    applicant_name: "Mark Luis",
+    status: "rejected",
+    date_requested: "April 30, 2024",
+    type_of_document: "Certificate Indigency",
+  },
+  {
+    id: "4",
+    applicant_name: "Mark Doe",
+    status: "for_pickup",
+    date_requested: "April 30, 2024",
+    type_of_document: "Purok Clearance",
+  },
+  {
+    id: "5",
+    applicant_name: "Mark Dayne",
+    status: "under_review",
+    date_requested: "April 30, 2024",
+    type_of_document: "Income Certificate",
+  },
+  {
+    id: "6",
+    applicant_name: "Mark Don",
+    status: "claimed",
+    date_requested: "April 30, 2024",
+    type_of_document: "Low Income Certificate",
+  },
+]
+
+
+const columns: ColumnDef<DocumentRequeset>[] = [
+  {
+    accessorKey: "applicant_name",
+    header: () => <div className='text-center'>Applicant's Name</div>,
+    cell: ({ row }) => (
+      <div className="capitalize text-center">{row.getValue("applicant_name")}</div>
+    ),
+  },
+  {
+    accessorKey: "type_of_document",
+    header: ({ column }) => {
+      return (
+        <div className='text-center'>
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Type of Document
+            <ArrowUpDown />
+          </Button>
+        </div>
+      )
+    },
+    cell: ({ row }) => (
+      <div className="capitalize text-center">{row.getValue("type_of_document")}</div>
+    ),
+  },
+  {
+    accessorKey: "date_requested",
+    header: () => <div className='text-center'>Date Requested</div>,
+    cell: ({ row }) => (
+      <div className="capitalize text-center">{row.getValue("date_requested")}</div>
+    ),
+  },
+  {
+    accessorKey: "status",
+    header: () => <div className='text-center'>Status</div>,
+    cell: ({ row }) => {
+      const status = row.getValue("status") as string;
+
+      const statusColors: Record<string, string> = {
+        rejected: "bg-red-200 text-red-700",
+        claimed: "bg-green-200 text-green-700",
+        under_review: "bg-yellow-200 text-yellow-700",
+        processing: "bg-blue-200 text-blue-700",
+        for_pickup: "bg-violet-200 text-violet-700",
+      };
+
+      const statusCode = statusColors[status] || "bg-gray-400 text-gray-600";
+
+      return (
+        <div className='flex justify-center items-center'>
+          <div className={`rounded w-3/5 py-1 capitalize text-center ${statusCode}`}>
+            {formatText(status)}
+          </div>
+        </div>
+      );
+    },
+  },
+
+]
+
+const DocumentRequeset = () => {
   return (
-<AdminLayout>niggs</AdminLayout>
+    <AdminLayout className='p-5 ' title='Document Request'>
+      <CustomDataTable columns={columns} data={data} filterColumn='applicant_name' searchPlaceHolder="Search applicant's name" renderSheet={(trigger, row) => (
+        <CustomSheet trigger={trigger} firstButton='Approve' firstButtonVariant='approve' secondButton='Reject' secondButtonVariant='reject' statusTitle='Under Review'
+          form={
+            <>
+              <CustomForm fields={DocumentRequestFields} className="grid grid-cols-2 gap-2" />
+              <CustomForm fields={PurposeofRequestField} className="grid grid-cols-1 pt-2" />
+              <CustomForm fields={ViewAttachment} className="flex justify-center pt-2" />
+            </>
+          } />
+      )} />
+    </AdminLayout>
   )
 }
 
-export default DocumentRequest
+export default DocumentRequeset

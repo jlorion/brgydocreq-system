@@ -2,7 +2,7 @@ import React from 'react'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "../ui/select"
 
 interface CustomSelectProps {
-	placeholder: string;
+	placeholder?: string;
 	items: { value: string, label: string }[];
 }
 
