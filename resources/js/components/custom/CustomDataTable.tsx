@@ -13,10 +13,9 @@ import {
 	getSortedRowModel,
 	useReactTable,
 } from "@tanstack/react-table"
-import { ArrowUpDown, CheckCircle2Icon, ChevronDown, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, LoaderIcon, Search } from "lucide-react"
+import { ArrowUpDown, CheckCircle2Icon, ChevronDown, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, LoaderIcon, Search, SearchIcon } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
 import {
 	DropdownMenu,
 	DropdownMenuCheckboxItem,
@@ -41,10 +40,6 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table"
-import { Badge } from "../ui/badge"
-import CustomSheet from "./CustomSheet"
-import { OnProcessFields } from '@/data/OnProcessFields'
-import { Separator } from "@radix-ui/react-select"
 import { formatText } from "@/lib/utils"
 
 
@@ -53,9 +48,10 @@ type CustomDataTableProps<Data> = {
 	columns: ColumnDef<Data, any>[]
 	filterColumn: string
 	searchPlaceHolder: string
+	renderSheet: (trigger: React.ReactNode, row: any) => React.ReactNode
 }
 
-export function CustomDataTable<Data>({ data, columns, filterColumn, searchPlaceHolder }: CustomDataTableProps<Data>) {
+export function CustomDataTable<Data>({ data, columns, filterColumn, searchPlaceHolder, renderSheet }: CustomDataTableProps<Data>) {
 
 	const [sorting, setSorting] = React.useState<SortingState>([])
 	const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
@@ -95,22 +91,20 @@ export function CustomDataTable<Data>({ data, columns, filterColumn, searchPlace
 	}
 	return (
 		<div className="w-full px-4">
-
 			{/* Search button and Adjustable columns */}
-			<div className="flex items-center py-4">
-
+			<div className="flex items-center pb-6">
 				<Input
-
 					placeholder={searchPlaceHolder}
 					value={(table.getColumn(filterColumn)?.getFilterValue() as string) ?? ""}
 					onChange={(event) =>
 						table.getColumn(filterColumn)?.setFilterValue(event.target.value)
 					}
-					className="max-w-sm"
+					className="max-w-sm shadow-sm py-5"
+					icon={<SearchIcon className="h-5" />}
 				/>
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
-						<Button variant="outline" className="ml-auto">
+						<Button variant="outline" className="ml-auto shadow-sm py-5">
 							Columns <ChevronDown />
 						</Button>
 					</DropdownMenuTrigger>
@@ -133,9 +127,9 @@ export function CustomDataTable<Data>({ data, columns, filterColumn, searchPlace
 			</div>
 
 			{/* Table */}
-			<div className="rounded-md border">
+			<div className="rounded-md border shadow-sm">
 				<Table>
-					<TableHeader className="h-13  bg-[#F1F4F9]">
+					<TableHeader className="h-14 bg-[#F1F4F9]">
 						{table.getHeaderGroups().map((headerGroup) => (
 							<TableRow key={headerGroup.id} className="hover:bg-transparent ">
 								{headerGroup.headers.map((header) => (
@@ -151,18 +145,20 @@ export function CustomDataTable<Data>({ data, columns, filterColumn, searchPlace
 					<TableBody>
 						{table.getRowModel().rows?.length ? (
 							table.getRowModel().rows.map((row) => (
-								<CustomSheet key={row.id} trigger={<TableRow
-									key={row.id}
-									data-state={row.getIsSelected() && "selected"}
-									className="cursor-pointer h-12"
-								>
-									{row.getVisibleCells().map((cell) => (
-										<TableCell key={cell.id} className="h-12">
-											{flexRender(cell.column.columnDef.cell, cell.getContext())}
-										</TableCell>
-									))}
-								</TableRow>} title="Fuck" formFields={OnProcessFields} />
-
+								renderSheet(
+									<TableRow
+										key={row.id}
+										data-state={row.getIsSelected() && "selected"}
+										className="cursor-pointer"
+									>
+										{row.getVisibleCells().map((cell) => (
+											<TableCell key={cell.id} className="h-14">
+												{flexRender(cell.column.columnDef.cell, cell.getContext())}
+											</TableCell>
+										))}
+									</TableRow>,
+									row
+								)
 							))
 						) : (
 							<TableRow>

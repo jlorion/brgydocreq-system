@@ -1,10 +1,9 @@
 import { CustomHeader } from '@/components/custom/CustomHeader';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import React from 'react'
-import { Home } from 'lucide-react';
+import { Archive, ArchiveIcon, ArchiveRestore, FileArchive, FileArchiveIcon, FolderArchive, Home, LoaderIcon, LoaderPinwheel } from 'lucide-react';
 import { CustomSidebar } from '@/components/custom/CustomSidebar';
 import WebLogo from '../../../assets/web-logo.svg';
-
 
 
 interface AdminLayoutProps {
@@ -17,7 +16,7 @@ interface AdminLayoutProps {
 const navItems = [
 	{ icon: Home, title: 'Dashboard', href: route('admin.dashboard') },
 	{ icon: Home, title: 'Document Request', href: route('admin.document-request') },
-	{ icon: Home, title: 'On Process', href: route('admin.on-process') },
+	{ icon: LoaderIcon, title: 'On Process', href: route('admin.on-process') },
 	{ icon: Home, title: 'Archives', href: route('admin.archives') },
 	{ icon: Home, title: 'Documents', href: route('admin.documents') },
 	{ icon: Home, title: 'Residents', href: route('admin.residents') },
@@ -33,11 +32,12 @@ const AdminLayout = ({ children, className, title }: AdminLayoutProps) => {
 				<SidebarInset>
 					<CustomHeader className='px-5' leftNavItems={
 						<> <SidebarTrigger />
-							<h1>{title}</h1>
+							<h1 className='font-semibold text-lg '>{title}</h1>
 						</>}
 					/>
 					<main className={`z-0 flex flex-grow flex-col ${className}`}>
 						{children}
+
 					</main>
 				</SidebarInset>
 			</SidebarProvider>

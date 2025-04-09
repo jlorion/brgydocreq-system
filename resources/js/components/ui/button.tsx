@@ -9,10 +9,10 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default:
-          "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90",
-        destructive:
-          "bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40",
+        approve:
+          "border border-blue-600 text-blue-600 shadow-xs hover:bg-blue-600 hover:text-white",
+        reject:
+          "border border-red-600 text-red-600 shadow-xs hover:bg-red-600 hover:text-white",
         plain:
           "text-s3  hover:bg-s3 hover:text-white",
         primary:
@@ -26,15 +26,15 @@ const buttonVariants = cva(
         search: "border-1 bg-blue-200 rounded-sm hover:bg-blue-300",
       },
       size: {
-        default: "h-9 rounded-2xl px-5 py-2 has-[>svg]:px-3",
+        primary: "h-9 rounded-2xl px-5 py-2 has-[>svg]:px-3",
         sm: "h-8 rounded-2xl px-3  py-2 has-[>svg]:px-2.5",
         lg: "h-10 rounded-2xl px-6  py-3 has-[>svg]:px-4",
         icon: "size-9",
       },
     },
     defaultVariants: {
-      variant: "default",
-      size: "default",
+      variant: "primary",
+      size: "primary",
     },
   }
 )

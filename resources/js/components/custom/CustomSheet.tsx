@@ -7,41 +7,43 @@ import CustomForm from './CustomForm';
 
 interface CustomSheetProps {
     image?: string;
-    button?: React.ReactNode;
+    firstButton: React.ReactNode;
+    secondButton?: React.ReactNode;
+    firstButtonClassName?: string
+    secondButtonClassName?: string;
+    firstButtonVariant?: "search" | "link" | "approve" | "reject" | "plain" | "primary" | "outline" | "secondary" | "ghost"
+    secondButtonVariant?: "search" | "link" | "approve" | "reject" | "plain" | "primary" | "outline" | "secondary" | "ghost"
     trigger: React.ReactNode;
     className?: string;
-    title?: string;
-    formFields: CustomFormField[];
+    plainTitle?: string;
+    statusTitle?: string;
+    form: React.ReactNode;
+
 }
 
-const CustomSheet = ({ image, trigger, title, formFields }: CustomSheetProps) => {
+
+const CustomSheet = ({ trigger, plainTitle, statusTitle, form, firstButton, secondButton, firstButtonClassName, secondButtonClassName, firstButtonVariant, secondButtonVariant }: CustomSheetProps) => {
     return (
         <Sheet>
             <SheetTrigger asChild>{trigger}</SheetTrigger>
             <SheetContent side="right" className="flex w-120 flex-col p-4">
-                <SheetHeader className="gap-1">
-                    <SheetTitle>{title}</SheetTitle>
-                    <div className="flex w-full justify-center">
-                        <div
-                            style={{
-                                backgroundImage: `url(${image})`,
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center',
-                                height: '150px',
-                                width: '150px',
-                                borderRadius: '100%',
-                            }}
-                        ></div>
-                    </div>
+                <SheetHeader className="flex justify-center items-center">
+                    {
+                        statusTitle ? (
+                            <SheetTitle className='text-2xl p-4 w-1/2 text-center bg-yellow-200 text-yellow-600 rounded-md mt-3'>{statusTitle}</SheetTitle>
+                        ) : (
+                            <SheetTitle className='text-2xl'>{plainTitle}</SheetTitle>
+                        )
+                    }
                 </SheetHeader>
-                <div className="flex flex-1 flex-col gap-4 overflow-y-auto py-4 text-sm">
-                    <CustomForm fields={formFields} />
+                <div className="flex flex-col overflow-y-auto">
+                    {form}
                 </div>
-                <SheetFooter className="mt-auto flex gap-2 sm:flex-col sm:space-x-0">
-                    <Button className="w-full">Save</Button>
+                <SheetFooter className="mt-auto grid grid-cols-2 gap-3 sm:flex-col sm:space-x-0">
+                    <Button className={firstButtonClassName} variant={firstButtonVariant}>{firstButton}</Button>
                     <SheetClose asChild>
-                        <Button variant="outline" className="w-full">
-                            Close
+                        <Button className={secondButtonClassName} variant={secondButtonVariant}>
+                            {secondButton}
                         </Button>
                     </SheetClose>
                 </SheetFooter>

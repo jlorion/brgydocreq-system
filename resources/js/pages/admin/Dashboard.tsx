@@ -5,6 +5,11 @@ import { CustomDataCard } from '@/components/custom/CustomDataCard';
 import { Button } from '@/components/ui/button';
 import { ArrowUpDown } from 'lucide-react';
 import { ColumnDef } from '@tanstack/react-table';
+import CustomSheet from '@/components/custom/CustomSheet';
+import CustomForm from '@/components/custom/CustomForm';
+import { DocumentRequestFields } from '@/data/DocumentRequestFields'
+import { PurposeofRequestField } from '@/data/DocumentRequestFields'
+import { ViewAttachment } from '@/data/DocumentRequestFields'
 
 export default function Dashboard() {
 
@@ -133,8 +138,16 @@ export default function Dashboard() {
                             <CustomChart />
 
                         </div>
-                        <CustomDataTable columns={columns} data={data} filterColumn='status' />
-
+                        <CustomDataTable columns={columns} data={data} filterColumn='applicant_name' searchPlaceHolder="Search applicant's name" renderSheet={(trigger, row) => (
+                            <CustomSheet trigger={trigger} firstButton='Approve' firstButtonVariant='approve' secondButton='Reject' secondButtonVariant='reject' statusTitle='Under Review'
+                                form={
+                                    <>
+                                        <CustomForm fields={DocumentRequestFields} className="grid grid-cols-2 gap-2" />
+                                        <CustomForm fields={PurposeofRequestField} className="grid grid-cols-1 pt-2" />
+                                        <CustomForm fields={ViewAttachment} className="flex justify-center pt-2" />
+                                    </>
+                                } />
+                        )} />
                     </div>
                 </div>
             </div>

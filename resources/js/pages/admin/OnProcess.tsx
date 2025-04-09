@@ -4,6 +4,11 @@ import AdminLayout from '@/layouts/admin/AdminLayout'
 import { formatText } from '@/lib/utils'
 import { ColumnDef } from '@tanstack/react-table'
 import { ArrowUpDown } from 'lucide-react'
+import { DocumentRequestFields } from '@/data/DocumentRequestFields'
+import { PurposeofRequestField } from '@/data/DocumentRequestFields'
+import { ViewAttachment } from '@/data/DocumentRequestFields'
+import CustomSheet from '@/components/custom/CustomSheet'
+import CustomForm from '@/components/custom/CustomForm'
 
 type OnProcess = {
   id: string
@@ -101,6 +106,13 @@ const columns: ColumnDef<OnProcess>[] = [
     ),
   },
   {
+    accessorKey: "date_processed",
+    header: () => <div className='text-center'>Date Processed</div>,
+    cell: ({ row }) => (
+      <div className="capitalize text-center">{row.getValue("date_processed")}</div>
+    ),
+  },
+  {
     accessorKey: "status",
     header: () => <div className='text-center'>Status</div>,
     cell: ({ row }) => {
@@ -125,20 +137,21 @@ const columns: ColumnDef<OnProcess>[] = [
       );
     },
   },
-  {
-    accessorKey: "date_processed",
-    header: () => <div className='text-center'>Date Processed</div>,
-    cell: ({ row }) => (
-      <div className="capitalize text-center">{row.getValue("date_processed")}</div>
-    ),
-  },
-
 ]
 
 const OnProcess = () => {
   return (
     <AdminLayout className='p-5' title='On Process'>
-      <CustomDataTable columns={columns} data={data} filterColumn='applicant_name' searchPlaceHolder="Search applicant's name" />
+      <CustomDataTable columns={columns} data={data} filterColumn='applicant_name' searchPlaceHolder="Search applicant's name" renderSheet={(trigger, row) => (
+        <CustomSheet trigger={trigger} firstButton='Approve' firstButtonVariant='approve' secondButton='Reject' secondButtonVariant='reject' statusTitle='Under Review'
+          form={
+            <>
+              <CustomForm fields={DocumentRequestFields} className="grid grid-cols-2 gap-2" />
+              <CustomForm fields={PurposeofRequestField} className="grid grid-cols-1 pt-2" />
+              <CustomForm fields={ViewAttachment} className="flex justify-center pt-2" />
+            </>
+          } />
+      )} />
     </AdminLayout>
   )
 }
