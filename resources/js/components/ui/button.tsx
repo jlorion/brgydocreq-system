@@ -24,6 +24,7 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-s3 hover:underline",
         search: "border-1 bg-blue-200 rounded-sm hover:bg-blue-300", 
+        empty: ''
       },
       size: {
         default: "h-9 rounded-2xl px-5 py-2 has-[>svg]:px-3",

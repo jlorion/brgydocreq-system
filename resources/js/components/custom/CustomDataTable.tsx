@@ -151,7 +151,7 @@ export function CustomDataTable<Data>({ data, columns, filterColumn }: CustomDat
 									className="cursor-pointer h-12"
 								>
 									{row.getVisibleCells().map((cell) => (
-										<TableCell key={cell.id}>
+										<TableCell key={cell.id} className="h-12">
 											{flexRender(cell.column.columnDef.cell, cell.getContext())}
 										</TableCell>
 									))}
