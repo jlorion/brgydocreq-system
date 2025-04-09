@@ -1,7 +1,7 @@
 import { CustomHeader } from '@/components/custom/CustomHeader';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import React from 'react'
-import { Archive, ArchiveIcon, ArchiveRestore, FileArchive, FileArchiveIcon, FolderArchive, Home, LoaderIcon, LoaderPinwheel } from 'lucide-react';
+import { LoaderIcon, LayoutDashboard, FileUser, Archive, FileText, Users, Shield } from 'lucide-react';
 import { CustomSidebar } from '@/components/custom/CustomSidebar';
 import WebLogo from '../../../assets/web-logo.svg';
 
@@ -14,13 +14,13 @@ interface AdminLayoutProps {
 
 
 const navItems = [
-	{ icon: Home, title: 'Dashboard', href: route('admin.dashboard') },
-	{ icon: Home, title: 'Document Request', href: route('admin.document-request') },
+	{ icon: LayoutDashboard, title: 'Dashboard', href: route('admin.dashboard') },
+	{ icon: FileUser, title: 'Document Request', href: route('admin.document-request') },
 	{ icon: LoaderIcon, title: 'On Process', href: route('admin.on-process') },
-	{ icon: Home, title: 'Archives', href: route('admin.archives') },
-	{ icon: Home, title: 'Documents', href: route('admin.documents') },
-	{ icon: Home, title: 'Residents', href: route('admin.residents') },
-	{ icon: Home, title: 'Admins', href: route('admin.admins') },
+	{ icon: Archive, title: 'Archives', href: route('admin.archives') },
+	{ icon: FileText, title: 'Documents', href: route('admin.documents') },
+	{ icon: Users, title: 'Residents', href: route('admin.residents') },
+	{ icon: Shield, title: 'Admins', href: route('admin.admins') },
 ];
 
 
