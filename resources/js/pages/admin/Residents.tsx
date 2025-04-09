@@ -77,7 +77,6 @@ const renderAddResidentForm = () => {
 const Residents = () => {
     return (
         <AdminLayout>
-            {' '}
             <div className="h-full w-full p-2 pt-5">
                 <div className="flex flex-row items-center justify-between pr-2">
                     <div className="flex max-w-lg min-w-md flex-row items-center gap-2 rounded-lg border-1 pl-5">

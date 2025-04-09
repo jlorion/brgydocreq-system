@@ -109,7 +109,7 @@ export default function Documents() {
                         button={
                             <>
                                 <div className="flex w-full justify-center">
-                                    <Button variant="primary" className="rounded-none w-2xs">
+                                    <Button variant="primary" className="w-2xs rounded-sm">
                                         Add
                                     </Button>
                                 </div>

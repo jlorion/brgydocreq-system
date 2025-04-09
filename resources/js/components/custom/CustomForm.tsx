@@ -7,19 +7,20 @@ import { Input } from '../ui/input';
 
 interface CustomFormField {
     id?: string;
-    label: string;
-    type: string;
-    placeholder: string;
-    value: string;
+    label?: string;
+    type?: string;
+    placeholder?: string;
+    value?: string;
     tabIndex?: number;
     autoComplete?: string;
-    onChange: (value: string) => void;
+    onChange?: (value: string) => void;
     errorMessage?: string;
     autofocus?: boolean;
     options?: { label: string; value: string }[];
     additionalProps?: Record<string, any>;
     selectItems?: { value: string; label: string }[];
 }
+
 
 interface CustomFormProps {
     fields: CustomFormField[];
@@ -57,6 +58,7 @@ const CustomForm = ({ fields, className, title }: CustomFormProps) => {
                         {...field.additionalProps}
                     />
                 );
+
             default:
                 return (
                     <Input
