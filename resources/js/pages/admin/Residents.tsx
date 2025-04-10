@@ -1,10 +1,12 @@
 import CustomDialog from '@/components/custom/CustomDialog';
 import CustomForm from '@/components/custom/CustomForm';
+import CustomSheet from '@/components/custom/CustomSheet';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { addResidentDemographic, addResidentName, residentAddress } from '@/data/FormFields';
+import { AddressData, DemographicData, PersonalData } from '@/data/ResidentData';
 import AdminLayout from '@/layouts/admin/AdminLayout';
 import Search from '../../../assets/search.png';
 import SearchTableCell from '../../../assets/SearchBlue.png';
@@ -15,7 +17,7 @@ const ResidentsData = [
         residentName: 'Reignear Magallanes',
         residentGender: 'Male',
         residentBirthday: '1998-01-01',
-        residentStatus: 'Active',
+        residentStatus: 'Inactive',
     },
     {
         id: 2,
@@ -58,21 +60,6 @@ const ResidentsData = [
         residentStatus: 'Active',
     },
 ];
-const renderAddResidentForm = () => {
-    return (
-        <>
-            <div className="mt-5">
-                <CustomForm fields={addResidentName} className="grid grid-cols-4 gap-x-4" />
-            </div>
-            <div className="mt-5">
-                <CustomForm fields={addResidentDemographic} className="grid grid-cols-4 gap-x-4" />
-            </div>
-            <div className="mt-5">
-                <CustomForm fields={residentAddress} className="grid grid-cols-4 gap-x-4" />
-            </div>
-        </>
-    );
-};
 
 const Residents = () => {
     return (
@@ -99,7 +86,19 @@ const Residents = () => {
                                     </Button>
                                 </>
                             }
-                            children={renderAddResidentForm()}
+                            children={
+                                <>
+                                    <div className="mt-5">
+                                        <CustomForm fields={addResidentName} className="grid grid-cols-4 gap-x-4" />
+                                    </div>
+                                    <div className="mt-5">
+                                        <CustomForm fields={addResidentDemographic} className="grid grid-cols-4 gap-x-4" />
+                                    </div>
+                                    <div className="mt-5">
+                                        <CustomForm fields={residentAddress} className="grid grid-cols-4 gap-x-4" />
+                                    </div>
+                                </>
+                            }
                         />
                     </div>
                 </div>
@@ -124,14 +123,29 @@ const Residents = () => {
                                     <TableCell>{resident.residentBirthday}</TableCell>
                                     <TableCell>{resident.residentStatus}</TableCell>
                                     <TableCell>
-                                        <Button variant="search" className="rounded-sm" key={resident.id}>
-                                            <>
-                                                <div className="flex flex-row items-center justify-center gap-2">
-                                                    <img src={SearchTableCell} alt="Search Icon" />
-                                                    <p className="text-blue-500">View</p>
-                                                </div>
-                                            </>
-                                        </Button>
+                                        <CustomSheet
+                                            trigger={
+                                                <Button variant="search" className="rounded-sm" key={resident.id}>
+                                                    <>
+                                                        <div className="flex flex-row items-center justify-center gap-2">
+                                                            <img src={SearchTableCell} alt="Search Icon" />
+                                                            <p className="text-blue-500">View</p>
+                                                        </div>
+                                                    </>
+                                                </Button>
+                                            }
+                                            firstButton="Set Inactive"
+                                            firstButtonVariant="reject"
+                                            secondButton="Ambot say ibutang ari"
+                                            statusTitle={resident.residentStatus}
+                                            form={
+                                                <>
+                                                    <CustomForm fields={PersonalData} className="grid grid-cols-2 gap-x-4" />
+                                                    <CustomForm fields={DemographicData} className="grid grid-cols-2 gap-x-4" />
+                                                    <CustomForm fields={AddressData} className="grid grid-cols-2 gap-x-4" />
+                                                </>
+                                            }
+                                        />
                                     </TableCell>
                                 </TableRow>
                             ))}
