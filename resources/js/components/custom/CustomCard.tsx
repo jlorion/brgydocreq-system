@@ -1,15 +1,21 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import CustomIcon from './CustomIcon';
+import { LucideIcon, User } from 'lucide-react';
 
 interface CustomCardProps {
-    image: string;
+    image?: string;
     title: string;
-    content: string;
-    alt: string;
+    content?: string;
+    alt?: string;
     onClick?: () => void;
+    description?: string;
+    statistics?: string;
+    increasePercentage?: string;
+    decreasePercentage?: string;
+    icon?: React.ReactNode
 }
 
-const CustomCard = ({ image, title, content, alt, onClick }: CustomCardProps) => {
+export const CustomClickableCard = ({ image, title, content, alt, onClick }: CustomCardProps) => {
     return (
         <>
             <button
@@ -30,4 +36,34 @@ const CustomCard = ({ image, title, content, alt, onClick }: CustomCardProps) =>
     );
 };
 
-export default CustomCard;
+export const CustomDisplayCard = ({ title, description, statistics, increasePercentage, decreasePercentage, icon }: CustomCardProps) => {
+    return (
+        <div className="*:data-[slot=card]:border *:data-[slot=card]:rounded-md *:data-[slot=card]:shadow-sm *:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card">
+            <Card className="@container/card">
+                <CardHeader className='flex flex-row justify-between items-center'>
+                    <div className='flex flex-col gap-3'>
+                        <CardDescription>{description}</CardDescription>
+                        <CardTitle className="@[250px]/card:text-3xl text-2xl font-semibold tabular-nums">
+                            {title}
+                        </CardTitle>
+                    </div>
+                    <div>
+                        {icon}
+                    </div>
+                </CardHeader>
+                <CardFooter className="flex items-start gap-1 text-sm">
+                    <span>
+                        {increasePercentage && <span className="text-teal-500">{increasePercentage}</span>}
+                        {decreasePercentage && <span className="text-red-500">{decreasePercentage}</span>}
+                    </span>
+                    <div className="text-muted-foreground">
+                        {statistics}
+                    </div>
+                </CardFooter>
+            </Card>
+        </div>
+    )
+}
+
+
+

@@ -26,22 +26,21 @@ export function CustomSidebar({ navItems, navTitle, ...props }: CustomSidebarPro
     const { url } = usePage<UrlProps>().props;
 
     console.log('usePage().props:', usePage().props);
+
     return (
         <Sidebar {...props}>
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>
-                        <SidebarMenuButton size="lg" asChild>
-                            <div className="flex w-full flex-col items-center justify-center">
-                                <CustomIcon imgSrc={navTitle} className='disabled:cursor-pointer disabled:hover' />
-                            </div>
-                        </SidebarMenuButton>
+                        <div className="flex w-full flex-col py-2 items-center justify-center">
+                            <CustomIcon imgSrc={navTitle} />
+                        </div>
                     </SidebarMenuItem>
                 </SidebarMenu>
             </SidebarHeader>
             <SidebarContent>
                 <SidebarGroup>
-                    <SidebarMenu className="gap-5">
+                    <SidebarMenu>
                         {navItems.map((item) => {
                             const isActive = url === item.href;
                             console.log('isActive:', isActive);

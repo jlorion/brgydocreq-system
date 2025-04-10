@@ -1,143 +1,166 @@
 import AdminLayout from '@/layouts/admin/AdminLayout';
 import { CustomDataTable } from '@/components/custom/CustomDataTable';
 import { CustomChart } from '@/components/custom/CustomChart';
-import { CustomDataCard } from '@/components/custom/CustomDataCard';
 import { Button } from '@/components/ui/button';
-import { ArrowUpDown } from 'lucide-react';
+import { Archive, ArrowUpDown, ChartSpline, FileText, Users } from 'lucide-react';
 import { ColumnDef } from '@tanstack/react-table';
 import CustomSheet from '@/components/custom/CustomSheet';
 import CustomForm from '@/components/custom/CustomForm';
 import { DocumentRequestFields } from '@/data/DocumentRequestFields'
 import { PurposeofRequestField } from '@/data/DocumentRequestFields'
 import { ViewAttachment } from '@/data/DocumentRequestFields'
+import { CustomDisplayCard } from '@/components/custom/CustomCard';
+import CustomIcon from '@/components/custom/CustomIcon';
 
 export default function Dashboard() {
 
     type Payment = {
         id: string
-        amount: number
-        status: "pending" | "processing" | "success" | "failed"
-        email: string
+        metric: string
+        count: string
+        last_updated: string
+        updated_by: string
+        change: string
     }
 
     const data: Payment[] = [
         {
             id: "8",
-            amount: 316,
-            status: "success",
-            email: "ken99@example.com",
+            metric: "Registered Residents",
+            count: "11, 564",
+            last_updated: "Apr 12, 2023 @ 12:00 PM",
+            updated_by: "System",
+            change: "+20",
         },
         {
-            id: "9",
-            amount: 242,
-            status: "success",
-            email: "Abe45@example.com",
+            id: "8",
+            metric: "Active Administrators",
+            count: "5",
+            last_updated: "Nov 12, 2023 @ 12:00 PM",
+            updated_by: "Super Admin",
+            change: "+1",
         },
         {
             id: "10",
-            amount: 837,
-            status: "processing",
-            email: "Monserrat44@example.com",
+            metric: "Barangay Officers",
+            count: "15",
+            last_updated: "Dec 12, 2023 @ 12:00 PM",
+            updated_by: "Admin",
+            change: "0",
+        },
+        {
+            id: "10",
+            metric: "Avaible Documents",
+            count: "11",
+            last_updated: "Dec 12, 2023 @ 12:00 PM",
+            updated_by: "Admin",
+            change: "0",
+        },
+        {
+            id: "10",
+            metric: "Claimed Documents",
+            count: "500",
+            last_updated: "Aug 12, 2023 @ 12:00 PM",
+            updated_by: "System",
+            change: "9",
         },
         {
             id: "11",
-            amount: 874,
-            status: "success",
-            email: "Silas22@example.com",
-        },
-        {
-            id: "1",
-            amount: 721,
-            status: "failed",
-            email: "carmella@example.com",
-        },
-        {
-            id: "2",
-            amount: 721,
-            status: "failed",
-            email: "carmella@example.com",
-        },
-        {
-            id: "3",
-            amount: 721,
-            status: "failed",
-            email: "carmella@example.com",
-        },
-        {
-            id: "4",
-            amount: 721,
-            status: "failed",
-            email: "carmella@example.com",
-        },
-        {
-            id: "5",
-            amount: 721,
-            status: "failed",
-            email: "carmella@example.com",
-        },
-        {
-            id: "6",
-            amount: 721,
-            status: "failed",
-            email: "carmella@example.com",
-        },
-        {
-            id: "7",
-            amount: 721,
-            status: "failed",
-            email: "carmella@example.com",
+            metric: "Rejected Documents",
+            count: "300",
+            last_updated: "Aug 12, 2023 @ 12:00 PM",
+            updated_by: "System",
+            change: "+3",
         },
     ]
 
 
     const columns: ColumnDef<Payment>[] = [
         {
-            accessorKey: "status",
-            header: "Status",
+            accessorKey: "metric",
+            header: () => <div className='text-center'>Metric</div>,
             cell: ({ row }) => (
-                <div className="capitalize">{row.getValue("status")}</div>
+                <div className="capitalize text-center">{row.getValue("metric")}</div>
             ),
         },
         {
-            accessorKey: "email",
+            accessorKey: "count",
             header: ({ column }) => {
                 return (
-                    <Button
-                        variant="ghost"
-                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    >
-                        Email
-                        <ArrowUpDown />
-                    </Button>
+                    <div className='text-center'>
+                        <Button
+                            variant="ghost"
+                            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                        >
+                            Count
+                            <ArrowUpDown />
+                        </Button>
+                    </div>
                 )
             },
-            cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
-            filterFn: "includesString",
+            cell: ({ row }) => (
+                <div className="capitalize text-center">{row.getValue("count")}</div>
+            ),
         },
         {
-            accessorKey: "amount",
-            header: () => <div className="text-right">Amount</div>,
-            cell: ({ row }) => {
-                const amount = parseFloat(row.getValue("amount"))
-                const formatted = new Intl.NumberFormat("en-US", {
-                    style: "currency",
-                    currency: "USD",
-                }).format(amount)
-                return <div className="text-right font-medium">{formatted}</div>
-            },
+            accessorKey: "last_updated",
+            header: () => <div className='text-center'>Last Updated</div>,
+            cell: ({ row }) => (
+                <div className="capitalize text-center">{row.getValue("last_updated")}</div>
+            ),
         },
+        {
+            accessorKey: "change",
+            header: () => <div className='text-center'>Change</div>,
+            cell: ({ row }) => (
+                <div className="capitalize text-center">{row.getValue("change")}</div>
+            ),
+        },
+        {
+            accessorKey: "updated_by",
+            header: () => <div className='text-center'>Updated By</div>,
+            cell: ({ row }) => (
+                <div className="capitalize text-center">{row.getValue("updated_by")}</div>
+            ),
+        },
+
 
     ]
     return (
         <AdminLayout className='p-5' title='Dashboard'>
             <div className="flex flex-1 flex-col">
                 <div className="@container/main flex flex-1 flex-col gap-2">
-                    <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-                        <CustomDataCard />
-                        <div className="px-4 lg:px-6">
-                            <CustomChart />
+                    <div className="flex flex-col gap-y-9">
+                        <div className='@xl/main:grid-cols-2 @5xl/main:grid-cols-4 @5xl/main:gap-5 grid grid-cols-1 lg:px-4'>
+                            <CustomDisplayCard title='8,689' description='Total Users' increasePercentage='83%' statistics='of total resident population'
+                                icon={
+                                    <div className='bg-violet-200 p-4 rounded-2xl'>
+                                        <CustomIcon icon={Users} className='text-violet-700' />
+                                    </div>
+                                } />
 
+                            <CustomDisplayCard title='10,293' description='Total Request' increasePercentage='1.3%' statistics='Up from past week'
+                                icon={
+                                    <div className='bg-amber-100 p-4 rounded-2xl'>
+                                        <CustomIcon icon={FileText} className='text-amber-500' />
+                                    </div>
+                                } />
+
+                            <CustomDisplayCard title='₱ 5,989' description='Total Revenue' decreasePercentage='4.3%' statistics='Down from yesterday'
+                                icon={
+                                    <div className='bg-green-200 p-4 rounded-2xl'>
+                                        <CustomIcon icon={ChartSpline} className='text-green-600' />
+                                    </div>
+                                } />
+
+                            <CustomDisplayCard title='9,542' description='Total Archives' increasePercentage='1.8%' statistics='Up from yesterday'
+                                icon={
+                                    <div className='bg-orange-200 p-4 rounded-2xl'>
+                                        <CustomIcon icon={Archive} className='text-orange-500' />
+                                    </div>
+                                } />
                         </div>
+
                         <CustomDataTable columns={columns} data={data} filterColumn='applicant_name' searchPlaceHolder="Search applicant's name" renderSheet={(trigger, row) => (
                             <CustomSheet trigger={trigger} firstButton='Approve' firstButtonVariant='approve' secondButton='Reject' secondButtonVariant='reject' statusTitle='Under Review'
                                 form={
