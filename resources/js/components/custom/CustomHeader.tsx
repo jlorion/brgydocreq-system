@@ -10,7 +10,7 @@ import { UseHeaderScroll } from '@/hooks/UseHeaderScroll';
 import { cn } from '@/lib/utils';
 import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { Menu } from 'lucide-react';
+import { Bell, ChevronDown, FileUser, Menu } from 'lucide-react';
 import { UserMenuContent } from './user-menu-content';
 import React from 'react';
 
@@ -114,21 +114,33 @@ export function CustomHeader({ breadcrumbs = [], mainNavItems = [], rightNavItem
 
                 <div className="ml-auto flex items-center">
                     {auth.user ? (
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" className="size-10 rounded-full p-1">
-                                    <Avatar className="size-8 overflow-hidden rounded-full">
-                                        <AvatarImage src={auth.user.avatar} alt={auth.user.username} />
-                                        <AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
-                                            {getInitials(auth.user.username)}
-                                        </AvatarFallback>
-                                    </Avatar>
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent className="w-56" align="end">
-                                <UserMenuContent user={auth.user} />
-                            </DropdownMenuContent>
-                        </DropdownMenu>
+                        <>
+                            <div className="ml-auto flex items-center gap-x-6">
+                                <Bell className="h-8 cursor-pointer hover:text-s3" />
+                                <span className='bg-red-600 text-white rounded-2xl px-[7px] py-[2px] text-xs absolute mb-6 ml-3 cursor-pointer'>3</span>
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                        <Button variant="ghost" className="flex items-center gap-3">
+                                            <Avatar className="size-8 overflow-hidden rounded-full">
+                                                <AvatarImage src={auth.user.avatar} alt={auth.user.username} />
+                                                <AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
+                                                    {getInitials(auth.user.username)}
+                                                </AvatarFallback>
+                                            </Avatar>
+                                            <div className="flex flex-col items-start gap-1 text-sm">
+                                                {auth.user.username}
+                                                <span className="text-xs">Super Admin</span>
+                                            </div>
+                                            <ChevronDown className="h-4 w-4" />
+                                        </Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent className="w-56" align="end">
+                                        <UserMenuContent user={auth.user} />
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                            </div>
+
+                        </>
                     ) : (
 
                         <div className="space-x-2 hidden lg:flex">

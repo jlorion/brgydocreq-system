@@ -17,15 +17,10 @@ interface CustomSidebarProps extends React.ComponentProps<typeof Sidebar> {
     navTitle?: string;
 }
 
-type UrlProps = {
-    url: string;
-}
 
 
 export function CustomSidebar({ navItems, navTitle, ...props }: CustomSidebarProps) {
-    const { url } = usePage<UrlProps>().props;
-
-    console.log('usePage().props:', usePage().props);
+    const { url } = usePage()
 
     return (
         <Sidebar {...props}>
@@ -42,13 +37,13 @@ export function CustomSidebar({ navItems, navTitle, ...props }: CustomSidebarPro
                 <SidebarGroup>
                     <SidebarMenu>
                         {navItems.map((item) => {
-                            const isActive = url === item.href;
-                            console.log('isActive:', isActive);
+                            const relativePathStart = item.href.indexOf('/', 8);
+                            const isActive = item.href.startsWith(url, relativePathStart);
 
                             return (
                                 <SidebarMenuItem key={item.title}>
                                     <SidebarMenuButton asChild isActive={isActive}>
-                                        <Link prefetch href={item.href} className="flex items-center gap-5 font-medium">
+                                        <Link prefetch href={item.href} className='flex items-center gap-5 font-medium'>
                                             {item.icon && <item.icon className="ml-5 h-5 w-5" />}
                                             {item.title}
                                         </Link>

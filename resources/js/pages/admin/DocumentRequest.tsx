@@ -14,7 +14,7 @@ import CustomForm from '@/components/custom/CustomForm'
 type DocumentRequeset = {
   id: string
   applicant_name: string
-  status: "claimed" | "processing" | "rejected" | "under_review" | "for_pickup"
+  status: "under_review"
   date_requested: string
   type_of_document: string
 }
@@ -23,28 +23,28 @@ const data: DocumentRequeset[] = [
   {
     id: "1",
     applicant_name: "Mark John",
-    status: "claimed",
+    status: "under_review",
     date_requested: "April 30, 2024",
     type_of_document: "Barangay Clearance",
   },
   {
     id: "2",
     applicant_name: "Mark Jefferson",
-    status: "processing",
+    status: "under_review",
     date_requested: "April 30, 2024",
     type_of_document: "Barangay Certificate",
   },
   {
     id: "3",
     applicant_name: "Mark Luis",
-    status: "rejected",
+    status: "under_review",
     date_requested: "April 30, 2024",
     type_of_document: "Certificate Indigency",
   },
   {
     id: "4",
     applicant_name: "Mark Doe",
-    status: "for_pickup",
+    status: "under_review",
     date_requested: "April 30, 2024",
     type_of_document: "Purok Clearance",
   },
@@ -58,7 +58,7 @@ const data: DocumentRequeset[] = [
   {
     id: "6",
     applicant_name: "Mark Don",
-    status: "claimed",
+    status: "under_review",
     date_requested: "April 30, 2024",
     type_of_document: "Low Income Certificate",
   },

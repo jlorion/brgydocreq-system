@@ -129,7 +129,7 @@ const columns: ColumnDef<Archives>[] = [
 const Archives = () => {
   return (
     <AdminLayout className='p-5' title='Archives'>
-      <CustomDataTable columns={columns} data={data} filterColumn='applicant_name' searchPlaceHolder="Search applicant's name" renderSheet={(trigger, row) => (
+      <CustomDataTable columns={columns} data={data} filterColumn='admin_name' searchPlaceHolder="Search administrator's name" renderSheet={(trigger, row) => (
         <CustomSheet trigger={trigger} firstButton='Approve' firstButtonVariant='approve' secondButton='Reject' secondButtonVariant='reject' statusTitle='Under Review'
           form={
             <>

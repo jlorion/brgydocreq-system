@@ -95,7 +95,7 @@ const columns: ColumnDef<OnProcess>[] = [
       )
     },
     cell: ({ row }) => (
-      <div className="capitalize text-center">{row.getValue("applicant_name")}</div>
+      <div className="capitalize text-center">{row.getValue("type_of_document")}</div>
     ),
   },
   {
