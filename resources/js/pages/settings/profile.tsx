@@ -5,12 +5,11 @@ import { FormEventHandler } from 'react';
 
 import DeleteUser from '@/components/custom/delete-user';
 import HeadingSmall from '@/components/custom/heading-small';
-import InputError from '@/components/custom/input-error';
+import InputError from '@/components/custom/InputError';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import AppLayout from '@/layouts/landing/landing-layout';
-import SettingsLayout from '@/layouts/settings/SettingsLayout';
+import SettingsLayout from '@/layouts/shared/SettingsLayout';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -28,8 +27,8 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
     const { auth } = usePage<SharedData>().props;
 
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm<Required<ProfileForm>>({
-        name: auth.user.name,
-        email: auth.user.email,
+        name: auth.user.resident_firstname,
+        email: auth.user.username,
     });
 
     const submit: FormEventHandler = (e) => {
@@ -41,7 +40,8 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
     };
 
     return (
-        <AppLayout breadcrumbs={breadcrumbs}>
+        <>
+
             <Head title="Profile settings" />
 
             <SettingsLayout>
@@ -122,6 +122,6 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
 
                 <DeleteUser />
             </SettingsLayout>
-        </AppLayout>
+        </>
     );
 }

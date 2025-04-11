@@ -33,6 +33,7 @@ export interface SharedData {
 export interface User {
     id: number;
     username: string;
+    resident_firstname: string;
     email: string;
     avatar?: string;
     email_verified_at: string | null;

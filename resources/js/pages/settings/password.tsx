@@ -1,6 +1,5 @@
-import InputError from '@/components/custom/input-error';
-import AppLayout from '@/layouts/landing/landing-layout';
-import SettingsLayout from '@/layouts/settings/SettingsLayout';
+import InputError from '@/components/custom/InputError';
+import SettingsLayout from '@/layouts/shared/SettingsLayout';
 import { type BreadcrumbItem } from '@/types';
 import { Transition } from '@headlessui/react';
 import { Head, useForm } from '@inertiajs/react';
@@ -49,7 +48,7 @@ export default function Password() {
     };
 
     return (
-        <AppLayout breadcrumbs={breadcrumbs}>
+        <>
             <Head title="Profile settings" />
 
             <SettingsLayout>
@@ -123,6 +122,6 @@ export default function Password() {
                     </form>
                 </div>
             </SettingsLayout>
-        </AppLayout>
+        </>
     );
 }

@@ -1,5 +1,5 @@
 import { UserInfo } from '@/components/custom/UserInfo';
-import { UserMenuContent } from '@/components/custom/user-menu-content';
+import { UserMenuContent } from '@/components/custom/CustomMenuContent';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar';
 import { useIsMobile } from '@/hooks/use-mobile';

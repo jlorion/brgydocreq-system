@@ -11,7 +11,7 @@ import { cn } from '@/lib/utils';
 import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { Bell, ChevronDown, FileUser, Menu } from 'lucide-react';
-import { UserMenuContent } from './user-menu-content';
+import { CustomMenuContent } from './CustomMenuContent';
 import React from 'react';
 
 interface CustomHeaderProps {
@@ -120,7 +120,7 @@ export function CustomHeader({ breadcrumbs = [], mainNavItems = [], rightNavItem
                                 <span className='bg-red-600 text-white rounded-2xl px-[7px] py-[2px] text-xs absolute mb-6 ml-3 cursor-pointer'>3</span>
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
-                                        <Button variant="ghost" className="flex items-center gap-3">
+                                        <Button variant="ghost" className="flex items-center">
                                             <Avatar className="size-8 overflow-hidden rounded-full">
                                                 <AvatarImage src={auth.user.avatar} alt={auth.user.username} />
                                                 <AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
@@ -135,7 +135,7 @@ export function CustomHeader({ breadcrumbs = [], mainNavItems = [], rightNavItem
                                         </Button>
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent className="w-56" align="end">
-                                        <UserMenuContent user={auth.user} />
+                                        <CustomMenuContent user={auth.user} />
                                     </DropdownMenuContent>
                                 </DropdownMenu>
                             </div>
