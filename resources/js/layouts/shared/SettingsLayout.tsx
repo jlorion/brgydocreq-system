@@ -1,68 +1,64 @@
-import Heading from '@/components/custom/heading';
+import { CustomSidebar } from '@/components/custom/CustomSidebar';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { cn } from '@/lib/utils';
 import { type NavItem } from '@/types';
-import { Link } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import { type PropsWithChildren } from 'react';
+import { CircleUser, KeyRound, SunMoon } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import HeadingSmall from '@/components/custom/heading-small';
 
 const sidebarNavItems: NavItem[] = [
     {
         title: 'Profile',
         href: '/settings/profile',
-        icon: null,
+        icon: CircleUser,
     },
     {
         title: 'Password',
         href: '/settings/password',
-        icon: null,
+        icon: KeyRound,
     },
     {
         title: 'Appearance',
         href: '/settings/appearance',
-        icon: null,
+        icon: SunMoon,
     },
 ];
 
-export default function SettingsLayout({ children }: PropsWithChildren) {
-    // When server-side rendering, we only render the layout on the client...
-    if (typeof window === 'undefined') {
-        return null;
-    }
+const temp =
+    <div>
+        <Avatar className="size-30">
+            <AvatarImage src="/images/avatars/1.png" alt="Avatar" />
+            <AvatarFallback>Profile</AvatarFallback>
+        </Avatar>
+    </div>
 
-    const currentPath = window.location.pathname;
+interface SettingsLayoutProps {
+    children: React.ReactNode;
+    title: string;
+}
+
+export default function SettingsLayout({ children, title }: SettingsLayoutProps) {
 
     return (
-        <div className="px-4 py-6">
-            <Heading title="Settings" description="Manage your profile and account settings" />
+        <SidebarProvider>
+            <CustomSidebar navItems={sidebarNavItems} navTitle={temp} />
+            <SidebarInset>
+                <main className="flex flex-col p-9">
+                    <div className='py-3 pl-5 text-white bg-linear-to-r from-cyan-500 to-blue-500 rounded-t-md '>
+                        <h2 className='text-lg'>
+                            {title}
+                        </h2>
+                    </div>
+                    <div className='border p-5 rounded-b-md shadow-sm'>
+                        <section className="max-w-xl space-y-12">{children}</section>
+                    </div>
+                </main>
+            </SidebarInset>
+        </SidebarProvider>
 
-            <div className="flex flex-col space-y-8 lg:flex-row lg:space-y-0 lg:space-x-12">
-                <aside className="w-full max-w-xl lg:w-48">
-                    <nav className="flex flex-col space-y-1 space-x-0">
-                        {sidebarNavItems.map((item) => (
-                            <Button
-                                key={item.href}
-                                size="sm"
-                                variant="ghost"
-                                asChild
-                                className={cn('w-full justify-start', {
-                                    'bg-muted': currentPath === item.href,
-                                })}
-                            >
-                                <Link href={item.href} prefetch>
-                                    {item.title}
-                                </Link>
-                            </Button>
-                        ))}
-                    </nav>
-                </aside>
-
-                <Separator className="my-6 md:hidden" />
-
-                <div className="flex-1 md:max-w-2xl">
-                    <section className="max-w-xl space-y-12">{children}</section>
-                </div>
-            </div>
-        </div>
-    );
+    )
 }

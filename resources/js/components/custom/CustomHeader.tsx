@@ -115,12 +115,12 @@ export function CustomHeader({ breadcrumbs = [], mainNavItems = [], rightNavItem
                 <div className="ml-auto flex items-center">
                     {auth.user ? (
                         <>
-                            <div className="ml-auto flex items-center gap-x-6">
+                            <div className="ml-auto flex items-center gap-x-10">
                                 <Bell className="h-8 cursor-pointer hover:text-s3" />
                                 <span className='bg-red-600 text-white rounded-2xl px-[7px] py-[2px] text-xs absolute mb-6 ml-3 cursor-pointer'>3</span>
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
-                                        <Button variant="ghost" className="flex items-center">
+                                        <Button variant="ghost" className="flex items-center gap-x-5">
                                             <Avatar className="size-8 overflow-hidden rounded-full">
                                                 <AvatarImage src={auth.user.avatar} alt={auth.user.username} />
                                                 <AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">

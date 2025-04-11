@@ -14,7 +14,7 @@ import { Link, usePage } from '@inertiajs/react';
 
 interface CustomSidebarProps extends React.ComponentProps<typeof Sidebar> {
     navItems: NavItem[];
-    navTitle?: string;
+    navTitle?: React.ReactNode;
 }
 
 
@@ -28,7 +28,7 @@ export function CustomSidebar({ navItems, navTitle, ...props }: CustomSidebarPro
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <div className="flex w-full flex-col py-2 items-center justify-center">
-                            <CustomIcon imgSrc={navTitle} />
+                            {navTitle}
                         </div>
                     </SidebarMenuItem>
                 </SidebarMenu>
