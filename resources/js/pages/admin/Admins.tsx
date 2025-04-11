@@ -1,14 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import CustomDialog from '@/components/custom/CustomDialog';
-import { Button } from '@/components/ui/button';
 import CustomAdminTable from '@/components/custom/CustomAdminTable';
+import CustomDialog from '@/components/custom/CustomDialog';
+import CustomForm from '@/components/custom/CustomForm';
 import CustomSheet from '@/components/custom/CustomSheet';
+import { Button } from '@/components/ui/button';
+import { adminDemographicData, adminElectedData, adminPersonalData } from '@/data/ViewAdminData';
 import AdminLayout from '@/layouts/admin/AdminLayout';
 import Gester from '../../../assets/gester.png';
 import Mark from '../../../assets/mark.png';
 import Reignear from '../../../assets/reignear.png';
-import CustomForm from '@/components/custom/CustomForm';
-import { AdminFormFields } from '@/data/AdminFormFields';
+
 const adminData = [
     {
         id: 1,
@@ -88,7 +89,6 @@ const adminRequestData = [
 //     );
 // }
 
-
 const Admins = () => {
     return (
         <AdminLayout>
@@ -131,14 +131,22 @@ const Admins = () => {
                                     trigger={
                                         <Button
                                             className="w-20 rounded-sm border-1 border-blue-400 text-blue-400"
-                                            variant="empty"
+                                            variant="plain"
                                             onClick={() => admin.id}
                                         >
                                             View
                                         </Button>
                                     }
-                                    image={admin.image}
-                                    formFields={AdminFormFields}
+                                    firstButton="Remove admin"
+                                    firstButtonVariant="reject"
+                                    plainTitle="Admin Details"
+                                    form={
+                                        <>
+                                            <CustomForm fields={adminPersonalData} className="grid grid-cols-2 gap-x-4" />
+                                            <CustomForm fields={adminDemographicData} className="grid grid-cols-2 gap-x-4" />
+                                            <CustomForm fields={adminElectedData} className="grid grid-cols-2 gap-x-4" />
+                                        </>
+                                    }
                                 />
                             </div>
                         </div>
