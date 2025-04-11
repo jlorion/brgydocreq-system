@@ -9,7 +9,7 @@ interface CustomDialogProps {
     trigger: React.ReactNode;
     width?: string;
     height?: string;
-    contentClassName?: string
+    contentClassName?: string       
     subTitleClassName?: string
 }
 
