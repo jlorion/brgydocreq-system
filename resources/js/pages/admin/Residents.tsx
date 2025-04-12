@@ -1,23 +1,31 @@
+import { CustomDataTable } from '@/components/custom/CustomDataTable';
 import CustomDialog from '@/components/custom/CustomDialog';
 import CustomForm from '@/components/custom/CustomForm';
 import CustomSheet from '@/components/custom/CustomSheet';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { addResidentDemographic, addResidentName, residentAddress } from '@/data/FormFields';
 import { AddressData, DemographicData, PersonalData } from '@/data/ResidentData';
 import AdminLayout from '@/layouts/admin/AdminLayout';
-import Search from '../../../assets/search.png';
-import SearchTableCell from '../../../assets/SearchBlue.png';
-const ResidentsData = [
+import { formatText } from '@/lib/utils';
+import { ColumnDef } from '@tanstack/react-table';
+
+type Resident = {
+    id: number;
+    precinctId: string;
+    residentName: string;
+    residentGender: string;
+    residentBirthday: string;
+    residentStatus: 'active' | 'inactive';
+};
+
+const ResidentsData: Resident[] = [
     {
         id: 1,
         precinctId: 'INV001',
         residentName: 'Reignear Magallanes',
         residentGender: 'Male',
         residentBirthday: '1998-01-01',
-        residentStatus: 'Inactive',
+        residentStatus: 'inactive',
     },
     {
         id: 2,
@@ -25,7 +33,7 @@ const ResidentsData = [
         residentName: 'Gester Lorica',
         residentGender: 'Male',
         residentBirthday: '1892-01-01',
-        residentStatus: 'Active',
+        residentStatus: 'inactive',
     },
     {
         id: 3,
@@ -33,7 +41,7 @@ const ResidentsData = [
         residentName: 'Mark Jefferson Saldana',
         residentGender: 'Male',
         residentBirthday: '1789-01-01',
-        residentStatus: 'Active',
+        residentStatus: 'active',
     },
     {
         id: 4,
@@ -41,7 +49,7 @@ const ResidentsData = [
         residentName: 'Mark Jefferson Saldana',
         residentGender: 'Male',
         residentBirthday: '1789-01-01',
-        residentStatus: 'Active',
+        residentStatus: 'active',
     },
     {
         id: 5,
@@ -49,7 +57,7 @@ const ResidentsData = [
         residentName: 'Mark Jefferson Saldana',
         residentGender: 'Male',
         residentBirthday: '1789-01-01',
-        residentStatus: 'Active',
+        residentStatus: 'inactive',
     },
     {
         id: 6,
@@ -57,7 +65,47 @@ const ResidentsData = [
         residentName: 'Mark Jefferson Saldana',
         residentGender: 'Male',
         residentBirthday: '1789-01-01',
-        residentStatus: 'Active',
+        residentStatus: 'active',
+    },
+];
+
+const columns: ColumnDef<Resident>[] = [
+    {
+        accessorKey: 'precinctId',
+        header: () => <div className="text-center">Precint ID</div>,
+        cell: ({ row }) => <div className="text-center capitalize">{row.getValue('precinctId')}</div>,
+    },
+    {
+        accessorKey: 'residentName',
+        header: () => <div className="text-center">Resident Name</div>,
+        cell: ({ row }) => <div className="text-center capitalize">{row.getValue('residentName')}</div>,
+    },
+    {
+        accessorKey: 'residentGender',
+        header: () => <div className="text-center">Gender</div>,
+        cell: ({ row }) => <div className="text-center capitalize">{row.getValue('residentGender')}</div>,
+    },
+    {
+        accessorKey: 'residentBirthday',
+        header: () => <div className="text-center">Birthday</div>,
+        cell: ({ row }) => <div className="text-center capitalize">{row.getValue('residentBirthday')}</div>,
+    },
+    {
+        accessorKey: 'residentStatus',
+        header: () => <div className="text-center">Status</div>,
+        cell: ({ row }) => {
+            const status = row.getValue('residentStatus') as string;
+            const statusColors: Record<string, string> = {
+                active: 'bg-blue-200 text-blue-700',
+                inactive: 'bg-red-200 text-red-700',
+            };
+            const statusCode = statusColors[status] || 'bg-gray-400 text-gray-600';
+            return (
+                <div className="flex items-center justify-center">
+                    <div className={`w-3/5 rounded py-1 text-center capitalize ${statusCode}`}>{formatText(status)}</div>
+                </div>
+            );
+        },
     },
 ];
 
@@ -65,103 +113,70 @@ const Residents = () => {
     return (
         <AdminLayout>
             <div className="h-full w-full p-2 pt-5">
-                <div className="flex flex-row items-center justify-between pr-2">
-                    <div className="flex max-w-lg min-w-md flex-row items-center gap-2 rounded-lg border-1 pl-5">
-                        <img src={Search} alt="" className="h-5 w-5" />
-                        <Input placeholder="Search" className="border-none"></Input>
-                    </div>
-                    <div>
-                        <CustomDialog
-                            title="Add resident"
-                            trigger={
-                                <Button className="rounded-sm" variant="primary">
-                                    Add Resident
-                                </Button>
-                            }
-                            contentClassName="mt-5"
-                            button={
-                                <>
-                                    <Button variant="primary" className="w-56">
-                                        Add
+                <div className="flex flex-col items-center justify-between pr-2">
+                    <CustomDataTable
+                        columns={columns}
+                        data={ResidentsData}
+                        filterColumn="residentName"
+                        searchPlaceHolder="Search resident's name"
+                        renderSheet={(trigger, row) => {
+                            const status = row.getValue('residentStatus') as string;
+                            const statusColors: Record<string, string> = {
+                                active: 'bg-blue-200 text-blue-700',
+                                inactive: 'bg-red-200 text-red-700',
+                            };
+                            const statusCode = statusColors[status] || 'bg-gray-400 text-gray-600';
+                            const statusTitle = <div className={`rounded px-2 py-1 text-center capitalize ${statusCode}`}>{formatText(status)}</div>;
+                            return (
+                                <CustomSheet
+                                    trigger={trigger}
+                                    firstButton="Set Inactive"
+                                    firstButtonVariant="reject"
+                                    secondButton="Ambot say ibutang ari"
+                                    statusTitle={statusTitle}
+                                    form={
+                                        <>
+                                            <CustomForm fields={PersonalData} className="grid grid-cols-2 gap-x-4" />
+                                            <CustomForm fields={DemographicData} className="grid grid-cols-2 gap-x-4" />
+                                            <CustomForm fields={AddressData} className="grid grid-cols-2 gap-x-4" />
+                                        </>
+                                    }
+                                />
+                            );
+                        }}
+                        renderButton={
+                            <CustomDialog
+                                title="Add resident"
+                                trigger={
+                                    <Button className="ml-2 w-32 rounded-2xl p-5" variant="primary">
+                                        Add Resident
                                     </Button>
-                                </>
-                            }
-                            children={
-                                <>
-                                    <div className="mt-5">
-                                        <CustomForm fields={addResidentName} className="grid grid-cols-4 gap-x-4" />
-                                    </div>
-                                    <div className="mt-5">
-                                        <CustomForm fields={addResidentDemographic} className="grid grid-cols-4 gap-x-4" />
-                                    </div>
-                                    <div className="mt-5">
-                                        <CustomForm fields={residentAddress} className="grid grid-cols-4 gap-x-4" />
-                                    </div>
-                                </>
-                            }
-                        />
-                    </div>
+                                }
+                                contentClassName="mt-5"
+                                button={
+                                    <>
+                                        <Button variant="primary" className="w-56">
+                                            Add
+                                        </Button>
+                                    </>
+                                }
+                                children={
+                                    <>
+                                        <div className="mt-5">
+                                            <CustomForm fields={addResidentName} className="grid grid-cols-4 gap-x-4" />
+                                        </div>
+                                        <div className="mt-5">
+                                            <CustomForm fields={addResidentDemographic} className="grid grid-cols-4 gap-x-4" />
+                                        </div>
+                                        <div className="mt-5">
+                                            <CustomForm fields={residentAddress} className="grid grid-cols-4 gap-x-4" />
+                                        </div>
+                                    </>
+                                }
+                            />
+                        }
+                    />
                 </div>
-                <div className="mt-2 min-h-[520px] overflow-hidden rounded-md border-1">
-                    <Table>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead className="w-36">Precinct ID</TableHead>
-                                <TableHead className="w-54">Resident Name</TableHead>
-                                <TableHead className="w-36">Gender</TableHead>
-                                <TableHead className="w-36">Birthday</TableHead>
-                                <TableHead className="w-36">Status</TableHead>
-                                <TableHead className="w-36">Action</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {ResidentsData.map((resident) => (
-                                <TableRow key={resident.id} className="gap-y-5">
-                                    <TableCell>{resident.precinctId}</TableCell>
-                                    <TableCell>{resident.residentName}</TableCell>
-                                    <TableCell>{resident.residentGender}</TableCell>
-                                    <TableCell>{resident.residentBirthday}</TableCell>
-                                    <TableCell>{resident.residentStatus}</TableCell>
-                                    <TableCell>
-                                        <CustomSheet
-                                            trigger={
-                                                <Button variant="search" className="rounded-sm" key={resident.id}>
-                                                    <>
-                                                        <div className="flex flex-row items-center justify-center gap-2">
-                                                            <img src={SearchTableCell} alt="Search Icon" />
-                                                            <p className="text-blue-500">View</p>
-                                                        </div>
-                                                    </>
-                                                </Button>
-                                            }
-                                            firstButton="Set Inactive"
-                                            firstButtonVariant="reject"
-                                            secondButton="Ambot say ibutang ari"
-                                            statusTitle={resident.residentStatus}
-                                            form={
-                                                <>
-                                                    <CustomForm fields={PersonalData} className="grid grid-cols-2 gap-x-4" />
-                                                    <CustomForm fields={DemographicData} className="grid grid-cols-2 gap-x-4" />
-                                                    <CustomForm fields={AddressData} className="grid grid-cols-2 gap-x-4" />
-                                                </>
-                                            }
-                                        />
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </div>
-                <Pagination className="flex justify-end pt-2">
-                    <PaginationContent className="rounded-lg border-2">
-                        <PaginationItem>
-                            <PaginationPrevious href="#" />
-                        </PaginationItem>
-                        <PaginationItem>
-                            <PaginationNext href="#" />
-                        </PaginationItem>
-                    </PaginationContent>
-                </Pagination>
             </div>
         </AdminLayout>
     );
