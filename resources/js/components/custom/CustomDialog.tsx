@@ -1,5 +1,5 @@
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import React, { HtmlHTMLAttributes } from 'react';
+import React from 'react';
 
 interface CustomDialogProps {
     title: string;
@@ -10,9 +10,10 @@ interface CustomDialogProps {
     width?: string;
     height?: string;
     subTitleClassName?: string
+    onSubmit?: React.FormEventHandler<HTMLFormElement>;
 }
 
-const CustomDialog = ({ title, subtitle, children, trigger, button, width = 'w-5xl', subTitleClassName, height = 'max-h-130' }: CustomDialogProps) => {
+const CustomDialog = ({ title, subtitle, children, trigger, button, width = 'w-5xl', subTitleClassName, height = 'max-h-130', onSubmit }: CustomDialogProps) => {
     return (
         <Dialog>
             <DialogTrigger asChild>{trigger}</DialogTrigger>
@@ -20,13 +21,15 @@ const CustomDialog = ({ title, subtitle, children, trigger, button, width = 'w-5
                 <DialogHeader className="flex-row items-center justify-start rounded-t-md bg-s3 p-2 -m-6.5">
                     <DialogTitle className=" text-white pl-4">{title}</DialogTitle>
                 </DialogHeader>
-                <div className={`scroll-invisible overflow-y-auto flex flex-col gap-3 mt-4 ${height}`}>
-                    <h1 className={subTitleClassName}>{subtitle}</h1>
-                    {children}
-                </div>
-                <DialogFooter className='w-full'>
-                    {button}
-                </DialogFooter>
+                <form onSubmit={onSubmit} className='flex flex-col gap-y-7'>
+                    <div className={`scroll-invisible overflow-y-auto flex flex-col gap-3 mt-4 ${height}`}>
+                        <h1 className={subTitleClassName}>{subtitle}</h1>
+                        {children}
+                    </div>
+                    <DialogFooter>
+                        {button}
+                    </DialogFooter>
+                </form>
             </DialogContent>
         </Dialog >
     );

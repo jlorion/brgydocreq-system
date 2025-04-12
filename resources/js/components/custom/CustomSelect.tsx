@@ -5,11 +5,13 @@ interface CustomSelectProps {
 	placeholder?: string;
 	items: { value: string, label: string }[];
 	className?: string;
+	onChange?: (value: string) => void;
+	value?: string;
 }
 
-const CustomSelect = ({ placeholder, items = [], className }: CustomSelectProps) => {
+const CustomSelect = ({ placeholder, items = [], className, onChange, value, }: CustomSelectProps) => {
 	return (
-		<Select>
+		<Select value={value} onValueChange={onChange}>
 			<SelectTrigger className={`w-full ${className}`}>
 				<SelectValue placeholder={placeholder} />
 			</SelectTrigger>

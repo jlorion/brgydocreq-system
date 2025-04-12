@@ -21,8 +21,8 @@ class AdminInvitationMail extends Mailable
 
     public function __construct($registrationLink, $role)
     {
-        $this->$registrationLink = $registrationLink;
-        $this->$role = $role;
+        $this->registrationLink = $registrationLink;
+        $this->role = $role;
     }
 
     /**

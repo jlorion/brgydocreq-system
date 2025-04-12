@@ -13,6 +13,10 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem,
 import { Input } from '@/components/ui/input';
 import CustomSelect from '@/components/custom/CustomSelect';
 import { Dialog } from '@/components/ui/dialog';
+import { useForm, usePage } from '@inertiajs/react';
+import { FormEventHandler } from 'react';
+import { LoaderCircle } from 'lucide-react';
+import InputError from '@/components/custom/InputError';
 
 const adminData = [
     {
@@ -93,16 +97,49 @@ const adminRequestData = [
 //     );
 // }
 
-const items = [
-    {
-        value: 'Admin', label: 'Admin'
-    },
-    {
-        value: 'Fucker', label: 'Fucker'
-    }
-]
+
+type InviteForm = {
+    email: string;
+    role: string;
+}
+
+type Role = {
+    role_id: number;
+    role_name: string;
+}
+
+interface PageProps {
+    roles: Role[];
+    [key: string]: any; // Add an index signature to satisfy the constraint
+}
+
 
 const Admins = () => {
+    const { data, setData, post, processing, errors } = useForm<InviteForm>({
+        email: '',
+        role: '',
+    });
+
+    const { roles = [] } = usePage<PageProps>().props
+
+    const roleItems = roles.map((role) => ({
+        value: role.role_id.toString(),
+        label: role.role_name,
+    }));
+
+    console.log('Roles:', roles);
+
+    const submit: FormEventHandler = (e) => {
+        e.preventDefault();
+        post(route('auth.admin-invite'), {
+            onError: (errors) => {
+                console.error('Form submission failed. Validation errors:');
+                Object.entries(errors).forEach(([field, message]) => {
+                    console.error(`Field: ${field}, Error: ${message}`);
+                });
+            },
+        });
+    }
     return (
         <AdminLayout title='Administrator'>
             <div className='flex flex-row justify-end'>
@@ -111,19 +148,28 @@ const Admins = () => {
                 } children={
                     <>
                         <div className='flex gap-x-4'>
-                            <Input placeholder='Email'></Input>
+                            <Input id='email' value={data.email} onChange={(e) => setData('email', e.target.value)} placeholder='Email' required />
+                            <InputError message={errors.email} />
                             <div className='w-1/2'>
-                                <CustomSelect items={items} placeholder='Role' />
+                                <CustomSelect value={data.role} onChange={(value) => { setData('role', value); console.log('role', value) }} items={roleItems} placeholder='Role' />
+                                <InputError message={errors.role} />
+
                             </div>
                         </div>
                     </>
+
                 } button={
-                    <Button>Send</Button>
-                } title='Invite Administrator' width='w-130' />
+                    <Button type='submit' disabled={processing}>
+                        {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
+                        Send
+                    </Button>
+
+                } title='Invite Administrator' width='w-130' onSubmit={submit} />
             </div>
 
 
-            <div className="grid gap-5 lg:grid-cols-3">
+
+            {/* <div className="grid gap-5 lg:grid-cols-3">
                 {adminData.map((admin) => (
                     <div className="flex h-96 max-w-96 min-w-72 flex-col items-center justify-between rounded-xl border-2">
                         <div
@@ -163,7 +209,7 @@ const Admins = () => {
                         </div>
                     </div>
                 ))}
-            </div>
+            </div> */}
         </AdminLayout>
     );
 };

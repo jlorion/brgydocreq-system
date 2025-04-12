@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Auth\AdminInvitationController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
@@ -12,9 +13,11 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\Auth\ResidentReferenceController;
 use Illuminate\Support\Facades\Route;
 
+
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
         ->name('auth.register');
+
 
     Route::post('register', [RegisteredUserController::class, 'store'])->name('auth.register.store');
 

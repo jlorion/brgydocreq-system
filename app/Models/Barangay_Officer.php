@@ -35,5 +35,5 @@ class Barangay_Officer extends Model
     public function status()
     {
         return $this->belongsTo(Status::class, 'status_id', 'status_id');
-}
+    }
 }
