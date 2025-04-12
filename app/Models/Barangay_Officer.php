@@ -26,6 +26,8 @@ class Barangay_Officer extends Model
         'status_id'
     ];
 
+    protected $table = 'barangay_officers';
+
     public function address()
     {
         return $this->belongsTo(Address::class, 'address_id', 'address_id');

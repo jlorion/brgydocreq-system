@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users', 'user_id')->cascadeOnDelete();
             $table->foreignId('admin_id')->constrained('admins', 'admin_id')->cascadeOnDelete();
             $table->foreignId('status_id')->constrained('statuses', 'status_id')->cascadeOnDelete();
-            $table->foreignId('requested_document_id')->constrained('requested__documents', 'requested_document_id')->cascadeOnDelete();
+            $table->foreignId('requested_document_id')->constrained('requested_documents', 'requested_document_id')->cascadeOnDelete();
             $table->string('content');
             $table->timestamps();
         });

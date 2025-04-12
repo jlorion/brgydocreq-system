@@ -4,6 +4,7 @@ import React from 'react'
 import { LoaderIcon, LayoutDashboard, FileUser, Archive, FileText, Users, Shield } from 'lucide-react';
 import { CustomSidebar } from '@/components/custom/CustomSidebar';
 import WebLogo from '../../../assets/web-logo.svg';
+import CustomIcon from '@/components/custom/CustomIcon';
 
 
 interface AdminLayoutProps {
@@ -11,6 +12,7 @@ interface AdminLayoutProps {
 	className?: string;
 	title?: string;
 }
+
 
 
 const navItems = [
@@ -28,14 +30,15 @@ const AdminLayout = ({ children, className, title }: AdminLayoutProps) => {
 	return (
 		<div className='box-border h-full w-full'>
 			<SidebarProvider>
-				<CustomSidebar navItems={navItems} navTitle={WebLogo} />
+				<CustomSidebar navItems={navItems} navTitle={<CustomIcon imgSrc={WebLogo} />
+				} />
 				<SidebarInset>
 					<CustomHeader className='px-5' leftNavItems={
 						<> <SidebarTrigger />
 							<h1 className='font-semibold text-lg '>{title}</h1>
 						</>}
 					/>
-					<main className={`z-0 flex flex-grow flex-col ${className}`}>
+					<main className={`z-0 flex flex-grow flex-col p-9 @container/main gap-y-9 ${className}`}>
 						{children}
 
 					</main>

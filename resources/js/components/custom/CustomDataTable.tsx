@@ -71,7 +71,7 @@ export function CustomDataTable<Data>({ data, columns, filterColumn, searchPlace
         return <div>No columns defined for the table.</div>;
     }
     return (
-        <div className="w-full px-4">
+        <div className="w-full">
             {/* Search button and Adjustable columns */}
             <div className="flex items-center pb-6">
                 <Input

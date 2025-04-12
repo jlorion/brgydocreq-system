@@ -9,11 +9,10 @@ interface CustomDialogProps {
     trigger: React.ReactNode;
     width?: string;
     height?: string;
-    contentClassName?: string       
     subTitleClassName?: string
 }
 
-const CustomDialog = ({ title, subtitle, children, trigger, button, width = 'w-5xl', contentClassName, subTitleClassName, height = 'max-h-130' }: CustomDialogProps) => {
+const CustomDialog = ({ title, subtitle, children, trigger, button, width = 'w-5xl', subTitleClassName, height = 'max-h-130' }: CustomDialogProps) => {
     return (
         <Dialog>
             <DialogTrigger asChild>{trigger}</DialogTrigger>
@@ -21,7 +20,7 @@ const CustomDialog = ({ title, subtitle, children, trigger, button, width = 'w-5
                 <DialogHeader className="flex-row items-center justify-start rounded-t-md bg-s3 p-2 -m-6.5">
                     <DialogTitle className=" text-white pl-4">{title}</DialogTitle>
                 </DialogHeader>
-                <div className={`scroll-invisible overflow-y-auto ${height} ${contentClassName}`}>
+                <div className={`scroll-invisible overflow-y-auto flex flex-col gap-3 mt-4 ${height}`}>
                     <h1 className={subTitleClassName}>{subtitle}</h1>
                     {children}
                 </div>

@@ -8,7 +8,7 @@ export default function TermsCondition({ trigger }: CustomDialogProps) {
 
     return (
 
-        <CustomDialog trigger={trigger} subtitle='Terms & Conditions and Privacy Policy' title='Barangay Balagunan, Santo Tomas, Davao del Norte' children={
+        <CustomDialog trigger={trigger} title='Terms & Conditions and Privacy Policy' children={
             <>
                 <h2 className="text-s3 font-semibold pb-3">Terms & Conditions</h2>
                 <article className="text-sm leading-relaxed text-gray-500 text-justify flex flex-col gap-y-4">

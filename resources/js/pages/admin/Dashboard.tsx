@@ -127,53 +127,47 @@ export default function Dashboard() {
 
     ]
     return (
-        <AdminLayout className='p-5' title='Dashboard'>
-            <div className="flex flex-1 flex-col">
-                <div className="@container/main flex flex-1 flex-col gap-2">
-                    <div className="flex flex-col gap-y-9">
-                        <div className='@xl/main:grid-cols-2 @5xl/main:grid-cols-4 @5xl/main:gap-5 grid grid-cols-1 lg:px-4'>
-                            <CustomDisplayCard title='8,689' description='Total Users' increasePercentage='83%' statistics='of total resident population'
-                                icon={
-                                    <div className='bg-violet-200 p-4 rounded-2xl'>
-                                        <CustomIcon icon={Users} className='text-violet-700' />
-                                    </div>
-                                } />
-
-                            <CustomDisplayCard title='10,293' description='Total Request' increasePercentage='1.3%' statistics='Up from past week'
-                                icon={
-                                    <div className='bg-amber-100 p-4 rounded-2xl'>
-                                        <CustomIcon icon={FileText} className='text-amber-500' />
-                                    </div>
-                                } />
-
-                            <CustomDisplayCard title='₱ 5,989' description='Total Revenue' decreasePercentage='4.3%' statistics='Down from yesterday'
-                                icon={
-                                    <div className='bg-green-200 p-4 rounded-2xl'>
-                                        <CustomIcon icon={ChartSpline} className='text-green-600' />
-                                    </div>
-                                } />
-
-                            <CustomDisplayCard title='9,542' description='Total Archives' increasePercentage='1.8%' statistics='Up from yesterday'
-                                icon={
-                                    <div className='bg-orange-200 p-4 rounded-2xl'>
-                                        <CustomIcon icon={Archive} className='text-orange-500' />
-                                    </div>
-                                } />
+        <AdminLayout className='' title='Dashboard'>
+            <div className='@xl/main:grid-cols-2 @5xl/main:grid-cols-4 @5xl/main:gap-5 grid grid-cols-1'>
+                <CustomDisplayCard title='8,689' description='Total Users' increasePercentage='83%' statistics='of total resident population'
+                    icon={
+                        <div className='bg-violet-200 p-4 rounded-2xl'>
+                            <CustomIcon icon={Users} className='text-violet-700' />
                         </div>
+                    } />
 
-                        <CustomDataTable columns={columns} data={data} filterColumn='metric' searchPlaceHolder="Search metric" renderSheet={(trigger, row) => (
-                            <CustomSheet trigger={trigger} firstButton='Approve' firstButtonVariant='approve' secondButton='Reject' secondButtonVariant='reject' statusTitle='Under Review'
-                                form={
-                                    <>
-                                        <CustomForm fields={DocumentRequestFields} className="grid grid-cols-2 gap-2" />
-                                        <CustomForm fields={PurposeofRequestField} className="grid grid-cols-1 pt-2" />
-                                        <CustomForm fields={ViewAttachment} className="flex justify-center pt-2" />
-                                    </>
-                                } />
-                        )} />
-                    </div>
-                </div>
+                <CustomDisplayCard title='10,293' description='Total Request' increasePercentage='1.3%' statistics='Up from past week'
+                    icon={
+                        <div className='bg-amber-100 p-4 rounded-2xl'>
+                            <CustomIcon icon={FileText} className='text-amber-500' />
+                        </div>
+                    } />
+
+                <CustomDisplayCard title='₱ 5,989' description='Total Revenue' decreasePercentage='4.3%' statistics='Down from yesterday'
+                    icon={
+                        <div className='bg-green-200 p-4 rounded-2xl'>
+                            <CustomIcon icon={ChartSpline} className='text-green-600' />
+                        </div>
+                    } />
+
+                <CustomDisplayCard title='9,542' description='Total Archives' increasePercentage='1.8%' statistics='Up from yesterday'
+                    icon={
+                        <div className='bg-orange-200 p-4 rounded-2xl'>
+                            <CustomIcon icon={Archive} className='text-orange-500' />
+                        </div>
+                    } />
             </div>
+
+            <CustomDataTable columns={columns} data={data} filterColumn='metric' searchPlaceHolder="Search metric" renderSheet={(trigger, row) => (
+                <CustomSheet trigger={trigger} firstButton='Approve' firstButtonVariant='approve' secondButton='Reject' secondButtonVariant='reject' statusTitle='Under Review'
+                    form={
+                        <>
+                            <CustomForm fields={DocumentRequestFields} className="grid grid-cols-2 gap-2" />
+                            <CustomForm fields={PurposeofRequestField} className="grid grid-cols-1 pt-2" />
+                            <CustomForm fields={ViewAttachment} className="flex justify-center pt-2" />
+                        </>
+                    } />
+            )} />
         </AdminLayout>
     );
 }

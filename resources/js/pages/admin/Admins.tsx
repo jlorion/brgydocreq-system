@@ -9,6 +9,10 @@ import AdminLayout from '@/layouts/admin/AdminLayout';
 import Gester from '../../../assets/gester.png';
 import Mark from '../../../assets/mark.png';
 import Reignear from '../../../assets/reignear.png';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Input } from '@/components/ui/input';
+import CustomSelect from '@/components/custom/CustomSelect';
+import { Dialog } from '@/components/ui/dialog';
 
 const adminData = [
     {
@@ -89,69 +93,76 @@ const adminRequestData = [
 //     );
 // }
 
+const items = [
+    {
+        value: 'Admin', label: 'Admin'
+    },
+    {
+        value: 'Fucker', label: 'Fucker'
+    }
+]
+
 const Admins = () => {
     return (
-        <AdminLayout>
-            <div className="flex w-full flex-col gap-4 p-2">
-                <div className="flex w-full justify-end pr-4">
-                    <CustomDialog
-                        title="Request for Admin"
-                        trigger={
-                            <Button variant="primary" className="w-56 rounded-sm">
-                                View Request
-                            </Button>
-                        }
-                        contentClassName="mt-5 h-96 w-full"
-                        children={
-                            <CustomAdminTable
-                                tableCellData={adminRequestData}
-                                onApprove={(referenceID) => console.log('Approved:', referenceID)}
-                                onReject={(referenceID) => console.log('Rejected:', referenceID)}
-                            />
-                        }
-                    />
-                </div>
-                <div className="grid gap-5 pr-5 pl-5 lg:grid-cols-3">
-                    {adminData.map((admin) => (
-                        <div className="flex h-96 max-w-96 min-w-72 flex-col items-center justify-between rounded-xl border-2">
-                            <div
-                                className="h-full w-full rounded-t-lg"
-                                style={{
-                                    backgroundImage: `url(${admin.image})`,
-                                    backgroundSize: 'cover',
-                                    backgroundPosition: 'center',
-                                }}
-                            ></div>
-                            <div className="flex w-full flex-col items-center gap-2 bg-white p-2">
-                                <h1 className="font-semibold">{admin.name}</h1>
-                                <h3 className="text-sm font-semibold">{admin.position}</h3>
-                                <p className="text-sm">{admin.role}</p>
-
-                                <CustomSheet
-                                    trigger={
-                                        <Button
-                                            className="w-20 rounded-sm border-1 border-blue-400 text-blue-400"
-                                            variant="plain"
-                                            onClick={() => admin.id}
-                                        >
-                                            View
-                                        </Button>
-                                    }
-                                    firstButton="Remove admin"
-                                    firstButtonVariant="reject"
-                                    plainTitle="Admin Details"
-                                    form={
-                                        <>
-                                            <CustomForm fields={adminPersonalData} className="grid grid-cols-2 gap-x-4" />
-                                            <CustomForm fields={adminDemographicData} className="grid grid-cols-2 gap-x-4" />
-                                            <CustomForm fields={adminElectedData} className="grid grid-cols-2 gap-x-4" />
-                                        </>
-                                    }
-                                />
+        <AdminLayout title='Administrator'>
+            <div className='flex flex-row justify-end'>
+                <CustomDialog trigger={
+                    <Button className='w-1/7'>Invite</Button>
+                } children={
+                    <>
+                        <div className='flex gap-x-4'>
+                            <Input placeholder='Email'></Input>
+                            <div className='w-1/2'>
+                                <CustomSelect items={items} placeholder='Role' />
                             </div>
                         </div>
-                    ))}
-                </div>
+                    </>
+                } button={
+                    <Button>Send</Button>
+                } title='Invite Administrator' width='w-130' />
+            </div>
+
+
+            <div className="grid gap-5 lg:grid-cols-3">
+                {adminData.map((admin) => (
+                    <div className="flex h-96 max-w-96 min-w-72 flex-col items-center justify-between rounded-xl border-2">
+                        <div
+                            className="h-full w-full rounded-t-lg"
+                            style={{
+                                backgroundImage: `url(${admin.image})`,
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center',
+                            }}
+                        ></div>
+                        <div className="flex w-full flex-col items-center gap-2 bg-white p-2">
+                            <h1 className="font-semibold">{admin.name}</h1>
+                            <h3 className="text-sm font-semibold">{admin.position}</h3>
+                            <p className="text-sm">{admin.role}</p>
+
+                            <CustomSheet
+                                trigger={
+                                    <Button
+                                        className="w-20 rounded-sm border-1 border-blue-400 text-blue-400"
+                                        variant="plain"
+                                        onClick={() => admin.id}
+                                    >
+                                        View
+                                    </Button>
+                                }
+                                firstButton="Remove admin"
+                                firstButtonVariant="reject"
+                                plainTitle="Admin Details"
+                                form={
+                                    <>
+                                        <CustomForm fields={adminPersonalData} className="grid grid-cols-2 gap-x-4" />
+                                        <CustomForm fields={adminDemographicData} className="grid grid-cols-2 gap-x-4" />
+                                        <CustomForm fields={adminElectedData} className="grid grid-cols-2 gap-x-4" />
+                                    </>
+                                }
+                            />
+                        </div>
+                    </div>
+                ))}
             </div>
         </AdminLayout>
     );

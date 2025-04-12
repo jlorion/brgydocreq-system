@@ -156,18 +156,7 @@ export default function Documents() {
                         </div>
                     ))}
                 </div>
-                <div className="w-full">
-                    <Pagination className="flex justify-end pt-2">
-                        <PaginationContent className="rounded-lg border-2">
-                            <PaginationItem>
-                                <PaginationPrevious href="#" />
-                            </PaginationItem>
-                            <PaginationItem>
-                                <PaginationNext href="#" />
-                            </PaginationItem>
-                        </PaginationContent>
-                    </Pagination>
-                </div>
+
             </div>
         </AdminLayout>
     );

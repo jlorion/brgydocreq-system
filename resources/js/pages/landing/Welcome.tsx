@@ -93,7 +93,6 @@ const Welcome = () => {
                                     content="Issued by the barangay confirming the residents good standing and residency and is typically used for employment or legal purposes"
                                 />
                             }
-                            contentClassName='flex flex-col gap-3 mt-4'
                             button={<Button variant="primary">Submit</Button>}
                             children={renderFormFields(attachments.barangayClearanceAttachment)}
                         />
@@ -108,7 +107,6 @@ const Welcome = () => {
                                     content="Verifies a resident's income level falls within the low-income bracket, typically used for scholarships, subsidies, or social benefits"
                                 />
                             }
-                            contentClassName='flex flex-col gap-3 mt-4'
                             button={<Button variant="primary">Submit</Button>}
                             children={renderFormFields(attachments.lowIncomeAttachment)}
                         />
@@ -123,7 +121,6 @@ const Welcome = () => {
                                     content="A formal declaration of a resident’s income, requested for employment, loan applications, or other financial requirements."
                                 />
                             }
-                            contentClassName='flex flex-col gap-3 mt-4'
                             button={<Button variant="primary">Submit</Button>}
                             children={renderFormFields(attachments.incomeAttachment)}
                         />
@@ -140,7 +137,6 @@ const Welcome = () => {
                             }
                             button={<Button variant="primary">Submit</Button>}
                             children={renderFormFields(attachments.indigencyAttachment)}
-                            contentClassName='flex flex-col gap-3 mt-4'
                         />
 
                         <CustomDialog
@@ -154,7 +150,6 @@ const Welcome = () => {
                                 />
                             }
                             button={<Button variant="primary">Submit</Button>}
-                            contentClassName='flex flex-col gap-3 mt-4'
                             children={renderFormFields(attachments.barangayCertificateAttachment)}
                         />
                         <CustomDialog
@@ -168,7 +163,6 @@ const Welcome = () => {
                                 />
                             }
                             button={<Button variant="primary">Submit</Button>}
-                            contentClassName='flex flex-col gap-3 mt-4'
                             children={renderFormFields(attachments.cedulaAttachment)}
                         />
                     </div>

@@ -4,12 +4,13 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 interface CustomSelectProps {
 	placeholder?: string;
 	items: { value: string, label: string }[];
+	className?: string;
 }
 
-const CustomSelect = ({ placeholder, items = [] }: CustomSelectProps) => {
+const CustomSelect = ({ placeholder, items = [], className }: CustomSelectProps) => {
 	return (
 		<Select>
-			<SelectTrigger className="w-[180px]">
+			<SelectTrigger className={`w-full ${className}`}>
 				<SelectValue placeholder={placeholder} />
 			</SelectTrigger>
 			<SelectContent>

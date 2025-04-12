@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AdminInvitationController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
@@ -19,6 +20,9 @@ Route::middleware('guest')->group(function () {
 
     Route::get('resident-reference', [ResidentReferenceController::class, 'create'])
         ->name('auth.resident-reference');
+
+    Route::post('/admin/invite', [AdminInvitationController::class, 'sendInvitation'])
+        ->name('auth.admin-invite');
 
     Route::post('resident-reference', [ResidentReferenceController::class, 'store'])->name('auth.resident-reference.store');
 
