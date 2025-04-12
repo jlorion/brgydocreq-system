@@ -169,7 +169,7 @@ const Admins = () => {
 
 
 
-            {/* <div className="grid gap-5 lg:grid-cols-3">
+            <div className="grid gap-5 lg:grid-cols-3">
                 {adminData.map((admin) => (
                     <div className="flex h-96 max-w-96 min-w-72 flex-col items-center justify-between rounded-xl border-2">
                         <div
@@ -209,7 +209,7 @@ const Admins = () => {
                         </div>
                     </div>
                 ))}
-            </div> */}
+            </div>
         </AdminLayout>
     );
 };
