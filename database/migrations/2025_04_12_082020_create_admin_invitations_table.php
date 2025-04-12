@@ -13,11 +13,8 @@ return new class extends Migration
     {
         Schema::create('admin_invitations', function (Blueprint $table) {
             $table->id('invite_id');
-            $table->foreignId('officer_id')->constrained('barangay_officers', 'officer_id')->cascadeOnDelete();
             $table->foreignId('role_id')->constrained('roles', 'role_id')->cascadeOnDelete();
             $table->string('email')->unique();
-            $table->string('phone_number')->index();
-            $table->string('admin_username')->unique();
             $table->string('invite_token')->unique();
             $table->timestamp('expires_at');
             $table->boolean('used')->default(false);

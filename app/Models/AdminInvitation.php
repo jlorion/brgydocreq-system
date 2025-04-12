@@ -17,5 +17,5 @@ class AdminInvitation extends Model
         'used'
     ];
 
-    protected $table = 'admins';
+    protected $table = 'admin_invitations';
 }
