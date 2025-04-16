@@ -33,12 +33,14 @@ class AdminInvitationController extends Controller
 
         Mail::to($validated['email'])->send(new AdminInvitationMail($token, $roleName));
 
+
         return response()->json(['message' => 'Invitation sent successfully.', 'token' => $token]);
     }
 
     public function validateToken(Request $request)
     {
         $token = $request->query('token');
+
 
         $invitation = AdminInvitation::with('role')
             ->where('invite_token', $token)
@@ -48,6 +50,13 @@ class AdminInvitationController extends Controller
         if (!$invitation || $invitation->used) {
             \redirect()->route('admin.register');
         }
+
+        session([
+            'invite_token' => $token,
+            'role_name' => $invitation->role->role_name,
+            'email' => $invitation->email
+        ]);
+
 
         return redirect()->route('admin.register');
     }
@@ -63,7 +72,7 @@ class AdminInvitationController extends Controller
             ->where('expires_at', '>', now())
             ->first();
 
-        if (!$inviteToken || !$email || !$roleName || $invitation->used || !$invitation) {
+        if ($invitation->used || !$invitation) {
             abort(403, 'Invalid or expired invitation token.');
         }
 

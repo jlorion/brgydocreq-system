@@ -8,12 +8,16 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Mail;
 
 // Route::get('/test-mail', function () {
-//     Mail::raw('This is a test email from Mailtrap!', function ($message) {
-//         $message->to('your-test-email@example.com') // This can be any dummy email
-//                 ->subject('Mailtrap Test');
-//     });
+// 	try {
+// 		Mail::raw('This is a test email from Mailtrap!', function ($message) {
+// 			$message->to('your-test-email@example.com') // Replace with a valid email
+// 				->subject('Mailtrap Test');
+// 		});
 
-//     return 'Test email sent!';
+// 		return 'Test email sent successfully!';
+// 	} catch (\Exception $e) {
+// 		return 'Error: ' . $e->getMessage();
+// 	}
 // });
 
 Route::get('/admins', [RoleController::class, 'index'])->name('admin.admins');

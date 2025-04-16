@@ -8,6 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class AdminInvitationMail extends Mailable
 {
@@ -21,6 +22,7 @@ class AdminInvitationMail extends Mailable
 
     public function __construct($registrationLink, $role)
     {
+
         $this->registrationLink = route('admin.register.validate', ['token' => $registrationLink]);
         $this->role = $role;
     }
