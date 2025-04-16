@@ -10,4 +10,5 @@ class Role extends Model
         'role_name',
     ];
 
+
 }

@@ -2,7 +2,7 @@
 import CustomActive from '@/components/custom/CustomActive';
 import { CustomClickableCard } from '@/components/custom/CustomCard';
 import CustomDialog from '@/components/custom/CustomDialog';
-import CustomForm from '@/components/custom/CustomForm';
+import CustomForm from '@/components/custom/CustomFormFields';
 import CustomIcon from '@/components/custom/CustomIcon';
 import { Button } from '@/components/ui/button';
 import { attachments, contactDetails, personalDetails, purposeDetail } from '@/data/FormFields';
@@ -47,7 +47,7 @@ const Welcome = () => {
         <>
             <Head title="Balagunan" />
             <MainLayout>
-                <section className="flex items-center justify-center py-12 lg:justify-between">
+                <section className="flex items-center justify-center lg:justify-between bg-silver h-screen pb-20">
                     {/* Left Div  Text*/}
                     <div className="flex items-center justify-center pl-2 lg:pl-25">
                         <div className="flex flex-col gap-y-3">
@@ -70,7 +70,7 @@ const Welcome = () => {
                             </div>
                         </div>
                     </div>
-                    <CustomIcon className="hidden h-2/3 lg:flex" imgSrc={Document} alt="Document" />
+                    <CustomIcon className="hidden lg:flex" imgSrc={Document} alt="Document" />
                 </section>
 
                 <section className="flex flex-col items-center justify-center px-5 pt-15 pb-5 md:px-10 lg:px-20">
@@ -168,7 +168,7 @@ const Welcome = () => {
                     </div>
                 </section>
 
-                <section id="about" className="flex h-screen flex-col items-center gap-y-10">
+                <section id="about" className="flex h-screen flex-col items-center gap-y-10 pt-5">
                     <div>
                         <h1 className="text-s3 text-3xl font-bold">About Us</h1>
                         <CustomActive />

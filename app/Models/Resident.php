@@ -22,7 +22,8 @@ class Resident extends Model
         'resident_gender',
         'resident_precinct',
         'address_id',
-        'status_id'
+        'status_id',
+        'resident_househouldnum'
     ];
 
 

@@ -8,7 +8,7 @@ import { DocumentRequestFields } from '@/data/DocumentRequestFields'
 import { PurposeofRequestField } from '@/data/DocumentRequestFields'
 import { ViewAttachment } from '@/data/DocumentRequestFields'
 import CustomSheet from '@/components/custom/CustomSheet'
-import CustomForm from '@/components/custom/CustomForm'
+import CustomForm from '@/components/custom/CustomFormFields'
 
 type OnProcess = {
   id: string

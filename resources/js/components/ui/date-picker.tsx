@@ -100,7 +100,7 @@ export function DatePicker({ value, onChange, tabIndex, id }: DatePickerProps) {
           id={id}
           mode="single"
           selected={date || undefined}
-          onSelect={(d) => onChange?.(d ?? null)}
+          onSelect={(d) => { onChange?.(d ?? null); console.log('date selected: ', d) }}
           initialFocus
           month={date ?? undefined}
           onMonthChange={(d) => onChange?.(d)}

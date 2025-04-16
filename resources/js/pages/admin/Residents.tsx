@@ -1,72 +1,18 @@
 import { CustomDataTable } from '@/components/custom/CustomDataTable';
 import CustomDialog from '@/components/custom/CustomDialog';
-import CustomForm from '@/components/custom/CustomForm';
+import CustomForm from '@/components/custom/CustomFormFields';
 import CustomSheet from '@/components/custom/CustomSheet';
 import { Button } from '@/components/ui/button';
 import { addResidentDemographic, addResidentName, residentAddress } from '@/data/FormFields';
 import { AddressData, DemographicData, PersonalData } from '@/data/ResidentData';
 import AdminLayout from '@/layouts/admin/AdminLayout';
 import { formatText } from '@/lib/utils';
+import { Resident } from '@/types';
 import { ColumnDef } from '@tanstack/react-table';
 
-type Resident = {
-    id: number;
-    precinctId: string;
-    residentName: string;
-    residentGender: string;
-    residentBirthday: string;
-    residentStatus: 'active' | 'inactive';
-};
 
 const ResidentsData: Resident[] = [
-    {
-        id: 1,
-        precinctId: 'INV001',
-        residentName: 'Reignear Magallanes',
-        residentGender: 'Male',
-        residentBirthday: '1998-01-01',
-        residentStatus: 'inactive',
-    },
-    {
-        id: 2,
-        precinctId: 'INV002',
-        residentName: 'Gester Lorica',
-        residentGender: 'Male',
-        residentBirthday: '1892-01-01',
-        residentStatus: 'inactive',
-    },
-    {
-        id: 3,
-        precinctId: 'INV003',
-        residentName: 'Mark Jefferson Saldana',
-        residentGender: 'Male',
-        residentBirthday: '1789-01-01',
-        residentStatus: 'active',
-    },
-    {
-        id: 4,
-        precinctId: 'INV003',
-        residentName: 'Mark Jefferson Saldana',
-        residentGender: 'Male',
-        residentBirthday: '1789-01-01',
-        residentStatus: 'active',
-    },
-    {
-        id: 5,
-        precinctId: 'INV003',
-        residentName: 'Mark Jefferson Saldana',
-        residentGender: 'Male',
-        residentBirthday: '1789-01-01',
-        residentStatus: 'inactive',
-    },
-    {
-        id: 6,
-        precinctId: 'INV003',
-        residentName: 'Mark Jefferson Saldana',
-        residentGender: 'Male',
-        residentBirthday: '1789-01-01',
-        residentStatus: 'active',
-    },
+
 ];
 
 const columns: ColumnDef<Resident>[] = [
@@ -88,7 +34,7 @@ const columns: ColumnDef<Resident>[] = [
     {
         accessorKey: 'residentBirthday',
         header: () => <div className="text-center">Birthday</div>,
-        cell: ({ row }) => <div className="text-center capitalize">{row.getValue('residentBirthday')}</div>,
+        cell: ({ row }) => <div className="text-center capitalFize">{row.getValue('residentBirthday')}</div>,
     },
     {
         accessorKey: 'residentStatus',

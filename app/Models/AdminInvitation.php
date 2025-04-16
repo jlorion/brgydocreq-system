@@ -5,7 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class AdminInvitation extends Model
+
 {
+    protected $primaryKey = 'invite_id';
+
     protected $fillable = [
         'officer_id',
         'role_id',
@@ -18,4 +21,9 @@ class AdminInvitation extends Model
     ];
 
     protected $table = 'admin_invitations';
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'role_id', 'role_id');
+    }
 }

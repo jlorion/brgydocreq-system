@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('resident_birthdate');
             $table->string('resident_gender');
             $table->string('resident_precinct');
+            $table->string('resident_householdnum');
             $table->timestamps();
         });
     }

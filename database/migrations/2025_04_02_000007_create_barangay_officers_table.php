@@ -19,10 +19,11 @@ return new class extends Migration
             $table->string('officer_middlename');
             $table->string('officer_lastname');
             $table->string('officer_suffix')->nullable();
-            $table->string('officer_birthday');
+            $table->date('officer_birthdate');
             $table->string('officer_gender');
             $table->string('officer_position');
             $table->string('officer_precinct');
+            $table->string('officer_householdnum');
             $table->timestamps();
         });
     }

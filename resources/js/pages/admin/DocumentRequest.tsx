@@ -8,7 +8,7 @@ import { ArrowUpDown } from 'lucide-react'
 import { DocumentRequestFields } from '@/data/DocumentRequestFields'
 import { PurposeofRequestField } from '@/data/DocumentRequestFields'
 import { ViewAttachment } from '@/data/DocumentRequestFields'
-import CustomForm from '@/components/custom/CustomForm'
+import CustomForm from '@/components/custom/CustomFormFields'
 
 
 type DocumentRequeset = {

@@ -21,7 +21,7 @@ type ResidentVerificationForm = {
     resident_birthdate: string;
     email: string;
     phone_number: string;
-    resident_address: string;
+    resident_house_serial_num: string;
 };
 
 const ResidentReference = () => {
@@ -33,7 +33,7 @@ const ResidentReference = () => {
         resident_suffix: '',
         email: '',
         phone_number: '',
-        resident_address: '',
+        resident_house_serial_num: '',
     });
 
     const submit: FormEventHandler = (e) => {
@@ -122,7 +122,7 @@ const ResidentReference = () => {
                     </div>
                     <div className="grid grid-cols-2 gap-x-5">
                         <div className="grid gap-2">
-                            <Label htmlFor="email">Email address</Label>
+                            <Label htmlFor="email">Email Address</Label>
                             <Input
                                 id="email"
                                 type="email"
@@ -159,18 +159,18 @@ const ResidentReference = () => {
                             <InputError message={errors.phone_number} />
                         </div>
                         <div className="grid gap-2">
-                            <Label htmlFor="address">Purok</Label>
+                            <Label htmlFor="house_serial_num">House or Building Serial Number</Label>
                             <Input
-                                id="address"
+                                id="house_serial_num"
                                 type="text"
                                 required
                                 tabIndex={7}
-                                autoComplete="address"
-                                value={data.resident_address}
-                                onChange={(e) => setData('resident_address', e.target.value)}
-                                placeholder="Purok 1"
+                                autoComplete="house_serial_num"
+                                value={data.resident_house_serial_num}
+                                onChange={(e) => setData('resident_house_serial_num', e.target.value)}
+                                placeholder="0025"
                             />
-                            <InputError message={errors.resident_address} />
+                            <InputError message={errors.resident_house_serial_num} />
                         </div>
                     </div>
 

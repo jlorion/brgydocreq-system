@@ -64,7 +64,6 @@ class ResidentReferenceController extends Controller
                 'message' => 'Reference number successfully sent bitch',
                 'reference_number' => $refNumber,
             ], 200);
-            
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 500);
         }

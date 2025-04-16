@@ -1,5 +1,5 @@
 import { CustomDataTable } from '@/components/custom/CustomDataTable'
-import CustomForm from '@/components/custom/CustomForm'
+import CustomForm from '@/components/custom/CustomFormFields'
 import CustomSheet from '@/components/custom/CustomSheet'
 import { Button } from '@/components/ui/button'
 import AdminLayout from '@/layouts/admin/AdminLayout'

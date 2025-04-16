@@ -1,4 +1,6 @@
+import { AdminRegisterForm } from '@/types';
 import { type ClassValue, clsx } from 'clsx';
+import { format } from 'date-fns';
 import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
@@ -11,3 +13,20 @@ export function formatText(text: string): string {
         .replace(/\b\w/g, (char) => char.toUpperCase()); // Capitalize the first letter of each word
 }
 
+export const createStringSetter = (setData: (key: keyof AdminRegisterForm, value: string) => void) => {
+    return (key: keyof AdminRegisterForm) => (value: string | Date | null) => {
+        if (typeof value === 'string') {
+            setData(key, value);
+            console.log(value);
+        }
+    };
+};
+
+export const createDateSetter = (setData: (key: keyof AdminRegisterForm, value: string) => void) => {
+    return (key: keyof AdminRegisterForm) => (value: string | Date | null) => {
+        if (value instanceof Date) {
+            const formattedDate = format(value, 'yyyy-MM-dd');
+            setData(key, formattedDate);
+        }
+    };
+};

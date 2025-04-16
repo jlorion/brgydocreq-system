@@ -42,7 +42,7 @@
     @inertiaHead
 </head>
 
-<body class="font-poppins antialiased">
+<body class="font-poppins antialiased bg-gray-100">
     @inertia
 </body>
 

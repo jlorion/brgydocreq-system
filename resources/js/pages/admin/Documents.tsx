@@ -1,5 +1,5 @@
 import CustomDialog from '@/components/custom/CustomDialog';
-import CustomForm from '@/components/custom/CustomForm';
+import CustomForm from '@/components/custom/CustomFormFields';
 import { Button } from '@/components/ui/button';
 import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import {

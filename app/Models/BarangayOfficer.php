@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Barangay_Officer extends Model
+class BarangayOfficer extends Model
 {
     use HasFactory;
     /**
@@ -18,12 +18,13 @@ class Barangay_Officer extends Model
         'officer_middlename',
         'officer_lastname',
         'officer_suffix',
-        'officer_birthday',
+        'officer_birthdate',
         'officer_gender',
         'officer_position',
         'officer_precinct',
         'address_id',
-        'status_id'
+        'status_id',
+        'officer_householdnum'
     ];
 
     protected $table = 'barangay_officers';

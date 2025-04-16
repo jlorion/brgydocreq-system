@@ -33,7 +33,7 @@ export function CustomHeader({ breadcrumbs = [], mainNavItems = [], rightNavItem
 
     return (
         <>
-            <div {...headerProps} className={`${className} ${headerProps.className}`}>
+            <div {...headerProps} className={`${className} ${headerProps.className} border`}>
                 {/* Mobile Menu */}
                 <div className="lg:hidden">
                     <Sheet>

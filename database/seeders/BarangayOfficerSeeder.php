@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\Barangay_Officer;
+use App\Models\BarangayOfficer;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class Barangay_OfficerSeeder extends Seeder
+class BarangayOfficerSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-       Barangay_Officer::factory()->count(50)->create();
+       BarangayOfficer::factory()->count(50)->create();
     }
 }

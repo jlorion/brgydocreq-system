@@ -26,6 +26,7 @@ class ResidentFactory extends Factory
             'resident_birthdate' => $this->faker->date(),
             'resident_gender' => $this->faker->randomElement(['Male', 'Female']),
             'resident_precinct' => $this->faker->randomNumber(9),
+            'resident_householdnum' => $this->faker->randomNumber(4, true),
             'address_id' => Address::factory(),
             'status_id' => Status::inRandomOrder()->first()->status_id,
         ];

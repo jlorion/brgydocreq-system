@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Archive, ArrowUpDown, ChartSpline, FileText, Users } from 'lucide-react';
 import { ColumnDef } from '@tanstack/react-table';
 import CustomSheet from '@/components/custom/CustomSheet';
-import CustomForm from '@/components/custom/CustomForm';
+import CustomForm from '@/components/custom/CustomFormFields';
 import { DocumentRequestFields } from '@/data/DocumentRequestFields'
 import { PurposeofRequestField } from '@/data/DocumentRequestFields'
 import { ViewAttachment } from '@/data/DocumentRequestFields'

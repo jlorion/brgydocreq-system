@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import CustomAdminTable from '@/components/custom/CustomAdminTable';
 import CustomDialog from '@/components/custom/CustomDialog';
-import CustomForm from '@/components/custom/CustomForm';
+import CustomForm from '@/components/custom/CustomFormFields';
 import CustomSheet from '@/components/custom/CustomSheet';
 import { Button } from '@/components/ui/button';
 import { adminDemographicData, adminElectedData, adminPersonalData } from '@/data/ViewAdminData';
@@ -17,6 +17,7 @@ import { useForm, usePage } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
 import { LoaderCircle } from 'lucide-react';
 import InputError from '@/components/custom/InputError';
+import { RoleItems } from '@/types';
 
 const adminData = [
     {
@@ -103,16 +104,6 @@ type InviteForm = {
     role: string;
 }
 
-type Role = {
-    role_id: number;
-    role_name: string;
-}
-
-interface PageProps {
-    roles: Role[];
-    [key: string]: any; // Add an index signature to satisfy the constraint
-}
-
 
 const Admins = () => {
     const { data, setData, post, processing, errors } = useForm<InviteForm>({
@@ -120,14 +111,15 @@ const Admins = () => {
         role: '',
     });
 
-    const { roles = [] } = usePage<PageProps>().props
+    const { roles = [] } = usePage<RoleItems>().props
 
     const roleItems = roles.map((role) => ({
         value: role.role_id.toString(),
-        label: role.role_name,
-    }));
+        label: role.role_name
+    }))
 
-    console.log('Roles:', roles);
+
+    console.log('Roles:', roleItems);
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
@@ -153,7 +145,6 @@ const Admins = () => {
                             <div className='w-1/2'>
                                 <CustomSelect value={data.role} onChange={(value) => { setData('role', value); console.log('role', value) }} items={roleItems} placeholder='Role' />
                                 <InputError message={errors.role} />
-
                             </div>
                         </div>
                     </>
@@ -168,7 +159,7 @@ const Admins = () => {
             </div>
 
 
-
+            {/* 
             <div className="grid gap-5 lg:grid-cols-3">
                 {adminData.map((admin) => (
                     <div className="flex h-96 max-w-96 min-w-72 flex-col items-center justify-between rounded-xl border-2">
@@ -209,7 +200,7 @@ const Admins = () => {
                         </div>
                     </div>
                 ))}
-            </div>
+            </div> */}
         </AdminLayout>
     );
 };

@@ -21,7 +21,7 @@ class AdminInvitationMail extends Mailable
 
     public function __construct($registrationLink, $role)
     {
-        $this->registrationLink = $registrationLink;
+        $this->registrationLink = route('admin.register.validate', ['token' => $registrationLink]);
         $this->role = $role;
     }
 

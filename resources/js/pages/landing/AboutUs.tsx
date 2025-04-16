@@ -17,7 +17,7 @@ const AboutUs = () => {
             <Head title="About us" />
             <MainLayout className="px-10 py-10 md:px-25">
                 <header>
-                    <h1 className="text-s3 pb-20 text-center text-3xl font-semibold">About Barangay</h1>
+                    <h1 className="text-s3 pb-10 text-center text-3xl font-semibold">About Barangay</h1>
                 </header>
 
                 <div className="flex flex-col gap-y-20 text-black">

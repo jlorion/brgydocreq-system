@@ -5,31 +5,15 @@ import CustomSelect from './CustomSelect';
 import { DatePicker } from '../ui/date-picker';
 import { Input } from '../ui/input';
 import TextLink from './CustomTextLink';
-import { attachments } from '@/data/FormFields';
-
-interface CustomFormField {
-    id?: string;
-    label?: string;
-    type?: string;
-    placeholder?: string;
-    value?: string;
-    tabIndex?: number;
-    autoComplete?: string;
-    onChange: (value: string) => void;
-    errorMessage?: string;
-    autofocus?: boolean;
-    options?: { label: string; value: string }[];
-    additionalProps?: Record<string, any>;
-    selectItems?: { value: string; label: string }[];
-    disabled?: boolean;
-}
-
+import { useState } from 'react';
+import { CustomFormField } from '@/types';
 
 interface CustomFormProps {
     fields: CustomFormField[];
     title?: string;
     className?: string;
 }
+
 
 const CustomForm = ({ fields, className, title }: CustomFormProps) => {
     const renderField = (field: CustomFormField) => {
@@ -39,10 +23,10 @@ const CustomForm = ({ fields, className, title }: CustomFormProps) => {
                     <Textarea
                         id={field.id}
                         placeholder={field.placeholder}
-                        value={field.value}
+                        value={field.value as string}
                         tabIndex={field.tabIndex}
                         disabled={field.disabled}
-                        onChange={(e) => field.onChange(e.target.value)}
+                        onChange={(e) => field.onChange?.(e.target.value)}
                         {...field.additionalProps}
                     />
                 );
@@ -51,21 +35,26 @@ const CustomForm = ({ fields, className, title }: CustomFormProps) => {
                     <DatePicker
                         id={field.id}
                         tabIndex={field.tabIndex}
+                        value={field.value as Date || null}
+                        onChange={(date) => field.onChange?.(date)}
                         {...field.additionalProps}
+
                     />
                 );
             case 'select':
                 return (
                     <CustomSelect
                         placeholder={field.placeholder}
+                        onChange={(value) => field.onChange?.(value)}
                         items={field.selectItems || []}
                         {...field.additionalProps}
+                        value={field.value as string || ''}
                     />
                 );
             case 'link':
                 return (
                     <TextLink className='text-sm'>
-                        {field.value}
+                        {field.value as string}
                     </TextLink >
                 );
 
@@ -74,12 +63,12 @@ const CustomForm = ({ fields, className, title }: CustomFormProps) => {
                     <Input
                         type={field.type}
                         placeholder={field.placeholder}
-                        value={field.value}
+                        value={field.value as string || ''}
                         autoFocus={field.autofocus}
                         disabled={field.disabled}
                         autoComplete={field.autoComplete}
                         tabIndex={field.tabIndex}
-                        onChange={(e) => field.onChange(e.target.value)}
+                        onChange={(e) => field.onChange?.(e.target.value)}
                         className={`
                             disabled:text-black disabled:border-shamrock-green`}
                         {...field.additionalProps}
@@ -89,20 +78,20 @@ const CustomForm = ({ fields, className, title }: CustomFormProps) => {
     };
 
     return (
-        <form className="flex flex-col" action="">
-            <h1 className="pb-1">{title}</h1>
+        <div className="flex flex-col">
+            <h1 className="pb-3">{title}</h1>
             <div className={className}>
                 {fields.map((field, index) => (
-                    <div key={index} className="pb-2">
+                    <div key={index} className="pb-3">
                         <Label htmlFor={field.id} className="text-xs">
                             {field.label}
                         </Label>
                         {renderField(field)}
-                        <InputError message={undefined} />
+                        <InputError message={field.errorMessage} />
                     </div>
                 ))}
             </div>
-        </form>
+        </div>
     );
 };
 
