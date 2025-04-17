@@ -27,6 +27,5 @@ Route::inertia('/contact-us', 'landing/ContactUs')->name('landing.contact-us');
 
 
 
-require __DIR__ . '/settings.php';
 require __DIR__ . '/admin.php';
 require __DIR__ . '/user.php';

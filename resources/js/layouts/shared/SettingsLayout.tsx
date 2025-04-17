@@ -13,17 +13,17 @@ import HeadingSmall from '@/components/custom/heading-small';
 const sidebarNavItems: NavItem[] = [
     {
         title: 'Profile',
-        href: '/settings/profile',
+        href: route('admin.settings.profile.edit'),
         icon: CircleUser,
     },
     {
         title: 'Password',
-        href: '/settings/password',
+        href: route('admin.settings.password.edit'),
         icon: KeyRound,
     },
     {
         title: 'Appearance',
-        href: '/settings/appearance',
+        href: route('admin.settings.appearance'),
         icon: SunMoon,
     },
 ];
@@ -48,7 +48,7 @@ export default function SettingsLayout({ children, title }: SettingsLayoutProps)
             <CustomSidebar navItems={sidebarNavItems} navTitle={temp} />
             <SidebarInset>
                 <main className="flex flex-col p-9">
-                    <div className='py-3 pl-5 text-white bg-linear-to-r from-cyan-500 to-blue-500 rounded-t-md '>
+                    <div className='py-3 pl-5 text-white bg-linear-to-r from-teal-500 to-green-500 rounded-t-md '>
                         <h2 className='text-lg'>
                             {title}
                         </h2>

@@ -38,9 +38,9 @@ export default function Login({ status, canResetPassword }: LoginProps) {
 				Object.entries(errors).forEach(([field, message]) => {
 					console.error(`Field: ${field}, Error: ${message}`);
 				});
-			
+
 			},
-			
+
 		});
 	};
 
@@ -89,8 +89,8 @@ export default function Login({ status, canResetPassword }: LoginProps) {
 							</div>
 
 							<div className="flex items-center">
-								{canResetPassword && (
-									<TextLink href={route('password.request')} className="text-sm" tabIndex={4}>
+								{(
+									<TextLink href={route('admin.forgot-password')} className="text-sm" tabIndex={4}>
 										Forgot password?
 									</TextLink>
 								)}

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
@@ -10,14 +10,14 @@ use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class ConfirmablePasswordController extends Controller
+class UserConfirmablePasswordController extends Controller
 {
     /**
      * Show the confirm password page.
      */
     public function show(): Response
     {
-        return Inertia::render('auth/confirm-password');
+        return Inertia::render('User/confirm-password');
     }
 
     /**

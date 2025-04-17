@@ -1,34 +1,30 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Auth\ConfirmablePasswordController;
-use App\Http\Controllers\Auth\EmailVerificationNotificationController;
-use App\Http\Controllers\Auth\EmailVerificationPromptController;
-use App\Http\Controllers\Auth\NewPasswordController;
-use App\Http\Controllers\Auth\PasswordResetLinkController;
-use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\Auth\VerifyEmailController;
-use App\Http\Controllers\Auth\ResidentReferenceController;
+use App\Http\Controllers\User\UserAuthSessionController;
+use App\Http\Controllers\User\UserNewPasswordController;
+use App\Http\Controllers\User\UserPasswordResetLinkController;
+use App\Http\Controllers\User\UserRegistrationController;
+use App\Http\Controllers\User\UserResidentReferenceController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('user')->name('user.')->group(function () {
 	Route::middleware(['guest:web'])->group(function () {
 
-		Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
-		Route::post('register/store', [RegisteredUserController::class, 'store'])->name('register.store');
-		Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
-		Route::post('/login/store', [AuthenticatedSessionController::class, 'store'])->name('login.store');
-		Route::get('/resident-reference', [ResidentReferenceController::class, 'create'])->name('resident-reference');
+		Route::get('/register', [UserRegistrationController::class, 'create'])->name('register');
+		Route::post('register/store', [UserRegistrationController::class, 'store'])->name('register.store');
+		Route::get('/login', [UserAuthSessionController::class, 'create'])->name('login');
+		Route::post('/login/store', [UserAuthSessionController::class, 'store'])->name('login.store');
+		Route::get('/resident-reference', [UserResidentReferenceController::class, 'create'])->name('resident-reference');
 
-		Route::post('/resident-reference/store', [ResidentReferenceController::class, 'store'])->name('resident-reference.store');
+		Route::post('/resident-reference/store', [UserResidentReferenceController::class, 'store'])->name('resident-reference.store');
 
-		Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])->name('forgot-password');
+		Route::get('/forgot-password', [UserPasswordResetLinkController::class, 'create'])->name('forgot-password');
 
-		Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
+		Route::post('forgot-password', [UserPasswordResetLinkController::class, 'store'])->name('password.email');
 
-		Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
+		Route::get('reset-password/{token}', [UserNewPasswordController::class, 'create'])->name('password.reset');
 
-		Route::post('reset-password', [NewPasswordController::class, 'store'])->name('password.store');
+		Route::post('reset-password', [UserNewPasswordController::class, 'store'])->name('password.store');
 	});
 
 	// Route::middleware('auth:web')->group(function () {
@@ -48,7 +44,7 @@ Route::prefix('user')->name('user.')->group(function () {
 
 	//     // Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
 
-	//     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
+	//     Route::post('logout', [UserAuthSessionController::class, 'destroy'])
 	//         ->name('logout');
 	// });
 });

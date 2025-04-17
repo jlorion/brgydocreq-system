@@ -9,9 +9,8 @@ export default function Appearance() {
     return (
         <>
             <Head title="Appearance settings" />
-            <SettingsLayout>
+            <SettingsLayout title='Appereance'>
                 <div className="space-y-6">
-                    <HeadingSmall title="Appearance settings" description="Update your account's appearance settings" />
                     <AppearanceTabs />
                 </div>
             </SettingsLayout>

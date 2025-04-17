@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\User;
 
 use App\Mail\ReferenceNumberMail;
 use App\Models\Resident;
@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
 
-class ResidentReferenceController extends Controller
+class UserResidentReferenceController extends Controller
 {
 
 
