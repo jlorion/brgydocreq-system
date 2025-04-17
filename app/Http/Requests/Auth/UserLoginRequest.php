@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
-class LoginRequest extends FormRequest
+class UserLoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,7 +28,7 @@ class LoginRequest extends FormRequest
     {
         return [
             'username' => ['required', 'string'],
-            'password' => ['required', 'string'],
+            'user_password' => ['required', 'string'],
         ];
     }
 
@@ -41,9 +41,9 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (!Auth::guard('admin')->attempt([
-            'admin_username' => $this->input('username'),
-            'password' => $this->input('password'),
+        if (!Auth::guard('web')->attempt([
+            'username' => $this->input('username'),
+            'password' => $this->input('user_password'),
         ], $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 

@@ -63,9 +63,9 @@ class UserResidentReferenceController extends Controller
 
         Mail::to($validated['email'])->send(new ReferenceNumberMail($refNumber));
 
-        return response()->json([
-            'message' => 'Reference number successfully sent bitch',
-            'reference_number' => $refNumber,
-        ], 200);
+        // return response()->json([
+        //     'message' => 'Reference number successfully sent bitch',
+        //     'reference_number' => $refNumber,
+        // ], 200);
     }
 }

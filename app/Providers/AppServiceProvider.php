@@ -26,8 +26,9 @@ class AppServiceProvider extends ServiceProvider
             if ($request->is('admin') || $request->is('admin/*')) {
                 return route('admin.login');
             }
-
-            return route('user.login');
+            if ($request->is('web') || $request->is('user/*')) {
+                return route('user.login');
+            }
         });
     }
 }

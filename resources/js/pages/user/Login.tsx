@@ -13,7 +13,7 @@ import LoginImage from '../../../assets/login-side-image.svg';
 
 type LoginForm = {
     username: string;
-    password: string;
+    user_password: string;
     remember: boolean;
 };
 
@@ -25,14 +25,14 @@ interface LoginProps {
 export default function Login({ status, canResetPassword }: LoginProps) {
     const { data, setData, post, processing, errors, reset } = useForm<Required<LoginForm>>({
         username: '',
-        password: '',
+        user_password: '',
         remember: false,
     });
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
         post(route('user.login.store'), {
-            onFinish: () => reset('password'),
+            onFinish: () => reset('user_password'),
             onError: (errors) => {
                 console.error('Form submission failed. Validation errors:');
                 Object.entries(errors).forEach(([field, message]) => {
@@ -69,8 +69,8 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                             type="password"
                             tabIndex={2}
                             autoComplete="current-password"
-                            value={data.password}
-                            onChange={(e) => setData('password', e.target.value)}
+                            value={data.user_password}
+                            onChange={(e) => setData('user_password', e.target.value)}
                             placeholder="Enter your password"
                         />
 
@@ -95,7 +95,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                             </div>
                         </div>
 
-                        <InputError message={errors.password} />
+                        <InputError message={errors.user_password} />
                     </div>
 
                     <Button type="submit" variant="primary" className="mt-5 w-full" tabIndex={5} disabled={processing}>

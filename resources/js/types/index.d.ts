@@ -104,6 +104,7 @@ export interface CustomFormField {
     value?: string | Date | null;
     tabIndex?: number;
     autoComplete?: string;
+    name?: string;
     onChange?: (value: string | Date | null) => void;
     errorMessage?: string;
     autofocus?: boolean;

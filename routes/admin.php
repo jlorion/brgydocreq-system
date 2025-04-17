@@ -28,7 +28,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 		Route::get('/forgot-password', [AdminPasswordResetLinkController::class, 'create'])->name('forgot-password');
 	});
 
-	Route::middleware(['auth:admin'])->group(function () {
+	Route::middleware(['auth:admin', 'verified'])->group(function () {
 
 		Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 		Route::get('/document-request', [AdminDocumentRequestController::class, 'index'])->name('document-request');

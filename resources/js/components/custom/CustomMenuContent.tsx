@@ -25,7 +25,7 @@ export function CustomMenuContent({ user, admin }: CustomMenuContentProps) {
                 )}
                 {user && (
                     <DropdownMenuItem asChild>
-                        <Link href={route('user.dashboard')} as='button' prefetch onClick={cleanup} className="flex items-center gap-2 px-1 py-1.5 text-left text-sm w-full cursor-pointer">
+                        <Link href={route('user.settings.profile.edit')} as='button' prefetch onClick={cleanup} className="flex items-center gap-2 px-1 py-1.5 text-left text-sm w-full cursor-pointer">
                             <UserInfo user={user} showEmail={true} />
                         </Link>
                     </DropdownMenuItem>

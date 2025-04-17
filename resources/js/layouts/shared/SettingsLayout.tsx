@@ -13,17 +13,17 @@ import HeadingSmall from '@/components/custom/heading-small';
 const sidebarNavItems: NavItem[] = [
     {
         title: 'Profile',
-        href: route('admin.settings.profile.edit'),
+        href: route('user.settings.profile.edit'),
         icon: CircleUser,
     },
     {
         title: 'Password',
-        href: route('admin.settings.password.edit'),
+        href: route('user.settings.password.edit'),
         icon: KeyRound,
     },
     {
         title: 'Appearance',
-        href: route('admin.settings.appearance'),
+        href: route('user.settings.appearance'),
         icon: SunMoon,
     },
 ];
