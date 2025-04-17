@@ -2,30 +2,18 @@ import { Head, useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 
 import TextLink from '@/components/custom/CustomTextLink';
-import InputError from '@/components/custom/InputError';
 import { Button } from '@/components/ui/button';
-import { DatePicker } from '@/components/ui/date-picker';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import AuthSplitLayout from '@/layouts/shared/AuthSplitLayout';
 import ResidentVerification from '../../../assets/verification-side-image.svg';
-import { FormEventHandler, useEffect } from 'react';
-import { useState } from 'react';
-import { format } from 'date-fns';
+import { FormEventHandler } from 'react';
+import { ResidentVerificationForm } from '@/types';
+import { ResidentReferenceFormFields } from '@/data/ResidentReferenceFormFields';
+import CustomForm from '@/components/custom/CustomFormFields';
+import { toast, Toaster } from 'sonner';
 
-type ResidentVerificationForm = {
-    resident_firstname: string;
-    resident_middlename: string;
-    resident_lastname: string;
-    resident_suffix: string;
-    resident_birthdate: string;
-    email: string;
-    phone_number: string;
-    resident_house_serial_num: string;
-};
 
 const ResidentReference = () => {
-    const { data, setData, post, processing, errors } = useForm<Required<ResidentVerificationForm>>({
+    const { data, setData, post, processing, errors, reset } = useForm<Required<ResidentVerificationForm>>({
         resident_firstname: '',
         resident_middlename: '',
         resident_lastname: '',
@@ -33,24 +21,26 @@ const ResidentReference = () => {
         resident_suffix: '',
         email: '',
         phone_number: '',
-        resident_house_serial_num: '',
+        resident_householdnum: '',
     });
 
-    const submit: FormEventHandler = (e) => {
+    const handleSubmit: FormEventHandler = (e) => {
         e.preventDefault();
         post(route('user.resident-reference.store'), {
+            onSuccess: () => {
+                toast.success('Reference number successfully sent to your email')
+                reset();
+            },
             onError: (errors) => {
-                console.error('Form submission failed. Validation errors:');
-                Object.entries(errors).forEach(([field, message]) => {
-                    console.error(`Field: ${field}, Error: ${message}`);
-                });
+                if (errors.message === 'Record not found') {
+                    toast.error('Record not found.')
+                }
             },
         })
     }
 
-    const [birthDate, setBirthDate] = useState<Date | null>(null)
-
     return (
+
         <AuthSplitLayout
             title="Resident Verification"
             description="Enter your personal details to verify your residency and receive your reference number"
@@ -58,121 +48,11 @@ const ResidentReference = () => {
 
         >
             <Head title="Resident Verification" />
-            <form className="mt-4 flex flex-col gap-6" onSubmit={submit}>
-                <div className="grid gap-6">
-                    <div className="grid grid-cols-2 gap-x-5">
-                        <div className="grid gap-2">
-                            <Label htmlFor="firstname">First name</Label>
-                            <Input
-                                id="firstname"
-                                type="text"
-                                required
-                                autoFocus
-                                tabIndex={1}
-                                autoComplete="firstname"
-                                value={data.resident_firstname}
-                                onChange={(e) => setData('resident_firstname', e.target.value)}
-                                placeholder="Juan"
-                            />
-                            <InputError message={errors.resident_firstname} />
-                        </div>
-                        <div className="grid gap-2">
-                            <Label htmlFor="middlename">Middle name</Label>
-                            <Input
-                                id="middlename"
-                                type="text"
-                                required
-                                tabIndex={2}
-                                autoComplete="middlename"
-                                value={data.resident_middlename}
-                                onChange={(e) => setData('resident_middlename', e.target.value)}
-                                placeholder="Reyes"
-                            />
-                            <InputError message={errors.resident_middlename} />
-                        </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-x-5">
-                        <div className="grid gap-2">
-                            <Label htmlFor="lastname">Last name</Label>
-                            <Input
-                                id="lastname"
-                                type="text"
-                                required
-                                tabIndex={3}
-                                autoComplete="lastname"
-                                value={data.resident_lastname}
-                                onChange={(e) => setData('resident_lastname', e.target.value)}
-                                placeholder="Dela Cruz"
-                            />
-                            <InputError message={errors.resident_lastname} />
-                        </div>
-                        <div className="grid gap-2">
-                            <Label htmlFor="suffix">Suffix</Label>
-                            <Input
-                                id="suffix"
-                                type="text"
-                                tabIndex={4}
-                                autoComplete="suffix"
-                                value={data.resident_suffix}
-                                onChange={(e) => setData('resident_suffix', e.target.value)}
-                                placeholder="Sr."
-                            />
-                            <InputError message={errors.resident_suffix} />
-                        </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-x-5">
-                        <div className="grid gap-2">
-                            <Label htmlFor="email">Email Address</Label>
-                            <Input
-                                id="email"
-                                type="email"
-                                required
-                                tabIndex={5}
-                                autoComplete="email"
-                                value={data.email}
-                                onChange={(e) => setData('email', e.target.value)}
-                                placeholder="email@example.com"
-                            />
-                            <InputError message={errors.email} />
-                        </div>
-                        <div className="grid gap-2">
-                            <Label htmlFor="birthdate">Birthdate</Label>
-                            <DatePicker tabIndex={4} aria-required value={birthDate} onChange={(date) => {
-                                setBirthDate(date);
-                                setData('resident_birthdate', date ? format(date, 'yyyy-MM-dd') : '');
-                            }} />
-                        </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-x-5">
-                        <div className="grid gap-2">
-                            <Label htmlFor="phonenum">Phone number</Label>
-                            <Input
-                                id="phonenum"
-                                type="text"
-                                required
-                                tabIndex={6}
-                                autoComplete="phone_number"
-                                value={data.phone_number}
-                                onChange={(e) => setData('phone_number', e.target.value)}
-                                placeholder="09074245108"
-                            />
-                            <InputError message={errors.phone_number} />
-                        </div>
-                        <div className="grid gap-2">
-                            <Label htmlFor="house_serial_num">Building Serial Number</Label>
-                            <Input
-                                id="house_serial_num"
-                                type="text"
-                                required
-                                tabIndex={7}
-                                autoComplete="house_serial_num"
-                                value={data.resident_house_serial_num}
-                                onChange={(e) => setData('resident_house_serial_num', e.target.value)}
-                                placeholder="0025"
-                            />
-                            <InputError message={errors.resident_house_serial_num} />
-                        </div>
-                    </div>
+            <Toaster richColors position="top-right" />
+            <form className="mt-4 flex flex-col gap-6" onSubmit={handleSubmit}>
+                <div className="grid gap-5">
+
+                    <CustomForm fields={ResidentReferenceFormFields(data, setData, errors)} className='grid grid-cols-2 gap-3' />
 
                     <Button type="submit" variant="primary" className="mt-5 w-full" tabIndex={8} disabled={processing}>
                         {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
