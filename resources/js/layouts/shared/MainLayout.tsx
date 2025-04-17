@@ -20,8 +20,8 @@ const landingMainNavItems: NavItem[] = [
 ];
 
 const landingRightNavItems: NavItem[] = [
-    { title: 'Sign up', href: route('auth.register') },
-    { title: 'Login', href: route('auth.login') },
+    { title: 'Sign up', href: route('user.register') },
+    { title: 'Login', href: route('user.login') },
 ];
 
 const leftNavItems = () => {

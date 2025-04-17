@@ -38,7 +38,7 @@ const ResidentReference = () => {
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        post(route('auth.resident-reference.store'), {
+        post(route('user.resident-reference.store'), {
             onError: (errors) => {
                 console.error('Form submission failed. Validation errors:');
                 Object.entries(errors).forEach(([field, message]) => {
@@ -159,7 +159,7 @@ const ResidentReference = () => {
                             <InputError message={errors.phone_number} />
                         </div>
                         <div className="grid gap-2">
-                            <Label htmlFor="house_serial_num">House or Building Serial Number</Label>
+                            <Label htmlFor="house_serial_num">Building Serial Number</Label>
                             <Input
                                 id="house_serial_num"
                                 type="text"
@@ -182,7 +182,7 @@ const ResidentReference = () => {
 
                 <div className="text-muted-foreground text-center text-sm">
                     Already have a reference number?{' '}
-                    <TextLink href={route('auth.register')} tabIndex={9} >
+                    <TextLink href={route('user.register')} tabIndex={9} >
                         Sign up
                     </TextLink>
                 </div>

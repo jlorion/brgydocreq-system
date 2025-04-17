@@ -1,12 +1,12 @@
 import { UserInfo } from '@/components/custom/UserInfo';
 import { DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
 import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
-import { type User } from '@/types';
+import { type Admin } from '@/types';
 import { Link } from '@inertiajs/react';
 import { LogOut, Settings } from 'lucide-react';
 
 interface CustomMenuContentProps {
-    user: User;
+    user: Admin;
 }
 
 export function CustomMenuContent({ user }: CustomMenuContentProps) {
@@ -32,7 +32,7 @@ export function CustomMenuContent({ user }: CustomMenuContentProps) {
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-                <Link className="block w-full cursor-pointer" method="post" href={route('logout')} as="button" onClick={cleanup}>
+                <Link className="block w-full cursor-pointer" method="post" href={route('admin.logout')} as="button" onClick={cleanup}>
                     <LogOut className="mr-2" />
                     Log out
                 </Link>

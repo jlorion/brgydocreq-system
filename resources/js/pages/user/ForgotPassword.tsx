@@ -4,7 +4,7 @@ import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
 
 import TextLink from '@/components/custom/CustomTextLink';
-import InputError from '@/components/custom/input-error';
+import InputError from '@/components/custom/InputError';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -57,7 +57,7 @@ export default function ForgotPassword({ status }: { status?: string }) {
 
                 <div className="text-muted-foreground space-x-1 text-center text-sm">
                     <span>Or, return to</span>
-                    <TextLink tabIndex={3} href={route('auth.login')}>
+                    <TextLink tabIndex={3} href={route('user.login')}>
                         log in
                     </TextLink>
                 </div>

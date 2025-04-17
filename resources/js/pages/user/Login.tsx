@@ -31,7 +31,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        post(route('auth.login.store'), {
+        post(route('user.login.store'), {
             onFinish: () => reset('password'),
             onError: (errors) => {
                 console.error('Form submission failed. Validation errors:');
@@ -52,7 +52,6 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                         <Input
                             id="username"
                             type="text"
-                            required
                             autoFocus
                             tabIndex={1}
                             autoComplete="username"
@@ -68,7 +67,6 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                         <Input
                             id="password"
                             type="password"
-                            required
                             tabIndex={2}
                             autoComplete="current-password"
                             value={data.password}
@@ -89,11 +87,11 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                             </div>
 
                             <div className="flex items-center">
-                                {canResetPassword && (
-                                    <TextLink href={route('password.request')} className="text-sm" tabIndex={4}>
+                                {
+                                    <TextLink href={route('user.forgot-password')} className="text-sm" tabIndex={4}>
                                         Forgot password?
                                     </TextLink>
-                                )}
+                                }
                             </div>
                         </div>
 
@@ -108,7 +106,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
 
                 <div className="text-muted-foreground text-center text-sm">
                     Don't have an account?{' '}
-                    <TextLink href={route('auth.register')} tabIndex={6}>
+                    <TextLink href={route('user.register')} tabIndex={6}>
                         Sign up
                     </TextLink>
                 </div>

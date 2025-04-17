@@ -3,6 +3,7 @@ import type { Config } from 'ziggy-js';
 
 export interface Auth {
     user: User;
+    admin: Admin;
 }
 
 export interface BreadcrumbItem {
@@ -23,22 +24,27 @@ export interface NavItem {
 }
 
 export interface SharedData {
-    name: string;
-    quote: { message: string; author: string };
     auth: Auth;
     ziggy: Config & { location: string };
     [key: string]: unknown;
 }
 
 export interface User {
-    id: number;
     username: string;
-    resident_firstname: string;
+    firstname: string;
     email: string;
     avatar?: string;
     email_verified_at: string | null;
     created_at: string;
     updated_at: string;
+    [key: string]: unknown; // This allows for additional properties...
+}
+export interface Admin {
+    admin_id: string;
+    admin_username: string;
+    admin_email: string;
+    admin_photopath?: string;
+    admin_role: string;
     [key: string]: unknown; // This allows for additional properties...
 }
 
@@ -47,7 +53,7 @@ export interface Role {
     role_name: string;
 }
 
-export interface  RoleItems {
+export interface RoleItems {
     roles: Role[];
     [key: string]: any; // Add an index signature to satisfy the constraint
 }

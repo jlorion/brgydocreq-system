@@ -32,7 +32,7 @@ export default function Register() {
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        post(route('auth.register.store'), {
+        post(route('user.register.store'), {
             onFinish: () => reset('password', 'password_confirmation'),
         });
     };
@@ -108,7 +108,7 @@ export default function Register() {
                             disabled={processing}
                             placeholder="Enter your reference number"
                         />
-                        <TextLink href={route('auth.resident-reference')} tabIndex={5} className="text-s3 flex justify-end text-sm hover:underline">
+                        <TextLink href={route('user.resident-reference')} tabIndex={5} className="text-s3 flex justify-end text-sm hover:underline">
                             Request Reference Number
                         </TextLink>
                         <InputError message={errors.reference_number} />
@@ -132,7 +132,7 @@ export default function Register() {
 
                 <div className="text-muted-foreground text-center text-sm">
                     Already have an account?{' '}
-                    <TextLink href={route('auth.login')} tabIndex={9}>
+                    <TextLink href={route('user.login')} tabIndex={9}>
                         Log in
                     </TextLink>
                 </div>

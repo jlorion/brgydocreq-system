@@ -16,7 +16,7 @@ class ResidentReferenceController extends Controller
 
     public function create()
     {
-        return Inertia::render('auth/ResidentReference');
+        return Inertia::render('user/ResidentReference');
     }
 
     public function store(Request $request)

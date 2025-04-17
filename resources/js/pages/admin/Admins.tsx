@@ -123,7 +123,7 @@ const Admins = () => {
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        post(route('auth.admin-invite'), {
+        post(route('admin.invite'), {
             onError: (errors) => {
                 console.error('Form submission failed. Validation errors:');
                 Object.entries(errors).forEach(([field, message]) => {

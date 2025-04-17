@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Admin extends Authenticatable
 
 {
+    protected $primaryKey = 'admin_id';
+
     protected $fillable = [
         'officer_id',
         'role_id',
@@ -18,5 +20,28 @@ class Admin extends Authenticatable
         'admin_photopath'
     ];
 
-    
+
+    protected $hidden = [
+        'admin_password',
+        'remember_token',
+    ];
+
+
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'admin_password' => 'hashed',
+        ];
+    }
+
+    public function getAuthPassword()
+    {
+        return $this->admin_password;
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'role_id', 'role_id');
+    }
 }
