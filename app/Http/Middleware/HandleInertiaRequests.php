@@ -38,17 +38,28 @@ class HandleInertiaRequests extends Middleware
     {
 
         $admin = $request->user('admin');
+        $user = $request->user('web');
 
 
         if ($admin) {
             $admin->load('role');
         }
 
+        if ($user) {
+            $user->load('resident');
+        }
+
         return [
             ...parent::share($request),
             'name' => config('app.name'),
             'auth' => [
-                'user' => $request->user('web'),
+                'user' => $user ? [
+                    'user_id' => $user->user_id,
+                    'username' => $user->username,
+                    'user_email' => $user->user_email,
+                    'user_firstname' => $user->resident->resident_firstname,
+                    'user_photopath' => $user->user_photopath
+                ] : null,
                 'admin' => $admin ? [
                     'admin_id' => $admin->admin_id,
                     'admin_username' => $admin->admin_username,

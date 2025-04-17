@@ -36,4 +36,5 @@ class Resident extends Model
     {
         return $this->belongsTo(Status::class, 'status_id', 'status_id');
     }
+
 }
