@@ -1,5 +1,5 @@
 import InputError from '@/components/custom/InputError';
-import SettingsLayout from '@/layouts/shared/SettingsLayout';
+import AdminSettingsLayout from '@/layouts/admin/AdminSettingsLayout';
 import { type BreadcrumbItem } from '@/types';
 import { Transition } from '@headlessui/react';
 import { Head, useForm } from '@inertiajs/react';
@@ -51,7 +51,7 @@ export default function Password() {
         <>
             <Head title="Password settings" />
 
-            <SettingsLayout title='Change Password'>
+            <AdminSettingsLayout title='Change Password'>
                 <div className="space-y-6">
 
                     <form onSubmit={updatePassword} className="space-y-6">
@@ -120,7 +120,7 @@ export default function Password() {
                         </div>
                     </form>
                 </div>
-            </SettingsLayout>
+            </AdminSettingsLayout>
         </>
     );
 }

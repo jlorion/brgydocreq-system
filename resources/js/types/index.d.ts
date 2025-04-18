@@ -83,6 +83,19 @@ export interface AdminRegisterForm {
     [key: string]: any;
 }
 
+export interface ResidentVerificationForm {
+    resident_firstname: string;
+    resident_middlename: string;
+    resident_lastname: string;
+    resident_suffix: string;
+    resident_birthdate: string;
+    resident_householdnum: string;
+    resident_birthdate: Date | null;
+    email: string;
+    phone_number: string;
+    
+}
+
 export interface CustomFormField {
     id?: string;
     label?: string;
@@ -91,6 +104,7 @@ export interface CustomFormField {
     value?: string | Date | null;
     tabIndex?: number;
     autoComplete?: string;
+    name?: string;
     onChange?: (value: string | Date | null) => void;
     errorMessage?: string;
     autofocus?: boolean;

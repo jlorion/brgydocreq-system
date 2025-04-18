@@ -1,5 +1,5 @@
 import InputError from '@/components/custom/InputError';
-import SettingsLayout from '@/layouts/shared/SettingsLayout';
+import UserSettingsLayout from '@/layouts/user/UserSettingsLayout';
 import { type BreadcrumbItem } from '@/types';
 import { Transition } from '@headlessui/react';
 import { Head, useForm } from '@inertiajs/react';
@@ -49,12 +49,10 @@ export default function Password() {
 
     return (
         <>
-            <Head title="Profile settings" />
+            <Head title="Password settings" />
 
-            <SettingsLayout>
+            <UserSettingsLayout title='Change password'>
                 <div className="space-y-6">
-                    <HeadingSmall title="Update password" description="Ensure your account is using a long, random password to stay secure" />
-
                     <form onSubmit={updatePassword} className="space-y-6">
                         <div className="grid gap-2">
                             <Label htmlFor="current_password">Current password</Label>
@@ -121,7 +119,7 @@ export default function Password() {
                         </div>
                     </form>
                 </div>
-            </SettingsLayout>
+            </UserSettingsLayout>
         </>
     );
 }

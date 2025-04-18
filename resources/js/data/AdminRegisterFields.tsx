@@ -14,6 +14,7 @@ export const PersonalDetails = (data: AdminRegisterForm, setData: (key: keyof Ad
 			type: 'text',
 			id: 'first_name',
 			placeholder: 'John',
+			autofocus: true,
 			value: data.officer_firstname,
 			tabIndex: 1,
 			autoComplete: 'given-name',
@@ -94,8 +95,8 @@ export const AccountDetails = (data: AdminRegisterForm, setData: (key: keyof Adm
 			value: data.admin_email,
 			tabIndex: 7,
 			autoComplete: 'email',
-			onChange: stringSetter('email'),
-			errorMessage: errors.email,
+			onChange: stringSetter('admin_email'),
+			errorMessage: errors.admin_email,
 		},
 		{
 			label: 'Phone Number',

@@ -12,8 +12,8 @@ import AuthSplitLayout from '@/layouts/shared/AuthSplitLayout';
 import LoginImage from '../../../assets/login-side-image.svg';
 
 type LoginForm = {
-	username: string;
-	password: string;
+	admin_username: string;
+	admin_password: string;
 	remember: boolean;
 };
 
@@ -24,15 +24,15 @@ interface LoginProps {
 
 export default function Login({ status, canResetPassword }: LoginProps) {
 	const { data, setData, post, processing, errors, reset } = useForm<Required<LoginForm>>({
-		username: '',
-		password: '',
+		admin_username: '',
+		admin_password: '',
 		remember: false,
 	});
 
 	const submit: FormEventHandler = (e) => {
 		e.preventDefault();
 		post(route('admin.login.store'), {
-			onFinish: () => reset('password'),
+			onFinish: () => reset('admin_password'),
 			onError: (errors) => {
 				console.error('Form submission failed. Validation errors:');
 				Object.entries(errors).forEach(([field, message]) => {
@@ -57,11 +57,11 @@ export default function Login({ status, canResetPassword }: LoginProps) {
 							autoFocus
 							tabIndex={1}
 							autoComplete="username"
-							value={data.username}
-							onChange={(e) => setData('username', e.target.value)}
+							value={data.admin_username}
+							onChange={(e) => setData('admin_username', e.target.value)}
 							placeholder="Enter your username"
 						/>
-						<InputError message={errors.username} />
+						<InputError message={errors.admin_username} />
 					</div>
 
 					<div className="grid gap-2">
@@ -71,11 +71,10 @@ export default function Login({ status, canResetPassword }: LoginProps) {
 							type="password"
 							tabIndex={2}
 							autoComplete="current-password"
-							value={data.password}
-							onChange={(e) => setData('password', e.target.value)}
+							value={data.admin_password}
+							onChange={(e) => setData('admin_password', e.target.value)}
 							placeholder="Enter your password"
 						/>
-
 						<div className="flex items-center justify-between">
 							<div className="ml-2 flex items-center space-x-3">
 								<Checkbox
@@ -97,7 +96,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
 							</div>
 						</div>
 
-						<InputError message={errors.password} />
+						<InputError message={errors.admin_password} />
 					</div>
 
 					<Button type="submit" variant="primary" className="mt-5 w-full" tabIndex={5} disabled={processing}>

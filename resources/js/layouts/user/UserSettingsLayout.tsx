@@ -2,30 +2,38 @@ import { CustomSidebar } from '@/components/custom/CustomSidebar';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
-import { cn } from '@/lib/utils';
 import { type NavItem } from '@/types';
-import { Head, Link } from '@inertiajs/react';
-import { type PropsWithChildren } from 'react';
-import { CircleUser, KeyRound, SunMoon } from 'lucide-react';
+import { Bell, CircleUser, KeyRound, SunMoon, FileInput } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import HeadingSmall from '@/components/custom/heading-small';
 
 const sidebarNavItems: NavItem[] = [
     {
         title: 'Profile',
-        href: route('admin.settings.profile.edit'),
+        href: route('user.settings.profile.edit'),
         icon: CircleUser,
     },
     {
-        title: 'Password',
-        href: route('admin.settings.password.edit'),
-        icon: KeyRound,
+        title: 'Document Request',
+        href: route('user.settings.document-request'),
+        icon: FileInput,
     },
     {
+        title: 'Notifications',
+        href: route('user.settings.notification'),
+        icon: Bell,
+    },
+    {
+        title: 'Password',
+        href: route('user.settings.password.edit'),
+        icon: KeyRound,
+    },
+
+    {
         title: 'Appearance',
-        href: route('admin.settings.appearance'),
+        href: route('user.settings.appearance'),
         icon: SunMoon,
     },
+
 ];
 
 const temp =
@@ -36,12 +44,12 @@ const temp =
         </Avatar>
     </div>
 
-interface SettingsLayoutProps {
+interface UserSettingsLayoutProps {
     children: React.ReactNode;
     title: string;
 }
 
-export default function SettingsLayout({ children, title }: SettingsLayoutProps) {
+export default function UserSettingsLayout({ children, title }: UserSettingsLayoutProps) {
 
     return (
         <SidebarProvider>

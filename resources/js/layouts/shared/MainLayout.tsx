@@ -1,5 +1,5 @@
 import CustomFooter from '@/components/custom/CustomFooter';
-import { CustomHeader } from '@/components/custom/CustomHeader';
+import { CustomUserHeader } from '@/components/custom/CustomUserHeader';
 import CustomIcon from '@/components/custom/CustomIcon';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
@@ -36,7 +36,7 @@ const MainLayout = ({ children, className }: MainLayoutProps) => {
     return (
         <>
             <div className="box-border h-full w-full">
-                <CustomHeader className='px-20' mainNavItems={landingMainNavItems} rightNavItems={landingRightNavItems} leftNavItems={leftNavItems()} />
+                <CustomUserHeader className='px-20' mainNavItems={landingMainNavItems} rightNavItems={landingRightNavItems} leftNavItems={leftNavItems()} />
                 <main className={`z-0 flex flex-grow flex-col ${className}`}>{children}</main>
                 <footer>
                     <CustomFooter />
