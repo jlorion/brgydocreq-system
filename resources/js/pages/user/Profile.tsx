@@ -9,7 +9,7 @@ import InputError from '@/components/custom/InputError';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import SettingsLayout from '@/layouts/shared/SettingsLayout';
+import UserSettingsLayout from '@/layouts/user/UserSettingsLayout';
 
 
 interface ProfileForm {
@@ -36,7 +36,7 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
     return (
         <>
             <Head title="Profile settings" />
-            <SettingsLayout title='Profile information'>
+            <UserSettingsLayout title='Profile information'>
                 <div className="space-y-6">
 
                     <form onSubmit={submit} className="space-y-6">
@@ -112,7 +112,7 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
                 </div>
 
                 <DeleteUser />
-            </SettingsLayout>
+            </UserSettingsLayout>
         </>
     );
 }

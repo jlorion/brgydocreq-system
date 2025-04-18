@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\User\UserAuthSessionController;
 use App\Http\Controllers\User\UserConfirmablePasswordController;
+use App\Http\Controllers\User\UserDocumentReqController;
 use App\Http\Controllers\User\UserEmailVerificationNotificationController;
 use App\Http\Controllers\User\UserEmailVerificationPromptController;
 use App\Http\Controllers\User\UserLanding;
 use App\Http\Controllers\User\UserNewPasswordController;
+use App\Http\Controllers\User\UserNotificationController;
 use App\Http\Controllers\User\UserPasswordController;
 use App\Http\Controllers\User\UserPasswordResetLinkController;
 use App\Http\Controllers\User\UserProfileController;
@@ -66,12 +68,14 @@ Route::prefix('user')->name('user.')->group(function () {
 			Route::get('/profile', [UserProfileController::class, 'edit'])->name('profile.edit');
 			Route::patch('/profile', [UserProfileController::class, 'update'])->name('profile.update');
 			Route::delete('/profile', [UserProfileController::class, 'destroy'])->name('profile.destroy');
+			Route::get('/document-request', [UserDocumentReqController::class, 'index'])->name('document-request');
+			Route::get('/notification', [UserNotificationController::class, 'index'])->name('notification');
 
 			Route::get('/password', [UserPasswordController::class, 'edit'])->name('password.edit');
 			Route::put('/password', [UserPasswordController::class, 'update'])->name('password.update');
 
 			Route::get('/appearance', function () {
-				return Inertia::render('admin/Appearance');
+				return Inertia::render('user/Appearance');
 			})->name('appearance');
 		});
 	});

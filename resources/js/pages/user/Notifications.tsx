@@ -1,8 +1,11 @@
+import UserSettingsLayout from '@/layouts/user/UserSettingsLayout'
 import React from 'react'
 
 const Notifications = () => {
   return (
-	<div>Notifications</div>
+    <UserSettingsLayout title='Notifications'>
+      <div>Nigga</div>
+    </UserSettingsLayout>
   )
 }
 
