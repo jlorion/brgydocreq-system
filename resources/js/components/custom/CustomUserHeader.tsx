@@ -9,12 +9,12 @@ import { useInitials } from '@/hooks/UseInitials';
 import { UseHeaderScroll } from '@/hooks/UseHeaderScroll';
 import { cn } from '@/lib/utils';
 import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';
-import { Link, usePage } from '@inertiajs/react';
+import { Link, router, usePage } from '@inertiajs/react';
 import { Bell, ChevronDown, FileUser, Menu } from 'lucide-react';
 import { CustomMenuContent } from './CustomMenuContent';
-import React from 'react';
+import React, { useEffect } from 'react';
 
-interface CustomHeaderProps {
+interface CustomUserHeaderProps {
     breadcrumbs?: BreadcrumbItem[];
     mainNavItems?: NavItem[];
     rightNavItems?: NavItem[];
@@ -22,7 +22,7 @@ interface CustomHeaderProps {
     className?: string;
 }
 
-export function CustomHeader({ breadcrumbs = [], mainNavItems = [], rightNavItems = [], leftNavItems, className }: CustomHeaderProps) {
+export function CustomUserHeader({ breadcrumbs = [], mainNavItems = [], rightNavItems = [], leftNavItems, className }: CustomUserHeaderProps) {
     const { auth } = usePage<SharedData>().props;
     const getInitials = useInitials();
     const { headerProps } = UseHeaderScroll();
@@ -141,36 +141,7 @@ export function CustomHeader({ breadcrumbs = [], mainNavItems = [], rightNavItem
                             </div>
 
                         </>
-                    ) : auth.admin ? (
-                        <>
-                            <div className="ml-auto flex items-center gap-x-10">
-                                <Bell className="h-8 cursor-pointer hover:text-s3" />
-                                <span className='bg-red-600 text-white rounded-2xl px-[7px] py-[2px] text-xs absolute mb-6 ml-3 cursor-pointer'>3</span>
-                                <DropdownMenu>
-                                    <DropdownMenuTrigger asChild>
-                                        <Button variant="ghost" className="flex items-center gap-x-5">
-                                            <Avatar className="size-8 overflow-hidden rounded-full">
-                                                <AvatarImage src={auth.admin.admin_photopath} alt={auth.admin.admin_username} />
-                                                <AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
-                                                    {getInitials(auth.admin.admin_username)}
-                                                </AvatarFallback>
-                                            </Avatar>
-                                            <div className="flex flex-col items-start gap-1 text-sm">
-                                                {auth.admin.admin_username}
-                                                <span className="text-xs">{auth.admin.admin_role}</span>
-                                            </div>
-                                            <ChevronDown className="h-4 w-4" />
-                                        </Button>
-                                    </DropdownMenuTrigger>
-                                    <DropdownMenuContent className="w-56" align="end">
-                                        <CustomMenuContent admin={auth.admin} />
-                                    </DropdownMenuContent>
-                                </DropdownMenu>
-                            </div>
-
-                        </>
                     ) : (
-
                         <div className="space-x-2 hidden lg:flex">
                             {rightNavItems.map((item, index) => (
                                 <Link prefetch href={item.href} key={index}>

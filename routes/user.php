@@ -4,6 +4,7 @@ use App\Http\Controllers\User\UserAuthSessionController;
 use App\Http\Controllers\User\UserConfirmablePasswordController;
 use App\Http\Controllers\User\UserEmailVerificationNotificationController;
 use App\Http\Controllers\User\UserEmailVerificationPromptController;
+use App\Http\Controllers\User\UserLanding;
 use App\Http\Controllers\User\UserNewPasswordController;
 use App\Http\Controllers\User\UserPasswordController;
 use App\Http\Controllers\User\UserPasswordResetLinkController;

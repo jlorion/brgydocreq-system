@@ -1,4 +1,4 @@
-import { CustomHeader } from '@/components/custom/CustomHeader';
+import { CustomAdminHeader } from '@/components/custom/CustomAdminHeader';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import React from 'react'
 import { LoaderIcon, LayoutDashboard, FileUser, Archive, FileText, Users, Shield } from 'lucide-react';
@@ -33,7 +33,7 @@ const AdminLayout = ({ children, className, title }: AdminLayoutProps) => {
 				<CustomSidebar navItems={navItems} navTitle={<CustomIcon imgSrc={WebLogo} />
 				} />
 				<SidebarInset>
-					<CustomHeader className='px-5' leftNavItems={
+					<CustomAdminHeader className='px-5' leftNavItems={
 						<> <SidebarTrigger />
 							<h1 className='font-semibold text-lg '>{title}</h1>
 						</>}
