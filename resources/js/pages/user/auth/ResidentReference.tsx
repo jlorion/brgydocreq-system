@@ -4,7 +4,7 @@ import { LoaderCircle } from 'lucide-react';
 import TextLink from '@/components/custom/CustomTextLink';
 import { Button } from '@/components/ui/button';
 import AuthSplitLayout from '@/layouts/shared/AuthSplitLayout';
-import ResidentVerification from '../../../assets/verification-side-image.svg';
+import ResidentVerification from '../../../../assets/verification-side-image.svg';
 import { FormEventHandler } from 'react';
 import { ResidentVerificationForm } from '@/types';
 import { ResidentReferenceFormFields } from '@/data/ResidentReferenceFormFields';

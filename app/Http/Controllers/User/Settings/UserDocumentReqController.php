@@ -9,6 +9,6 @@ use Inertia\Inertia;
 class UserDocumentReqController extends Controller
 {
     public function index(){
-        return Inertia::render('user/DocumentRequest');
+        return Inertia::render('user/settings/DocumentRequest');
     }
 }

@@ -10,7 +10,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthSplitLayout from '@/layouts/shared/AuthSplitLayout';
-import RegisterImage from '../../../assets/register-side-image.svg';
+import RegisterImage from '../../../../assets/register-side-image.svg';
 import TermsCondition from '@/components/custom/TermsCondition';
 
 type RegisterForm = {

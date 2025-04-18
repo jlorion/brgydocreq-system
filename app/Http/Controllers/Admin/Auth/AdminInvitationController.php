@@ -76,7 +76,7 @@ class AdminInvitationController extends Controller
             abort(403, 'Invalid or expired invitation token.');
         }
 
-        return Inertia::render('admin/Register', [
+        return Inertia::render('admin/auth/Register', [
             'invite_token' => $inviteToken,
             'email' => $email,
             'role_name' => $roleName,

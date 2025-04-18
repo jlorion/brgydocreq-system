@@ -18,7 +18,7 @@ class AdminPasswordController extends Controller
      */
     public function edit(Request $request): Response
     {
-        return Inertia::render('admin/Password', [
+        return Inertia::render('admin/settings/Password', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => $request->session()->get('status'),
         ]);

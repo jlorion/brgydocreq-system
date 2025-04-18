@@ -51,7 +51,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 			Route::put('/password', [AdminPasswordController::class, 'update'])->name('password.update');
 
 			Route::get('/appearance', function () {
-				return Inertia::render('admin/Appearance');
+				return Inertia::render('admin/settings/Appearance');
 			})->name('appearance');
 		});
 	});

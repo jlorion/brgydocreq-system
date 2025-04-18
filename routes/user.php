@@ -74,7 +74,7 @@ Route::prefix('user')->name('user.')->group(function () {
 			Route::put('/password', [UserPasswordController::class, 'update'])->name('password.update');
 
 			Route::get('/appearance', function () {
-				return Inertia::render('user/Appearance');
+				return Inertia::render('user/settings/Appearance');
 			})->name('appearance');
 		});
 	});
