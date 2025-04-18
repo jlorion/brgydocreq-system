@@ -2,17 +2,17 @@
 
 use App\Http\Controllers\Admin\AdminAdminsController;
 use App\Http\Controllers\Admin\AdminArchivesController;
-use App\Http\Controllers\Admin\AdminAuthSessionController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminDocumentRequestController;
 use App\Http\Controllers\Admin\AdminDocumentsController;
-use App\Http\Controllers\Admin\AdminInvitationController;
 use App\Http\Controllers\Admin\AdminOnProcessController;
-use App\Http\Controllers\Admin\AdminPasswordController;
-use App\Http\Controllers\Admin\AdminPasswordResetLinkController;
-use App\Http\Controllers\Admin\AdminProfileController;
-use App\Http\Controllers\Admin\AdminRegistrationController;
 use App\Http\Controllers\Admin\AdminResidentsController;
+use App\Http\Controllers\Admin\Auth\AdminAuthSessionController;
+use App\Http\Controllers\Admin\Auth\AdminInvitationController;
+use App\Http\Controllers\Admin\Auth\AdminPasswordResetLinkController;
+use App\Http\Controllers\Admin\Settings\AdminPasswordController;
+use App\Http\Controllers\Admin\Settings\AdminProfileController;
+use App\Http\Controllers\Admin\Auth\AdminRegistrationController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 

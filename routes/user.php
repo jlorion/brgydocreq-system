@@ -1,19 +1,18 @@
 <?php
 
-use App\Http\Controllers\User\UserAuthSessionController;
-use App\Http\Controllers\User\UserConfirmablePasswordController;
-use App\Http\Controllers\User\UserDocumentReqController;
-use App\Http\Controllers\User\UserEmailVerificationNotificationController;
-use App\Http\Controllers\User\UserEmailVerificationPromptController;
-use App\Http\Controllers\User\UserLanding;
-use App\Http\Controllers\User\UserNewPasswordController;
-use App\Http\Controllers\User\UserNotificationController;
-use App\Http\Controllers\User\UserPasswordController;
-use App\Http\Controllers\User\UserPasswordResetLinkController;
-use App\Http\Controllers\User\UserProfileController;
-use App\Http\Controllers\User\UserRegistrationController;
-use App\Http\Controllers\User\UserResidentReferenceController;
-use App\Http\Controllers\User\UserVerifyEmailController;
+use App\Http\Controllers\User\Auth\UserAuthSessionController;
+use App\Http\Controllers\User\Auth\UserConfirmablePasswordController;
+use App\Http\Controllers\User\Auth\UserEmailVerificationNotificationController;
+use App\Http\Controllers\User\Auth\UserEmailVerificationPromptController;
+use App\Http\Controllers\User\Auth\UserNewPasswordController;
+use App\Http\Controllers\User\Auth\UserPasswordResetLinkController;
+use App\Http\Controllers\User\Auth\UserRegistrationController;
+use App\Http\Controllers\User\Auth\UserResidentReferenceController;
+use App\Http\Controllers\User\Auth\UserVerifyEmailController;
+use App\Http\Controllers\User\Settings\UserDocumentReqController;
+use App\Http\Controllers\User\Settings\UserNotificationController;
+use App\Http\Controllers\User\Settings\UserPasswordController;
+use App\Http\Controllers\User\Settings\UserProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 

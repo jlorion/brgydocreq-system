@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\User\Settings;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -11,14 +11,14 @@ use Illuminate\Validation\Rules\Password;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class AdminPasswordController extends Controller
+class UserPasswordController extends Controller
 {
     /**
      * Show the user's password settings page.
      */
     public function edit(Request $request): Response
     {
-        return Inertia::render('admin/Password', [
+        return Inertia::render('user/Password', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => $request->session()->get('status'),
         ]);

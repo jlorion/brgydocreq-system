@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\User\Auth;
 
 use App\Mail\ReferenceNumberMail;
 use App\Models\Resident;
