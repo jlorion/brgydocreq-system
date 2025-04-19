@@ -44,4 +44,9 @@ class Admin extends Authenticatable
     {
         return $this->belongsTo(Role::class, 'role_id', 'role_id');
     }
+
+    public function barangayOfficer()
+    {
+        return $this->belongsTo(BarangayOfficer::class, 'officer_id', 'officer_id');
+    }
 }

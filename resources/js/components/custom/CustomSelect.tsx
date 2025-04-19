@@ -6,7 +6,7 @@ interface CustomSelectProps {
 	items: { value: string, label: string }[];
 	className?: string;
 	onChange?: (value: string) => void;
-	value?: string;
+	value: string;
 }
 
 const CustomSelect = ({ placeholder, items = [], className, onChange, value, }: CustomSelectProps) => {

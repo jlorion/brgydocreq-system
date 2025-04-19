@@ -25,6 +25,7 @@ export interface NavItem {
 
 export interface SharedData {
     auth: Auth;
+    admins: AdminFetch[];
     ziggy: Config & { location: string };
     [key: string]: unknown;
 }
@@ -53,7 +54,25 @@ export interface Role {
 
 export interface RoleItems {
     roles: Role[];
-    [key: string]: any; // Add an index signature to satisfy the constraint
+    [key: string]: unknown; // This allows for additional properties...
+}
+
+export interface AdminFetch {
+    admin_id: number;
+    admin_username: string;
+    admin_email: string;
+    admin_photopath: string;
+    admin_role: string;
+    officer_firstname: string;
+    officer_middlename: string;
+    officer_lastname: string;
+    officer_suffix: string;
+    officer_birthdate: string;
+    officer_precinct: string;
+    officer_householdnum: string;
+    officer_position: string;
+    officer_gender: string;
+    officer_purok: string;
 }
 
 export interface Resident {
@@ -93,7 +112,6 @@ export interface ResidentVerificationForm {
     resident_birthdate: Date | null;
     email: string;
     phone_number: string;
-    
 }
 
 export interface CustomFormField {
@@ -112,4 +130,9 @@ export interface CustomFormField {
     additionalProps?: Record<string, any>;
     selectItems?: { value: string; label: string }[];
     disabled?: boolean;
+}
+
+export interface InviteForm {
+    email: string;
+    role: string;
 }

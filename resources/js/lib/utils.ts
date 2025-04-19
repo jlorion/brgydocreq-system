@@ -1,4 +1,3 @@
-import { AdminRegisterForm } from '@/types';
 import { type ClassValue, clsx } from 'clsx';
 import { format } from 'date-fns';
 import { twMerge } from 'tailwind-merge';
@@ -22,7 +21,7 @@ export const createStringSetter = <T extends Record<string, any>>(setData: (key:
     };
 };
 
-export const createDateSetter = <T extends Record<string, any>> (setData: (key: keyof T, value: string) => void) => {
+export const createDateSetter = <T extends Record<string, any>>(setData: (key: keyof T, value: string) => void) => {
     return (key: keyof T) => (value: string | Date | null) => {
         if (value instanceof Date) {
             const formattedDate = format(value, 'yyyy-MM-dd');

@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class BarangayOfficer extends Model
 {
     use HasFactory;
+
+    protected $primaryKey = 'officer_id';
     /**
      * The attributes that are mass assignable.
      *
@@ -36,5 +38,9 @@ class BarangayOfficer extends Model
     public function status()
     {
         return $this->belongsTo(Status::class, 'status_id', 'status_id');
+    }
+    public function admin()
+    {
+        return $this->hasOne(Admin::class, 'officer_id', 'officer_id');
     }
 }

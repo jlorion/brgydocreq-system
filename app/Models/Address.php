@@ -7,7 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Address extends Model
 {
+
     use HasFactory;
+
+    protected $primaryKey = 'address_id';
     /**
      * The attributes that are mass assignable.
      *
@@ -23,5 +26,9 @@ class Address extends Model
     public function resident()
     {
         return $this->hasMany(Resident::class, 'address_id', 'address_id');
+    }
+    public function barangayOfficer()
+    {
+        return $this->hasMany(BarangayOfficer::class, 'address_id', 'address_id');
     }
 }

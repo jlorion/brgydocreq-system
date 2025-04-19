@@ -36,7 +36,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
 		Route::get('/archives', [AdminArchivesController::class, 'index'])->name('archives');
 		Route::get('/documents', [AdminDocumentsController::class, 'index'])->name('documents');
 		Route::get('/residents', [AdminResidentsController::class, 'index'])->name('residents');
-		Route::get('/admins', [AdminAdminsController::class, 'index'])->name('admins');
+		Route::get('/admins', [AdminAdminsController::class, 'fetchAdminInfo'])->name('admins');
+		Route::put('/admins/{admin_id}', [AdminAdminsController::class, 'updateAdminInfo'])->name('admins.update');
 		Route::post('/invite', [AdminInvitationController::class, 'sendInvitation'])->name('invite');
 		Route::post('logout', [AdminAuthSessionController::class, 'destroy'])->name('logout');
 

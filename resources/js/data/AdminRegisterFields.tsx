@@ -2,13 +2,11 @@ import { createDateSetter, createStringSetter } from "@/lib/utils";
 import { AdminRegisterForm, CustomFormField } from "@/types";
 
 
-
 export const PersonalDetails = (data: AdminRegisterForm, setData: (key: keyof AdminRegisterForm, value: string | Date | null) => void, errors: Partial<Record<keyof AdminRegisterForm, string>>): CustomFormField[] => {
 	const stringSetter = createStringSetter(setData);
 	const dateSetter = createDateSetter(setData);
 
 	return [
-
 		{
 			label: 'First Name',
 			type: 'text',
