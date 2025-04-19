@@ -1,4 +1,5 @@
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { CustomFormField } from '@/types';
 import React from 'react';
 
 interface CustomDialogProps {
@@ -11,9 +12,10 @@ interface CustomDialogProps {
     height?: string;
     subTitleClassName?: string
     onSubmit?: React.FormEventHandler<HTMLFormElement>;
+    fields?: CustomFormField
 }
 
-const CustomDialog = ({ title, subtitle, children, trigger, button, width = 'w-5xl', subTitleClassName, height = 'max-h-130', onSubmit }: CustomDialogProps) => {
+const CustomDialog = ({ title, subtitle, children, trigger, button, width = 'w-5xl', subTitleClassName, height = 'max-h-130', onSubmit, fields }: CustomDialogProps) => {
     return (
         <Dialog>
             <DialogTrigger asChild>{trigger}</DialogTrigger>

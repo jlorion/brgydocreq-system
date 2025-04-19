@@ -5,7 +5,6 @@ import CustomSelect from './CustomSelect';
 import { DatePicker } from '../ui/date-picker';
 import { Input } from '../ui/input';
 import TextLink from './CustomTextLink';
-import { useState } from 'react';
 import { CustomFormField } from '@/types';
 
 interface CustomFormProps {
@@ -48,7 +47,7 @@ const CustomForm = ({ fields, className, title }: CustomFormProps) => {
                         onChange={(value) => field.onChange?.(value)}
                         items={field.selectItems || []}
                         {...field.additionalProps}
-                        value={field.value as string || ''}
+                        value={field.value as string}
                     />
                 );
             case 'link':
@@ -79,7 +78,7 @@ const CustomForm = ({ fields, className, title }: CustomFormProps) => {
 
     return (
         <div className="flex flex-col">
-            <h1 className="pb-3">{title}</h1>
+            <h1 className="pb-2 font-normal">{title}</h1>
             <div className={className}>
                 {fields.map((field, index) => (
                     <div key={index} className="pb-3">

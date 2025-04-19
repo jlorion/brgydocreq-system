@@ -12,10 +12,10 @@ interface CustomCardProps {
     statistics?: string;
     increasePercentage?: string;
     decreasePercentage?: string;
-    icon?: React.ReactNode
+    icon?: React.ReactNode;
 }
 
-export const CustomClickableCard = ({ image, title, content, alt, onClick }: CustomCardProps) => {
+export const CustomClickableCard = ({ image, title, content, alt, onClick, description, }: CustomCardProps) => {
     return (
         <>
             <button
@@ -25,13 +25,14 @@ export const CustomClickableCard = ({ image, title, content, alt, onClick }: Cus
                 aria-label={title}
             >
                 <CustomIcon imgSrc={image} alt={alt} className="h-full w-full rounded-md border border-gray-300 object-cover" />
-                <Card className="absolute bottom-0 gap-2 rounded-b-md border border-gray-300 py-3">
+                <Card className="absolute bottom-0 gap-2 rounded-b-md border border-gray-300 py-3 w-full">
                     <CardHeader className="px-4">
                         <CardTitle className="text-s3 text-center text-xl font-semibold">{title}</CardTitle>
+                        <CardDescription className='text-justify text-md font-semibold text-black'>{description}</CardDescription>
                     </CardHeader>
-                    <CardContent className="px-4 text-justify text-[13px] font-bold text-black">{content}</CardContent>
-                </Card>
-            </button>
+                    <CardContent className='px-4 text-justify text-[13px] font-semibold text-black '>{content}</CardContent>
+                </Card >
+            </button >
         </>
     );
 };
@@ -64,6 +65,29 @@ export const CustomDisplayCard = ({ title, description, statistics, increasePerc
         </div>
     )
 }
+
+
+export const AdminCustomCard = ({ image, title, content, alt, onClick, description }: CustomCardProps) => {
+    return (
+        <>
+            <button
+                className="h-68 w-90 cursor-pointer duration-300 ease-in-out hover:-translate-y-2 hover:scale-104 hover:shadow-lg"
+                onClick={onClick}
+                type='button'
+                aria-label={title}
+            >
+                <CustomIcon imgSrc={image} alt={alt} className="h-full w-full rounded-t-md border border-gray-300 object-cover" />
+                <Card className="gap-2 rounded-b-md border border-gray-300 w-full pt-4">
+                    <CardHeader>
+                        <CardTitle className="text-s3 text-center text-lg font-semibold">{title}</CardTitle>
+                        <CardDescription className="text-center text-md font-semibold text-black">{description}</CardDescription>
+                    </CardHeader>
+                    <CardContent className="text-center text-xs font-semibold text-black" >{content}</CardContent>
+                </Card>
+            </button>
+        </>
+    );
+};
 
 
 
