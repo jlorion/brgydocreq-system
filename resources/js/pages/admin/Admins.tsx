@@ -10,7 +10,7 @@ import InputError from '@/components/custom/InputError';
 import { AdminFetch, InviteForm, RoleItems, SharedData } from '@/types';
 import { AdminCustomCard } from '@/components/custom/CustomCard';
 import CustomSelect from '@/components/custom/CustomSelect';
-import { AccountInfo, BarangayOfficerInfo } from '@/data/admin/FetchAdminsInfo';
+import { AccountInfo, BarangayOfficerInfo } from '@/data/admin/AdminsFields';
 import CustomForm from '@/components/custom/CustomFormFields';
 
 

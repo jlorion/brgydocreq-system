@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('resident_middlename');
             $table->string('resident_lastname');
             $table->string('resident_suffix')->nullable();
-            $table->string('resident_birthdate');
+            $table->date('resident_birthdate');
             $table->string('resident_gender');
             $table->string('resident_precinct');
             $table->string('resident_householdnum');

@@ -26,6 +26,7 @@ export interface NavItem {
 export interface SharedData {
     auth: Auth;
     admins: AdminFetch[];
+    residents: ResidentFetch[];
     ziggy: Config & { location: string };
     [key: string]: unknown;
 }
@@ -66,7 +67,7 @@ export interface AdminFetch {
     officer_firstname: string;
     officer_middlename: string;
     officer_lastname: string;
-    officer_suffix: string;
+    officer_suffix: string | null;
     officer_birthdate: string;
     officer_precinct: string;
     officer_householdnum: string;
@@ -75,15 +76,18 @@ export interface AdminFetch {
     officer_purok: string;
 }
 
-export interface Resident {
-    id: number;
-    precinctId: string;
-    houseHoldNum: string;
-    residentName: string;
-    residentGender: string;
-    residentBirthday: string;
-    address: string;
-    residentStatus: 'active' | 'inactive';
+export interface ResidentFetch {
+    resident_id: number;
+    resident_firstname: string;
+    resident_middlename: string;
+    resident_lastname: string;
+    resident_suffix: string | null;
+    resident_birthdate: string;
+    resident_gender: string;
+    resident_precinct: string;
+    resident_householdnum: string;
+    resident_status: string;
+    resident_purok: string;
 }
 
 export interface AdminRegisterForm {

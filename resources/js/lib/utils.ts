@@ -29,3 +29,20 @@ export const createDateSetter = <T extends Record<string, any>>(setData: (key: k
         }
     };
 };
+
+export const getStatusColors = (status: string) => {
+    const statusColors: Record<string, string> = {
+        rejected: 'bg-red-300 text-red-700',
+        active: 'bg-sky-300 text-sky-700',
+        inactive: 'bg-red-300 text-red-700',
+        claimed: 'bg-green-300  text-green-700',
+        under_review: 'bg-yellow-300 text-yellow-700',
+        processing: 'bg-blue-300 text-blue-700',
+        for_pickup: 'bg-violet-300 text-violet-700',
+        default: 'bg-gray-300 text-gray-700',
+    };
+
+    const keyStatus = status.toLowerCase().replace(/\s+/g, '_');
+
+    return statusColors[keyStatus] || statusColors.default;
+};

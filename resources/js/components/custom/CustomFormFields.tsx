@@ -34,7 +34,7 @@ const CustomForm = ({ fields, className, title }: CustomFormProps) => {
                     <DatePicker
                         id={field.id}
                         tabIndex={field.tabIndex}
-                        value={field.value as Date || null}
+                        value={field.value ? new Date(field.value) : null}
                         onChange={(date) => field.onChange?.(date)}
                         {...field.additionalProps}
 

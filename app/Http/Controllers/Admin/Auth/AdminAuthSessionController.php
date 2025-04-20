@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\AdminLoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -15,6 +16,8 @@ class AdminAuthSessionController extends Controller
 {
     public function create(Request $request): Response
     {
+        // dd(Hash::make('mark123456'));
+
         return Inertia::render('admin/auth/Login', [
             'canResetPassword' => Route::has('forgot-password'),
             'status' => $request->session()->get('status'),

@@ -1,126 +1,169 @@
 import { CustomDataTable } from '@/components/custom/CustomDataTable';
-import CustomDialog from '@/components/custom/CustomDialog';
 import CustomForm from '@/components/custom/CustomFormFields';
 import CustomSheet from '@/components/custom/CustomSheet';
 import { Button } from '@/components/ui/button';
-import { addResidentDemographic, addResidentName, residentAddress } from '@/data/FormFields';
-import { AddressData, DemographicData, PersonalData } from '@/data/ResidentData';
 import AdminLayout from '@/layouts/admin/AdminLayout';
-import { formatText } from '@/lib/utils';
-import { Resident } from '@/types';
+import { ResidentFetch, SharedData } from '@/types';
+import { useForm, usePage } from '@inertiajs/react';
 import { ColumnDef } from '@tanstack/react-table';
+import { ArrowUpDown } from 'lucide-react';
+import { formatText, getStatusColors } from '@/lib/utils';
+import { ResidentFields } from '@/data/admin/ResidentsFields';
 
-
-const ResidentsData: Resident[] = [
-
-];
-
-const columns: ColumnDef<Resident>[] = [
-    {
-        accessorKey: 'precinctId',
-        header: () => <div className="text-center">Precint ID</div>,
-        cell: ({ row }) => <div className="text-center capitalize">{row.getValue('precinctId')}</div>,
-    },
-    {
-        accessorKey: 'residentName',
-        header: () => <div className="text-center">Resident Name</div>,
-        cell: ({ row }) => <div className="text-center capitalize">{row.getValue('residentName')}</div>,
-    },
-    {
-        accessorKey: 'residentGender',
-        header: () => <div className="text-center">Gender</div>,
-        cell: ({ row }) => <div className="text-center capitalize">{row.getValue('residentGender')}</div>,
-    },
-    {
-        accessorKey: 'residentBirthday',
-        header: () => <div className="text-center">Birthday</div>,
-        cell: ({ row }) => <div className="text-center capitalFize">{row.getValue('residentBirthday')}</div>,
-    },
-    {
-        accessorKey: 'residentStatus',
-        header: () => <div className="text-center">Status</div>,
-        cell: ({ row }) => {
-            const status = row.getValue('residentStatus') as string;
-            const statusColors: Record<string, string> = {
-                active: 'bg-blue-200 text-blue-700',
-                inactive: 'bg-red-200 text-red-700',
-            };
-            const statusCode = statusColors[status] || 'bg-gray-400 text-gray-600';
-            return (
-                <div className="flex items-center justify-center">
-                    <div className={`w-3/5 rounded py-1 text-center capitalize ${statusCode}`}>{formatText(status)}</div>
-                </div>
-            );
-        },
-    },
-];
 
 const Residents = () => {
+
+    const { residents } = usePage<SharedData>().props
+
+    const dataResident: ResidentFetch[] = residents.map((resident) => ({
+        resident_id: resident.resident_id,
+        resident_firstname: resident.resident_firstname,
+        resident_middlename: resident.resident_middlename,
+        resident_lastname: resident.resident_lastname,
+        resident_suffix: resident.resident_suffix,
+        resident_gender: resident.resident_gender,
+        resident_householdnum: resident.resident_householdnum,
+        resident_precinct: resident.resident_precinct,
+        resident_purok: resident.resident_purok,
+        resident_status: resident.resident_status,
+        resident_birthdate: resident.resident_birthdate
+    }));
+
+    const { data, setData, put, processing, errors } = useForm<Required<ResidentFetch>>({
+        resident_id: 0,
+        resident_firstname: '',
+        resident_middlename: '',
+        resident_lastname: '',
+        resident_suffix: '',
+        resident_birthdate: '',
+        resident_gender: '',
+        resident_precinct: '',
+        resident_householdnum: '',
+        resident_status: '',
+        resident_purok: '',
+    });
+
+    const populateSheet = (resident: ResidentFetch) => {
+        setData({
+            resident_id: resident.resident_id,
+            resident_firstname: resident.resident_firstname,
+            resident_middlename: resident.resident_middlename,
+            resident_lastname: resident.resident_lastname,
+            resident_suffix: resident.resident_suffix,
+            resident_birthdate: resident.resident_birthdate,
+            resident_gender: resident.resident_gender,
+            resident_precinct: resident.resident_precinct,
+            resident_householdnum: resident.resident_householdnum,
+            resident_status: resident.resident_status,
+            resident_purok: resident.resident_purok,
+        });
+    }
+
+    const columns: ColumnDef<ResidentFetch>[] = [
+        {
+            id: 'resident_fullname',
+            header: () => <div className='text-center'>Resident's Name</div>,
+            cell: ({ row }) => {
+                const { resident_firstname, resident_middlename, resident_lastname, resident_suffix } = row.original;
+                const middleInitial = resident_middlename ? `${resident_middlename.charAt(0).toUpperCase()}.` : '';
+                const fullName = [
+                    resident_firstname,
+                    middleInitial,
+                    resident_suffix ? `${resident_lastname},` : resident_lastname,
+                    resident_suffix
+                ].filter(Boolean).join(' ').trim();
+
+                return <div className="capitalize text-center">{fullName}</div>
+            },
+        },
+
+        {
+            accessorKey: "resident_birthdate",
+            header: () => <div className='text-center'>Birthdate</div>,
+            cell: ({ row }) => (
+                <div className="capitalize text-center">{row.getValue("resident_birthdate")}</div>
+            ),
+        },
+        {
+            accessorKey: "resident_householdnum",
+            header: ({ column }) => {
+                return (
+                    <div className='text-center'>
+                        <Button
+                            variant="ghost"
+                            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                        >
+                            Bldg Serial No.
+                            <ArrowUpDown />
+                        </Button>
+                    </div>
+                )
+            },
+            cell: ({ row }) => (
+                <div className="capitalize text-center">{row.getValue("resident_householdnum")}</div>
+            ),
+        },
+        {
+            accessorKey: "resident_precinct",
+            header: () => <div className='text-center'>Precinct</div>,
+            cell: ({ row }) => (
+                <div className="capitalize text-center">{row.getValue("resident_precinct")}</div>
+            ),
+        },
+        {
+            accessorKey: "resident_gender",
+            header: () => <div className='text-center'>Gender</div>,
+            cell: ({ row }) => (
+                <div className="capitalize text-center">{row.getValue("resident_gender")}</div>
+            ),
+        },
+        {
+            accessorKey: "resident_purok",
+            header: () => <div className='text-center'>Purok</div>,
+            cell: ({ row }) => (
+                <div className="capitalize text-center">{row.getValue("resident_purok")}</div>
+            ),
+        },
+        {
+            accessorKey: "resident_status",
+            header: () => <div className='text-center'>Status</div>,
+            cell: ({ row }) => {
+                const status = row.getValue("resident_status") as string;
+                return (
+                    <div className='flex justify-center items-center'>
+                        <div className={`rounded w-28 py-1 capitalize text-center ${getStatusColors(status)}`}>
+                            {status}
+                        </div>
+                    </div>
+                );
+            },
+        },
+
+    ]
     return (
         <AdminLayout>
             <div className="h-full w-full p-2 pt-5">
                 <div className="flex flex-col items-center justify-between pr-2">
+
                     <CustomDataTable
+                        onRowClick={(row: ResidentFetch) => populateSheet(row)}
                         columns={columns}
-                        data={ResidentsData}
-                        filterColumn="residentName"
+                        data={dataResident}
+                        filterColumn="resident_fullname"
                         searchPlaceHolder="Search resident's name"
-                        renderSheet={(trigger, row) => {
-                            const status = row.getValue('residentStatus') as string;
-                            const statusColors: Record<string, string> = {
-                                active: 'bg-blue-200 text-blue-700',
-                                inactive: 'bg-red-200 text-red-700',
-                            };
-                            const statusCode = statusColors[status] || 'bg-gray-400 text-gray-600';
-                            const statusTitle = <div className={`rounded px-2 py-1 text-center capitalize ${statusCode}`}>{formatText(status)}</div>;
-                            return (
-                                <CustomSheet
-                                    trigger={trigger}
-                                    firstButton="Set Inactive"
-                                    firstButtonVariant="reject"
-                                    secondButton="Ambot say ibutang ari"
-                                    statusTitle={statusTitle}
-                                    form={
-                                        <>
-                                            <CustomForm fields={PersonalData} className="grid grid-cols-2 gap-x-4" />
-                                            <CustomForm fields={DemographicData} className="grid grid-cols-2 gap-x-4" />
-                                            <CustomForm fields={AddressData} className="grid grid-cols-2 gap-x-4" />
-                                        </>
-                                    }
-                                />
-                            );
-                        }}
-                        renderButton={
-                            <CustomDialog
-                                title="Add resident"
-                                trigger={
-                                    <Button className="ml-2 w-32 rounded-2xl p-5" variant="primary">
-                                        Add Resident
-                                    </Button>
-                                }
-                                contentClassName="mt-5"
-                                button={
+                        renderSheet={(trigger, row) => (
+                            <CustomSheet
+                                key={row}
+                                trigger={trigger}
+                                firstButton={<Button className='text-center w-full'>Save</Button>}
+                                statusTitle={data.resident_status}
+                                form={
                                     <>
-                                        <Button variant="primary" className="w-56">
-                                            Add
-                                        </Button>
+                                        <input type="text" hidden defaultValue={data.resident_id} />
+                                        <CustomForm fields={ResidentFields(data, setData, errors)} className="grid grid-cols-2 gap-2" />
                                     </>
-                                }
-                                children={
-                                    <>
-                                        <div className="mt-5">
-                                            <CustomForm fields={addResidentName} className="grid grid-cols-4 gap-x-4" />
-                                        </div>
-                                        <div className="mt-5">
-                                            <CustomForm fields={addResidentDemographic} className="grid grid-cols-4 gap-x-4" />
-                                        </div>
-                                        <div className="mt-5">
-                                            <CustomForm fields={residentAddress} className="grid grid-cols-4 gap-x-4" />
-                                        </div>
-                                    </>
-                                }
-                            />
-                        }
+                                } />
+                        )}
                     />
                 </div>
             </div>
