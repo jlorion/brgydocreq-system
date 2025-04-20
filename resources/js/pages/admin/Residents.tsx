@@ -6,9 +6,10 @@ import AdminLayout from '@/layouts/admin/AdminLayout';
 import { ResidentFetch, SharedData } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { ColumnDef } from '@tanstack/react-table';
-import { ArrowUpDown } from 'lucide-react';
+import { ArrowUpDown, LoaderCircle, PlusCircle } from 'lucide-react';
 import { formatText, getStatusColors } from '@/lib/utils';
 import { ResidentFields } from '@/data/admin/ResidentsFields';
+import { FormEventHandler } from 'react';
 
 
 const Residents = () => {
@@ -43,6 +44,18 @@ const Residents = () => {
         resident_purok: '',
     });
 
+    const updateSubmit: FormEventHandler = (e) => {
+        e.preventDefault();
+        put(route('admin.residents.update', data.resident_id), {
+            onError: (errors) => {
+                console.error('Form submission failed. Validation errors:');
+                Object.entries(errors).forEach(([field, message]) => {
+                    console.error(`Field: ${field}, Error: ${message}`);
+                });
+            },
+        })
+    }
+
     const populateSheet = (resident: ResidentFetch) => {
         setData({
             resident_id: resident.resident_id,
@@ -61,7 +74,7 @@ const Residents = () => {
 
     const columns: ColumnDef<ResidentFetch>[] = [
         {
-            id: 'resident_fullname',
+            accessorKey: 'resident_fullname',
             header: () => <div className='text-center'>Resident's Name</div>,
             cell: ({ row }) => {
                 const { resident_firstname, resident_middlename, resident_lastname, resident_suffix } = row.original;
@@ -149,13 +162,21 @@ const Residents = () => {
                         onRowClick={(row: ResidentFetch) => populateSheet(row)}
                         columns={columns}
                         data={dataResident}
-                        filterColumn="resident_fullname"
+                        additionalComponent={
+                            <Button><PlusCircle /> Add Resident</Button>
+                        }
+                        filterColumn="resident_status"
                         searchPlaceHolder="Search resident's name"
                         renderSheet={(trigger, row) => (
                             <CustomSheet
+                                onSubmit={updateSubmit}
                                 key={row}
                                 trigger={trigger}
-                                firstButton={<Button className='text-center w-full'>Save</Button>}
+                                firstButton={
+                                    <Button disabled={processing} className='text-center w-full'>
+                                        {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
+                                        Save
+                                    </Button>}
                                 statusTitle={data.resident_status}
                                 form={
                                     <>

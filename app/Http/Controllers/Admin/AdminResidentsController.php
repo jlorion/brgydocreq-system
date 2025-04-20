@@ -34,4 +34,46 @@ class AdminResidentsController extends Controller
             'residents' => $flattenResidents
         ]);
     }
+
+    public function updateResidentInfo(Request $request)
+    {
+
+        $validated = $request->validate([
+            'resident_id' => 'required|exists:residents,resident_id',
+            'resident_firstname' => 'required|string|max:255',
+            'resident_middlename' => 'required|string|max:255',
+            'resident_lastname' => 'required|string|max:255',
+            'resident_suffix' => 'nullable|string|max:255',
+            'resident_birthdate' => 'required|date',
+            'resident_gender' => 'required|string|max:255',
+            'resident_precinct' => 'required|string|max:255',
+            'resident_householdnum' => 'required|string|max:255',
+            'resident_status' => 'required|string|max:255',
+            'resident_purok' => 'required|string|max:255',
+        ]);
+
+        $resident = Resident::findOrFail($validated['resident_id']);
+
+        $resident->update([
+            'resident_firstname' => $validated['resident_firstname'],
+            'resident_middlename' => $validated['resident_middlename'],
+            'resident_lastname' => $validated['resident_lastname'],
+            'resident_suffix' => $validated['resident_suffix'],
+            'resident_birthdate' => $validated['resident_birthdate'],
+            'resident_gender' => $validated['resident_gender'],
+            'resident_precinct' => $validated['resident_precinct'],
+            'resident_householdnum' => $validated['resident_householdnum'],
+
+        ]);
+
+        $resident->status->update([
+            'status_name' => $validated['resident_status'],
+        ]);
+
+        $resident->address->update([
+            'purok' => $validated['resident_purok']
+        ]);
+
+        // dd($resident);
+    }
 }
