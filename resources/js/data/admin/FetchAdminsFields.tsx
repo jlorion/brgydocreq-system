@@ -19,7 +19,6 @@ export const AccountInfo = (data: AdminFetch, setData: (key: keyof AdminFetch, v
 			label: 'Role',
 			type: 'select',
 			id: 'role',
-			placeholder: data.admin_role,
 			disabled: data.admin_role === null,
 			value: data.admin_role ?? 'N/A',
 			tabIndex: -2,

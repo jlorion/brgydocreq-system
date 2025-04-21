@@ -38,7 +38,7 @@ const AdminLayout = ({ children, className, title }: AdminLayoutProps) => {
 							<h1 className='font-semibold text-lg '>{title}</h1>
 						</>}
 					/>
-					<main className={`z-0 flex flex-grow flex-col p-9 @container/main gap-y-9 ${className}`}>
+					<main className={`z-0 flex flex-grow flex-col bg-gray-50 p-9 @container/main gap-y-9 ${className}`}>
 						{children}
 
 					</main>

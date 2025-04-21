@@ -9,10 +9,10 @@ import { useInitials } from '@/hooks/UseInitials';
 import { UseHeaderScroll } from '@/hooks/UseHeaderScroll';
 import { cn } from '@/lib/utils';
 import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';
-import { Link, router, usePage } from '@inertiajs/react';
-import { Bell, ChevronDown, FileUser, Menu } from 'lucide-react';
+import { Link, usePage } from '@inertiajs/react';
+import { Bell, ChevronDown, Menu } from 'lucide-react';
 import { CustomMenuContent } from './CustomMenuContent';
-import React, { useEffect } from 'react';
+
 
 interface CustomUserHeaderProps {
     breadcrumbs?: BreadcrumbItem[];
@@ -26,14 +26,17 @@ export function CustomUserHeader({ breadcrumbs = [], mainNavItems = [], rightNav
     const { auth } = usePage<SharedData>().props;
     const getInitials = useInitials();
     const { headerProps } = UseHeaderScroll();
+    const { url } = usePage()
 
+    const isActive = url === '/about-us' || url === '/contact-us'
     const isWelcomePage = route().current('landing.home');
     const scrollableItems = ['about', 'services'];
     console.log(auth)
 
     return (
         <>
-            <div {...headerProps} className={`${className} ${headerProps.className} border`}>
+            <div {...headerProps} className={` ${className}  ${headerProps.className}  bg-silver ${isActive ? 'border' : ''}
+      `}>
                 {/* Mobile Menu */}
                 <div className="lg:hidden">
                     <Sheet>

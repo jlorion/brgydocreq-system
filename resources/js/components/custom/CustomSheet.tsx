@@ -1,7 +1,5 @@
-import { Sheet, SheetClose, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import React from 'react';
-
-import { Button } from '../ui/button';
+import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { getStatusColors } from '@/lib/utils';
 
 interface CustomSheetProps {
     image?: string;
@@ -16,6 +14,7 @@ interface CustomSheetProps {
     plainTitle?: string;
     statusTitle?: string;
     form: React.ReactNode;
+    onSubmit?: React.FormEventHandler<HTMLFormElement>
 }
 
 const CustomSheet = ({
@@ -25,35 +24,30 @@ const CustomSheet = ({
     form,
     firstButton,
     secondButton,
-    firstButtonClassName,
-    secondButtonClassName,
-    firstButtonVariant,
-    secondButtonVariant,
+    onSubmit
 }: CustomSheetProps) => {
     return (
         <Sheet>
             <SheetTrigger asChild>{trigger}</SheetTrigger>
             <SheetContent side="right" className="flex w-120 flex-col p-4">
-                <SheetHeader className="flex items-center justify-center">
-                    {statusTitle ? (
-                        <SheetTitle className="mt-3 w-1/2 rounded-md bg-yellow-200 p-4 text-center text-2xl text-yellow-600">
-                            {statusTitle}
-                        </SheetTitle>
-                    ) : (
-                        <SheetTitle className="text-2xl">{plainTitle}</SheetTitle>
-                    )}
-                </SheetHeader>
-                <div className="flex flex-col overflow-y-auto">{form}</div>
-                <SheetFooter className="mt-auto grid grid-cols-2 gap-3 sm:flex-col sm:space-x-0">
-                    <Button className={firstButtonClassName} variant={firstButtonVariant}>
+                <form onSubmit={onSubmit} className='flex flex-col h-full'>
+                    <SheetHeader className="flex items-center justify-center">
+                        {statusTitle ? (
+                            <SheetTitle
+                                className={`mt-3 w-1/2 rounded-md p-4 text-center text-2xl ${getStatusColors(statusTitle)}`}
+                            >
+                                {statusTitle}
+                            </SheetTitle>
+                        ) : (
+                            <SheetTitle className="text-2xl">{plainTitle}</SheetTitle>
+                        )}
+                    </SheetHeader>
+                    <div className="flex flex-col overflow-y-auto ">{form}</div>
+                    <SheetFooter className="mt-auto flex gap-x-3 flex-row">
                         {firstButton}
-                    </Button>
-                    <SheetClose asChild>
-                        <Button className={secondButtonClassName} variant={secondButtonVariant}>
-                            {secondButton}
-                        </Button>
-                    </SheetClose>
-                </SheetFooter>
+                        {secondButton}
+                    </SheetFooter>
+                </form>
             </SheetContent>
         </Sheet>
     );

@@ -3,22 +3,22 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 
 interface CustomSelectProps {
 	placeholder?: string;
-	items: { value: string, label: string }[];
+	items: { value: number, label: string }[];
 	className?: string;
-	onChange?: (value: string) => void;
-	value: string;
+	onChange?: (value: number) => void;
+	value: number | null;
 }
 
 const CustomSelect = ({ placeholder, items = [], className, onChange, value, }: CustomSelectProps) => {
 	return (
-		<Select value={value} onValueChange={onChange}>
+		<Select value={value !== null ? value.toString() : undefined} onValueChange={(val) => onChange?.(parseInt(val))}>
 			<SelectTrigger className={`w-full ${className}`}>
 				<SelectValue placeholder={placeholder} />
 			</SelectTrigger>
 			<SelectContent>
 				<SelectGroup>
 					{items.map((item, index) => (
-						<SelectItem key={index} value={item.value}>{item.label}</SelectItem>
+						<SelectItem key={index} value={item.value.toString()}>{item.label}</SelectItem>
 					))}
 				</SelectGroup>
 			</SelectContent>

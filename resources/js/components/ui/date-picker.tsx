@@ -81,7 +81,7 @@ export function DatePicker({ value, onChange, tabIndex, id }: DatePickerProps) {
 
           <Select
             onValueChange={handleYearChange}
-            value={date ? date.getFullYear().toString() : ""}
+            value={date ? date.getFullYear().toString() : undefined}
           >
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Year" />

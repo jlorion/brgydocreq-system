@@ -34,7 +34,7 @@ const CustomForm = ({ fields, className, title }: CustomFormProps) => {
                     <DatePicker
                         id={field.id}
                         tabIndex={field.tabIndex}
-                        value={field.value as Date || null}
+                        value={field.value ? new Date(field.value) : null}
                         onChange={(date) => field.onChange?.(date)}
                         {...field.additionalProps}
 
@@ -44,10 +44,10 @@ const CustomForm = ({ fields, className, title }: CustomFormProps) => {
                 return (
                     <CustomSelect
                         placeholder={field.placeholder}
-                        onChange={(value) => field.onChange?.(value)}
+                        onChange={(value: number) => field.onChange?.(value)}
                         items={field.selectItems || []}
                         {...field.additionalProps}
-                        value={field.value as string}
+                        value={field.value as number}
                     />
                 );
             case 'link':

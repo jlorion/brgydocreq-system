@@ -35,7 +35,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
 		Route::get('/on-process', [AdminOnProcessController::class, 'index'])->name('on-process');
 		Route::get('/archives', [AdminArchivesController::class, 'index'])->name('archives');
 		Route::get('/documents', [AdminDocumentsController::class, 'index'])->name('documents');
-		Route::get('/residents', [AdminResidentsController::class, 'index'])->name('residents');
+		Route::get('/residents', [AdminResidentsController::class, 'fetchResidentInfo'])->name('residents');
+		Route::put('/residents/{resident_id}', [AdminResidentsController::class, 'updateResidentInfo'])->name('residents.update');
+		Route::post('/residents/store', [AdminResidentsController::class, 'storeResidentInfo'])->name('residents.store');
 		Route::get('/admins', [AdminAdminsController::class, 'fetchAdminInfo'])->name('admins');
 		Route::put('/admins/{admin_id}', [AdminAdminsController::class, 'updateAdminInfo'])->name('admins.update');
 		Route::post('/invite', [AdminInvitationController::class, 'sendInvitation'])->name('invite');

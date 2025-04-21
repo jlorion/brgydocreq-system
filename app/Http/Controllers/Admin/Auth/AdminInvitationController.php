@@ -18,21 +18,20 @@ class AdminInvitationController extends Controller
         // Validate the request
         $validated = $request->validate([
             'email' => 'required|email|unique:admin_invitations,email',
-            'role' => 'required|exists:roles,role_id',
+            'role_id' => 'required|exists:roles,role_id',
         ]);
 
         $token = Str::random(32);
         AdminInvitation::create([
             'email' => $validated['email'],
-            'role_id' => $validated['role'],
+            'role_id' => $validated['role_id'],
             'invite_token' => $token,
             'expires_at' => now()->addHours(24),
         ]);
 
-        $roleName = Role::where('role_id', $validated['role'])->value('role_name');
+        $roleName = Role::where('role_id', $validated['role_id'])->value('role_name');
 
         Mail::to($validated['email'])->send(new AdminInvitationMail($token, $roleName));
-
 
         return response()->json(['message' => 'Invitation sent successfully.', 'token' => $token]);
     }

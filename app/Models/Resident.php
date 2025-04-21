@@ -8,11 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Resident extends Model
 {
     use HasFactory;
+    
+    protected $primaryKey = 'resident_id';
+
     /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
      */
+
     protected $fillable = [
         'resident_firstname',
         'resident_middlename',
@@ -23,7 +27,7 @@ class Resident extends Model
         'resident_precinct',
         'address_id',
         'status_id',
-        'resident_househouldnum'
+        'resident_householdnum'
     ];
 
 

@@ -87,14 +87,14 @@ const AboutUs = () => {
                     <section className="flex flex-col pb-10 lg:flex-row">
                         {/* Left side */}
                         <div className="mx-auto flex flex-col gap-y-7">
-                            <div className="box-border flex w-full items-center justify-center rounded-sm border border-gray-300 p-4">
+                            <div className="box-border flex w-full items-center justify-center rounded-sm border border-gray-300 p-4 shadow-md">
                                 <div
                                     className="fb-page"
                                     data-href="https://www.facebook.com/profile.php?id=61556343104505"
                                     data-tabs="timeline"
                                     data-width="420"
                                     data-height="500"
-                                    data-small-header="false"
+                                    data-mdall-header="false"
                                     data-adapt-container-width="true"
                                     data-hide-cover="false"
                                     data-show-facepile="true"
@@ -105,7 +105,7 @@ const AboutUs = () => {
                                 </div>
                             </div>
 
-                            <div className="box-border flex w-full items-center justify-center rounded-sm border border-gray-300 p-4">
+                            <div className="box-border flex w-full items-center justify-center rounded-sm border border-gray-300 p-4 shadow-md">
                                 <div
                                     className="fb-page"
                                     data-href="https://www.facebook.com/SBOStoTomas"
@@ -123,7 +123,7 @@ const AboutUs = () => {
                                 </div>
                             </div>
 
-                            <div className="box-border flex w-full items-center justify-center rounded-sm border border-gray-300 p-4">
+                            <div className="box-border flex w-full items-center justify-center rounded-sm border border-gray-300 p-4 shadow-md">
                                 <div
                                     className="fb-page"
                                     data-href="https://www.facebook.com/mpdosantotomas"
@@ -146,10 +146,10 @@ const AboutUs = () => {
                         {/* Right side */}
                         <div className="flex flex-1 flex-col items-center gap-5 p-2 text-center lg:pl-20">
                             {/* Text here regarding Santo Tomas */}
-                            <CustomIcon imgSrc={BarangayLogo} alt="Barangay Logo" />
+                            <CustomIcon imgSrc={BarangayLogo} alt="Barangay Logo" className='shadow-lg rounded-full' />
                             <h1 className="text-3xl font-semibold">Barangay Officials 2023 - 2025</h1>
                             <Table>
-                                <TableBody>
+                                <TableBody >
                                     {BarangayOfficials.map((official, index) => (
                                         <TableRow key={index}>
                                             <TableCell className="border-2 text-start text-[11px] md:max-w-60 md:text-base">
@@ -162,7 +162,7 @@ const AboutUs = () => {
                                     ))}
                                 </TableBody>
                             </Table>
-                            <div className="w-full">
+                            <div className="w-full shadow-lg border">
                                 <iframe
                                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3955.851350407047!2d125.58890147456896!3d7.481661692530346!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x32f94b8ee00d5e2b%3A0xf6c14f94852ddf1!2sBalagunan%20Barangay%20Hall!5e0!3m2!1sen!2sph!4v1739366648931!5m2!1sen!2sph"
                                     width="100%"

@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Role;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class AdminAdminsController extends Controller
@@ -14,9 +13,7 @@ class AdminAdminsController extends Controller
 
     public function fetchAdminInfo()
     {
-        $admins = Admin::with(['barangayOfficer.address' => function ($query) {
-            $query->select('address_id', 'purok');
-        }, 'role'])
+        $admins = Admin::with(['barangayOfficer.address:address_id,purok', 'role'])
             ->whereHas('role', function ($query) {
                 $query->where('role_name', '!=', 'super_admin');
             })
@@ -24,7 +21,7 @@ class AdminAdminsController extends Controller
 
         $roles = Role::select('role_id', 'role_name')->where('role_name', '!=', 'super admin')->get();
 
-        $flatten = $admins->map(function ($admin) {
+        $flattenAdmins = $admins->map(function ($admin) {
             return [
                 'admin_id' => $admin->admin_id,
                 'admin_username' => $admin->admin_username,
@@ -45,9 +42,8 @@ class AdminAdminsController extends Controller
         });
 
 
-
         return Inertia::render('admin/Admins', [
-            'admins' => $flatten,
+            'admins' => $flattenAdmins,
             'roles' => $roles
         ]);
     }

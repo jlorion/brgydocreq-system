@@ -24,16 +24,17 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { formatText } from '@/lib/utils';
 
-type CustomDataTableProps<Data> = {
-    data: Data[];
-    columns: ColumnDef<Data, any>[];
+interface CustomDataTableProps<T> {
+    columns: ColumnDef<T>[];
+    data: T[];
     filterColumn: string;
-    searchPlaceHolder: string;
+    searchPlaceHolder?: string;
     renderSheet: (trigger: React.ReactNode, row: any) => React.ReactNode;
-    renderButton?: React.ReactNode;
-};
+    onRowClick?: (row: T) => void;
+    additionalComponent?: React.ReactNode;
+}
 
-export function CustomDataTable<Data>({ data, columns, filterColumn, searchPlaceHolder, renderSheet, renderButton }: CustomDataTableProps<Data>) {
+export function CustomDataTable<T>({ data, columns, filterColumn, searchPlaceHolder, renderSheet, onRowClick, additionalComponent }: CustomDataTableProps<T>) {
     const [sorting, setSorting] = React.useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
@@ -73,7 +74,7 @@ export function CustomDataTable<Data>({ data, columns, filterColumn, searchPlace
     return (
         <div className="w-full">
             {/* Search button and Adjustable columns */}
-            <div className="flex items-center pb-6">
+            <div className="flex items-center pb-6 gap-x-4">
                 <Input
                     placeholder={searchPlaceHolder}
                     value={(table.getColumn(filterColumn)?.getFilterValue() as string) ?? ''}
@@ -81,6 +82,9 @@ export function CustomDataTable<Data>({ data, columns, filterColumn, searchPlace
                     className="max-w-sm py-5 shadow-sm"
                     icon={<SearchIcon className="h-5" />}
                 />
+                <div className='flex gap-x-4'>
+                    {additionalComponent}
+                </div>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline" className="ml-auto py-5 shadow-sm">
@@ -103,7 +107,6 @@ export function CustomDataTable<Data>({ data, columns, filterColumn, searchPlace
                             ))}
                     </DropdownMenuContent>
                 </DropdownMenu>
-                {renderButton}
             </div>
 
             {/* Table */}
@@ -124,14 +127,14 @@ export function CustomDataTable<Data>({ data, columns, filterColumn, searchPlace
                         {table.getRowModel().rows?.length ? (
                             table.getRowModel().rows.map((row) =>
                                 renderSheet(
-                                    <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'} className="cursor-pointer">
+                                    <TableRow onClick={() => onRowClick?.(row.original)} key={row.id} data-state={row.getIsSelected() && 'selected'} className="cursor-pointer">
                                         {row.getVisibleCells().map((cell) => (
                                             <TableCell key={cell.id} className="h-14">
                                                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                             </TableCell>
                                         ))}
                                     </TableRow>,
-                                    row,
+                                    row.id,
                                 ),
                             )
                         ) : (
