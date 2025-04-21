@@ -83,10 +83,10 @@ export const AddResidentsFields = (data: Omit<ResidentFetch, 'resident_id'>, set
 			type: 'select',
 			id: 'purok',
 			placeholder: 'Select purok',
-			value: data.resident_purok,
+			value: data.resident_purokid,
 			tabIndex: 7,
 			autoComplete: 'address-line1',
-			onChange: stringSetter('resident_purok'),
+			onChange: stringSetter('resident_purokid'),
 			errorMessage: errors.resident_purok,
 			selectItems: puroks.map((purok) => ({
 				label: purok.purok,

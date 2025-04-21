@@ -97,7 +97,7 @@ class AdminResidentsController extends Controller
             'resident_purokid' => 'required|exists:addresses,address_id',
         ]);
 
-        Resident::create([
+        $residents =  Resident::create([
             'resident_firstname' => $validate['resident_firstname'],
             'resident_middlename' => $validate['resident_middlename'],
             'resident_lastname' => $validate['resident_lastname'],
@@ -108,5 +108,7 @@ class AdminResidentsController extends Controller
             'resident_householdnum' => $validate['resident_householdnum'],
             'address_id' => $validate['resident_purokid'],
         ]);
+
+
     }
 }
