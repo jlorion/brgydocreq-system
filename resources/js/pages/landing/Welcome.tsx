@@ -47,7 +47,7 @@ const Welcome = () => {
         <>
             <Head title="Balagunan" />
             <MainLayout>
-                <section className="flex items-center justify-center lg:justify-between bg-silver h-screen pb-20">
+                <section className="flex items-center justify-center lg:justify-between bg-silver  h-screen pb-20">
                     {/* Left Div  Text*/}
                     <div className="flex items-center justify-center pl-2 lg:pl-25">
                         <div className="flex flex-col gap-y-3">
