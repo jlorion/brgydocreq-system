@@ -27,6 +27,9 @@ export interface SharedData {
     auth: Auth;
     admins: AdminFetch[];
     residents: ResidentFetch[];
+    roles: Role[];
+    puroks: Purok[];
+    status: Status[];
     ziggy: Config & { location: string };
     [key: string]: unknown;
 }
@@ -53,9 +56,14 @@ export interface Role {
     role_name: string;
 }
 
-export interface RoleItems {
-    roles: Role[];
-    [key: string]: unknown; // This allows for additional properties...
+export interface Purok {
+    address_id: number;
+    purok: string;
+}
+
+export interface Status {
+    status_id: number,
+    status_name: string;
 }
 
 export interface AdminFetch {
@@ -88,6 +96,8 @@ export interface ResidentFetch {
     resident_householdnum: string;
     resident_status: string;
     resident_purok: string;
+    resident_statusid: number | null;
+    resident_purokid: number | null;
 }
 
 export interface AdminRegisterForm {
@@ -123,20 +133,20 @@ export interface CustomFormField {
     label?: string;
     type?: string;
     placeholder?: string;
-    value?: string | Date | null;
+    value?: string | number | Date | null;
     tabIndex?: number;
     autoComplete?: string;
     name?: string;
-    onChange?: (value: string | Date | null) => void;
+    onChange?: (value: string | number | Date | null) => void;
     errorMessage?: string;
     autofocus?: boolean;
     options?: { label: string; value: string }[];
     additionalProps?: Record<string, any>;
-    selectItems?: { value: string; label: string }[];
+    selectItems?: { value: number; label: string }[];
     disabled?: boolean;
 }
 
 export interface InviteForm {
     email: string;
-    role: string;
+    role_id: number | null;
 }

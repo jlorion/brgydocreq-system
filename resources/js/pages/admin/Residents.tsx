@@ -7,9 +7,11 @@ import { ResidentFetch, SharedData } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { ColumnDef } from '@tanstack/react-table';
 import { ArrowUpDown, LoaderCircle, PlusCircle } from 'lucide-react';
-import { formatText, getStatusColors } from '@/lib/utils';
-import { ResidentFields } from '@/data/admin/ResidentsFields';
+import { getStatusColors } from '@/lib/utils';
+import { FetchResidentsFields } from '@/data/admin/FetchResidentsFields';
+import { AddResidentsFields } from '@/data/admin/AddResidentsFields';
 import { FormEventHandler } from 'react';
+import CustomDialog from '@/components/custom/CustomDialog';
 
 
 const Residents = () => {
@@ -20,6 +22,8 @@ const Residents = () => {
         resident_id: resident.resident_id,
         resident_firstname: resident.resident_firstname,
         resident_middlename: resident.resident_middlename,
+        resident_purokid: resident.resident_purokid,
+        resident_statusid: resident.resident_statusid,
         resident_lastname: resident.resident_lastname,
         resident_suffix: resident.resident_suffix,
         resident_gender: resident.resident_gender,
@@ -32,6 +36,8 @@ const Residents = () => {
 
     const { data, setData, put, processing, errors } = useForm<Required<ResidentFetch>>({
         resident_id: 0,
+        resident_purokid: null,
+        resident_statusid: null,
         resident_firstname: '',
         resident_middlename: '',
         resident_lastname: '',
@@ -43,6 +49,34 @@ const Residents = () => {
         resident_status: '',
         resident_purok: '',
     });
+
+    const { data: addData, setData: addSetData, post: addPost, processing: addProcessing, errors: addErrors } = useForm<Omit<ResidentFetch, 'resident_id'>>({
+        resident_firstname: '',
+        resident_middlename: '',
+        resident_purokid: null,
+        resident_statusid: null,
+        resident_lastname: '',
+        resident_suffix: '',
+        resident_birthdate: '',
+        resident_gender: '',
+        resident_precinct: '',
+        resident_householdnum: '',
+        resident_status: '',
+        resident_purok: '',
+    });
+
+    const addSubmit: FormEventHandler = (e) => {
+        e.preventDefault();
+        addPost(route('admin.residents.store'), {
+            onError: (errors) => {
+                console.error('Form submission failed. Validation errors:');
+                Object.entries(errors).forEach(([field, message]) => {
+                    console.error(`Field: ${field}, Error: ${message}`);
+                });
+            },
+        })
+    }
+
 
     const updateSubmit: FormEventHandler = (e) => {
         e.preventDefault();
@@ -56,9 +90,12 @@ const Residents = () => {
         })
     }
 
+
     const populateSheet = (resident: ResidentFetch) => {
         setData({
             resident_id: resident.resident_id,
+            resident_purokid: resident.resident_purokid,
+            resident_statusid: resident.resident_statusid,
             resident_firstname: resident.resident_firstname,
             resident_middlename: resident.resident_middlename,
             resident_lastname: resident.resident_lastname,
@@ -163,7 +200,23 @@ const Residents = () => {
                         columns={columns}
                         data={dataResident}
                         additionalComponent={
-                            <Button><PlusCircle /> Add Resident</Button>
+                            <CustomDialog
+                                title='Add Resident'
+                                onSubmit={addSubmit}
+                                button={
+                                    <Button disabled={addProcessing}>
+                                        {addProcessing && <LoaderCircle className="h-4 w-4 animate-spin" />}
+                                        Submit
+                                    </Button>}
+                                children={
+                                    <CustomForm fields={AddResidentsFields(addData, addSetData, addErrors)} className='grid grid-cols-3 gap-x-5' />
+                                }
+                                trigger={
+                                    <Button>
+                                        <PlusCircle />
+                                        Add Resident
+                                    </Button>
+                                } />
                         }
                         filterColumn="resident_status"
                         searchPlaceHolder="Search resident's name"
@@ -181,7 +234,7 @@ const Residents = () => {
                                 form={
                                     <>
                                         <input type="text" hidden defaultValue={data.resident_id} />
-                                        <CustomForm fields={ResidentFields(data, setData, errors)} className="grid grid-cols-2 gap-2" />
+                                        <CustomForm fields={FetchResidentsFields(data, setData, errors)} className="grid grid-cols-2 gap-2" />
                                     </>
                                 } />
                         )}

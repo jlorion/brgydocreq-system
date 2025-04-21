@@ -1,9 +1,11 @@
 import { createDateSetter, createStringSetter } from "@/lib/utils";
-import { CustomFormField, ResidentFetch } from "@/types";
+import { CustomFormField, ResidentFetch, SharedData } from "@/types";
+import { usePage } from "@inertiajs/react";
 
-export const ResidentFields = (data: ResidentFetch, setData: (key: keyof ResidentFetch, value: string | Date | null) => void, errors: Partial<Record<keyof ResidentFetch, string>>): CustomFormField[] => {
+export const FetchResidentsFields = (data: ResidentFetch, setData: (key: keyof ResidentFetch, value: string | Date | number | null) => void, errors: Partial<Record<keyof ResidentFetch, string>>): CustomFormField[] => {
 	const stringSetter = createStringSetter(setData);
 	const dateSetter = createDateSetter(setData);
+	const { puroks, status } = usePage<SharedData>().props
 
 	return [
 		{
@@ -52,7 +54,7 @@ export const ResidentFields = (data: ResidentFetch, setData: (key: keyof Residen
 			type: 'date',
 			id: 'birthdate',
 			disabled: data.resident_birthdate === null,
-			tabIndex: -9,
+			tabIndex: -5,
 			value: data.resident_birthdate ?? 'N/A',
 			onChange: dateSetter('resident_birthdate'),
 			errorMessage: errors.resident_birthdate,
@@ -63,7 +65,7 @@ export const ResidentFields = (data: ResidentFetch, setData: (key: keyof Residen
 			id: 'gender',
 			disabled: data.resident_gender === null,
 			value: data.resident_gender ?? 'N/A',
-			tabIndex: -8,
+			tabIndex: -6,
 			onChange: stringSetter('resident_gender'),
 			errorMessage: errors.resident_gender,
 		},
@@ -74,19 +76,23 @@ export const ResidentFields = (data: ResidentFetch, setData: (key: keyof Residen
 			id: 'precinct_number',
 			disabled: data.resident_precinct === null,
 			value: data.resident_precinct ?? 'N/A',
-			tabIndex: -10,
+			tabIndex: -7,
 			onChange: stringSetter('resident_precinct'),
 			errorMessage: errors.resident_precinct,
 		},
 		{
 			label: 'Purok',
-			type: 'text',
+			type: 'select',
 			id: 'purok',
-			disabled: data.resident_purok === null,
-			value: data.resident_purok ?? 'N/A',
-			tabIndex: -11,
-			onChange: stringSetter('resident_purok'),
+			disabled: data.resident_purokid === null,
+			value: data.resident_purokid ?? 'N/A',
+			tabIndex: -8,
+			onChange: stringSetter('resident_purokid'),
 			errorMessage: errors.resident_purok,
+			selectItems: puroks.map((purok) => ({
+				label: purok.purok,
+				value: purok.address_id
+			}))
 		},
 		{
 			label: 'Building Serial Number',
@@ -94,7 +100,7 @@ export const ResidentFields = (data: ResidentFetch, setData: (key: keyof Residen
 			id: 'building_number',
 			disabled: data.resident_householdnum === null,
 			value: data.resident_householdnum ?? 'N/A',
-			tabIndex: -12,
+			tabIndex: -9,
 			onChange: stringSetter('resident_householdnum'),
 			errorMessage: errors.resident_householdnum,
 		},
@@ -102,14 +108,15 @@ export const ResidentFields = (data: ResidentFetch, setData: (key: keyof Residen
 			label: 'Status',
 			type: 'select',
 			id: 'status',
-			disabled: data.resident_status === null,
-			value: data.resident_status ?? 'N/A',
-			tabIndex: -13,
-			onChange: stringSetter('resident_status'),
-			errorMessage: errors.resident_status,
-			selectItems: [
-				{ label: data.resident_status, value: data.resident_status },
-			],
+			disabled: data.resident_statusid === null,
+			value: data.resident_statusid ?? 'N/A',
+			tabIndex: -10,
+			onChange: stringSetter('resident_statusid'),
+			errorMessage: errors.resident_statusid,
+			selectItems: status.map((status) => ({
+				label: status.status_name,
+				value: status.status_id
+			}))
 		},
 	]
 }

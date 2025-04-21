@@ -7,19 +7,19 @@ import { useForm, usePage } from '@inertiajs/react';
 import { FormEventHandler, useEffect, useState } from 'react';
 import { LoaderCircle, LoaderCircleIcon } from 'lucide-react';
 import InputError from '@/components/custom/InputError';
-import { AdminFetch, InviteForm, RoleItems, SharedData } from '@/types';
+import { AdminFetch, InviteForm, SharedData } from '@/types';
 import { AdminCustomCard } from '@/components/custom/CustomCard';
 import CustomSelect from '@/components/custom/CustomSelect';
-import { AccountInfo, BarangayOfficerInfo } from '@/data/admin/AdminsFields';
+import { AccountInfo, BarangayOfficerInfo } from '@/data/admin/FetchAdminsFields';
 import CustomForm from '@/components/custom/CustomFormFields';
 
 
 const Admins = () => {
-    const { admins } = usePage<SharedData>().props
+    const { admins, roles } = usePage<SharedData>().props
 
     const { data: dataInvite, setData: setDataInvite, post: postInvite, processing: processingInvite, errors: errorsInvite } = useForm<Required<InviteForm>>({
         email: '',
-        role: '',
+        role_id: null,
     });
 
     const { data: dataAdmin, setData: setDataAdmin, put: putAdmin, processing: processingAdmin, errors: errorsAdmin } = useForm<Required<AdminFetch>>({
@@ -85,13 +85,6 @@ const Admins = () => {
         })
     }
 
-    const { roles = [] } = usePage<RoleItems>().props
-
-    const roleItems = roles.map((role) => ({
-        value: role.role_id.toString(),
-        label: role.role_name
-    }))
-
 
     return (
         <AdminLayout title='Administrator'>
@@ -104,9 +97,15 @@ const Admins = () => {
                             <Input id='email' value={dataInvite.email} onChange={(e) => setDataInvite('email', e.target.value)} placeholder='Email' required />
                             <InputError message={errorsInvite.email} />
                             <div className='w-1/2'>
-                                <CustomSelect value={dataInvite.role}
-                                    onChange={(value) => setDataInvite('role', value)} items={roleItems} placeholder='Role' />
-                                <InputError message={errorsInvite.role} />
+                                <CustomSelect
+                                    placeholder='Role'
+                                    value={dataInvite.role_id}
+                                    onChange={(value) => { setDataInvite('role_id', value), console.log(value) }}
+                                    items={roles.map((role) => (
+                                        { value: role.role_id, label: role.role_name }
+                                    ))}
+                                />
+                                <InputError message={errorsInvite.role_id} />
                             </div>
                         </div>
                     </>

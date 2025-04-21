@@ -12,9 +12,9 @@ export function formatText(text: string): string {
         .replace(/\b\w/g, (char) => char.toUpperCase()); // Capitalize the first letter of each word
 }
 
-export const createStringSetter = <T extends Record<string, any>>(setData: (key: keyof T, value: string) => void) => {
-    return (key: keyof T) => (value: string | Date | null) => {
-        if (typeof value === 'string') {
+export const createStringSetter = <T extends Record<string, any>>(setData: (key: keyof T, value: string | number) => void) => {
+    return (key: keyof T) => (value: string | Date | number | null) => {
+        if (typeof value === 'string' || typeof value === 'number') {
             setData(key, value);
             console.log(value);
         }
@@ -22,7 +22,7 @@ export const createStringSetter = <T extends Record<string, any>>(setData: (key:
 };
 
 export const createDateSetter = <T extends Record<string, any>>(setData: (key: keyof T, value: string) => void) => {
-    return (key: keyof T) => (value: string | Date | null) => {
+    return (key: keyof T) => (value: string | Date | number | null) => {
         if (value instanceof Date) {
             const formattedDate = format(value, 'yyyy-MM-dd');
             setData(key, formattedDate);
