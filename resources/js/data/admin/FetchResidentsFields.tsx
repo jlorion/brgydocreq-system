@@ -88,7 +88,7 @@ export const FetchResidentsFields = (data: ResidentFetch, setData: (key: keyof R
 			value: data.resident_purokid ?? 'N/A',
 			tabIndex: -8,
 			onChange: stringSetter('resident_purokid'),
-			errorMessage: errors.resident_purok,
+			errorMessage: errors.resident_purokid,
 			selectItems: puroks.map((purok) => ({
 				label: purok.purok,
 				value: purok.address_id

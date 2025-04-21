@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
+/**
      * Run the migrations.
      */
     public function up(): void
@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('residents', function (Blueprint $table) {
             $table->id('resident_id');
             $table->foreignId('address_id')->constrained('addresses', 'address_id')->onDelete('cascade');
-            $table->foreignId('status_id')->constrained('statuses', 'status_id')->onDelete('cascade');
+            $table->unsignedBigInteger('status_id')->default(3);
+            $table->foreign('status_id')->references('status_id')->on('statuses')->onDelete('cascade');
             $table->string('resident_firstname');
             $table->string('resident_middlename');
             $table->string('resident_lastname');

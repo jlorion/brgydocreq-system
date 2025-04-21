@@ -1,6 +1,6 @@
 
 import CustomActive from '@/components/custom/CustomActive';
-import { CustomClickableCard } from '@/components/custom/CustomCard';
+import { DocumentCustomCard } from '@/components/custom/CustomCard';
 import CustomDialog from '@/components/custom/CustomDialog';
 import CustomForm from '@/components/custom/CustomFormFields';
 import CustomIcon from '@/components/custom/CustomIcon';
@@ -86,7 +86,7 @@ const Welcome = () => {
                         <CustomDialog
                             title="Barangay Clearance"
                             trigger={
-                                <CustomClickableCard
+                                <DocumentCustomCard
                                     image={BarangayClearance}
                                     alt="Barangay Clearance"
                                     title="Barangay Clearance"
@@ -100,7 +100,7 @@ const Welcome = () => {
                         <CustomDialog
                             title="Certificate of Low Income"
                             trigger={
-                                <CustomClickableCard
+                                <DocumentCustomCard
                                     image={CertOfLowIncome}
                                     alt="Certificate of Low Income"
                                     title="Certificate of Low Income"
@@ -114,7 +114,7 @@ const Welcome = () => {
                         <CustomDialog
                             title="Certificate of Income"
                             trigger={
-                                <CustomClickableCard
+                                <DocumentCustomCard
                                     image={CertOfIncome}
                                     alt="Certificate of Income"
                                     title="Certificate of Income"
@@ -128,7 +128,7 @@ const Welcome = () => {
                         <CustomDialog
                             title="Certificate of Indigency"
                             trigger={
-                                <CustomClickableCard
+                                <DocumentCustomCard
                                     image={CertOfIndigency}
                                     alt="Certificate of Indigency"
                                     title="Certificate of Indigency"
@@ -142,7 +142,7 @@ const Welcome = () => {
                         <CustomDialog
                             title="Barangay Certificate"
                             trigger={
-                                <CustomClickableCard
+                                <DocumentCustomCard
                                     image={BarangayCert}
                                     alt="Barangay Certificate"
                                     title="Barangay Certificate"
@@ -155,7 +155,7 @@ const Welcome = () => {
                         <CustomDialog
                             title="Cedula"
                             trigger={
-                                <CustomClickableCard
+                                <DocumentCustomCard
                                     image={Cedula}
                                     alt="Cedula"
                                     title="Cedula"

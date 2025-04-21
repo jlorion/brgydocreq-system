@@ -80,7 +80,6 @@ class AdminResidentsController extends Controller
             'status_id' => $validate['resident_statusid'],
 
         ]);
-
     }
 
     public function storeResidentInfo(Request $request)
@@ -95,11 +94,10 @@ class AdminResidentsController extends Controller
             'resident_gender' => 'required|string|max:255',
             'resident_precinct' => 'required|string|max:255',
             'resident_householdnum' => 'required|string|max:255',
-            'resident_status' => 'required|string|max:255',
-            'resident_purok' => 'required|string|max:255',
+            'resident_purokid' => 'required|exists:addresses,address_id',
         ]);
 
-        $residents = Resident::create([
+        Resident::create([
             'resident_firstname' => $validate['resident_firstname'],
             'resident_middlename' => $validate['resident_middlename'],
             'resident_lastname' => $validate['resident_lastname'],
@@ -108,8 +106,7 @@ class AdminResidentsController extends Controller
             'resident_gender' => $validate['resident_gender'],
             'resident_precinct' => $validate['resident_precinct'],
             'resident_householdnum' => $validate['resident_householdnum'],
-            'status_name' => $validate['resident_status'],
-            'purok' => $validate['resident_purok'],
+            'address_id' => $validate['resident_purokid'],
         ]);
     }
 }

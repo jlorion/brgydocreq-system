@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->id('document_id');
-            $table->foreignId('status_id')->constrained('statuses', 'status_id')->onDelete('cascade');
+            $table->unsignedBigInteger('status_id')->default(8);
+            $table->foreign('status_id')->references('status_id')->on('statuses')->onDelete('cascade');
             $table->string('document_name');
             $table->string('description');
             $table->string('price');
-            $table->string('document_phootopath');
+            $table->string('document_photopath')->nullable();
             $table->timestamps();
         });
     }

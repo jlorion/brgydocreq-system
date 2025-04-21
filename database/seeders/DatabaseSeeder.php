@@ -16,7 +16,8 @@ class DatabaseSeeder extends Seeder
             StatusSeeder::class,
             BarangayOfficerSeeder::class,
             ResidentSeeder::class,
-            RoleSeeder::class
+            RoleSeeder::class,
+            DocumentSeeder::class
         ]);
     }
 }

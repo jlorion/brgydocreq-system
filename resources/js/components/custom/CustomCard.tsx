@@ -14,8 +14,8 @@ interface CustomCardProps {
     decreasePercentage?: string;
     icon?: React.ReactNode;
 }
-
-export const CustomClickableCard = ({ image, title, content, alt, onClick, description, }: CustomCardProps) => {
+    
+export const DocumentCustomCard = ({ image, title, content, alt, onClick, description, }: CustomCardProps) => {
     return (
         <>
             <button
