@@ -9,6 +9,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthSplitLayout from '@/layouts/shared/AuthSplitLayout';
+import { Eye, EyeOff } from 'lucide-react';
 import LoginImage from '../../../../assets/login-side-image.svg';
 
 type LoginForm = {
@@ -72,6 +73,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                             value={data.user_password}
                             onChange={(e) => setData('user_password', e.target.value)}
                             placeholder="Enter your password"
+                            icon={(showPassword) => (showPassword ? <Eye/> : <EyeOff/>)}
                         />
 
                         <div className="flex items-center justify-between">
