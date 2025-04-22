@@ -1,6 +1,4 @@
 import { CustomSidebar } from '@/components/custom/CustomSidebar';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Bell, CircleUser, KeyRound, SunMoon, FileInput } from 'lucide-react';
@@ -61,8 +59,8 @@ export default function UserSettingsLayout({ children, title }: UserSettingsLayo
                             {title}
                         </h2>
                     </div>
-                    <div className='border p-5 rounded-b-md shadow-sm'>
-                        <section className="max-w-xl space-y-12">{children}</section>
+                    <div className='border p-6 rounded-b-md shadow-sm'>
+                        <section className="space-y-12">{children}</section>
                     </div>
                 </main>
             </SidebarInset>

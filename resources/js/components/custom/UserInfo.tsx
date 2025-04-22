@@ -1,9 +1,9 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useInitials } from '@/hooks/UseInitials';
-import { User, type Admin } from '@/types';
+import { UserForm, type Admin } from '@/types';
 
 interface UserInfoProps {
-    user?: User;
+    user?: UserForm;
     admin?: Admin;
     showEmail: boolean;
 }
@@ -30,7 +30,7 @@ export function UserInfo({ user, admin, showEmail = false }: UserInfoProps) {
             <Avatar className="h-8 w-8 overflow-hidden rounded-full">
                 <AvatarImage src={user.user_photopath} alt={user.username} />
                 <AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
-                    {getInitials(user.user_firstname)}
+                    {getInitials(user.resident_firstname)}
                 </AvatarFallback>
             </Avatar>
             <div className="grid flex-1 text-left text-sm leading-tight">
