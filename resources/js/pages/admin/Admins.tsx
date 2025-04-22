@@ -10,7 +10,7 @@ import InputError from '@/components/custom/InputError';
 import { AdminFetch, InviteForm, SharedData } from '@/types';
 import { AdminCustomCard } from '@/components/custom/CustomCard';
 import CustomSelect from '@/components/custom/CustomSelect';
-import { AccountInfo, BarangayOfficerInfo } from '@/data/admin/FetchAdminsFields';
+import { AccountInfo, BarangayOfficerInfo } from '@/data/admin/FetchUpdateAdminsFields';
 import CustomForm from '@/components/custom/CustomFormFields';
 
 
@@ -22,7 +22,7 @@ const Admins = () => {
         role_id: null,
     });
 
-    const { data: dataAdmin, setData: setDataAdmin, put: putAdmin, processing: processingAdmin, errors: errorsAdmin } = useForm<Required<AdminFetch>>({
+    const { data: dataAdmin, setData: setDataAdmin, patch: patchAdmin, processing: processingAdmin, errors: errorsAdmin } = useForm<Required<AdminFetch>>({
         admin_id: 0,
         admin_username: '',
         admin_email: '',
@@ -75,7 +75,7 @@ const Admins = () => {
 
     const updateSubmit: FormEventHandler = (e) => {
         e.preventDefault();
-        putAdmin(route('admin.admins.update', dataAdmin.admin_id), {
+        patchAdmin(route('admin.admins.update', dataAdmin.admin_id), {
             onError: (errors) => {
                 console.error('Form submission failed. Validation errors:');
                 Object.entries(errors).forEach(([field, message]) => {

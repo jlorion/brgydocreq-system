@@ -40,6 +40,7 @@ class UserProfileController extends Controller
         return to_route('user.settings.profile.edit');
     }
 
+
     /**
      * Delete the user's account.
      */
