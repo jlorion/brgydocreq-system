@@ -2,7 +2,8 @@ import { CustomSidebar } from '@/components/custom/CustomSidebar';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Bell, CircleUser, KeyRound, SunMoon, FileInput } from 'lucide-react';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import CustomProfilePic from '@/components/custom/CustomProfilePic';
+
 
 const sidebarNavItems: NavItem[] = [
     {
@@ -34,13 +35,6 @@ const sidebarNavItems: NavItem[] = [
 
 ];
 
-const temp =
-    <div>
-        <Avatar className="size-30">
-            <AvatarImage src="/images/avatars/1.png" alt="Avatar" />
-            <AvatarFallback>Profile</AvatarFallback>
-        </Avatar>
-    </div>
 
 interface UserSettingsLayoutProps {
     children: React.ReactNode;
@@ -51,7 +45,7 @@ export default function UserSettingsLayout({ children, title }: UserSettingsLayo
 
     return (
         <SidebarProvider>
-            <CustomSidebar navItems={sidebarNavItems} navTitle={temp} />
+            <CustomSidebar navItems={sidebarNavItems} navTitle={<CustomProfilePic />} />
             <SidebarInset>
                 <main className="flex flex-col p-9">
                     <div className='py-3 pl-5 text-white bg-linear-to-r from-teal-500 to-green-500 rounded-t-md '>
