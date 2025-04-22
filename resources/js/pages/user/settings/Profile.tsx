@@ -51,21 +51,21 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
         <>
             <Head title="Profile settings" />
             <UserSettingsLayout title='Profile information'>
-                <form onSubmit={submit} className='space-y-6'>
-                    <CustomForm className='grid grid-cols-3 gap-x-5 mb-2' fields={AccountInfo(data, setData, errors)} />
-                    <div className='bg-amber-300 p-4 rounded-md'>
-                        <article className='flex text-justify '>
-                            <span>
-                                <NotebookPenIcon size={25} className='mr-2 mt-1' />
-                            </span>
-                            Your personal details below are based on official records provided by the Barangay and is managed by authorized personnel. For consistency and accuracy, this information cannot be edited by users.  If you need to make corrections or updates, please visit or contact the Barangay office directly. All updates will be reflected in the system once confirmed by the Barangay.
-                        </article>
-                    </div>
-                    <CustomForm className='grid grid-cols-3 gap-x-5' fields={ResidentInfo(data, setData, errors)} />
+                <form onSubmit={submit} className='space-y-5'>
+                    <CustomForm className='grid grid-cols-3 gap-x-5' fields={AccountInfo(data, setData, errors)} />
                     <div className='flex justify-end'>
                         <Button className='w-1/8' disabled={processing}>Save</Button>
                     </div>
                 </form>
+                <div className='bg-amber-300 p-4 rounded-md'>
+                    <article className='flex text-justify '>
+                        <span>
+                            <NotebookPenIcon size={25} className='mr-2 mt-1' />
+                        </span>
+                        Your personal details below are based on official records provided by the Barangay and is managed by authorized personnel. For consistency and accuracy, this information cannot be edited by users.  If you need to make corrections or updates, please visit or contact the Barangay office directly. All updates will be reflected in the system once confirmed by the Barangay.
+                    </article>
+                </div>
+                <CustomForm className='grid grid-cols-3 gap-x-5' fields={ResidentInfo(data, setData, errors)} />
                 <DeleteUser />
             </UserSettingsLayout>
         </>
