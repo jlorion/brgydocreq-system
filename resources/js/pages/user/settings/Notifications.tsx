@@ -1,12 +1,11 @@
-import UserSettingsLayout from '@/layouts/user/UserSettingsLayout'
-import React from 'react'
+import UserSettingsLayout from '@/layouts/user/UserSettingsLayout';
 
 const Notifications = () => {
-  return (
-    <UserSettingsLayout title='Notifications'>
-      <div>Nigga</div>
-    </UserSettingsLayout>
-  )
-}
+    return (
+        <UserSettingsLayout title="Notifications">
+            <div>Nigga</div>
+        </UserSettingsLayout>
+    );
+};
 
-export default Notifications
+export default Notifications;
