@@ -1,10 +1,9 @@
 import { CustomSidebar } from '@/components/custom/CustomSidebar';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Bell, CircleUser, KeyRound, SunMoon, FileInput } from 'lucide-react';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import CustomProfilePic from '@/components/custom/CustomProfilePic';
+
 
 const sidebarNavItems: NavItem[] = [
     {
@@ -36,13 +35,6 @@ const sidebarNavItems: NavItem[] = [
 
 ];
 
-const temp =
-    <div>
-        <Avatar className="size-30">
-            <AvatarImage src="/images/avatars/1.png" alt="Avatar" />
-            <AvatarFallback>Profile</AvatarFallback>
-        </Avatar>
-    </div>
 
 interface UserSettingsLayoutProps {
     children: React.ReactNode;
@@ -53,7 +45,7 @@ export default function UserSettingsLayout({ children, title }: UserSettingsLayo
 
     return (
         <SidebarProvider>
-            <CustomSidebar navItems={sidebarNavItems} navTitle={temp} />
+            <CustomSidebar navItems={sidebarNavItems} navTitle={<CustomProfilePic />} />
             <SidebarInset>
                 <main className="flex flex-col p-9">
                     <div className='py-3 pl-5 text-white bg-linear-to-r from-teal-500 to-green-500 rounded-t-md '>
@@ -61,8 +53,8 @@ export default function UserSettingsLayout({ children, title }: UserSettingsLayo
                             {title}
                         </h2>
                     </div>
-                    <div className='border p-5 rounded-b-md shadow-sm'>
-                        <section className="max-w-xl space-y-12">{children}</section>
+                    <div className='border p-6 rounded-b-md shadow-sm'>
+                        <section className="space-y-12">{children}</section>
                     </div>
                 </main>
             </SidebarInset>

@@ -13,13 +13,14 @@ interface CustomCardProps {
     increasePercentage?: string;
     decreasePercentage?: string;
     icon?: React.ReactNode;
+    className?: string;
 }
     
-export const DocumentCustomCard = ({ image, title, content, alt, onClick, description, }: CustomCardProps) => {
+export const DocumentCustomCard = ({ image, title, content, alt, onClick, description, className}: CustomCardProps) => {
     return (
         <>
             <button
-                className="relative h-68 w-90 cursor-pointer duration-300 ease-in-out hover:-translate-y-2 hover:scale-104 hover:shadow-lg"
+                className={`relative h-68 w-90 cursor-pointer duration-300 ease-in-out hover:-translate-y-2 hover:scale-104 hover:shadow-lg ${className}`}
                 onClick={onClick}
                 type='button'
                 aria-label={title}
