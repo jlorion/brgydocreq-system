@@ -1,10 +1,8 @@
 import { CustomSidebar } from '@/components/custom/CustomSidebar';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
-import { Bell, CircleUser, KeyRound, SunMoon, FileInput } from 'lucide-react';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Bell, CircleUser, FileInput, KeyRound, SunMoon } from 'lucide-react';
 
 const sidebarNavItems: NavItem[] = [
     {
@@ -33,16 +31,16 @@ const sidebarNavItems: NavItem[] = [
         href: route('user.settings.appearance'),
         icon: SunMoon,
     },
-
 ];
 
-const temp =
+const temp = (
     <div>
         <Avatar className="size-30">
             <AvatarImage src="/images/avatars/1.png" alt="Avatar" />
             <AvatarFallback>Profile</AvatarFallback>
         </Avatar>
     </div>
+);
 
 interface UserSettingsLayoutProps {
     children: React.ReactNode;
@@ -50,23 +48,19 @@ interface UserSettingsLayoutProps {
 }
 
 export default function UserSettingsLayout({ children, title }: UserSettingsLayoutProps) {
-
     return (
         <SidebarProvider>
             <CustomSidebar navItems={sidebarNavItems} navTitle={temp} />
             <SidebarInset>
                 <main className="flex flex-col p-9">
-                    <div className='py-3 pl-5 text-white bg-linear-to-r from-teal-500 to-green-500 rounded-t-md '>
-                        <h2 className='text-lg'>
-                            {title}
-                        </h2>
+                    <div className="rounded-t-md bg-linear-to-r from-teal-500 to-green-500 py-3 pl-5 text-white">
+                        <h2 className="text-lg">{title}</h2>
                     </div>
-                    <div className='border p-5 rounded-b-md shadow-sm'>
-                        <section className="max-w-xl space-y-12">{children}</section>
+                    <div className="rounded-b-md border p-5 shadow-sm">
+                        <section className="max-w-full space-y-12">{children}</section>
                     </div>
                 </main>
             </SidebarInset>
         </SidebarProvider>
-
-    )
+    );
 }

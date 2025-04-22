@@ -35,11 +35,10 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
     return (
         <>
             <Head title="Profile settings" />
-            <UserSettingsLayout title='Profile information'>
+            <UserSettingsLayout title="Profile information">
                 <div className="space-y-6">
-
                     <form onSubmit={submit} className="space-y-6">
-                        <div className="grid gap-2">
+                        <div className="grid max-w-sm gap-2">
                             <Label htmlFor="name">Name</Label>
 
                             <Input
@@ -55,7 +54,7 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
                             <InputError className="mt-2" message={errors.name} />
                         </div>
 
-                        <div className="grid gap-2">
+                        <div className="grid max-w-sm gap-2">
                             <Label htmlFor="email">Email address</Label>
 
                             <Input
