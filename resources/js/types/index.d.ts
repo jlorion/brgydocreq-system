@@ -28,6 +28,7 @@ export interface SharedData {
     admins: AdminFetch[];
     residents: ResidentFetch[];
     roles: Role[];
+    documents: Document[];
     puroks: Purok[];
     status: Status[];
     ziggy: Config & { location: string };
@@ -62,8 +63,17 @@ export interface Purok {
 }
 
 export interface Status {
-    status_id: number,
+    status_id: number;
     status_name: string;
+}
+
+export interface Document {
+    document_id: number;
+    status_id: number | null;
+    document_name: string;
+    description: string;
+    price: string;
+    document_photopath: string | null;
 }
 
 export interface AdminFetch {

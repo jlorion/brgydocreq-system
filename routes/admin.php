@@ -34,7 +34,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
 		Route::get('/document-request', [AdminDocumentRequestController::class, 'index'])->name('document-request');
 		Route::get('/on-process', [AdminOnProcessController::class, 'index'])->name('on-process');
 		Route::get('/archives', [AdminArchivesController::class, 'index'])->name('archives');
-		Route::get('/documents', [AdminDocumentsController::class, 'index'])->name('documents');
+		Route::get('/documents', [AdminDocumentsController::class, 'fetchDocumentInfo'])->name('documents');
+		Route::put('/documents/{document_id}', [AdminDocumentsController::class, 'updateDocumentInfo'])->name('documents.update');
+		Route::post('/documents/store', [AdminDocumentsController::class, 'storeDocumentInfo'])->name('documents.store');
 		Route::get('/residents', [AdminResidentsController::class, 'fetchResidentInfo'])->name('residents');
 		Route::put('/residents/{resident_id}', [AdminResidentsController::class, 'updateResidentInfo'])->name('residents.update');
 		Route::post('/residents/store', [AdminResidentsController::class, 'storeResidentInfo'])->name('residents.store');

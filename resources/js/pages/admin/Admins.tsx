@@ -1,7 +1,7 @@
 import CustomDialog from '@/components/custom/CustomDialog';
 import { Button } from '@/components/ui/button';
 import AdminLayout from '@/layouts/admin/AdminLayout';
-import Reignear from '../../../assets/reignear.png';
+import Gester from '../../../assets/gester.png';
 import { Input } from '@/components/ui/input';
 import { useForm, usePage } from '@inertiajs/react';
 import { FormEventHandler, useEffect, useState } from 'react';
@@ -126,7 +126,7 @@ const Admins = () => {
                         title='Administrator Profile'
                         button={<Button type='submit' disabled={processingAdmin} variant="primary">	{processingAdmin && <LoaderCircleIcon className="h-4 w-4 animate-spin" />} Save</Button>}
                         trigger={
-                            <AdminCustomCard image={Reignear}
+                            <AdminCustomCard image={Gester}
                                 title={`Hon. ${admin.officer_firstname} ${admin.officer_middlename} ${admin.officer_lastname} ${admin.officer_suffix || ''}`}
                                 description={admin.officer_position}
                                 content={admin.admin_role}
@@ -136,7 +136,7 @@ const Admins = () => {
                         onSubmit={updateSubmit}
                         children={
                             <>
-                                <Input type="text" hidden defaultValue={dataAdmin.admin_id} />
+                                <Input type="text" defaultValue={dataAdmin.admin_id} />
                                 <CustomForm title='Account Information' fields={AccountInfo(dataAdmin, setDataAdmin, errorsAdmin)} className='grid grid-cols-3 gap-x-5 mb-3' />
                                 <CustomForm title='Personal Information' fields={BarangayOfficerInfo(dataAdmin, setDataAdmin, errorsAdmin)} className='grid grid-cols-3 gap-x-5' />
                             </>

@@ -1,7 +1,7 @@
 import { createDateSetter, createStringSetter } from "@/lib/utils";
 import { CustomFormField, AdminFetch } from "@/types";
 
-export const AccountInfo = (data: AdminFetch, setData: (key: keyof AdminFetch, value: string | Date | null) => void, errors: Partial<Record<keyof AdminFetch, string>>): CustomFormField[] => {
+export const AccountInfo = (data: AdminFetch, setData: (key: keyof AdminFetch, value: string | Date | number | null) => void, errors: Partial<Record<keyof AdminFetch, string>>): CustomFormField[] => {
 	const stringSetter = createStringSetter(setData);
 
 	return [
