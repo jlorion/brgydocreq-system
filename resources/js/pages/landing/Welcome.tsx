@@ -5,7 +5,7 @@ import CustomDialog from '@/components/custom/CustomDialog';
 import CustomForm from '@/components/custom/CustomFormFields';
 import CustomIcon from '@/components/custom/CustomIcon';
 import { Button } from '@/components/ui/button';
-import { attachments, contactDetails, personalDetails, purposeDetail } from '@/data/FormFields';
+import { attachments, contactDetails, personalDetails, purposeDetail } from '@/data/admin/AdminRegistration';
 import MainLayout from '@/layouts/shared/MainLayout';
 import { Head, Link } from '@inertiajs/react';
 import BarangayCert from '../../../assets/barangay-certificate.png';
@@ -79,10 +79,10 @@ const Welcome = () => {
                             Services
                         </h1>
                         <CustomActive />
-                        <p className="py-2 font-medium text-black">Request. Track. Receive. All in one place!</p>
+                        <p className="py- font-medium text-black">Request. Track. Receive. All in one place!</p>
                     </div>
 
-                    <div className="grid w-full justify-center gap-y-8 pt-4 md:grid-cols-2 md:gap-x-10 md:gap-y-10 lg:grid-cols-3 lg:gap-x-12">
+                    <div className="grid w-full justify-center gap-y-8 pt-4 md:grid-cols-2 md:gap-x-10 md:gap-y-15 lg:grid-cols-3 lg:gap-x-12">
                         <CustomDialog
                             title="Barangay Clearance"
                             trigger={
@@ -168,7 +168,7 @@ const Welcome = () => {
                     </div>
                 </section>
 
-                <section id="about" className="flex h-screen flex-col items-center gap-y-10 pt-5">
+                <section id="about" className="flex h-screen flex-col items-center gap-y-10 pt-10">
                     <div>
                         <h1 className="text-s3 text-3xl font-bold">About Us</h1>
                         <CustomActive />

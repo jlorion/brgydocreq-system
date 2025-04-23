@@ -96,7 +96,7 @@ export default function Documents() {
                         </>
                     } />
             </div>
-            <div className='grid grid-cols-3 gap-7'>
+            <div className='grid grid-cols-3 gap-y-18'>
 
                 {documents.map((document, index) => (
                     <CustomDialog

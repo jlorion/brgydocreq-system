@@ -52,6 +52,8 @@ class UserRegistrationController extends Controller
             'user_phonenum' => $residentReference->phone_number,
             'user_password' => Hash::make($validated['password']),
         ]);
+        $residentReference->update(['used' => true]);
+        
 
         event(new Registered($user));
 
@@ -59,6 +61,5 @@ class UserRegistrationController extends Controller
 
         return to_route('user.landing.home');
 
-        $residentReference->update(['used' => true]);
     }
 }

@@ -1,7 +1,7 @@
 import { CustomFormField, ResidentVerificationForm } from "@/types"
 import { format } from "date-fns";
 
-export const ResidentReferenceFormFields = (data: ResidentVerificationForm, setData: (key: keyof ResidentVerificationForm, value: string | Date | null) => void, errors: Partial<Record<keyof ResidentVerificationForm, string>>): CustomFormField[] => {
+export const ResidentReferenceFields = (data: ResidentVerificationForm, setData: (key: keyof ResidentVerificationForm, value: string | Date | null) => void, errors: Partial<Record<keyof ResidentVerificationForm, string>>): CustomFormField[] => {
 
 	return [
 		{
