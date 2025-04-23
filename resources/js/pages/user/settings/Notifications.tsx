@@ -3,7 +3,7 @@ import UserSettingsLayout from '@/layouts/user/UserSettingsLayout';
 const Notifications = () => {
     return (
         <UserSettingsLayout title="Notifications">
-            <div>Nigga</div>
+            <div>Notifications</div>
         </UserSettingsLayout>
     );
 };
