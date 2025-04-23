@@ -1,7 +1,6 @@
 import CustomDialog from '@/components/custom/CustomDialog';
 import { Button } from '@/components/ui/button';
 import AdminLayout from '@/layouts/admin/AdminLayout';
-import BarangayClearance from '../../../assets/barangay-clearance.png';
 import { DocumentCustomCard } from '@/components/custom/CustomCard';
 import { useForm, usePage } from '@inertiajs/react';
 import { Document, SharedData } from '@/types';
@@ -12,6 +11,8 @@ import { fetchUpdateSecondHalve } from '@/data/admin/FetchUpdateDocumentFields'
 import { addFirstHalve } from '@/data/admin/AddDocumentFields'
 import { addSecondHalve } from '@/data/admin/AddDocumentFields'
 import { FormEventHandler } from 'react';
+import { useInitials } from '@/hooks/UseInitials';
+import DefaultDocPic from '../../../assets/default_documentpic.svg'
 
 export default function Documents() {
 
@@ -19,7 +20,6 @@ export default function Documents() {
 
 
     // update and fetch document
-
     const { data: updateData, setData: updateSetData, put: updatePut, processing: updateProcessing, errors: updateErrors } = useForm<Required<Document>>({
         document_id: 0,
         status_id: null,
@@ -103,7 +103,7 @@ export default function Documents() {
                         button={<Button disabled={updateProcessing} variant="primary">{updateProcessing && <LoaderCircleIcon className="h-4 w-4 animate-spin" />} Save</Button>}
                         trigger={
                             <DocumentCustomCard
-                                image={BarangayClearance}
+                                image={document.document_photopath ?? DefaultDocPic}
                                 alt={document.document_name}
                                 title={document.document_name}
                                 content={document.description}
