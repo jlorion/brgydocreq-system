@@ -128,7 +128,6 @@ const Admins = () => {
                         trigger={
                             <AdminCustomCard
                                 image={admin.admin_photopath ?? DefaultProfilePic}
-                                Imagesize='1'
                                 title={`Hon. ${admin.officer_firstname} ${admin.officer_middlename} ${admin.officer_lastname} ${admin.officer_suffix || ''}`}
                                 description={admin.officer_position}
                                 content={admin.admin_role}
