@@ -46,7 +46,7 @@ export const fetchUpdateFirstHalve = (data: DocumentForm, setData: (key: keyof D
 			disabled: data.status_id === null,
 			value: data.status_id ?? 0,
 			tabIndex: -6,
-			onChange: (value: number) => setData('status_id', value), // Correct handler
+			onChange: (value: number) => setData('status_id', value),
 			errorMessage: errors.status_id,
 			selectItems: status.map((status) => ({
 				label: status.status_name,

@@ -26,7 +26,7 @@ export interface NavItem {
 
 export interface SharedData {
     auth: Auth;
-    admins: AdminFetch[];
+    admins: AdminForm[];
     residents: ResidentFetch[];
     roles: Role[];
     documents: DocumentForm[];
@@ -51,14 +51,6 @@ export interface UserForm {
     resident_precinct: string;
     resident_householdnum: string;
     resident_purok: string;
-}
-export interface Admin {
-    admin_id: string;
-    admin_username: string;
-    admin_email: string;
-    admin_photopath?: string;
-    admin_role: string;
-    [key: string]: unknown; // This allows for additional properties...
 }
 
 export interface Role {
@@ -85,11 +77,12 @@ export interface DocumentForm {
     document_photopath: File | null;
 }
 
-export interface AdminFetch {
+export interface AdminForm {
     admin_id: number;
     admin_username: string;
     admin_email: string;
-    admin_photopath: string;
+    admin_photopath: File | null;
+    admin_roleid: number | null;
     admin_role: string;
     officer_firstname: string;
     officer_middlename: string;
@@ -101,6 +94,7 @@ export interface AdminFetch {
     officer_position: string;
     officer_gender: string;
     officer_purok: string;
+    officer_purokid: number | null;
 }
 
 export interface ResidentFetch {
