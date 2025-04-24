@@ -13,7 +13,7 @@
     
     <div style="padding: 20px; border: 1px solid #ddd; border-radius: 5px;">
         <p>
-            You have been invited by Barangay Captain <strong>Mark Jefferson Saldanaña</strong> to register and join the 
+            You have been invited by Barangay Captain <strong>Mark Jefferson Saldanañaa</strong> to register and join the 
             <strong>Barangay Balagunan Document Request System</strong> as an <strong>{{ $role }}</strong>.
         </p>
 
