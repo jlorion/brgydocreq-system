@@ -10,7 +10,7 @@ const SampleData = {
     purpose: 'to serve and to protect',
     payment: 120,
     date: '2023-10-01',
-    status: 'rejected',
+    status: 'processing',
     attachment: barangayCertificate,
 };
 
@@ -109,7 +109,11 @@ const DocumentRequest = () => {
                             <Button variant="primary" className="w-40 disabled:opacity-50" disabled={SampleData.status !== 'rejected'}>
                                 Resubmit
                             </Button>
-                            <Button variant="destructive" className="w-40">
+                            <Button
+                                variant="destructive"
+                                className="w-40 disabled:opacity-50"
+                                disabled={['processing', 'for pickup', 'claimed'].includes(SampleData.status)}
+                            >
                                 Cancel
                             </Button>
                         </div>
