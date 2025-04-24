@@ -138,7 +138,7 @@ export default function TermsCondition({ trigger }: CustomDialogProps) {
                 </article>
 
             </>
-        } width='w-3xl' contentClassName='mt-9' subTitleClassName='mb-5 text-center font-semibold text-s3 text-lg' />
+        } width='w-3xl' subTitleClassName='mb-5 text-center font-semibold text-s3 text-lg' />
 
     );
 }
