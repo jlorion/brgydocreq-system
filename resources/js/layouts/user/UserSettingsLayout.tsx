@@ -1,3 +1,5 @@
+import CustomProfilePic from '@/components/custom/CustomProfilePic';
+
 import { CustomSidebar } from '@/components/custom/CustomSidebar';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
@@ -33,14 +35,12 @@ const sidebarNavItems: NavItem[] = [
     },
 ];
 
-const temp = (
-    <div>
-        <Avatar className="size-30">
-            <AvatarImage src="/images/avatars/1.png" alt="Avatar" />
-            <AvatarFallback>Profile</AvatarFallback>
-        </Avatar>
-    </div>
-);
+<div>
+    <Avatar className="size-30">
+        <AvatarImage src="/images/avatars/1.png" alt="Avatar" />
+        <AvatarFallback>Profile</AvatarFallback>
+    </Avatar>
+</div>;
 
 interface UserSettingsLayoutProps {
     children: React.ReactNode;
@@ -50,7 +50,7 @@ interface UserSettingsLayoutProps {
 export default function UserSettingsLayout({ children, title }: UserSettingsLayoutProps) {
     return (
         <SidebarProvider>
-            <CustomSidebar navItems={sidebarNavItems} navTitle={temp} />
+            <CustomSidebar navItems={sidebarNavItems} navTitle={<CustomProfilePic />} />
             <SidebarInset>
                 <main className="flex flex-col p-9">
                     <div className="rounded-t-md bg-linear-to-r from-teal-500 to-green-500 py-3 pl-5 text-white">
