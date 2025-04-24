@@ -30,6 +30,7 @@ class AdminAdminsController extends Controller
                 'admin_username' => $admin->admin_username,
                 'admin_email' => $admin->admin_email,
                 'admin_photopath' => $admin->admin_photopath,
+                'admin_phonenum' => $admin->admin_phonenum,
                 'admin_roleid' => $admin->role->role_id,
                 'admin_role' => $admin->role->role_name,
                 'officer_firstname' => $admin->barangayOfficer->officer_firstname,
@@ -63,8 +64,9 @@ class AdminAdminsController extends Controller
             'admin_id' => 'required|exists:admins,admin_id',
             'admin_username' => 'required|string|max:255',
             'admin_email' => 'required|email|max:255',
+            'admin_phonenum' => 'required|string|max:100',
             'admin_photopath' => 'nullable|string|max:255',
-            'admin_role' => 'required|string|max:255',
+            'admin_roleid' => 'required|exists:roles,role_id',
             'officer_firstname' => 'required|string|max:255',
             'officer_middlename' => 'required|string|max:255',
             'officer_lastname' => 'required|string|max:255',
@@ -74,7 +76,7 @@ class AdminAdminsController extends Controller
             'officer_householdnum' => 'required|string|max:255',
             'officer_position' => 'required|required|string|max:255',
             'officer_gender' => 'required|string|max:20',
-            'officer_purok' => 'required|string|max:255',
+            'officer_purokid' => 'required|exists:addresses,address_id',
         ]);
 
         $admin = Admin::findOrFail($validate['admin_id']);
@@ -82,8 +84,9 @@ class AdminAdminsController extends Controller
         $admin->update([
             'admin_username' => $validate['admin_username'],
             'admin_email' => $validate['admin_email'],
+            'admin_phonenum' => $validate['admin_phonenum'],
             'admin_photopath' => $validate['admin_photopath'],
-            'admin_role' => $validate['admin_role'],
+            'role_id' => $validate['admin_roleid'],
         ]);
 
         $admin->barangayOfficer->update([
@@ -96,17 +99,7 @@ class AdminAdminsController extends Controller
             'officer_householdnum' => $validate['officer_householdnum'],
             'officer_position' => $validate['officer_position'],
             'officer_gender' => $validate['officer_gender'],
+            'address_id' => $validate['officer_purokid'],
         ]);
-
-        $admin->barangayOfficer->address->update([
-            'purok' => $validate['officer_purok'],
-        ]);
-
-        $admin->role->update([
-            'role_name' => $validate['admin_role']
-        ]);
-
-
-        return back()->with('success', "Administrator successfully updated");
     }
 }

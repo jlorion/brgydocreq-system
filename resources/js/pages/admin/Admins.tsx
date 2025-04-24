@@ -12,6 +12,7 @@ import CustomSelect from '@/components/custom/CustomSelect';
 import { AccountInfo, BarangayOfficerInfo } from '@/data/admin/FetchUpdateAdminsFields';
 import CustomForm from '@/components/custom/CustomFormFields';
 import DefaultProfilePic from '../../../assets/default_profilepic.svg'
+import { toast, Toaster } from 'sonner';
 
 
 const Admins = () => {
@@ -35,12 +36,12 @@ const Admins = () => {
         });
     }
 
-
     // update and fetch admin
     const { data: updateData, setData: updateSetData, patch: updatePost, processing: updateProcessing, errors: updateErrors } = useForm<Required<AdminForm>>({
         admin_id: 0,
         admin_photopath: null,
         admin_roleid: null,
+        admin_phonenum: '',
         admin_username: '',
         admin_email: '',
         admin_role: '',
@@ -59,7 +60,11 @@ const Admins = () => {
 
     const updateSubmit: FormEventHandler = (e) => {
         e.preventDefault();
+        console.log(updateData)
         updatePost(route('admin.admins.update', updateData.admin_id), {
+            onSuccess: () => {
+                toast.success('Succesfully updated')
+            },
             onError: (errors) => {
                 console.error('Form submission failed. Validation errors:');
                 Object.entries(errors).forEach(([field, message]) => {
@@ -76,6 +81,7 @@ const Admins = () => {
             admin_username: admin.admin_username,
             admin_email: admin.admin_email,
             admin_photopath: admin.admin_photopath,
+            admin_phonenum: admin.admin_phonenum,
             admin_roleid: admin.admin_roleid,
             admin_role: admin.admin_role,
             officer_firstname: admin.officer_firstname,

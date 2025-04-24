@@ -83,6 +83,7 @@ export interface AdminForm {
     admin_email: string;
     admin_photopath: File | null;
     admin_roleid: number | null;
+    admin_phonenum: string;
     admin_role: string;
     officer_firstname: string;
     officer_middlename: string;
