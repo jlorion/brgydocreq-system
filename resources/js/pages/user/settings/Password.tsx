@@ -51,10 +51,10 @@ export default function Password() {
         <>
             <Head title="Password settings" />
 
-            <UserSettingsLayout title='Change password'>
+            <UserSettingsLayout title="Change password">
                 <div className="space-y-6">
                     <form onSubmit={updatePassword} className="space-y-6">
-                        <div className="grid gap-2">
+                        <div className="grid max-w-sm gap-2">
                             <Label htmlFor="current_password">Current password</Label>
 
                             <Input
@@ -71,7 +71,7 @@ export default function Password() {
                             <InputError message={errors.current_password} />
                         </div>
 
-                        <div className="grid gap-2">
+                        <div className="grid max-w-sm gap-2">
                             <Label htmlFor="password">New password</Label>
 
                             <Input
@@ -88,7 +88,7 @@ export default function Password() {
                             <InputError message={errors.password} />
                         </div>
 
-                        <div className="grid gap-2">
+                        <div className="grid max-w-sm gap-2">
                             <Label htmlFor="password_confirmation">Confirm password</Label>
 
                             <Input
