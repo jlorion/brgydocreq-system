@@ -6,42 +6,28 @@ import CustomForm from '@/components/custom/CustomFormFields';
 import CustomIcon from '@/components/custom/CustomIcon';
 import { Button } from '@/components/ui/button';
 import MainLayout from '@/layouts/shared/MainLayout';
-import { Head, Link, usePage } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import BarangayLogo from '../../../assets/barangay-logo.png';
 import DocumentArchive from '../../../assets/document-archive.svg';
 import DocumentRequest from '../../../assets/document-request.svg';
 import Document from '../../../assets/documents.png';
 import Population from '../../../assets/population.svg';
 import Puroks from '../../../assets/puroks.svg';
-import { SharedData } from '@/types';
+import { DocumentReqForm, SharedData } from '@/types';
 import DefaultDocPic from '../../../assets/default_documentpic.svg'
+import { DocumentRequestFields } from '@/data/user/DocumentRequestFields';
 
 const Welcome = () => {
 
-    const { documents } = usePage<SharedData>().props;
+    const { documents, auth } = usePage<SharedData>().props;
 
-    // const renderFormFields = (attachmentFields: any) => {
-    //     return (
-    //         <>
-    //             <div>
-    //                 <CustomForm fields={personalDetails} title="Personal Details" className="grid grid-cols-4 gap-x-4" />
-    //             </div>
-    //             <div className="flex gap-x-5 pr-5">
-    //                 <div className="w-1/2">
-    //                     <CustomForm fields={contactDetails} title="Contact Details" className="grid grid-cols-2 gap-x-4" />
-    //                 </div>
-    //                 <div className="flex-grow">
-    //                     <CustomForm fields={attachmentFields} title="Attachment" className="grid grid-cols-1 gap-x-4" />
-    //                 </div>
-    //             </div>
-    //             <div className="flex-grow">
-    //                 <CustomForm fields={purposeDetail} title="Purpose" className="grid grid-cols-1 gap-x-4" />
-    //             </div>
-    //         </>
-    //     );
-    // };
+    const { data, setData, post, processing, errors, } = useForm<Required<DocumentReqForm>>({
+        attachment: null,
+        request_purpose: '',
+    })
 
     return (
+
         <>
             <Head title="Balagunan" />
             <MainLayout>
@@ -62,7 +48,7 @@ const Welcome = () => {
                             </div>
 
                             <div className="flex justify-center lg:justify-start">
-                                <Button variant="primary" className="w-36">
+                                <Button variant="primary" className="w-36" >
                                     Request
                                 </Button>
                             </div>
@@ -80,9 +66,9 @@ const Welcome = () => {
                         <p className="py- font-medium text-black">Request. Track. Receive. All in one place!</p>
                     </div>
 
+                    <div className="grid justify-center gap-y-8 pt-5 lg:grid-cols-3 lg:gap-x-26 lg:gap-y-18">
 
-                    {/* {documents.map((document, index) => (
-                        <div className="grid w-full justify-center gap-y-8 pt-4 md:grid-cols-2 md:gap-x-10 md:gap-y-15 lg:grid-cols-3 lg:gap-x-12">
+                        {auth.user ? (documents.map((document, index) => (
                             <CustomDialog
                                 key={index}
                                 title={document.document_name}
@@ -94,12 +80,25 @@ const Welcome = () => {
                                         content={document.description} />
                                 }
                                 button={<Button variant="primary">Submit</Button>}
-                                children={<div></div>}
+                                children={
+                                    <CustomForm fields={DocumentRequestFields(data, setData, errors)} />
+                                }
                             />
 
-                        </div>
-                    ))
-                    } */}
+                        ))) : (
+                            (documents.map((document, index) => (
+                                <Link href={route('user.login')}>
+                                    <DocumentCustomCard
+                                        key={index}
+                                        image={document.document_photopath ? `/storage/${document.document_photopath}` : DefaultDocPic}
+                                        alt={document.document_name}
+                                        title={document.document_name}
+                                        content={document.description} />
+                                </Link>
+                            )))
+                        )
+                        }
+                    </div>
                 </section>
 
                 <section id="about" className="flex h-screen flex-col items-center gap-y-10 pt-10">

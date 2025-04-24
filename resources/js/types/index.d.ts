@@ -77,6 +77,11 @@ export interface DocumentForm {
     document_photopath: File | null;
 }
 
+export interface DocumentReqForm {
+    request_purpose: string;
+    attachment: File | null;
+}
+
 export interface AdminForm {
     admin_id: number;
     admin_username: string;

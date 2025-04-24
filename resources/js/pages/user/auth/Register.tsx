@@ -108,14 +108,14 @@ export default function Register() {
                             disabled={processing}
                             placeholder="Enter your reference number"
                         />
+                        <InputError message={errors.reference_number} />
                         <TextLink href={route('user.resident-reference')} tabIndex={5} className="text-s3 flex justify-end text-sm hover:underline">
                             Request Reference Number
                         </TextLink>
-                        <InputError message={errors.reference_number} />
                     </div>
 
                     <div className="mt-4 flex items-center justify-center space-x-3">
-                        <Checkbox id="terms" tabIndex={6} required/>
+                        <Checkbox id="terms" tabIndex={6} required />
                         <Label htmlFor="terms" className="text-sm flex items-center justify-start">
                             <span>I agree to the</span>
                             <TermsCondition trigger={<Button variant='link' tabIndex={7} className='pl-1 pr-0 m-0 gap-0'>

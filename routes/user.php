@@ -13,6 +13,7 @@ use App\Http\Controllers\User\Settings\UserDocumentReqController;
 use App\Http\Controllers\User\Settings\UserNotificationController;
 use App\Http\Controllers\User\Settings\UserPasswordController;
 use App\Http\Controllers\User\Settings\UserProfileController;
+use App\Http\Controllers\User\UserDocumentController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -38,9 +39,9 @@ Route::prefix('user')->name('user.')->group(function () {
 
 	Route::middleware('auth:web')->group(function () {
 
-		Route::inertia('/', 'landing/Welcome')->name('landing.home');
-		Route::inertia('/about-us', 'landing/AboutUs')->name('landing.about-us');
+		Route::get('/', [UserDocumentController::class, 'showDocument'])->name('landing.home');
 		Route::inertia('/contact-us', 'landing/ContactUs')->name('landing.contact-us');
+		Route::inertia('/about-us', 'landing/AboutUs')->name('landing.about-us');
 
 		Route::get('verify-email', UserEmailVerificationPromptController::class)
 			->name('verification.notice');
