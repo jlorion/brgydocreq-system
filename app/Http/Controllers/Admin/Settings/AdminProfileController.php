@@ -20,7 +20,7 @@ class AdminProfileController extends Controller
      */
     public function edit(Request $request): Response
     {
-        
+
         $roles = Role::get(['role_id', 'role_name']);
         $puroks = Address::get(['address_id', 'purok']);
 
@@ -37,16 +37,23 @@ class AdminProfileController extends Controller
      */
     public function update(Request $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $validate = $request->validate([
+            'admin_username' => 'required|unique:admins,admin_username,' . $request->user('admin')->admin_id . ',admin_id',
+            'admin_email' => 'required|email|unique:admins,admin_email,' . $request->user('admin')->admin_id . ',admin_id',
+            'admin_phonenum' => ['required', 'regex:/^09\d{9}$/']
+        ]);
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        $admin = $request->user('admin');
+
+        if ($admin->isDirty('admin_email')) {
+            $admin->email_verified_at = null;
         }
 
-        $request->user()->save();
+        $admin->update($validate);
 
         return to_route('admin.settings.profile.edit');
     }
+
 
     /**
      * Delete the user's account.

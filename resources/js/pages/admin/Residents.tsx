@@ -219,8 +219,8 @@ const Residents = () => {
                                     </Button>
                                 } />
                         }
-                        filterColumn="resident_status"
-                        searchPlaceHolder="Search resident's name"
+                        filterColumn="resident_householdnum"
+                        searchPlaceHolder="Search bldg serial number"
                         renderSheet={(trigger, row) => (
                             <CustomSheet
                                 onSubmit={updateSubmit}

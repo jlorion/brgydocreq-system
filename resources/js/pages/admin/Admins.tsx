@@ -27,6 +27,9 @@ const Admins = () => {
     const inviteSubmit: FormEventHandler = (e) => {
         e.preventDefault();
         invitePost(route('admin.invite'), {
+            onSuccess: () => {
+                toast.success('Succesfully updated')
+            },
             onError: (errors) => {
                 console.error('Form submission failed. Validation errors:');
                 Object.entries(errors).forEach(([field, message]) => {
@@ -37,7 +40,7 @@ const Admins = () => {
     }
 
     // update and fetch admin
-    const { data: updateData, setData: updateSetData, patch: updatePost, processing: updateProcessing, errors: updateErrors } = useForm<Required<AdminForm>>({
+    const { data: updateData, setData: updateSetData, post: updatePost, processing: updateProcessing, errors: updateErrors } = useForm<Required<AdminForm>>({
         admin_id: 0,
         admin_photopath: null,
         admin_roleid: null,
@@ -62,6 +65,8 @@ const Admins = () => {
         e.preventDefault();
         console.log(updateData)
         updatePost(route('admin.admins.update', updateData.admin_id), {
+            method: 'patch',
+            forceFormData: true,
             onSuccess: () => {
                 toast.success('Succesfully updated')
             },

@@ -33,7 +33,7 @@ class AdminInvitationController extends Controller
 
         Mail::to($validated['email'])->send(new AdminInvitationMail($token, $roleName));
 
-        return response()->json(['message' => 'Invitation sent successfully.', 'token' => $token]);
+        // return response()->json(['message' => 'Invitation sent successfully.', 'token' => $token]);
     }
 
     public function validateToken(Request $request)

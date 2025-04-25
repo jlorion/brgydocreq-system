@@ -158,6 +158,8 @@ interface BaseFormField {
     label?: string;
     tabIndex?: number;
     disabled?: boolean;
+    maxLength?: number;
+    pattern?: string;
     errorMessage?: string;
     additionalProps?: Record<string, any>;
 }

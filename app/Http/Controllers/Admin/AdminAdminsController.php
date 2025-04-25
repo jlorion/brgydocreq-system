@@ -65,7 +65,6 @@ class AdminAdminsController extends Controller
             'admin_username' => 'required|string|max:255',
             'admin_email' => 'required|email|max:255',
             'admin_phonenum' => 'required|string|max:100',
-            'admin_photopath' => 'nullable|string|max:255',
             'admin_roleid' => 'required|exists:roles,role_id',
             'officer_firstname' => 'required|string|max:255',
             'officer_middlename' => 'required|string|max:255',
@@ -85,7 +84,6 @@ class AdminAdminsController extends Controller
             'admin_username' => $validate['admin_username'],
             'admin_email' => $validate['admin_email'],
             'admin_phonenum' => $validate['admin_phonenum'],
-            'admin_photopath' => $validate['admin_photopath'],
             'role_id' => $validate['admin_roleid'],
         ]);
 

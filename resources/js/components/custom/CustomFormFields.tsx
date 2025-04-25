@@ -45,6 +45,7 @@ const CustomForm = ({ fields, className, title }: CustomFormProps) => {
                     <CustomSelect
                         placeholder={field.placeholder}
                         onChange={field.onChange ?? (() => { })}
+                        disabled={field.disabled}
                         items={field.selectItems ?? []}
                         value={field.value ?? null}
                         {...field.additionalProps}
@@ -84,12 +85,15 @@ const CustomForm = ({ fields, className, title }: CustomFormProps) => {
                     );
                 }
 
+
                 return (
                     <Input
                         type={field.type}
                         placeholder={field.placeholder}
                         value={field.value}
+                        pattern={field.pattern}
                         autoFocus={field.autofocus}
+                        maxLength={field.maxLength}
                         disabled={field.disabled}
                         autoComplete={field.autoComplete}
                         tabIndex={field.tabIndex}

@@ -41,7 +41,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 		Route::patch('/residents/{resident_id}', [AdminResidentsController::class, 'updateResidentInfo'])->name('residents.update');
 		Route::post('/residents/store', [AdminResidentsController::class, 'storeResidentInfo'])->name('residents.store');
 		Route::get('/admins', [AdminAdminsController::class, 'fetchAdminInfo'])->name('admins');
-		Route::patch('/admins/{admin_id}', [AdminAdminsController::class, 'updateAdminInfo'])->name('admins.update');
+		Route::post('/admins/{admin_id}', [AdminAdminsController::class, 'updateAdminInfo'])->name('admins.update');
 		Route::post('/invite', [AdminInvitationController::class, 'sendInvitation'])->name('invite');
 		Route::post('logout', [AdminAuthSessionController::class, 'destroy'])->name('logout');
 

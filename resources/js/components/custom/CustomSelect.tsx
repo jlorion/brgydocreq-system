@@ -7,11 +7,12 @@ interface CustomSelectProps {
 	className?: string;	
 	onChange?: (value: number) => void;
 	value: number | null;
+	disabled?: boolean
 }
 
-const CustomSelect = ({ placeholder, items = [], className, onChange, value, }: CustomSelectProps) => {
+const CustomSelect = ({ placeholder, items = [], className, onChange, value, disabled }: CustomSelectProps) => {
 	return (
-		<Select value={value !== null ? value.toString() : undefined} onValueChange={(val) => onChange?.(parseInt(val))}>
+		<Select disabled={disabled} value={value !== null ? value.toString() : undefined} onValueChange={(val) => onChange?.(parseInt(val))}>
 			<SelectTrigger className={`w-full ${className}`}>
 				<SelectValue placeholder={placeholder} />
 			</SelectTrigger>

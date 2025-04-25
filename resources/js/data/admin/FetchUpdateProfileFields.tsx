@@ -20,7 +20,7 @@ export const AccountInfo = (data: AdminForm, setData: (key: keyof AdminForm, val
 			label: 'Role',
 			type: 'select',
 			id: 'role',
-			disabled: data.admin_roleid === null,
+			disabled: true,
 			value: data.admin_roleid ?? 0,
 			tabIndex: -2,
 			onChange: (value: number) => setData('admin_roleid', value),
@@ -44,10 +44,18 @@ export const AccountInfo = (data: AdminForm, setData: (key: keyof AdminForm, val
 			label: 'Phone number',
 			type: 'text',
 			id: 'phone_num',
+			maxLength: 11,
 			value: data.admin_phonenum,
 			tabIndex: -3,
-			onChange: (e) => setData('admin_phonenum', e.target.value),
+			onChange: (e) => {
+				const value = e.target.value;
+				// Accept only digits, and trim if over 11
+				if (/^\d{0,11}$/.test(value)) {
+					setData('admin_phonenum', value);
+				}
+			},
 			errorMessage: errors.admin_phonenum,
+
 		},
 	]
 }
