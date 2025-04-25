@@ -10,9 +10,10 @@ import { UseHeaderScroll } from '@/hooks/UseHeaderScroll';
 import { cn } from '@/lib/utils';
 import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { Bell, ChevronDown, FileUser, Menu } from 'lucide-react';
+import { Bell, ChevronDown, Menu } from 'lucide-react';
 import { CustomMenuContent } from './CustomMenuContent';
 import React from 'react';
+import DefaultProfilePic from '../../../assets/default_profilepic.svg'
 
 interface CustomAdminHeaderProps {
 	breadcrumbs?: BreadcrumbItem[];
@@ -114,10 +115,8 @@ export function CustomAdminHeader({ breadcrumbs = [], mainNavItems = [], rightNa
 									<DropdownMenuTrigger asChild>
 										<Button variant="ghost" className="flex items-center gap-x-5">
 											<Avatar className="size-8 overflow-hidden rounded-full">
-												<AvatarImage src={auth.admin.admin_photopath} alt={auth.admin.admin_username} />
-												<AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
-													{getInitials(auth.admin.admin_username)}
-												</AvatarFallback>
+											<AvatarImage src={auth.admin.admin_photopath ? `/storage/${auth.admin.admin_photopath}` : DefaultProfilePic} alt={auth.admin.admin_username} />
+
 											</Avatar>
 											<div className="flex flex-col items-start gap-1 text-sm">
 												{auth.admin.admin_username}
