@@ -40,7 +40,6 @@ const AdminLayout = ({ children, className, title }: AdminLayoutProps) => {
 					/>
 					<main className={`z-0 flex flex-grow flex-col bg-gray-50 p-9 @container/main gap-y-9 ${className}`}>
 						{children}
-
 					</main>
 				</SidebarInset>
 			</SidebarProvider>

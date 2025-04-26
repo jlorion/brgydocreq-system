@@ -27,9 +27,11 @@ interface DatePickerProps {
   id?: string
   disabled?: boolean
   className?: string
+  formatDate?: string
+  placeholder?: string
 }
 
-export function DatePicker({ value, onChange, tabIndex, id, disabled, className }: DatePickerProps) {
+export function DatePicker({ value, onChange, tabIndex, id, disabled, className, placeholder = 'Pick a birthday', formatDate = 'PPP' }: DatePickerProps) {
   const date = value
 
   const months = [
@@ -61,7 +63,7 @@ export function DatePicker({ value, onChange, tabIndex, id, disabled, className 
           tabIndex={tabIndex}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
-          {date ? format(date, "PPP") : <span>Pick a birthday</span>}
+          {date ? format(date, formatDate) : <span>{placeholder}</span>}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">

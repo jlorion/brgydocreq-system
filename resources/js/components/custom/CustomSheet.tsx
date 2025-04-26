@@ -7,8 +7,6 @@ interface CustomSheetProps {
     secondButton?: React.ReactNode;
     firstButtonClassName?: string;
     secondButtonClassName?: string;
-    firstButtonVariant?: 'search' | 'link' | 'approve' | 'reject' | 'plain' | 'primary' | 'outline' | 'secondary' | 'ghost';
-    secondButtonVariant?: 'search' | 'link' | 'approve' | 'reject' | 'plain' | 'primary' | 'outline' | 'secondary' | 'ghost';
     trigger: React.ReactNode;
     className?: string;
     plainTitle?: string;

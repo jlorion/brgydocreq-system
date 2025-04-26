@@ -12,7 +12,7 @@ import CustomSelect from '@/components/custom/CustomSelect';
 import { AccountInfo, BarangayOfficerInfo } from '@/data/admin/FetchUpdateAdminsFields';
 import CustomForm from '@/components/custom/CustomFormFields';
 import DefaultProfilePic from '../../../assets/default_profilepic.svg'
-import { toast, Toaster } from 'sonner';
+import { toast } from 'sonner';
 
 
 const Admins = () => {
@@ -158,6 +158,7 @@ const Admins = () => {
                                 <Input type="text" hidden defaultValue={updateData.admin_id} />
                                 <CustomForm title='Account Information' fields={AccountInfo(updateData, updateSetData, updateErrors)} className='grid grid-cols-3 gap-x-5 mb-3' />
                                 <CustomForm title='Personal Information' fields={BarangayOfficerInfo(updateData, updateSetData, updateErrors)} className='grid grid-cols-3 gap-x-5' />
+
                             </>
 
                         }

@@ -4,7 +4,6 @@ import { Input } from '../ui/input';
 import InputError from './InputError';
 import CustomSelect from './CustomSelect';
 import { DatePicker } from '../ui/date-picker';
-import TextLink from './CustomTextLink';
 import { CustomFormField } from '@/types';
 
 interface CustomFormProps {
@@ -34,6 +33,8 @@ const CustomForm = ({ fields, className, title }: CustomFormProps) => {
                         id={field.id}
                         tabIndex={field.tabIndex}
                         value={field.value ? new Date(field.value) : null}
+                        formatDate={field.formatDate}
+                        placeholder={field.placeholder}
                         disabled={field.disabled}
                         className="disabled:text-black disabled:border-shamrock-green"
                         onChange={field.onChange}
@@ -51,8 +52,6 @@ const CustomForm = ({ fields, className, title }: CustomFormProps) => {
                         {...field.additionalProps}
                     />
                 );
-            case 'link':
-                return <TextLink className="text-sm">{field.value}</TextLink>;
             case 'file':
                 return (
                     <Input

@@ -27,7 +27,6 @@ const CustomDialog = ({
     subTitleClassName,
     height = 'max-h-130',
     onSubmit,
-    fields,
     classname,
 }: CustomDialogProps) => {
     return (
@@ -42,7 +41,9 @@ const CustomDialog = ({
                         <h1 className={subTitleClassName}>{subtitle}</h1>
                         {children}
                     </div>
-                    <DialogFooter>{button}</DialogFooter>
+                    {button ? (
+                        <DialogFooter>{button}</DialogFooter>
+                    ) : null}
                 </form>
                 <Toaster richColors position="bottom-left" />
             </DialogContent>

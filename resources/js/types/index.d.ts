@@ -28,6 +28,7 @@ export interface SharedData {
     auth: Auth;
     admins: AdminForm[];
     residents: ResidentFetch[];
+    docrequests: SubmittedDocumentForm[];
     roles: Role[];
     documents: DocumentForm[];
     puroks: Purok[];
@@ -90,13 +91,13 @@ export interface SubmittedDocumentForm {
     resident_middlename: string;
     resident_lastname: string;
     resident_suffix: string | null;
-    document_id: number | null;
+    document_id: number;
     requested_purpose: string;
     document_name: string;
     attachment_path: File | null;
     amount: number;
-    date_requested: Date; 
-    document_status: Date; 
+    date_requested: Date | null;
+    document_status: string;
 }
 
 export interface AdminForm {
@@ -215,15 +216,11 @@ interface SelectField extends BaseFormField {
 
 interface DateField extends BaseFormField {
     type: 'date';
+    placeholder?: string;
+    formatDate?: string;
     value?: string | Date | null;
     onChange?: (date: Date | null) => void;
 }
 
-interface LinkField extends BaseFormField {
-    type: 'link';
-    value?: string;
-    onChange?: never; // No onChange for links
-}
-
 // Discriminated union
-export type CustomFormField = TextField | TextareaField | FileField | SelectField | DateField | LinkField;
+export type CustomFormField = TextField | TextareaField | FileField | SelectField | DateField;
