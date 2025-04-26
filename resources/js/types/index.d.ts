@@ -79,7 +79,7 @@ export interface DocumentForm {
 
 export interface DocumentReqForm {
     user_id: number;
-    document_id: number | null;
+    document_id: number;
     requested_purpose: string;
     attachment_path: File | null;
 }
@@ -92,9 +92,9 @@ export interface SubmittedDocumentForm {
     resident_suffix: string | null;
     document_id: number | null;
     requested_purpose: string;
+    document_name: string;
     attachment_path: File | null;
     amount: number;
-    document_name: string;
     date_requested: Date; 
     document_status: Date; 
 }

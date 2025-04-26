@@ -14,6 +14,7 @@ use App\Http\Controllers\User\Settings\UserNotificationController;
 use App\Http\Controllers\User\Settings\UserPasswordController;
 use App\Http\Controllers\User\Settings\UserProfileController;
 use App\Http\Controllers\User\UserDocumentController;
+use App\Http\Controllers\User\UserDocumentRequestController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -61,6 +62,8 @@ Route::prefix('user')->name('user.')->group(function () {
 
 		Route::post('logout', [UserAuthSessionController::class, 'destroy'])
 			->name('logout');
+
+		Route::post('document/store', [UserDocumentRequestController::class, 'storeDocRequest'])->name('document.store');
 
 		Route::prefix('/settings')->name('settings.')->group(function () {
 

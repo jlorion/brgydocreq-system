@@ -9,11 +9,12 @@ import { DocumentRequestFields } from '@/data/admin/FetchUpdateDocReqFields'
 import { PurposeofRequestField } from '@/data/admin/FetchUpdateDocReqFields'
 import { ViewAttachment } from '@/data/admin/FetchUpdateDocReqFields'
 import CustomForm from '@/components/custom/CustomFormFields'
+import { SubmittedDocumentForm } from '@/types'
 
 
 
 
-const columns: ColumnDef<DocumentRequeset>[] = [
+const columns: ColumnDef<SubmittedDocumentForm>[] = [
   {
     accessorKey: "applicant_name",
     header: () => <div className='text-center'>Applicant's Name</div>,

@@ -16,17 +16,35 @@ import Puroks from '../../../assets/puroks.svg';
 import { DocumentReqForm, SharedData } from '@/types';
 import DefaultDocPic from '../../../assets/default_documentpic.svg'
 import { DocumentRequestFields } from '@/data/user/DocumentRequestFields';
+import { FormEventHandler } from 'react';
+import { toast } from 'sonner';
 
 const Welcome = () => {
 
     const { documents, auth } = usePage<SharedData>().props;
 
-    const { data, setData, post, processing, errors, } = useForm<Required<DocumentReqForm>>({
+    const { data, setData, post, processing, errors, reset} = useForm<Required<DocumentReqForm>>({
         user_id: auth.user.user_id,
-        document_id: null,
+        document_id: 0,
         attachment_path: null,
         requested_purpose: '',
     })
+
+    const submitDocument: FormEventHandler = (e) => {
+        e.preventDefault();
+        post(route('user.document.store'), {
+            onSuccess: () => {
+                toast.success('Succesfully submitted');
+                reset()
+            },
+            onError: (errors) => {
+                console.error('Form submission failed. Validation errors:');
+                Object.entries(errors).forEach(([field, message]) => {
+                    console.error(`Field: ${field}, Error: ${message}`);
+                });
+            },
+        })
+    }
 
     return (
 
@@ -74,18 +92,20 @@ const Welcome = () => {
                             <CustomDialog
                                 key={document.document_id}
                                 title={document.document_name}
+                                onSubmit={submitDocument}
                                 trigger={
                                     <DocumentCustomCard
                                         image={document.document_photopath ? `/storage/${document.document_photopath}` : DefaultDocPic}
                                         alt={document.document_name}
                                         title={document.document_name}
+                                        onClick={() => setData('document_id', document.document_id)}
                                         content={document.description} />
                                 }
-                                button={<Button variant="primary">Submit</Button>}
+                                button={<Button disabled={processing} variant="primary">Submit</Button>}
                                 children={
                                     <>
-                                        <input hidden defaultValue={document.document_id} />
-                                        <input hidden defaultValue={auth.user.user_id} />
+                                        <input type='text' hidden defaultValue={data.document_id} />
+                                        <input type='text' hidden defaultValue={data.user_id} />
                                         <CustomForm fields={DocumentRequestFields(data, setData, errors)} />
                                     </>
                                 }

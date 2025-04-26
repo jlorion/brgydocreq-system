@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id('requested_document_id');
             $table->foreignId('user_id')->constrained('users', 'user_id')->cascadeOnDelete();
             $table->foreignId('document_id')->constrained('documents', 'document_id')->cascadeOnDelete();
+            $table->unsignedBigInteger('status_id')->default(5);
+            $table->foreign('status_id')->references('status_id')->on('statuses')->cascadeOnDelete();
             $table->string('requested_purpose');
             $table->string('attachment_path');
             $table->timestamps();
