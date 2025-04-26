@@ -5,64 +5,12 @@ import AdminLayout from '@/layouts/admin/AdminLayout'
 import { formatText } from '@/lib/utils'
 import { ColumnDef } from '@tanstack/react-table'
 import { ArrowUpDown } from 'lucide-react'
-import { DocumentRequestFields } from '@/data/DocumentRequestFields'
-import { PurposeofRequestField } from '@/data/DocumentRequestFields'
-import { ViewAttachment } from '@/data/DocumentRequestFields'
+import { DocumentRequestFields } from '@/data/admin/FetchUpdateDocReqFields'
+import { PurposeofRequestField } from '@/data/admin/FetchUpdateDocReqFields'
+import { ViewAttachment } from '@/data/admin/FetchUpdateDocReqFields'
 import CustomForm from '@/components/custom/CustomFormFields'
 
 
-type DocumentRequeset = {
-  id: string
-  applicant_name: string
-  status: "under_review"
-  date_requested: string
-  type_of_document: string
-}
-
-const data: DocumentRequeset[] = [
-  {
-    id: "1",
-    applicant_name: "Mark John",
-    status: "under_review",
-    date_requested: "April 30, 2024",
-    type_of_document: "Barangay Clearance",
-  },
-  {
-    id: "2",
-    applicant_name: "Mark Jefferson",
-    status: "under_review",
-    date_requested: "April 30, 2024",
-    type_of_document: "Barangay Certificate",
-  },
-  {
-    id: "3",
-    applicant_name: "Mark Luis",
-    status: "under_review",
-    date_requested: "April 30, 2024",
-    type_of_document: "Certificate Indigency",
-  },
-  {
-    id: "4",
-    applicant_name: "Mark Doe",
-    status: "under_review",
-    date_requested: "April 30, 2024",
-    type_of_document: "Purok Clearance",
-  },
-  {
-    id: "5",
-    applicant_name: "Mark Dayne",
-    status: "under_review",
-    date_requested: "April 30, 2024",
-    type_of_document: "Income Certificate",
-  },
-  {
-    id: "6",
-    applicant_name: "Mark Don",
-    status: "under_review",
-    date_requested: "April 30, 2024",
-    type_of_document: "Low Income Certificate",
-  },
-]
 
 
 const columns: ColumnDef<DocumentRequeset>[] = [

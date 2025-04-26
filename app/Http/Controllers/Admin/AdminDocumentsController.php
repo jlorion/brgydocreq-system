@@ -68,6 +68,6 @@ class AdminDocumentsController extends Controller
             $validate['document_photopath'] = $path;
         }
 
-        Document::create([$validate]);
+        Document::create($validate);
     }
 }

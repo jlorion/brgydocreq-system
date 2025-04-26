@@ -22,8 +22,10 @@ const Welcome = () => {
     const { documents, auth } = usePage<SharedData>().props;
 
     const { data, setData, post, processing, errors, } = useForm<Required<DocumentReqForm>>({
-        attachment: null,
-        request_purpose: '',
+        user_id: auth.user.user_id,
+        document_id: null,
+        attachment_path: null,
+        requested_purpose: '',
     })
 
     return (
@@ -68,9 +70,9 @@ const Welcome = () => {
 
                     <div className="grid justify-center gap-y-8 pt-5 lg:grid-cols-3 lg:gap-x-26 lg:gap-y-18">
 
-                        {auth.user ? (documents.map((document, index) => (
+                        {auth.user ? (documents.map((document) => (
                             <CustomDialog
-                                key={index}
+                                key={document.document_id}
                                 title={document.document_name}
                                 trigger={
                                     <DocumentCustomCard
@@ -81,7 +83,11 @@ const Welcome = () => {
                                 }
                                 button={<Button variant="primary">Submit</Button>}
                                 children={
-                                    <CustomForm fields={DocumentRequestFields(data, setData, errors)} />
+                                    <>
+                                        <input hidden defaultValue={document.document_id} />
+                                        <input hidden defaultValue={auth.user.user_id} />
+                                        <CustomForm fields={DocumentRequestFields(data, setData, errors)} />
+                                    </>
                                 }
                             />
 

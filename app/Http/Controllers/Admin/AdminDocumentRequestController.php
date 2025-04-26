@@ -8,8 +8,12 @@ use Inertia\Inertia;
 
 class AdminDocumentRequestController extends Controller
 {
-    public function index()
+    public function fetchDocReqInfo()
     {
+        
+
         return Inertia::render('admin/DocumentRequest');
     }
+
+
 }

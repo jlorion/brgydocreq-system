@@ -31,7 +31,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 	Route::middleware(['auth:admin', 'verified:admin'])->group(function () {
 
 		Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
-		Route::get('/document-request', [AdminDocumentRequestController::class, 'index'])->name('document-request');
+		Route::get('/document-request', [AdminDocumentRequestController::class, 'fetchDocReqInfo'])->name('document-request');
 		Route::get('/on-process', [AdminOnProcessController::class, 'index'])->name('on-process');
 		Route::get('/archives', [AdminArchivesController::class, 'index'])->name('archives');
 		Route::get('/documents', [AdminDocumentsController::class, 'fetchDocumentInfo'])->name('documents');

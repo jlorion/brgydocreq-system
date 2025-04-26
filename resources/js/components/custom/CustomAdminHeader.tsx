@@ -1,19 +1,19 @@
 import { Breadcrumbs } from '@/components/custom/breadcrumbs';
 import CustomIcon from '@/components/custom/CustomIcon';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList, navigationMenuTriggerStyle } from '@/components/ui/navigation-menu';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { useInitials } from '@/hooks/UseInitials';
 import { UseHeaderScroll } from '@/hooks/UseHeaderScroll';
 import { cn } from '@/lib/utils';
 import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { Bell, ChevronDown, Menu } from 'lucide-react';
+import { ChevronDown, Menu } from 'lucide-react';
 import { CustomMenuContent } from './CustomMenuContent';
 import React from 'react';
 import DefaultProfilePic from '../../../assets/default_profilepic.svg'
+
 
 interface CustomAdminHeaderProps {
 	breadcrumbs?: BreadcrumbItem[];
@@ -25,12 +25,9 @@ interface CustomAdminHeaderProps {
 
 export function CustomAdminHeader({ breadcrumbs = [], mainNavItems = [], rightNavItems = [], leftNavItems, className }: CustomAdminHeaderProps) {
 	const { auth } = usePage<SharedData>().props;
-	const getInitials = useInitials();
 	const { headerProps } = UseHeaderScroll();
 
-	console.log(auth)
-
-
+	// console.log(auth)
 
 	return (
 		<>
@@ -109,13 +106,12 @@ export function CustomAdminHeader({ breadcrumbs = [], mainNavItems = [], rightNa
 					{auth.admin && (
 						<>
 							<div className="ml-auto flex items-center gap-x-10">
-								<Bell className="h-8 cursor-pointer hover:text-s3" />
-								<span className='bg-red-600 text-white rounded-2xl px-[7px] py-[2px] text-xs absolute mb-6 ml-3 cursor-pointer'>3</span>
+
 								<DropdownMenu>
 									<DropdownMenuTrigger asChild>
 										<Button variant="ghost" className="flex items-center gap-x-5">
 											<Avatar className="size-8 overflow-hidden rounded-full">
-											<AvatarImage src={auth.admin.admin_photopath ? `/storage/${auth.admin.admin_photopath}` : DefaultProfilePic} alt={auth.admin.admin_username} />
+												<AvatarImage src={auth.admin.admin_photopath ? `/storage/${auth.admin.admin_photopath}` : DefaultProfilePic} alt={auth.admin.admin_username} />
 
 											</Avatar>
 											<div className="flex flex-col items-start gap-1 text-sm">

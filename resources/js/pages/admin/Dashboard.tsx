@@ -4,7 +4,7 @@ import CustomForm from '@/components/custom/CustomFormFields';
 import CustomIcon from '@/components/custom/CustomIcon';
 import CustomSheet from '@/components/custom/CustomSheet';
 import { Button } from '@/components/ui/button';
-import { DocumentRequestFields, PurposeofRequestField, ViewAttachment } from '@/data/DocumentRequestFields';
+import { DocumentRequestFields, PurposeofRequestField, ViewAttachment } from '@/data/admin/FetchUpdateDocReqFields';
 import AdminLayout from '@/layouts/admin/AdminLayout';
 import { ColumnDef } from '@tanstack/react-table';
 import { Archive, ArrowUpDown, ChartSpline, FileText, Users } from 'lucide-react';

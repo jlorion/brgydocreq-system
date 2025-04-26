@@ -12,6 +12,7 @@ import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { Bell, ChevronDown, Menu } from 'lucide-react';
 import { CustomMenuContent } from './CustomMenuContent';
+import CustomNotificationBell from './CustomNotificationBell';
 
 
 interface CustomUserHeaderProps {
@@ -109,8 +110,7 @@ export function CustomUserHeader({ breadcrumbs = [], mainNavItems = [], rightNav
                     {auth.user ? (
                         <>
                             <div className="ml-auto flex items-center gap-x-10">
-                                <Bell className="h-8 cursor-pointer hover:text-s3" />
-                                <span className='bg-red-600 text-white rounded-2xl px-[7px] py-[2px] text-xs absolute mb-6 ml-3 cursor-pointer'>3</span>
+                                <CustomNotificationBell />
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
                                         <Button variant="ghost" className="flex items-center gap-x-5">

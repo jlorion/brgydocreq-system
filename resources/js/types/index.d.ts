@@ -78,8 +78,25 @@ export interface DocumentForm {
 }
 
 export interface DocumentReqForm {
-    request_purpose: string;
-    attachment: File | null;
+    user_id: number;
+    document_id: number | null;
+    requested_purpose: string;
+    attachment_path: File | null;
+}
+
+export interface SubmittedDocumentForm {
+    user_id: number;
+    resident_firstname: string;
+    resident_middlename: string;
+    resident_lastname: string;
+    resident_suffix: string | null;
+    document_id: number | null;
+    requested_purpose: string;
+    attachment_path: File | null;
+    amount: number;
+    document_name: string;
+    date_requested: Date; 
+    document_status: Date; 
 }
 
 export interface AdminForm {
