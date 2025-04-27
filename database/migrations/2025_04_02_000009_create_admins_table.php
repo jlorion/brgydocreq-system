@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id('admin_id');
             $table->foreignId('officer_id')->constrained('barangay_officers', 'officer_id')->onDelete('cascade');
             $table->foreignId('role_id')->constrained('roles', 'role_id')->onDelete('cascade');
+            $table->unsignedBigInteger('status_id')->default(3);
+            $table->foreign('status_id')->references('status_id')->on('statuses')->onDelete('cascade');
             $table->string('admin_username');
             $table->string('admin_phonenum');
             $table->string('admin_email');

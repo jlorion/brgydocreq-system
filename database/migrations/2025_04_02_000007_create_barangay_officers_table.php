@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('barangay_officers', function (Blueprint $table) {
             $table->id('officer_id');
             $table->foreignId('address_id')->constrained('addresses', 'address_id')->onDelete('cascade');
-            $table->foreignId('status_id')->constrained('statuses', 'status_id')->onDelete('cascade');
+            $table->unsignedBigInteger('status_id')->default(3);
+            $table->foreign('status_id')->references('status_id')->on('statuses')->onDelete('cascade');
             $table->string('officer_firstname');
             $table->string('officer_middlename');
             $table->string('officer_lastname');

@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id('user_id');
             $table->foreignId('resident_id')->constrained('residents', 'resident_id')->onDelete('cascade');
+            $table->unsignedBigInteger('status_id')->default(3);
+            $table->foreign('status_id')->references('status_id')->on('statuses')->onDelete('cascade');
             $table->string('username')->unique();
             $table->string('user_email')->unique();
             $table->string('user_phonenum');
@@ -25,15 +27,17 @@ return new class extends Migration
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
-            $table->string('email')->primary();
+            $table->primary(['email', 'guard']);
+            $table->string('guard');
+            $table->string('email');
             $table->string('token');
             $table->timestamp('created_at')->nullable();
         });
 
         Schema::create('sessions', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->foreignId('user_id')->nullable()->index();
             $table->string('ip_address', 45)->nullable();
+            $table->string('guard')->nullable()->index();
             $table->text('user_agent')->nullable();
             $table->longText('payload');
             $table->integer('last_activity')->index();
