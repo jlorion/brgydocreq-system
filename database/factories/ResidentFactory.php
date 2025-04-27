@@ -28,7 +28,6 @@ class ResidentFactory extends Factory
             'resident_precinct' => $this->faker->randomNumber(9),
             'resident_householdnum' => $this->faker->randomNumber(4, true),
             'address_id' => Address::factory(),
-            'status_id' => Status::inRandomOrder()->first()->status_id,
         ];
     }
 }

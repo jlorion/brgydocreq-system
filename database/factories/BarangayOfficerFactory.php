@@ -29,7 +29,6 @@ class BarangayOfficerFactory extends Factory
             'officer_precinct' => $this->faker->randomNumber(9),
             'officer_householdnum' => $this->faker->randomNumber(4, true),
             'address_id' => Address::factory(),
-            'status_id' => Status::inRandomOrder()->first()->status_id,
         ];
     }
 }

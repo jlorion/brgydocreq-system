@@ -4,7 +4,7 @@ import type { Config } from 'ziggy-js';
 
 export interface Auth {
     user: UserForm;
-    admin: Admin;
+    admin: AdminForm;
 }
 
 export interface BreadcrumbItem {
@@ -86,7 +86,11 @@ export interface DocumentReqForm {
 }
 
 export interface SubmittedDocumentForm {
+    requested_document_id: number;
     user_id: number;
+    admin_id: number;
+    status_id: number;
+    content: string;
     resident_firstname: string;
     resident_middlename: string;
     resident_lastname: string;
@@ -96,8 +100,8 @@ export interface SubmittedDocumentForm {
     document_name: string;
     attachment_path: File | null;
     amount: number;
-    date_requested: Date | null;
-    document_status: string;
+    date_requested: Date;
+    docreq_status: string;
 }
 
 export interface AdminForm {

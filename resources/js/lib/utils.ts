@@ -30,9 +30,7 @@ export const createDateSetter = <T extends Record<string, any>>(setData: (key: k
     };
 };
 
-export const createFileSetter = <T extends Record<string, any>>(
-    setData: (key: keyof T, value: string | Date | number | null | File) => void
-) => {
+export const createFileSetter = <T extends Record<string, any>>(setData: (key: keyof T, value: string | Date | number | null | File) => void) => {
     return (key: keyof T) => (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0] || null;
         setData(key, file);
@@ -43,6 +41,7 @@ export const createFileSetter = <T extends Record<string, any>>(
 export const getStatusColors = (status: string) => {
     const statusColors: Record<string, string> = {
         rejected: 'bg-red-300 text-red-700',
+        approved: 'bg-blue-300 text-blue-700',
         active: 'bg-sky-300 text-sky-700',
         inactive: 'bg-red-300 text-red-700',
         claimed: 'bg-green-300  text-green-700',

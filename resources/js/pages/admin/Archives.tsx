@@ -6,9 +6,9 @@ import AdminLayout from '@/layouts/admin/AdminLayout'
 import { formatText } from '@/lib/utils'
 import { ColumnDef } from '@tanstack/react-table'
 import { ArrowUpDown } from 'lucide-react'
-import { DocumentRequestFields } from '@/data/admin/FetchUpdateDocReqFields'
-import { PurposeofRequestField } from '@/data/admin/FetchUpdateDocReqFields'
-import { ViewAttachment } from '@/data/admin/FetchUpdateDocReqFields'
+import { DocumentRequestFields } from '@/data/admin/FetchDocReqFields'
+import { PurposeofRequestField } from '@/data/admin/FetchDocReqFields'
+import { ViewAttachment } from '@/data/admin/FetchDocReqFields'
 
 type Archives = {
   id: string

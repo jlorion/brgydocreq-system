@@ -23,7 +23,7 @@ const Welcome = () => {
 
     const { documents, auth } = usePage<SharedData>().props;
 
-    const { data, setData, post, processing, errors, reset} = useForm<Required<DocumentReqForm>>({
+    const { data, setData, post, processing, errors, reset } = useForm<Required<DocumentReqForm>>({
         user_id: auth.user.user_id,
         document_id: 0,
         attachment_path: null,
@@ -33,6 +33,8 @@ const Welcome = () => {
     const submitDocument: FormEventHandler = (e) => {
         e.preventDefault();
         post(route('user.document.store'), {
+            preserveScroll: true,
+            preserveState: true,
             onSuccess: () => {
                 toast.success('Succesfully submitted');
                 reset()

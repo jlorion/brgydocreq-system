@@ -1,7 +1,5 @@
 
-import CustomDialog from "@/components/custom/CustomDialog";
-import TextLink from "@/components/custom/CustomTextLink";
-import { CustomFormField, SubmittedDocumentForm, SharedData } from "@/types";
+import { CustomFormField, SubmittedDocumentForm } from "@/types";
 import { format } from "date-fns";
 
 export const DocReqFieldsFirstHalve = (data: SubmittedDocumentForm, setData: (key: keyof SubmittedDocumentForm, value: string | Date | null) => void, errors: Partial<Record<keyof SubmittedDocumentForm, string>>): CustomFormField[] => {
@@ -63,7 +61,7 @@ export const DocReqFieldsFirstHalve = (data: SubmittedDocumentForm, setData: (ke
 		{
 			label: 'Amount',
 			type: 'text',
-			id: 'amount',
+			id: 'price',
 			disabled: true,
 			value: data.amount,
 			tabIndex: -5,

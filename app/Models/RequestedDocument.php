@@ -15,6 +15,7 @@ class RequestedDocument extends Model
         'user_id',
         'requested_purpose',
         'attachment_path',
+        'status_id'
     ];
 
     public function document()
@@ -25,5 +26,9 @@ class RequestedDocument extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'user_id');
+    }
+
+    public function status(){
+        return $this->belongsTo(Status::class, 'status_id', 'status_id');
     }
 }

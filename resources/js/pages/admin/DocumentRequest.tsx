@@ -4,22 +4,29 @@ import { Button } from '@/components/ui/button'
 import AdminLayout from '@/layouts/admin/AdminLayout'
 import { getStatusColors } from '@/lib/utils'
 import { ColumnDef } from '@tanstack/react-table'
-import { ArrowUpDown, File } from 'lucide-react'
+import { ArrowUpDown } from 'lucide-react'
 import CustomForm from '@/components/custom/CustomFormFields'
-import { DocReqFieldsFirstHalve, DocReqFieldsSecondHalve } from '@/data/admin/FetchUpdateDocReqFields'
+import { DocReqFieldsFirstHalve, DocReqFieldsSecondHalve } from '@/data/admin/FetchDocReqFields'
 import { SharedData, SubmittedDocumentForm } from '@/types'
 import { useForm, usePage } from '@inertiajs/react'
 import { format } from 'date-fns'
 import CustomDialog from '@/components/custom/CustomDialog'
-import TextLink from '@/components/custom/CustomTextLink'
 import CustomIcon from '@/components/custom/CustomIcon'
+import { RejectDocReqFields } from '@/data/admin/RejectDocReqFields'
+import { FormEventHandler } from 'react'
+import { toast } from 'sonner'
 
 
 const DocumentRequeset = () => {
 
-  const { docrequests } = usePage<SharedData>().props;
+  const { docrequests, auth } = usePage<SharedData>().props;
 
-  const { data, setData, post, processing, errors } = useForm<Required<SubmittedDocumentForm>>({
+  //update status if rejected and store notifications and if approved update the status to approve
+  const { data, setData, post, processing, errors, reset } = useForm<Required<SubmittedDocumentForm>>({
+    requested_document_id: 0,
+    admin_id: auth.admin.admin_id,
+    status_id: 0,
+    content: '',
     user_id: 0,
     resident_firstname: '',
     resident_middlename: '',
@@ -31,11 +38,49 @@ const DocumentRequeset = () => {
     attachment_path: null,
     amount: 0,
     date_requested: new Date(),
-    document_status: '',
+    docreq_status: '',
   })
 
+  const rejectSubmit: FormEventHandler = (e) => {
+    e.preventDefault()
+    post(route('admin.documentreq.reject'), {
+      onSuccess: () => {
+        toast.success('Updated to rejected')
+        reset()
+      },
+      onError: (errors) => {
+        console.error('Form submission failed. Validation errors:');
+        Object.entries(errors).forEach(([field, message]) => {
+          console.error(`Field: ${field}, Error: ${message}`);
+        });
+      },
+
+    })
+  }
+
+  const approveSubmit: FormEventHandler = (e) => {
+    e.preventDefault();
+    post(route('admin.documentreq.approve'), {
+      onSuccess: () => {
+        toast.success('Updated to approved')
+      },
+      onError: (errors) => {
+        console.error('Form submission failed. Validation errors:');
+        Object.entries(errors).forEach(([field, message]) => {
+          console.error(`Field: ${field}, Error: ${message}`);
+        });
+      },
+    })
+  }
+
+
+  // data for every cell
   const dataDocReq: SubmittedDocumentForm[] = docrequests.map((docrequest) => ({
+    requested_document_id: docrequest.requested_document_id,
     user_id: docrequest.user_id,
+    admin_id: auth.admin.admin_id,
+    status_id: docrequest.status_id,
+    content: docrequest.content,
     resident_firstname: docrequest.resident_firstname,
     resident_middlename: docrequest.resident_middlename,
     resident_lastname: docrequest.resident_lastname,
@@ -46,13 +91,17 @@ const DocumentRequeset = () => {
     attachment_path: docrequest.attachment_path,
     amount: docrequest.amount,
     date_requested: docrequest.date_requested,
-    document_status: docrequest.document_status,
+    docreq_status: docrequest.docreq_status,
   }))
 
-
+  // populate the sheet
   const populateSheet = (docrequest: SubmittedDocumentForm) => {
     setData({
+      requested_document_id: docrequest.requested_document_id,
       user_id: docrequest.user_id,
+      admin_id: auth.admin.admin_id,
+      status_id: docrequest.status_id,
+      content: docrequest.content,
       resident_firstname: docrequest.resident_firstname,
       resident_middlename: docrequest.resident_middlename,
       resident_lastname: docrequest.resident_lastname,
@@ -63,7 +112,7 @@ const DocumentRequeset = () => {
       attachment_path: docrequest.attachment_path,
       amount: docrequest.amount,
       date_requested: docrequest.date_requested,
-      document_status: docrequest.document_status,
+      docreq_status: docrequest.docreq_status,
     })
   }
 
@@ -113,21 +162,21 @@ const DocumentRequeset = () => {
         return <div className="capitalize text-center">{formatDate}</div>
       },
     },
-    // {
-    //   accessorKey: "document_status",
-    //   header: () => <div className='text-center'>Status</div>,
-    //   cell: ({ row }) => {
-    //     const status = row.getValue("document_status") as string;
+    {
+      accessorKey: "docreq_status",
+      header: () => <div className='text-center'>Status</div>,
+      cell: ({ row }) => {
+        const status = row.getValue("docreq_status") as string;
 
-    //     return (
-    //       <div className='flex justify-center items-center'>
-    //         <div className={`rounded w-3/5 py-1 capitalize text-center ${getStatusColors(status)}`}>
-    //           {status}
-    //         </div>
-    //       </div>
-    //     );
-    //   },
-    // },
+        return (
+          <div className='flex justify-center items-center'>
+            <div className={`rounded w-3/5 py-1 capitalize text-center ${getStatusColors(status)}`}>
+              {status}
+            </div>
+          </div>
+        );
+      },
+    },
 
   ]
 
@@ -142,28 +191,83 @@ const DocumentRequeset = () => {
         renderSheet={(trigger, row) => (
           <CustomSheet
             key={row}
+            onSubmit={approveSubmit}
             trigger={trigger}
-            firstButton={<Button className='w-full' variant='approve'>Approve</Button>}
-            secondButton={<Button className='w-full' variant='reject'>Reject</Button>}
-            statusTitle='Under Review'
+            firstButton={
+              data.docreq_status === 'Under Review' ? (
+                <>
+                  <input type="text" hidden defaultValue={data.status_id} />
+                  <input type="text" hidden defaultValue={data.requested_document_id} />
+                  <Button
+                    onClick={() => {
+                      setData('status_id', 11);
+                    }}
+                    disabled={processing}
+                    className="w-full" variant="approve">
+                    Approve
+                  </Button>
+                </>
+              ) : (
+                <Button
+                  className={`w-full ${data.docreq_status === 'Approved' ? 'bg-blue-500' : data.docreq_status === 'Rejected' ? 'bg-red-500' : 'bg-gray-500'}`}
+                  disabled
+                >
+                  {data.docreq_status}
+                </Button>
+
+              )
+            }
+            secondButton={
+              data.docreq_status === 'Under Review' ? (
+                <CustomDialog
+                  title="Reason of Rejection"
+                  onSubmit={rejectSubmit}
+                  width="w-150"
+                  trigger={
+                    <Button
+                      className="w-full"
+                      onClick={() => {
+                        setData('status_id', 1);
+                      }}
+                      variant="reject"
+                    >
+                      Reject
+                    </Button>
+                  }
+                  button={<Button disabled={processing}>Submit</Button>}
+                  children={
+                    <>
+                      <input type="text" hidden defaultValue={data.admin_id} />
+                      <input type="text" hidden defaultValue={data.requested_document_id} />
+                      <input type="text" hidden defaultValue={data.status_id} />
+                      <CustomForm fields={RejectDocReqFields(data, setData, errors)} />
+                    </>
+                  }
+                />
+              ) : null
+            }
+            statusTitle={data.docreq_status}
             form={
               <>
                 <CustomForm fields={DocReqFieldsFirstHalve(data, setData, errors)} className="grid grid-cols-2 gap-2" />
                 <CustomForm fields={DocReqFieldsSecondHalve(data, setData, errors)} className="grid grid-cols-1 pt-2" />
                 <CustomDialog
-                  width='w-150'
+                  width="w-150"
                   trigger={
-                    <Button variant='link' className="text-sm">View Attachment</Button >
+                    <Button variant="link" className="text-sm">
+                      View Attachment
+                    </Button>
                   }
-                  title='Attachment'
+                  title="Attachment"
                   children={
-                    <div className='flex justify-center items-center object-cover mt-2'>
+                    <div className="flex justify-center items-center object-cover mt-2">
                       <CustomIcon imgSrc={`/storage/${data.attachment_path}`} />
                     </div>
                   }
                 />
               </>
-            } />
+            }
+          />
         )} />
     </AdminLayout>
   )
