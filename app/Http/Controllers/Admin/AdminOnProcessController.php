@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\DocumentArchive;
+use App\Models\Notifications;
 use App\Models\Processing;
 use App\Models\Status;
 use Illuminate\Http\Request;
@@ -54,16 +56,28 @@ class AdminOnProcessController extends Controller
         ]);
     }
 
-    public function updateOnProcess(Request $request)
+    public function processing(Request $request)
     {
 
         $validate = $request->validate([
             'onprocess_id' => 'required|exists:processings,onprocess_id',
+            'requested_document_id' => 'required|exists:requested_documents,requested_document_id',
+            'admin_id' => 'required|exists:admins,admin_id',
             'status_id' => 'required|exists:statuses,status_id',
+            'additional_message' => 'nullable|string|max:200',
+            'notification' => 'required|string|max:100'
         ]);
 
-        DB::transaction(function () use ($validate) {
-            Processing::findOrFail($validate['onprocess_id'])->update($validate);
+        $processing = collect($validate)->except(['additional_message', 'notification'])->toArray();
+
+        DB::transaction(function () use ($validate, $processing) {
+
+            Notifications::create($validate);
+            Processing::findOrFail($validate['onprocess_id'])->update($processing);
+
+            if ($validate['status_id'] === 2) {
+                DocumentArchive::create($validate);
+            }
         });
     }
 }

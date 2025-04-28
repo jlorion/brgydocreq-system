@@ -35,7 +35,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 		Route::post('/document-request/reject', [AdminDocumentRequestController::class, 'rejectDocReq'])->name('documentreq.reject');
 		Route::post('/document-request/approve', [AdminDocumentRequestController::class, 'approveDocReq'])->name('documentreq.approve');
 		Route::get('/on-process', [AdminOnProcessController::class, 'fetchOnProcess'])->name('on-process');
-		Route::post('/on-process/update', [AdminOnProcessController::class, 'updateOnProcess'])->name('on-process.update');
+		Route::post('/on-process/processing', [AdminOnProcessController::class, 'processing'])->name('processing');
 		Route::get('/archives', [AdminArchivesController::class, 'index'])->name('archives');
 		Route::get('/documents', [AdminDocumentsController::class, 'fetchDocumentInfo'])->name('documents');
 		Route::post('/documents/{document_id}', [AdminDocumentsController::class, 'updateDocumentInfo'])->name('documents.update');

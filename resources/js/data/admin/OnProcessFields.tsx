@@ -70,6 +70,7 @@ export const FetchFirstHalve = (data: OnProcessForm, setData: (key: keyof OnProc
 			selectItems: status.map((status) => ({
 				label: status.status_name,
 				value: status.status_id,
+				disabled: status.status_id === 11
 			})),
 		},
 	]

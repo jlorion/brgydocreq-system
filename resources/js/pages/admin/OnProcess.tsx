@@ -13,6 +13,7 @@ import { FetchFirstHalve, FetchSecondHalve } from '@/data/admin/OnProcessFields'
 import { FormEventHandler, useEffect } from 'react'
 import CustomDialog from '@/components/custom/CustomDialog'
 import { ClaimedFields, ProcessingFields, ForPickUpFields } from '@/data/admin/OnProcessFields'
+import { toast } from 'sonner'
 
 const OnProcess = () => {
 
@@ -42,7 +43,11 @@ const OnProcess = () => {
 
   const onProcessSubmit: FormEventHandler = (e) => {
     e.preventDefault();
-    post(route('admin.on-process.update'), {
+    post(route('admin.processing'), {
+      onSuccess: () => {
+        toast.success('Succesfully updated and send notification');
+        reset()
+      },
       onError: (errors) => {
         console.error("Form Validation error");
         Object.entries(errors).forEach(([field, message]) => {
@@ -244,18 +249,28 @@ const OnProcess = () => {
                   onSubmit={onProcessSubmit}
                   width="w-150"
                   trigger={
-                    <Button
-                      className="w-full"
-                    >
-                      Save
-                    </Button>
+                    data.status_name === 'Claimed' ? (
+                      <Button
+                        disabled
+                        className="w-full bg-green-600"
+                      >
+                        Claimed
+                      </Button>
+                    ) : (
+                      <Button
+                        className="w-full"
+                      >
+                        Save
+                      </Button>
+                    )
+
                   }
                   button={<Button disabled={processing}>Submit</Button>}
                   children={
                     <>
-                      <input type="text" defaultValue={data.admin_id} />
-                      <input type="text" defaultValue={data.requested_document_id} />
-                      <input type="text" defaultValue={data.status_id} />
+                      <input type="hidden" defaultValue={data.admin_id} />
+                      <input type="hidden" defaultValue={data.requested_document_id} />
+                      <input type="hidden" defaultValue={data.status_id} />
                       <CustomForm fields={dialogProps.fields(data, setData, errors)} />
                     </>
                   }

@@ -238,7 +238,8 @@ interface SelectField extends BaseFormField {
     type: 'select';
     placeholder?: string;
     value?: number | null;
-    selectItems?: { value: number; label: string }[];
+    selectItems?: { value: number; label: string; disabled?: boolean }[];
+    disabled?: boolean;
     onChange?: (value: number) => void;
 }
 
