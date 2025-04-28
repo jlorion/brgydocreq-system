@@ -12,7 +12,7 @@ import { useForm, usePage } from '@inertiajs/react'
 import { format } from 'date-fns'
 import CustomDialog from '@/components/custom/CustomDialog'
 import CustomIcon from '@/components/custom/CustomIcon'
-import { RejectDocReqFields } from '@/data/admin/RejectDocReqFields'
+import { RejectDocReqFields, ApproveDocReqFields } from '@/data/admin/DocReqFields'
 import { FormEventHandler } from 'react'
 import { toast } from 'sonner'
 
@@ -25,8 +25,9 @@ const DocumentRequeset = () => {
   const { data, setData, post, processing, errors, reset } = useForm<Required<SubmittedDocumentForm>>({
     requested_document_id: 0,
     admin_id: auth.admin.admin_id,
+    additional_message: '',
+    notification: '',
     status_id: 0,
-    content: '',
     user_id: 0,
     resident_firstname: '',
     resident_middlename: '',
@@ -80,7 +81,8 @@ const DocumentRequeset = () => {
     user_id: docrequest.user_id,
     admin_id: auth.admin.admin_id,
     status_id: docrequest.status_id,
-    content: docrequest.content,
+    additional_message: docrequest.additional_message,
+    notification: docrequest.notification,
     resident_firstname: docrequest.resident_firstname,
     resident_middlename: docrequest.resident_middlename,
     resident_lastname: docrequest.resident_lastname,
@@ -101,7 +103,8 @@ const DocumentRequeset = () => {
       user_id: docrequest.user_id,
       admin_id: auth.admin.admin_id,
       status_id: docrequest.status_id,
-      content: docrequest.content,
+      additional_message: docrequest.additional_message,
+      notification: docrequest.notification,
       resident_firstname: docrequest.resident_firstname,
       resident_middlename: docrequest.resident_middlename,
       resident_lastname: docrequest.resident_lastname,
@@ -191,22 +194,34 @@ const DocumentRequeset = () => {
         renderSheet={(trigger, row) => (
           <CustomSheet
             key={row}
-            onSubmit={approveSubmit}
             trigger={trigger}
             firstButton={
               data.docreq_status === 'Under Review' ? (
-                <>
-                  <input type="text" hidden defaultValue={data.status_id} />
-                  <input type="text" hidden defaultValue={data.requested_document_id} />
-                  <Button
-                    onClick={() => {
-                      setData('status_id', 11);
-                    }}
-                    disabled={processing}
-                    className="w-full" variant="approve">
-                    Approve
-                  </Button>
-                </>
+                <CustomDialog
+                  title="Approving Document Request"
+                  button={<Button disabled={processing}>Submit</Button>}
+                  onSubmit={approveSubmit}
+                  width="w-150"
+                  trigger={
+                    <Button
+                      onClick={() => {
+                        setData('status_id', 11);
+                        setData('notification', 'Your request has been successfully approved.');
+                      }}
+                      className="w-full"
+                      variant="approve">
+                      Approve
+                    </Button>
+                  }
+                  children={
+                    <>
+                      <input type="text" hidden defaultValue={data.admin_id} />
+                      <input type="text" hidden defaultValue={data.requested_document_id} />
+                      <input type="text" hidden defaultValue={data.status_id} />
+                      <CustomForm fields={ApproveDocReqFields(data, setData, errors)} />
+                    </>
+                  } />
+
               ) : (
                 <Button
                   className={`w-full ${data.docreq_status === 'Approved' ? 'bg-blue-500' : data.docreq_status === 'Rejected' ? 'bg-red-500' : 'bg-gray-500'}`}
@@ -228,6 +243,7 @@ const DocumentRequeset = () => {
                       className="w-full"
                       onClick={() => {
                         setData('status_id', 1);
+                        setData('notification', 'Your request has been rejected.');
                       }}
                       variant="reject"
                     >

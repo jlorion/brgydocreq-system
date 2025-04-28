@@ -24,7 +24,7 @@ const Welcome = () => {
     const { documents, auth } = usePage<SharedData>().props;
 
     const { data, setData, post, processing, errors, reset } = useForm<Required<DocumentReqForm>>({
-        user_id: auth.user.user_id,
+        user_id: 0,
         document_id: 0,
         attachment_path: null,
         requested_purpose: '',
@@ -100,14 +100,17 @@ const Welcome = () => {
                                         image={document.document_photopath ? `/storage/${document.document_photopath}` : DefaultDocPic}
                                         alt={document.document_name}
                                         title={document.document_name}
-                                        onClick={() => setData('document_id', document.document_id)}
+                                        onClick={() => {
+                                            setData('document_id', document.document_id);
+                                            setData('user_id', auth.user.user_id)
+                                        }}
                                         content={document.description} />
                                 }
                                 button={<Button disabled={processing} variant="primary">Submit</Button>}
                                 children={
                                     <>
-                                        <input type='text' hidden defaultValue={data.document_id} />
-                                        <input type='text' hidden defaultValue={data.user_id} />
+                                        <input type='hidden' defaultValue={data.document_id} />
+                                        <input type='hidden' defaultValue={data.user_id} />
                                         <CustomForm fields={DocumentRequestFields(data, setData, errors)} />
                                     </>
                                 }

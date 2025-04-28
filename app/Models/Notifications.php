@@ -12,6 +12,7 @@ class Notifications extends Model
         'requested_document_id',
         'admin_id',
         'status_id',
-        'content'
+        'additional_message',
+        'notification',
     ];
 }

@@ -90,7 +90,8 @@ export interface SubmittedDocumentForm {
     user_id: number;
     admin_id: number;
     status_id: number;
-    content: string;
+    additional_message: string;
+    notification: string;
     resident_firstname: string;
     resident_middlename: string;
     resident_lastname: string;
@@ -179,6 +180,7 @@ interface BaseFormField {
     id?: string;
     label?: string;
     tabIndex?: number;
+    autoFocus?: boolean;
     disabled?: boolean;
     maxLength?: number;
     pattern?: string;

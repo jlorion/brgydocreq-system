@@ -4,74 +4,34 @@ import AdminLayout from '@/layouts/admin/AdminLayout'
 import { formatText } from '@/lib/utils'
 import { ColumnDef } from '@tanstack/react-table'
 import { ArrowUpDown } from 'lucide-react'
-import { DocumentRequestFields } from '@/data/admin/FetchDocReqFields'
-import { PurposeofRequestField } from '@/data/admin/FetchDocReqFields'
-import { ViewAttachment } from '@/data/admin/FetchDocReqFields'
 import CustomSheet from '@/components/custom/CustomSheet'
 import CustomForm from '@/components/custom/CustomFormFields'
+import { SharedData, SubmittedDocumentForm } from '@/types'
+import { useForm, usePage } from '@inertiajs/react'
 
-type OnProcess = {
-  id: string
-  applicant_name: string
-  status: "claimed" | "processing" | "rejected" | "under_review" | "for_pickup"
-  date_processed: string
-  type_of_document: string
-  approved_by: string
-}
+const { docrequests, auth } = usePage<SharedData>().props;
 
-const data: OnProcess[] = [
-  {
-    id: "1",
-    applicant_name: "Mark John",
-    status: "claimed",
-    date_processed: "April 30, 2024",
-    type_of_document: "Barangay Clearance",
-    approved_by: "Aohn Doe",
-  },
-  {
-    id: "2",
-    applicant_name: "Mark Jefferson",
-    status: "processing",
-    date_processed: "April 30, 2024",
-    type_of_document: "Barangay Certificate",
-    approved_by: "Bohn Doe",
-  },
-  {
-    id: "3",
-    applicant_name: "Mark Luis",
-    status: "rejected",
-    date_processed: "April 30, 2024",
-    type_of_document: "Certificate Indigency",
-    approved_by: "Cohn Doe",
-  },
-  {
-    id: "4",
-    applicant_name: "Mark Doe",
-    status: "for_pickup",
-    date_processed: "April 30, 2024",
-    type_of_document: "Purok Clearance",
-    approved_by: "Dohn Doe",
-  },
-  {
-    id: "5",
-    applicant_name: "Mark Dayne",
-    status: "under_review",
-    date_processed: "April 30, 2024",
-    type_of_document: "Income Certificate",
-    approved_by: "Eohn Doe",
-  },
-  {
-    id: "6",
-    applicant_name: "Mark Don",
-    status: "claimed",
-    date_processed: "April 30, 2024",
-    type_of_document: "Low Income Certificate",
-    approved_by: "Fohn Doe",
-  },
-]
+const { data, setData, post, processing, errors, reset } = useForm<Required<SubmittedDocumentForm>>({
+  requested_document_id: 0,
+  admin_id: auth.admin.admin_id,
+  additional_message: '',
+  notification: '',
+  status_id: 0,
+  user_id: 0,
+  resident_firstname: '',
+  resident_middlename: '',
+  resident_lastname: '',
+  resident_suffix: '',
+  document_id: 0,
+  requested_purpose: '',
+  document_name: '',
+  attachment_path: null,
+  amount: 0,
+  date_requested: new Date(),
+  docreq_status: '',
+})
 
-
-const columns: ColumnDef<OnProcess>[] = [
+const columns: ColumnDef<SubmittedDocumentForm>[] = [
   {
     accessorKey: "applicant_name",
     header: () => <div className='text-center'>Applicant's Name</div>,
@@ -103,6 +63,13 @@ const columns: ColumnDef<OnProcess>[] = [
     header: () => <div className='text-center'>Approve By</div>,
     cell: ({ row }) => (
       <div className="capitalize text-center">{row.getValue("approved_by")}</div>
+    ),
+  },
+  {
+    accessorKey: "date_approved",
+    header: () => <div className='text-center'>Date Approved</div>,
+    cell: ({ row }) => (
+      <div className="capitalize text-center">{row.getValue("date_approved")}</div>
     ),
   },
   {
@@ -142,16 +109,22 @@ const columns: ColumnDef<OnProcess>[] = [
 const OnProcess = () => {
   return (
     <AdminLayout className='p-5' title='On Process'>
-      <CustomDataTable columns={columns} data={data} filterColumn='applicant_name' searchPlaceHolder="Search applicant's name" renderSheet={(trigger, row) => (
-        <CustomSheet trigger={trigger} firstButton='Approve' firstButtonVariant='approve' secondButton='Reject' secondButtonVariant='reject' statusTitle='Under Review'
-          form={
-            <>
-              <CustomForm fields={DocumentRequestFields} className="grid grid-cols-2 gap-2" />
-              <CustomForm fields={PurposeofRequestField} className="grid grid-cols-1 pt-2" />
-              <CustomForm fields={ViewAttachment} className="flex justify-center pt-2" />
-            </>
-          } />
-      )} />
+      <CustomDataTable
+        columns={columns}
+        data={data}
+        filterColumn='applicant_name'
+        searchPlaceHolder="Search applicant's name"
+        renderSheet={(trigger, row) => (
+          <CustomSheet
+            trigger={trigger}
+            firstButton='Submit'
+            statusTitle='Under Review'
+            form={
+              <>
+                <div></div>
+              </>
+            } />
+        )} />
     </AdminLayout>
   )
 }

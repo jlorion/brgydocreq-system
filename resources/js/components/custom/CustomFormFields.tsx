@@ -23,6 +23,7 @@ const CustomForm = ({ fields, className, title }: CustomFormProps) => {
                         value={field.value}
                         tabIndex={field.tabIndex}
                         disabled={field.disabled}
+                        autoFocus={field.autoFocus}
                         onChange={field.onChange}
                         {...field.additionalProps}
                     />

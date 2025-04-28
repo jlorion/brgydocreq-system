@@ -14,4 +14,9 @@ class Status extends Model
     {
         return $this->hasMany(Resident::class, 'status_id', 'status_id');
     }
+
+    public function processing()
+    {
+        return $this->hasMany(Processing::class, 'status_id', 'status_id');
+    }
 }
