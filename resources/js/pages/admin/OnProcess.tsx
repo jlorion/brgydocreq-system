@@ -10,8 +10,9 @@ import { SharedData, OnProcessForm } from '@/types'
 import { useForm, usePage } from '@inertiajs/react'
 import { format } from 'date-fns'
 import { FetchFirstHalve, FetchSecondHalve } from '@/data/admin/OnProcessFields';
-import { FormEventHandler } from 'react'
-
+import { FormEventHandler, useEffect } from 'react'
+import CustomDialog from '@/components/custom/CustomDialog'
+import { ClaimedFields, ProcessingFields, ForPickUpFields } from '@/data/admin/OnProcessFields'
 
 const OnProcess = () => {
 
@@ -22,6 +23,8 @@ const OnProcess = () => {
     onprocess_id: 0,
     admin_id: auth.admin.admin_id,
     status_id: 0,
+    additional_message: '',
+    notification: '',
     created_at: new Date(),
     updated_at: new Date(),
     requested_document_id: 0,
@@ -58,6 +61,8 @@ const OnProcess = () => {
       status_id: onprocess.status_id,
       created_at: onprocess.created_at,
       updated_at: onprocess.updated_at,
+      additional_message: onprocess.additional_message,
+      notification: onprocess.notification,
       requested_document_id: onprocess.requested_document_id,
       officer_firstname: onprocess.officer_firstname,
       officer_middlename: onprocess.officer_middlename,
@@ -76,6 +81,8 @@ const OnProcess = () => {
   const onProcessData: OnProcessForm[] = onprocess.map((onprocess) => ({
     onprocess_id: onprocess.onprocess_id,
     admin_id: onprocess.admin_id,
+    additional_message: onprocess.additional_message,
+    notification: onprocess.notification,
     status_id: onprocess.status_id,
     created_at: onprocess.created_at,
     updated_at: onprocess.updated_at,
@@ -182,6 +189,24 @@ const OnProcess = () => {
     },
   ]
 
+  const statusDialogMap = {
+    2: {
+      title: 'Claimed',
+      fields: ClaimedFields,
+      notification: 'You claimed your document at Barangay Office.'
+    },
+    7: {
+      title: 'For Pick-up',
+      fields: ForPickUpFields,
+      notification: 'Your request is ready for pick-up.'
+    },
+    6: {
+      title: 'Processing',
+      fields: ProcessingFields,
+      notification: 'Your request is for processing.'
+    },
+  } as const;
+
   return (
     <AdminLayout className='p-5' title='On Process'>
       <CustomDataTable
@@ -190,27 +215,62 @@ const OnProcess = () => {
         filterColumn='applicant_name'
         onRowClick={(row: OnProcessForm) => (populateSheet(row))}
         searchPlaceHolder="Search applicant's name"
-        renderSheet={(trigger, row) => (
-          <CustomSheet
-            key={row}
-            onSubmit={onProcessSubmit}
-            trigger={trigger}
-            firstButton={
-              data.status_name === 'Claimed' ? (
-                <Button>Claimed</Button>
-              ) : (
-                <Button disabled={processing} className='w-full'>Save</Button>
-              )
+        renderSheet={(trigger, row) => {
+
+          // map the dialog based on the selected status
+          const dialogProps = statusDialogMap[data.status_id as keyof typeof statusDialogMap] || {
+            title: 'Unknown Status',
+            fields: ProcessingFields,
+          };
+
+          // automatically set notification when status changes
+          useEffect(() => {
+            const currentStatus = statusDialogMap[data.status_id as keyof typeof statusDialogMap];
+
+            if (currentStatus?.notification) {
+              setData('notification', currentStatus.notification);
+            } else {
+              setData('notification', 'Undefined');
             }
-            statusTitle={data.status_name}
-            form={
-              <>
-                <input type="hidden" defaultValue={data.onprocess_id} />
-                <CustomForm className='grid grid-cols-2 gap-x-3' fields={FetchFirstHalve(data, setData, errors)} />
-                <CustomForm className='grid grid-cols-1 gap-x-3' fields={FetchSecondHalve(data, setData, errors)} />
-              </>
-            } />
-        )} />
+          }, [data.status_id]);
+
+          return (
+            <CustomSheet
+              key={row}
+              trigger={trigger}
+              firstButton={
+                <CustomDialog
+                  title={dialogProps.title}
+                  onSubmit={onProcessSubmit}
+                  width="w-150"
+                  trigger={
+                    <Button
+                      className="w-full"
+                    >
+                      Save
+                    </Button>
+                  }
+                  button={<Button disabled={processing}>Submit</Button>}
+                  children={
+                    <>
+                      <input type="text" defaultValue={data.admin_id} />
+                      <input type="text" defaultValue={data.requested_document_id} />
+                      <input type="text" defaultValue={data.status_id} />
+                      <CustomForm fields={dialogProps.fields(data, setData, errors)} />
+                    </>
+                  }
+                />
+              }
+              statusTitle={data.status_name}
+              form={
+                <>
+                  <input type="hidden" defaultValue={data.onprocess_id} />
+                  <CustomForm className='grid grid-cols-2 gap-x-3' fields={FetchFirstHalve(data, setData, errors)} />
+                  <CustomForm className='grid grid-cols-1 gap-x-3' fields={FetchSecondHalve(data, setData, errors)} />
+                </>
+              } />
+          )
+        }} />
     </AdminLayout>
   )
 }

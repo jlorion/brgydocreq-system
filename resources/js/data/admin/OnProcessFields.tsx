@@ -109,3 +109,92 @@ export const FetchSecondHalve = (data: OnProcessForm, setData: (key: keyof OnPro
 		},
 	]
 }
+
+export const ProcessingFields = (data: OnProcessForm, setData: (key: keyof OnProcessForm, value: string) => void, errors: Partial<Record<keyof OnProcessForm, string>>): CustomFormField[] => {
+
+	return [
+		{
+			label: 'Notification',
+			type: 'text',
+			id: 'notification',
+			disabled: true,
+			value: data.notification,
+			tabIndex: -1,
+			errorMessage: errors.notification,
+		},
+		{
+			label: 'Additional Message',
+			placeholder: 'This is optional..',
+			type: 'textarea',
+			id: 'request_rejected',
+			value: data.additional_message,
+			autoFocus: true,
+			tabIndex: 1,
+			onChange: (e) => setData('additional_message', e.target.value),
+			errorMessage: errors.additional_message,
+			additionalProps: {
+				className: 'h-24',
+			}
+		},
+
+	]
+}
+
+export const ClaimedFields = (data: OnProcessForm, setData: (key: keyof OnProcessForm, value: string) => void, errors: Partial<Record<keyof OnProcessForm, string>>): CustomFormField[] => {
+
+	return [
+		{
+			label: 'Notification',
+			type: 'text',
+			id: 'notification',
+			disabled: true,
+			value: data.notification,
+			tabIndex: -1,
+			errorMessage: errors.notification,
+		},
+		{
+			label: 'Additional Message',
+			placeholder: 'This is optional..',
+			type: 'textarea',
+			id: 'request_rejected',
+			value: data.additional_message,
+			autoFocus: true,
+			tabIndex: 1,
+			onChange: (e) => setData('additional_message', e.target.value),
+			errorMessage: errors.additional_message,
+			additionalProps: {
+				className: 'h-24',
+			}
+		},
+
+	]
+}
+export const ForPickUpFields = (data: OnProcessForm, setData: (key: keyof OnProcessForm, value: string) => void, errors: Partial<Record<keyof OnProcessForm, string>>): CustomFormField[] => {
+
+	return [
+		{
+			label: 'Notification',
+			type: 'text',
+			id: 'notification',
+			disabled: true,
+			value: data.notification,
+			tabIndex: -1,
+			errorMessage: errors.notification,
+		},
+		{
+			label: 'Additional Message',
+			placeholder: 'This is optional..',
+			type: 'textarea',
+			id: 'request_rejected',
+			value: data.additional_message,
+			autoFocus: true,
+			tabIndex: 1,
+			onChange: (e) => setData('additional_message', e.target.value),
+			errorMessage: errors.additional_message,
+			additionalProps: {
+				className: 'h-24',
+			}
+		},
+
+	]
+}

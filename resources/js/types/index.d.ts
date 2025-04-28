@@ -112,6 +112,8 @@ export interface OnProcessForm {
     status_id: number;
     created_at: Date;
     updated_at: Date;
+    additional_message: string;
+    notification: string;
     requested_document_id: number;
     officer_firstname: string;
     officer_middlename: string;

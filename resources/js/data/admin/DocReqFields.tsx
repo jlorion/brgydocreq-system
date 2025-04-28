@@ -64,7 +64,6 @@ export const RejectFields = (data: SubmittedDocumentForm, setData: (key: keyof S
 }
 
 
-
 export const FetchFirstHalve = (data: SubmittedDocumentForm, setData: (key: keyof SubmittedDocumentForm, value: string | Date | null) => void, errors: Partial<Record<keyof SubmittedDocumentForm, string>>): CustomFormField[] => {
 
 	return [
