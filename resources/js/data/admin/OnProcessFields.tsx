@@ -1,8 +1,10 @@
-
-import { CustomFormField, SubmittedDocumentForm } from "@/types";
+import { CustomFormField, OnProcessForm, SharedData } from "@/types"
+import { usePage } from "@inertiajs/react";
 import { format } from "date-fns";
 
-export const DocReqFieldsFirstHalve = (data: SubmittedDocumentForm, setData: (key: keyof SubmittedDocumentForm, value: string | Date | null) => void, errors: Partial<Record<keyof SubmittedDocumentForm, string>>): CustomFormField[] => {
+
+export const FetchFirstHalve = (data: OnProcessForm, setData: (key: keyof OnProcessForm, value: string | number | null) => void, errors: Partial<Record<keyof OnProcessForm, string>>): CustomFormField[] => {
+	const { status } = usePage<SharedData>().props
 
 	return [
 		{
@@ -57,53 +59,53 @@ export const DocReqFieldsFirstHalve = (data: SubmittedDocumentForm, setData: (ke
 			onChange: (e) => setData('document_name', e.target.value),
 			errorMessage: errors.document_name,
 		},
-
 		{
-			label: 'Amount',
-			type: 'text',
-			id: 'price',
-			disabled: true,
-			value: data.amount,
-			tabIndex: -5,
-			onChange: (e) => setData('amount', e.target.value),
-			errorMessage: errors.amount,
+			label: 'Status',
+			type: 'select',
+			id: 'status',
+			value: data.status_id ?? 0,
+			tabIndex: -6,
+			onChange: (value: number) => setData('status_id', value),
+			errorMessage: errors.status_id,
+			selectItems: status.map((status) => ({
+				label: status.status_name,
+				value: status.status_id,
+			})),
 		},
-
-
 	]
 }
 
-export const DocReqFieldsSecondHalve = (data: SubmittedDocumentForm, setData: (key: keyof SubmittedDocumentForm, value: string) => void, errors: Partial<Record<keyof SubmittedDocumentForm, string>>): CustomFormField[] => {
+
+export const FetchSecondHalve = (data: OnProcessForm, setData: (key: keyof OnProcessForm, value: string | Date | null) => void, errors: Partial<Record<keyof OnProcessForm, string>>): CustomFormField[] => {
 
 	return [
 		{
-			label: 'Date Requested',
+			label: 'Date Approved',
 			type: 'date',
-			id: 'date_requested',
+			id: 'date_approved',
 			disabled: true,
 			tabIndex: -6,
-			value: data.date_requested,
+			value: data.created_at,
 			formatDate: "MMM. dd, yyyy '@' hh:mmaaa",
 			onChange: (date: Date | null) => {
-				setData('date_requested', date ? format(date, "MMM. dd, yyyy '@' hh:mmaaa") : '');
+				setData('created_at', date ? format(date, "MMM. dd, yyyy '@' hh:mmaaa") : '');
 			},
-			errorMessage: errors.date_requested,
+			errorMessage: errors.created_at,
 
 		},
 		{
-			label: 'Purpose of Filing',
-			type: 'textarea',
-			id: 'requested_purpose',
+			label: 'Date Updated',
+			type: 'date',
+			id: 'date_updated',
 			disabled: true,
-			value: data.requested_purpose ?? 'N/A',
-			tabIndex: -7,
-			onChange: (e) => setData('requested_purpose', e.target.value),
-			errorMessage: errors.requested_purpose,
-			additionalProps: {
-				className: 'h-24',
-			}
-		},
+			tabIndex: -6,
+			value: data.updated_at,
+			formatDate: "MMM. dd, yyyy '@' hh:mmaaa",
+			onChange: (date: Date | null) => {
+				setData('updated_at', date ? format(date, "MMM. dd, yyyy '@' hh:mmaaa") : '');
+			},
+			errorMessage: errors.updated_at,
 
+		},
 	]
 }
-

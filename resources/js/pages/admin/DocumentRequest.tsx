@@ -6,13 +6,12 @@ import { getStatusColors } from '@/lib/utils'
 import { ColumnDef } from '@tanstack/react-table'
 import { ArrowUpDown } from 'lucide-react'
 import CustomForm from '@/components/custom/CustomFormFields'
-import { DocReqFieldsFirstHalve, DocReqFieldsSecondHalve } from '@/data/admin/FetchDocReqFields'
 import { SharedData, SubmittedDocumentForm } from '@/types'
 import { useForm, usePage } from '@inertiajs/react'
 import { format } from 'date-fns'
 import CustomDialog from '@/components/custom/CustomDialog'
 import CustomIcon from '@/components/custom/CustomIcon'
-import { RejectDocReqFields, ApproveDocReqFields } from '@/data/admin/DocReqFields'
+import { RejectFields, ApproveFields, FetchFirstHalve, FetchSecondHalve } from '@/data/admin/DocReqFields'
 import { FormEventHandler } from 'react'
 import { toast } from 'sonner'
 
@@ -173,7 +172,7 @@ const DocumentRequeset = () => {
 
         return (
           <div className='flex justify-center items-center'>
-            <div className={`rounded w-3/5 py-1 capitalize text-center ${getStatusColors(status)}`}>
+            <div className={`rounded w-28 py-1 capitalize text-center ${getStatusColors(status)}`}>
               {status}
             </div>
           </div>
@@ -218,7 +217,7 @@ const DocumentRequeset = () => {
                       <input type="text" hidden defaultValue={data.admin_id} />
                       <input type="text" hidden defaultValue={data.requested_document_id} />
                       <input type="text" hidden defaultValue={data.status_id} />
-                      <CustomForm fields={ApproveDocReqFields(data, setData, errors)} />
+                      <CustomForm fields={ApproveFields(data, setData, errors)} />
                     </>
                   } />
 
@@ -253,10 +252,10 @@ const DocumentRequeset = () => {
                   button={<Button disabled={processing}>Submit</Button>}
                   children={
                     <>
-                      <input type="text" hidden defaultValue={data.admin_id} />
-                      <input type="text" hidden defaultValue={data.requested_document_id} />
-                      <input type="text" hidden defaultValue={data.status_id} />
-                      <CustomForm fields={RejectDocReqFields(data, setData, errors)} />
+                      <input type="hidden" defaultValue={data.admin_id} />
+                      <input type="hidden" defaultValue={data.requested_document_id} />
+                      <input type="hidden" defaultValue={data.status_id} />
+                      <CustomForm fields={RejectFields(data, setData, errors)} />
                     </>
                   }
                 />
@@ -265,8 +264,8 @@ const DocumentRequeset = () => {
             statusTitle={data.docreq_status}
             form={
               <>
-                <CustomForm fields={DocReqFieldsFirstHalve(data, setData, errors)} className="grid grid-cols-2 gap-2" />
-                <CustomForm fields={DocReqFieldsSecondHalve(data, setData, errors)} className="grid grid-cols-1 pt-2" />
+                <CustomForm fields={FetchFirstHalve(data, setData, errors)} className="grid grid-cols-2 gap-2" />
+                <CustomForm fields={FetchSecondHalve(data, setData, errors)} className="grid grid-cols-1 pt-2" />
                 <CustomDialog
                   width="w-150"
                   trigger={

@@ -46,7 +46,7 @@ export const getStatusColors = (status: string) => {
         inactive: 'bg-red-300 text-red-700',
         claimed: 'bg-green-300  text-green-700',
         under_review: 'bg-yellow-300 text-yellow-700',
-        processing: 'bg-blue-300 text-blue-700',
+        processing: 'bg-fuchsia-300 text-fuchsia-700',
         for_pickup: 'bg-violet-300 text-violet-700',
         default: 'bg-gray-300 text-gray-700',
     };
