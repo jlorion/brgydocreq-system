@@ -31,7 +31,7 @@ export interface SharedData {
     docrequests: SubmittedDocumentForm[];
     roles: Role[];
     documents: DocumentForm[];
-    onprocess: OnProcessForm[];
+    docprocessing: DocumentProcessingForm[];
     puroks: Purok[];
     status: Status[];
     ziggy: Config & { location: string };
@@ -86,45 +86,26 @@ export interface DocumentReqForm {
     attachment_path: File | null;
 }
 
-export interface SubmittedDocumentForm {
+export interface DocumentProcessingForm {
     requested_document_id: number;
+    onprocess_id: number;
     user_id: number;
     admin_id: number;
     status_id: number;
+    document_id: number;
+    amount: number;
     additional_message: string;
     notification: string;
+    officer_firstname: string;
+    officer_lastname: string;
     resident_firstname: string;
-    resident_middlename: string;
     resident_lastname: string;
-    resident_suffix: string | null;
-    document_id: number;
     requested_purpose: string;
     document_name: string;
+    status_name: string;
     attachment_path: File | null;
-    amount: number;
-    date_requested: Date;
-    docreq_status: string;
-}
-
-export interface OnProcessForm {
-    onprocess_id: number;
-    admin_id: number;
-    status_id: number;
     created_at: Date;
     updated_at: Date;
-    additional_message: string;
-    notification: string;
-    requested_document_id: number;
-    officer_firstname: string;
-    officer_middlename: string;
-    officer_lastname: string;
-    officer_suffix: string;
-    resident_firstname: string;
-    resident_middlename: string;
-    resident_lastname: string;
-    resident_suffix: string;
-    document_name: string;
-    status_name: string;
 }
 
 export interface AdminForm {

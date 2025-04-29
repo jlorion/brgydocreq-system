@@ -1,9 +1,9 @@
-import { CustomFormField, OnProcessForm, SharedData } from "@/types"
+import { CustomFormField, DocumentProcessingForm, SharedData } from "@/types"
 import { usePage } from "@inertiajs/react";
 import { format } from "date-fns";
 
 
-export const FetchFirstHalve = (data: OnProcessForm, setData: (key: keyof OnProcessForm, value: string | number | null) => void, errors: Partial<Record<keyof OnProcessForm, string>>): CustomFormField[] => {
+export const FetchFirstHalve = (data: DocumentProcessingForm, setData: (key: keyof DocumentProcessingForm, value: string | number | null) => void, errors: Partial<Record<keyof DocumentProcessingForm, string>>): CustomFormField[] => {
 	const { status } = usePage<SharedData>().props
 
 	return [
@@ -18,17 +18,6 @@ export const FetchFirstHalve = (data: OnProcessForm, setData: (key: keyof OnProc
 			errorMessage: errors.resident_firstname,
 		},
 		{
-			label: 'Middle Name',
-			type: 'text',
-			id: 'middle_name',
-			disabled: true,
-			value: data.resident_middlename,
-			tabIndex: -2,
-			onChange: (e) => setData('resident_middlename', e.target.value),
-			errorMessage: errors.resident_middlename,
-		},
-
-		{
 			label: 'Last Name',
 			type: 'text',
 			id: 'last_name',
@@ -38,17 +27,6 @@ export const FetchFirstHalve = (data: OnProcessForm, setData: (key: keyof OnProc
 			onChange: (e) => setData('resident_lastname', e.target.value),
 			errorMessage: errors.resident_lastname,
 		},
-		{
-			label: 'Suffix',
-			type: 'text',
-			id: 'suffix',
-			disabled: true,
-			value: data.resident_suffix ?? 'N/A',
-			tabIndex: -4,
-			onChange: (e) => setData('resident_suffix', e.target.value),
-			errorMessage: errors.resident_suffix,
-		},
-
 		{
 			label: 'Type of Document',
 			type: 'text',
@@ -77,7 +55,7 @@ export const FetchFirstHalve = (data: OnProcessForm, setData: (key: keyof OnProc
 }
 
 
-export const FetchSecondHalve = (data: OnProcessForm, setData: (key: keyof OnProcessForm, value: string | Date | null) => void, errors: Partial<Record<keyof OnProcessForm, string>>): CustomFormField[] => {
+export const FetchSecondHalve = (data: DocumentProcessingForm, setData: (key: keyof DocumentProcessingForm, value: string | Date | null) => void, errors: Partial<Record<keyof DocumentProcessingForm, string>>): CustomFormField[] => {
 
 	return [
 		{
@@ -111,7 +89,7 @@ export const FetchSecondHalve = (data: OnProcessForm, setData: (key: keyof OnPro
 	]
 }
 
-export const ProcessingFields = (data: OnProcessForm, setData: (key: keyof OnProcessForm, value: string) => void, errors: Partial<Record<keyof OnProcessForm, string>>): CustomFormField[] => {
+export const ProcessingFields = (data: DocumentProcessingForm, setData: (key: keyof DocumentProcessingForm, value: string) => void, errors: Partial<Record<keyof DocumentProcessingForm, string>>): CustomFormField[] => {
 
 	return [
 		{
@@ -141,7 +119,7 @@ export const ProcessingFields = (data: OnProcessForm, setData: (key: keyof OnPro
 	]
 }
 
-export const ClaimedFields = (data: OnProcessForm, setData: (key: keyof OnProcessForm, value: string) => void, errors: Partial<Record<keyof OnProcessForm, string>>): CustomFormField[] => {
+export const ClaimedFields = (data: DocumentProcessingForm, setData: (key: keyof DocumentProcessingForm, value: string) => void, errors: Partial<Record<keyof DocumentProcessingForm, string>>): CustomFormField[] => {
 
 	return [
 		{
@@ -170,7 +148,7 @@ export const ClaimedFields = (data: OnProcessForm, setData: (key: keyof OnProces
 
 	]
 }
-export const ForPickUpFields = (data: OnProcessForm, setData: (key: keyof OnProcessForm, value: string) => void, errors: Partial<Record<keyof OnProcessForm, string>>): CustomFormField[] => {
+export const ForPickUpFields = (data: DocumentProcessingForm, setData: (key: keyof DocumentProcessingForm, value: string) => void, errors: Partial<Record<keyof DocumentProcessingForm, string>>): CustomFormField[] => {
 
 	return [
 		{

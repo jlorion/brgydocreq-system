@@ -3,10 +3,8 @@ import { getStatusColors } from '@/lib/utils';
 
 interface CustomSheetProps {
     image?: string;
-    firstButton: React.ReactNode;
+    firstButton?: React.ReactNode;
     secondButton?: React.ReactNode;
-    firstButtonClassName?: string;
-    secondButtonClassName?: string;
     trigger: React.ReactNode;
     className?: string;
     plainTitle?: string;

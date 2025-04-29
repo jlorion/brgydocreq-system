@@ -1,8 +1,8 @@
 
-import { CustomFormField, SubmittedDocumentForm, } from "@/types";
+import { CustomFormField, DocumentProcessingForm, } from "@/types";
 import { format } from "date-fns";
 
-export const ApproveFields = (data: SubmittedDocumentForm, setData: (key: keyof SubmittedDocumentForm, value: string) => void, errors: Partial<Record<keyof SubmittedDocumentForm, string>>): CustomFormField[] => {
+export const ApproveFields = (data: DocumentProcessingForm, setData: (key: keyof DocumentProcessingForm, value: string) => void, errors: Partial<Record<keyof DocumentProcessingForm, string>>): CustomFormField[] => {
 
 	return [
 		{
@@ -32,8 +32,33 @@ export const ApproveFields = (data: SubmittedDocumentForm, setData: (key: keyof 
 	]
 }
 
+export const ViewFields = (data: DocumentProcessingForm, setData: (key: keyof DocumentProcessingForm, value: string) => void, errors: Partial<Record<keyof DocumentProcessingForm, string>>): CustomFormField[] => {
 
-export const RejectFields = (data: SubmittedDocumentForm, setData: (key: keyof SubmittedDocumentForm, value: string) => void, errors: Partial<Record<keyof SubmittedDocumentForm, string>>): CustomFormField[] => {
+	return [
+		{
+			label: 'Notification',
+			type: 'text',
+			disabled: true,
+			value: data.notification,
+			tabIndex: -1,
+		},
+		{
+			label: 'Additional Message',
+			type: 'textarea',
+			id: 'request_approved',
+			disabled: true,
+			value: data.additional_message,
+			tabIndex: -2,
+			additionalProps: {
+				className: 'h-24',
+			}
+		},
+
+	]
+}
+
+
+export const RejectFields = (data: DocumentProcessingForm, setData: (key: keyof DocumentProcessingForm, value: string) => void, errors: Partial<Record<keyof DocumentProcessingForm, string>>): CustomFormField[] => {
 
 	return [
 		{
@@ -64,7 +89,7 @@ export const RejectFields = (data: SubmittedDocumentForm, setData: (key: keyof S
 }
 
 
-export const FetchFirstHalve = (data: SubmittedDocumentForm, setData: (key: keyof SubmittedDocumentForm, value: string | Date | null) => void, errors: Partial<Record<keyof SubmittedDocumentForm, string>>): CustomFormField[] => {
+export const FetchFirstHalve = (data: DocumentProcessingForm, setData: (key: keyof DocumentProcessingForm, value: string | Date | null) => void, errors: Partial<Record<keyof DocumentProcessingForm, string>>): CustomFormField[] => {
 
 	return [
 		{
@@ -77,16 +102,7 @@ export const FetchFirstHalve = (data: SubmittedDocumentForm, setData: (key: keyo
 			onChange: (e) => setData('resident_firstname', e.target.value),
 			errorMessage: errors.resident_firstname,
 		},
-		{
-			label: 'Middle Name',
-			type: 'text',
-			id: 'middle_name',
-			disabled: true,
-			value: data.resident_middlename,
-			tabIndex: -2,
-			onChange: (e) => setData('resident_middlename', e.target.value),
-			errorMessage: errors.resident_middlename,
-		},
+
 
 		{
 			label: 'Last Name',
@@ -98,16 +114,7 @@ export const FetchFirstHalve = (data: SubmittedDocumentForm, setData: (key: keyo
 			onChange: (e) => setData('resident_lastname', e.target.value),
 			errorMessage: errors.resident_lastname,
 		},
-		{
-			label: 'Suffix',
-			type: 'text',
-			id: 'suffix',
-			disabled: true,
-			value: data.resident_suffix ?? 'N/A',
-			tabIndex: -4,
-			onChange: (e) => setData('resident_suffix', e.target.value),
-			errorMessage: errors.resident_suffix,
-		},
+
 
 		{
 			label: 'Type of Document',
@@ -135,7 +142,7 @@ export const FetchFirstHalve = (data: SubmittedDocumentForm, setData: (key: keyo
 	]
 }
 
-export const FetchSecondHalve = (data: SubmittedDocumentForm, setData: (key: keyof SubmittedDocumentForm, value: string) => void, errors: Partial<Record<keyof SubmittedDocumentForm, string>>): CustomFormField[] => {
+export const FetchSecondHalve = (data: DocumentProcessingForm, setData: (key: keyof DocumentProcessingForm, value: string) => void, errors: Partial<Record<keyof DocumentProcessingForm, string>>): CustomFormField[] => {
 
 	return [
 		{
@@ -144,12 +151,12 @@ export const FetchSecondHalve = (data: SubmittedDocumentForm, setData: (key: key
 			id: 'date_requested',
 			disabled: true,
 			tabIndex: -6,
-			value: data.date_requested,
+			value: data.created_at,
 			formatDate: "MMM. dd, yyyy '@' hh:mmaaa",
 			onChange: (date: Date | null) => {
-				setData('date_requested', date ? format(date, "MMM. dd, yyyy '@' hh:mmaaa") : '');
+				setData('created_at', date ? format(date, "MMM. dd, yyyy '@' hh:mmaaa") : '');
 			},
-			errorMessage: errors.date_requested,
+			errorMessage: errors.created_at,
 
 		},
 		{

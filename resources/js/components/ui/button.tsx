@@ -13,6 +13,8 @@ const buttonVariants = cva(
           "border border-blue-600 text-blue-600 shadow-xs hover:bg-blue-600 hover:text-white",
         reject:
           "border border-red-600 text-red-600 shadow-xs hover:bg-red-600 hover:text-white",
+        view:
+          "border border-amber-500 text-amber-500 shadow-xs hover:bg-amber-500 hover:text-white",
         plain:
           "text-s3  hover:bg-s3 hover:text-white",
         primary:

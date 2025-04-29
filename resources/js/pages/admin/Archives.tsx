@@ -1,144 +1,232 @@
 import { CustomDataTable } from '@/components/custom/CustomDataTable'
+import CustomDialog from '@/components/custom/CustomDialog'
 import CustomForm from '@/components/custom/CustomFormFields'
+import CustomIcon from '@/components/custom/CustomIcon'
 import CustomSheet from '@/components/custom/CustomSheet'
 import { Button } from '@/components/ui/button'
+import { FetchFirstHalve, FetchSecondHalve, ViewFields } from '@/data/admin/DocReqFields'
 import AdminLayout from '@/layouts/admin/AdminLayout'
-import { formatText } from '@/lib/utils'
+import { getStatusColors } from '@/lib/utils'
+import { DocumentProcessingForm, SharedData } from '@/types'
+import { useForm, usePage } from '@inertiajs/react'
 import { ColumnDef } from '@tanstack/react-table'
+import { format } from 'date-fns'
 import { ArrowUpDown } from 'lucide-react'
-import { DocumentRequestFields } from '@/data/admin/FetchDocReqFields'
-import { PurposeofRequestField } from '@/data/admin/FetchDocReqFields'
-import { ViewAttachment } from '@/data/admin/FetchDocReqFields'
-
-type Archives = {
-  id: string
-  admin_name: string
-  status: "claimed" | "rejected"
-  date_archived: string
-  type_of_document: string
-}
-
-const data: Archives[] = [
-  {
-    id: "1",
-    admin_name: "Mark John",
-    status: "claimed",
-    date_archived: "April 30, 2024",
-    type_of_document: "Barangay Clearance",
-  },
-  {
-    id: "2",
-    admin_name: "Mark Jefferson",
-    status: "rejected",
-    date_archived: "April 30, 2024",
-    type_of_document: "Barangay Certificate",
-  },
-  {
-    id: "3",
-    admin_name: "Mark Luis",
-    status: "rejected",
-    date_archived: "April 30, 2024",
-    type_of_document: "Certificate Indigency",
-  },
-  {
-    id: "4",
-    admin_name: "Mark Doe",
-    status: "claimed",
-    date_archived: "April 30, 2024",
-    type_of_document: "Purok Clearance",
-  },
-  {
-    id: "5",
-    admin_name: "Mark Dayne",
-    status: "rejected",
-    date_archived: "April 30, 2024",
-    type_of_document: "Income Certificate",
-  },
-  {
-    id: "6",
-    admin_name: "Mark Don",
-    status: "claimed",
-    date_archived: "April 30, 2024",
-    type_of_document: "Low Income Certificate",
-  },
-]
-
-
-const columns: ColumnDef<Archives>[] = [
-  {
-    accessorKey: "admin_name",
-    header: () => <div className='text-center'>Administrator's Name</div>,
-    cell: ({ row }) => (
-      <div className="capitalize text-center">{row.getValue("admin_name")}</div>
-    ),
-  },
-  {
-    accessorKey: "type_of_document",
-    header: ({ column }) => {
-      return (
-        <div className='text-center'>
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Type of Document
-            <ArrowUpDown />
-          </Button>
-        </div>
-      )
-    },
-    cell: ({ row }) => (
-      <div className="capitalize text-center">{row.getValue("type_of_document")}</div>
-    ),
-  },
-  {
-    accessorKey: "date_archived",
-    header: () => <div className='text-center'>Date Processed</div>,
-    cell: ({ row }) => (
-      <div className="capitalize text-center">{row.getValue("date_archived")}</div>
-    ),
-  },
-  {
-    accessorKey: "status",
-    header: () => <div className='text-center'>Status</div>,
-    cell: ({ row }) => {
-      const status = row.getValue("status") as string;
-
-      const statusColors: Record<string, string> = {
-        rejected: "bg-red-200 text-red-700",
-        claimed: "bg-green-200 text-green-700",
-        under_review: "bg-yellow-200 text-yellow-700",
-        processing: "bg-blue-200 text-blue-700",
-        for_pickup: "bg-violet-200 text-violet-700",
-      };
-
-      const statusCode = statusColors[status] || "bg-gray-400 text-gray-600";
-
-      return (
-        <div className='flex justify-center items-center'>
-          <div className={`rounded w-3/5 py-1 capitalize text-center ${statusCode}`}>
-            {formatText(status)}
-          </div>
-        </div>
-      );
-    },
-  },
-
-]
+import { FormEventHandler } from 'react'
+import { toast } from 'sonner'
 
 const Archives = () => {
+  const { docprocessing, auth } = usePage<SharedData>().props;
+
+  const { data, setData, post, processing, errors, reset } = useForm<Required<DocumentProcessingForm>>({
+    requested_document_id: 0,
+    onprocess_id: 0,
+    user_id: 0,
+    admin_id: auth.admin.admin_id,
+    status_id: 0,
+    document_id: 0,
+    amount: 0,
+    additional_message: '',
+    notification: '',
+    officer_firstname: '',
+    officer_lastname: '',
+    resident_firstname: '',
+    resident_lastname: '',
+    requested_purpose: '',
+    document_name: '',
+    status_name: '',
+    attachment_path: null,
+    created_at: new Date(),
+    updated_at: new Date(),
+  })
+
+  const onProcessSubmit: FormEventHandler = (e) => {
+    e.preventDefault();
+    post(route('admin.processing'), {
+      onSuccess: () => {
+        toast.success('Succesfully updated and send notification');
+        reset()
+      },
+      onError: (errors) => {
+        console.error("Form Validation error");
+        Object.entries(errors).forEach(([field, message]) => {
+          console.error(`Field: ${field}, Message: ${message}`);
+        })
+      }
+    });
+  }
+
+
+  // populate sheet
+  const populateSheet = (docprocessing: DocumentProcessingForm) => {
+    setData({
+      requested_document_id: docprocessing.requested_document_id,
+      onprocess_id: docprocessing.onprocess_id,
+      user_id: docprocessing.user_id,
+      admin_id: docprocessing.admin_id,
+      status_id: docprocessing.status_id,
+      document_id: docprocessing.document_id,
+      amount: docprocessing.amount,
+      additional_message: docprocessing.additional_message,
+      notification: docprocessing.notification,
+      officer_firstname: docprocessing.officer_firstname,
+      officer_lastname: docprocessing.officer_lastname,
+      resident_firstname: docprocessing.resident_firstname,
+      resident_lastname: docprocessing.resident_lastname,
+      requested_purpose: docprocessing.requested_purpose,
+      document_name: docprocessing.document_name,
+      status_name: docprocessing.status_name,
+      attachment_path: docprocessing.attachment_path,
+      created_at: docprocessing.created_at,
+      updated_at: docprocessing.updated_at,
+    })
+  }
+
+  //data for every cell
+  const onProcessData: DocumentProcessingForm[] = docprocessing.map((docprocessing) => ({
+    requested_document_id: docprocessing.requested_document_id,
+    onprocess_id: docprocessing.onprocess_id,
+    user_id: docprocessing.user_id,
+    admin_id: docprocessing.admin_id,
+    status_id: docprocessing.status_id,
+    document_id: docprocessing.document_id,
+    amount: docprocessing.amount,
+    additional_message: docprocessing.additional_message,
+    notification: docprocessing.notification,
+    officer_firstname: docprocessing.officer_firstname,
+    officer_lastname: docprocessing.officer_lastname,
+    resident_firstname: docprocessing.resident_firstname,
+    resident_lastname: docprocessing.resident_lastname,
+    requested_purpose: docprocessing.requested_purpose,
+    document_name: docprocessing.document_name,
+    status_name: docprocessing.status_name,
+    attachment_path: docprocessing.attachment_path,
+    created_at: docprocessing.created_at,
+    updated_at: docprocessing.updated_at,
+  }));
+
+  // columns for table
+  const columns: ColumnDef<DocumentProcessingForm>[] = [
+    {
+      accessorKey: "applicant_name",
+      header: () => <div className='text-center'>Applicant's Name</div>,
+      cell: ({ row }) => {
+        const { resident_firstname, resident_lastname } = row.original
+        const name = [
+          `${resident_lastname},`,
+          resident_firstname,
+        ].filter(Boolean).join(' ').trim()
+
+        return <div className="capitalize text-center">{name}</div>
+      },
+    },
+    {
+      accessorKey: "document_name",
+      header: ({ column }) => {
+        return (
+          <div className='text-center'>
+            <Button
+              variant="ghost"
+              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            >
+              Type of Document
+              <ArrowUpDown />
+            </Button>
+          </div>
+        )
+      },
+      cell: ({ row }) => (
+        <div className="capitalize text-center">{row.getValue("document_name")}</div>
+      ),
+    },
+    {
+      accessorKey: "archived_by",
+      header: () => <div className='text-center'>Archived By</div>,
+      cell: ({ row }) => {
+        const { officer_firstname, officer_lastname } = row.original
+        const name = [
+          `${officer_lastname},`,
+          officer_firstname,
+        ].filter(Boolean).join(' ').trim()
+
+        return <div className="capitalize text-center">{name}</div>
+      },
+    },
+    {
+      accessorKey: "updated_at",
+      header: () => <div className='text-center'>Date Archived</div>,
+      cell: ({ row }) => {
+        const date = row.getValue('updated_at') as string;
+        const formatDate = date ? format(new Date(date), "MMM. dd, yyyy '@' hh:mmaaa") : '';
+
+        return <div className="capitalize text-center">{formatDate}</div>
+      },
+    },
+    {
+      accessorKey: "status_name",
+      header: () => <div className='text-center'>Status</div>,
+      cell: ({ row }) => {
+        const status = row.getValue("status_name") as string;
+
+        return (
+          <div className='flex justify-center items-center'>
+            <div className={`rounded w-28 py-1 capitalize text-center ${getStatusColors(status)}`}>
+              {status}
+            </div>
+          </div>
+        );
+      },
+    },
+  ]
+
   return (
     <AdminLayout className='p-5' title='Archives'>
-      <CustomDataTable columns={columns} data={data} filterColumn='admin_name' searchPlaceHolder="Search administrator's name" renderSheet={(trigger, row) => (
-        <CustomSheet trigger={trigger} firstButton='Approve' firstButtonVariant='approve' secondButton='Reject' secondButtonVariant='reject' statusTitle='Under Review'
-          form={
-            <>
-              <CustomForm fields={DocumentRequestFields} className="grid grid-cols-2 gap-2" />
-              <CustomForm fields={PurposeofRequestField} className="grid grid-cols-1 pt-2" />
-              <CustomForm fields={ViewAttachment} className="flex justify-center pt-2" />
-            </>
-          } />
-      )} />    </AdminLayout>
+      <CustomDataTable columns={columns}
+        data={onProcessData}
+        filterColumn='document_name'
+        onRowClick={(row: DocumentProcessingForm) => (populateSheet(row))}
+        searchPlaceHolder="Search administrator's name"
+        renderSheet={(trigger, row) => (
+          <CustomSheet
+            key={row}
+            firstButton={
+              <CustomDialog
+                title='View'
+                width="w-150"
+                trigger={
+                  <Button className='w-full' variant='view'>View</Button>
+                }
+                children={
+                  <CustomForm
+                    fields={ViewFields(data, setData, errors)}
+                  />
+                }
+              />
+            }
+            trigger={trigger}
+            statusTitle={data.status_name}
+            form={
+              <>
+                <CustomForm fields={FetchFirstHalve(data, setData, errors)} className="grid grid-cols-2 gap-2" />
+                <CustomForm fields={FetchSecondHalve(data, setData, errors)} className="grid grid-cols-1 pt-2" />
+                <CustomDialog
+                  width="w-150"
+                  trigger={
+                    <Button variant="link" className="text-sm">
+                      View Attachment
+                    </Button>
+                  }
+                  title="Attachment"
+                  children={
+                    <div className="flex justify-center items-center object-cover mt-2">
+                      <CustomIcon imgSrc={`/storage/${data.attachment_path}`} />
+                    </div>
+                  }
+                />
+              </>
+            } />
+        )} />
+    </AdminLayout>
   )
 }
 

@@ -6,7 +6,7 @@ import { ColumnDef } from '@tanstack/react-table'
 import { ArrowUpDown } from 'lucide-react'
 import CustomSheet from '@/components/custom/CustomSheet'
 import CustomForm from '@/components/custom/CustomFormFields'
-import { SharedData, OnProcessForm } from '@/types'
+import { SharedData, DocumentProcessingForm } from '@/types'
 import { useForm, usePage } from '@inertiajs/react'
 import { format } from 'date-fns'
 import { FetchFirstHalve, FetchSecondHalve } from '@/data/admin/OnProcessFields';
@@ -16,29 +16,28 @@ import { ClaimedFields, ProcessingFields, ForPickUpFields } from '@/data/admin/O
 import { toast } from 'sonner'
 
 const OnProcess = () => {
+  const { docprocessing, auth } = usePage<SharedData>().props;
 
-
-  const { onprocess, auth } = usePage<SharedData>().props;
-
-  const { data, setData, post, processing, errors, reset } = useForm<Required<OnProcessForm>>({
+  const { data, setData, post, processing, errors, reset } = useForm<Required<DocumentProcessingForm>>({
+    requested_document_id: 0,
     onprocess_id: 0,
+    user_id: 0,
     admin_id: auth.admin.admin_id,
     status_id: 0,
+    document_id: 0,
+    amount: 0,
     additional_message: '',
     notification: '',
-    created_at: new Date(),
-    updated_at: new Date(),
-    requested_document_id: 0,
     officer_firstname: '',
-    officer_middlename: '',
     officer_lastname: '',
-    officer_suffix: '',
     resident_firstname: '',
-    resident_middlename: '',
     resident_lastname: '',
-    resident_suffix: '',
+    requested_purpose: '',
     document_name: '',
     status_name: '',
+    attachment_path: null,
+    created_at: new Date(),
+    updated_at: new Date(),
   })
 
   const onProcessSubmit: FormEventHandler = (e) => {
@@ -46,7 +45,6 @@ const OnProcess = () => {
     post(route('admin.processing'), {
       onSuccess: () => {
         toast.success('Succesfully updated and send notification');
-        reset()
       },
       onError: (errors) => {
         console.error("Form Validation error");
@@ -59,67 +57,66 @@ const OnProcess = () => {
 
 
   // populate sheet
-  const populateSheet = (onprocess: OnProcessForm) => {
+  const populateSheet = (docprocessing: DocumentProcessingForm) => {
     setData({
-      onprocess_id: onprocess.onprocess_id,
-      admin_id: onprocess.admin_id,
-      status_id: onprocess.status_id,
-      created_at: onprocess.created_at,
-      updated_at: onprocess.updated_at,
-      additional_message: onprocess.additional_message,
-      notification: onprocess.notification,
-      requested_document_id: onprocess.requested_document_id,
-      officer_firstname: onprocess.officer_firstname,
-      officer_middlename: onprocess.officer_middlename,
-      officer_lastname: onprocess.officer_lastname,
-      officer_suffix: onprocess.officer_suffix,
-      resident_firstname: onprocess.resident_firstname,
-      resident_middlename: onprocess.resident_middlename,
-      resident_lastname: onprocess.resident_lastname,
-      resident_suffix: onprocess.resident_suffix,
-      document_name: onprocess.document_name,
-      status_name: onprocess.status_name,
+      requested_document_id: docprocessing.requested_document_id,
+      onprocess_id: docprocessing.onprocess_id,
+      user_id: docprocessing.user_id,
+      admin_id: docprocessing.admin_id,
+      status_id: docprocessing.status_id,
+      document_id: docprocessing.document_id,
+      amount: docprocessing.amount,
+      additional_message: docprocessing.additional_message,
+      notification: docprocessing.notification,
+      officer_firstname: docprocessing.officer_firstname,
+      officer_lastname: docprocessing.officer_lastname,
+      resident_firstname: docprocessing.resident_firstname,
+      resident_lastname: docprocessing.resident_lastname,
+      requested_purpose: docprocessing.requested_purpose,
+      document_name: docprocessing.document_name,
+      status_name: docprocessing.status_name,
+      attachment_path: docprocessing.attachment_path,
+      created_at: docprocessing.created_at,
+      updated_at: docprocessing.updated_at,
     })
   }
 
   //data for every cell
-  const onProcessData: OnProcessForm[] = onprocess.map((onprocess) => ({
-    onprocess_id: onprocess.onprocess_id,
-    admin_id: onprocess.admin_id,
-    additional_message: onprocess.additional_message,
-    notification: onprocess.notification,
-    status_id: onprocess.status_id,
-    created_at: onprocess.created_at,
-    updated_at: onprocess.updated_at,
-    requested_document_id: onprocess.requested_document_id,
-    officer_firstname: onprocess.officer_firstname,
-    officer_middlename: onprocess.officer_middlename,
-    officer_lastname: onprocess.officer_lastname,
-    officer_suffix: onprocess.officer_suffix,
-    resident_firstname: onprocess.resident_firstname,
-    resident_middlename: onprocess.resident_middlename,
-    resident_lastname: onprocess.resident_lastname,
-    resident_suffix: onprocess.resident_suffix,
-    document_name: onprocess.document_name,
-    status_name: onprocess.status_name,
+  const onProcessData: DocumentProcessingForm[] = docprocessing.map((docprocessing) => ({
+    requested_document_id: docprocessing.requested_document_id,
+    onprocess_id: docprocessing.onprocess_id,
+    user_id: docprocessing.user_id,
+    admin_id: docprocessing.admin_id,
+    status_id: docprocessing.status_id,
+    document_id: docprocessing.document_id,
+    amount: docprocessing.amount,
+    additional_message: docprocessing.additional_message,
+    notification: docprocessing.notification,
+    officer_firstname: docprocessing.officer_firstname,
+    officer_lastname: docprocessing.officer_lastname,
+    resident_firstname: docprocessing.resident_firstname,
+    resident_lastname: docprocessing.resident_lastname,
+    requested_purpose: docprocessing.requested_purpose,
+    document_name: docprocessing.document_name,
+    status_name: docprocessing.status_name,
+    attachment_path: docprocessing.attachment_path,
+    created_at: docprocessing.created_at,
+    updated_at: docprocessing.updated_at,
   }));
 
   // columns for table
-  const columns: ColumnDef<OnProcessForm>[] = [
+  const columns: ColumnDef<DocumentProcessingForm>[] = [
     {
       accessorKey: "applicant_name",
       header: () => <div className='text-center'>Applicant's Name</div>,
       cell: ({ row }) => {
-        const { resident_firstname, resident_middlename, resident_lastname, resident_suffix } = row.original
-        const middleInitial = resident_middlename ? `${resident_middlename.charAt(0).toUpperCase()}.` : '';
-        const fullName = [
+        const { resident_firstname, resident_lastname } = row.original
+        const name = [
+          `${resident_lastname},`,
           resident_firstname,
-          middleInitial,
-          resident_suffix ? `${resident_lastname},` : resident_lastname,
-          resident_suffix
         ].filter(Boolean).join(' ').trim()
 
-        return <div className="capitalize text-center">{fullName}</div>
+        return <div className="capitalize text-center">{name}</div>
       },
     },
     {
@@ -145,16 +142,13 @@ const OnProcess = () => {
       accessorKey: "approved_by",
       header: () => <div className='text-center'>Approved By</div>,
       cell: ({ row }) => {
-        const { officer_firstname, officer_middlename, officer_lastname, officer_suffix } = row.original
-        const middleInitial = officer_middlename ? `${officer_middlename.charAt(0).toUpperCase()}.` : '';
-        const fullName = [
+        const { officer_firstname, officer_lastname } = row.original
+        const name = [
+          `${officer_lastname},`,
           officer_firstname,
-          middleInitial,
-          officer_suffix ? `${officer_lastname},` : officer_lastname,
-          officer_suffix
         ].filter(Boolean).join(' ').trim()
 
-        return <div className="capitalize text-center">{fullName}</div>
+        return <div className="capitalize text-center">{name}</div>
       },
     },
     {
@@ -218,7 +212,7 @@ const OnProcess = () => {
         columns={columns}
         data={onProcessData}
         filterColumn='applicant_name'
-        onRowClick={(row: OnProcessForm) => (populateSheet(row))}
+        onRowClick={(row: DocumentProcessingForm) => (populateSheet(row))}
         searchPlaceHolder="Search applicant's name"
         renderSheet={(trigger, row) => {
 
@@ -255,6 +249,13 @@ const OnProcess = () => {
                         className="w-full bg-green-600"
                       >
                         Claimed
+                      </Button>
+                    ) : data.status_id === 11 ? (
+                      <Button
+                        disabled
+                        className="w-full opacity-70"
+                      >
+                        Save
                       </Button>
                     ) : (
                       <Button

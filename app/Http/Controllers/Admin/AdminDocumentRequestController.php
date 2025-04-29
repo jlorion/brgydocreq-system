@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\DocumentArchive;
 use App\Models\Notifications;
 use App\Models\Processing;
 use App\Models\RequestedDocument;
@@ -29,23 +30,21 @@ class AdminDocumentRequestController extends Controller
                 'requested_document_id' => $docRequest->requested_document_id,
                 'user_id' => $docRequest->user_id,
                 'resident_firstname' => $docRequest->user->resident->resident_firstname,
-                'resident_middlename' => $docRequest->user->resident->resident_middlename,
                 'resident_lastname' => $docRequest->user->resident->resident_lastname,
-                'resident_suffix' => $docRequest->user->resident->resident_suffix,
                 'document_id' => $docRequest->document_id,
                 'requested_purpose' => $docRequest->requested_purpose,
                 'document_name' => $docRequest->document->document_name,
                 'attachment_path' => $docRequest->attachment_path,
                 'amount' => $docRequest->document->price,
-                'date_requested' => $docRequest->created_at,
-                'docreq_status' => $docRequest->status->status_name
+                'created_at' => $docRequest->created_at,
+                'status_name' => $docRequest->status->status_name
             ];
         }));
 
         // return \response()->json($flatterDocRequest);
 
         return Inertia::render('admin/DocumentRequest', [
-            'docrequests' => $flatterDocRequest
+            'docprocessing' => $flatterDocRequest
         ]);
     }
 
@@ -59,16 +58,23 @@ class AdminDocumentRequestController extends Controller
             'notification' => 'required|string|max:100'
         ]);
 
-        $validate['admin_id'] = \auth('admin')->id();
 
         DB::transaction(function () use ($validate) {
 
-            Notifications::create($validate);
-
+            $notification = Notifications::create($validate);
             RequestedDocument::findOrFail($validate['requested_document_id'])
                 ->update([
                     'status_id' => $validate['status_id']
                 ]);
+
+            if ($validate['status_id'] === 1) {
+                DocumentArchive::create([
+                    'status_id' => $validate['status_id'],
+                    'admin_id' => $validate['admin_id'],
+                    'requested_document_id' => $validate['requested_document_id'],
+                    'notification_id' => $notification->getKey()
+                ]);
+            }
         });
     }
 

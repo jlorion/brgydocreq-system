@@ -36,13 +36,9 @@ class AdminOnProcessController extends Controller
                 'updated_at' => $onProcess->updated_at,
                 'requested_document_id' => $onProcess->requested_document_id,
                 'officer_firstname' => $onProcess->admin->barangayOfficer->officer_firstname,
-                'officer_middlename' => $onProcess->admin->barangayOfficer->officer_middlename,
                 'officer_lastname' => $onProcess->admin->barangayOfficer->officer_lastname,
-                'officer_suffix' => $onProcess->admin->barangayOfficer->officer_suffix,
                 'resident_firstname' => $onProcess->requestedDocument->user->resident->resident_firstname,
-                'resident_middlename' => $onProcess->requestedDocument->user->resident->resident_middlename,
                 'resident_lastname' => $onProcess->requestedDocument->user->resident->resident_lastname,
-                'resident_suffix' => $onProcess->requestedDocument->user->resident->resident_suffix,
                 'document_name' => $onProcess->requestedDocument->document->document_name,
                 'status_name' => $onProcess->status->status_name,
             ];
@@ -51,7 +47,7 @@ class AdminOnProcessController extends Controller
         // return \response()->json($status);
 
         return Inertia::render('admin/OnProcess', [
-            'onprocess' => $flattenOnProcess,
+            'docprocessing' => $flattenOnProcess,
             'status' => $status
         ]);
     }
@@ -72,11 +68,16 @@ class AdminOnProcessController extends Controller
 
         DB::transaction(function () use ($validate, $processing) {
 
-            Notifications::create($validate);
+            $notification = Notifications::create($validate);
             Processing::findOrFail($validate['onprocess_id'])->update($processing);
 
             if ($validate['status_id'] === 2) {
-                DocumentArchive::create($validate);
+                DocumentArchive::create([
+                    'requested_document_id' => $validate['requested_document_id'],
+                    'admin_id' => $validate['admin_id'],
+                    'status_id' => $validate['status_id'],
+                    'notification_id' => $notification->getKey(),
+                ]);
             }
         });
     }
