@@ -19,6 +19,7 @@ interface StepperProps {
 export default function Stepper({ currentStatus, className }: StepperProps) {
 	const currentIndex = steps.findIndex(step => step.value === currentStatus);
 
+
 	return (
 		<div className={`flex items-center justify-between w-full max-w-4xl mx-auto ${className}`}>
 			{steps.map((step, index) => {

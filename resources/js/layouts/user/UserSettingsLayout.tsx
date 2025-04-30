@@ -1,7 +1,6 @@
 import CustomProfilePic from '@/components/custom/CustomProfilePic';
 
 import { CustomSidebar } from '@/components/custom/CustomSidebar';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Bell, CircleUser, FileInput, KeyRound, SunMoon } from 'lucide-react';
@@ -18,11 +17,6 @@ const sidebarNavItems: NavItem[] = [
         icon: FileInput,
     },
     {
-        title: 'Notifications',
-        href: route('user.settings.notification'),
-        icon: Bell,
-    },
-    {
         title: 'Password',
         href: route('user.settings.password.edit'),
         icon: KeyRound,
@@ -34,13 +28,6 @@ const sidebarNavItems: NavItem[] = [
         icon: SunMoon,
     },
 ];
-
-<div>
-    <Avatar className="size-30">
-        <AvatarImage src="/images/avatars/1.png" alt="Avatar" />
-        <AvatarFallback>Profile</AvatarFallback>
-    </Avatar>
-</div>;
 
 interface UserSettingsLayoutProps {
     children: React.ReactNode;
