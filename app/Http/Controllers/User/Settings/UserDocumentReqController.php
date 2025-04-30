@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\User\Settings;
 
 use App\Http\Controllers\Controller;
-use App\Models\Notifications;
 use App\Models\RequestedDocument;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class UserDocumentReqController extends Controller
@@ -18,14 +18,20 @@ class UserDocumentReqController extends Controller
         ])->get();
 
 
-        $docReqId = $docRequests->pluck('requested_document_id');
+        $latestStatus = DB::table('notifications as n1')
+        ->select('status_id', 'requested_document_id')
+        ->whereRaw('created_at = (
+        SELECT MAX(created_at)
+        FROM notifications as n2
+        WHERE n1.requested_document_id = n2.requested_document_id
+        )');
 
-        $docTracking = Notifications::whereIn('requested_document_id', $docReqId)
-            ->where('status_id', '!=', 1)
-            ->get(['status_id', 'requested_document_id']);
+
+
+        $docTracking = collect($latestStatus->get())->keyBy('requested_document_id');
 
         $flattenDocRequest = $docRequests->map((function ($docRequest) use ($docTracking) {
-            $status = $docTracking[$docRequest->requested_document_id]->status_id;
+            $status = $docTracking[$docRequest->requested_document_id]->status_id ?? 5;
 
             return [
                 'requested_document_id' => $docRequest->requested_document_id,
@@ -42,7 +48,7 @@ class UserDocumentReqController extends Controller
             ];
         }));
 
-        // return \response()->json($flattenDocRequest);
+        // return \response()->json($latestStatus);
 
         return Inertia::render('user/settings/DocumentRequest', [
             'docprocessing' => $flattenDocRequest,

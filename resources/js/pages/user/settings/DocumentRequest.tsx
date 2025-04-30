@@ -12,7 +12,7 @@ import CustomStepper from '@/components/custom/CustomStepper';
 
 const DocumentRequest = () => {
 
-    const { docprocessing, doctracking} = usePage<SharedData>().props;
+    const { docprocessing, doctracking } = usePage<SharedData>().props;
 
     const { data, setData, post, processing, errors, reset } = useForm<Required<DocumentProcessingForm>>({
         requested_document_id: 0,
@@ -50,7 +50,7 @@ const DocumentRequest = () => {
                                 </span>
                             </div>
                             <CardContent className='flex flex-col'>
-                                <CustomStepper currentStatus={doc.status_id} className='py-10' />
+                                <CustomStepper key={doc.requested_document_id} currentStatus={doc.status_id} className='py-10' />
                                 <CustomForm className='grid grid-cols-4 gap-x-5' fields={FetchFirstHalve(doc, setData, errors)} />
                                 <CustomForm fields={FetchSecondHalve(doc, setData, errors)} />
                                 <CustomDialog
