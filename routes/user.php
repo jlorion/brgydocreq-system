@@ -70,7 +70,7 @@ Route::prefix('user')->name('user.')->group(function () {
 			Route::get('/profile', [UserProfileController::class, 'edit'])->name('profile.edit');
 			Route::patch('/profile', [UserProfileController::class, 'update'])->name('profile.update');
 			Route::delete('/profile', [UserProfileController::class, 'destroy'])->name('profile.destroy');
-			Route::get('/document-request', [UserDocumentReqController::class, 'index'])->name('document-request');
+			Route::get('/document-request', [UserDocumentReqController::class, 'fetchDocReq'])->name('document-request');
 			Route::get('/notification', [UserNotificationController::class, 'index'])->name('notification');
 
 			Route::get('/password', [UserPasswordController::class, 'edit'])->name('password.edit');

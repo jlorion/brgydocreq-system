@@ -2,125 +2,80 @@ import CustomDialog from '@/components/custom/CustomDialog';
 import { Button } from '@/components/ui/button';
 import UserSettingsLayout from '@/layouts/user/UserSettingsLayout';
 import { Check, Clock, FileCheck2, FileSearch, FileText, Info, MoveRight, ShoppingCart } from 'lucide-react';
-import barangayCertificate from '../../../../assets/barangay-clearance.png';
-
-const SampleData = {
-    name: 'Reignear Magallanes',
-    document: 'Barangay Clearance',
-    purpose: 'to serve and to protect',
-    payment: 120,
-    date: '2023-10-01',
-    status: 'processing',
-    attachment: barangayCertificate,
-};
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { FetchFirstHalve, FetchSecondHalve } from '@/data/user/DocReqFields'
+import CustomForm from '@/components/custom/CustomFormFields';
+import { useForm, usePage } from '@inertiajs/react';
+import { DocumentProcessingForm, SharedData } from '@/types';
+import CustomIcon from '@/components/custom/CustomIcon';
+import CustomStepper from '@/components/custom/CustomStepper';
 
 const DocumentRequest = () => {
+
+    const { docprocessing, doctracking} = usePage<SharedData>().props;
+
+    const { data, setData, post, processing, errors, reset } = useForm<Required<DocumentProcessingForm>>({
+        requested_document_id: 0,
+        onprocess_id: 0,
+        user_id: 0,
+        admin_id: 0,
+        status_id: 0,
+        document_id: 0,
+        amount: 0,
+        additional_message: '',
+        notification: '',
+        officer_firstname: '',
+        officer_lastname: '',
+        resident_firstname: '',
+        resident_lastname: '',
+        requested_purpose: '',
+        document_name: '',
+        status_name: '',
+        attachment_path: null,
+        created_at: new Date(),
+        updated_at: new Date(),
+    })
+
+
+
     return (
-        <UserSettingsLayout title="Document Request">
-            <div className="max-h-[530px] w-full">
-                <div className="max-h-full w-full rounded-2xl border-2">
-                    <div className="flex min-h-12 w-full items-center gap-x-5 rounded-t-2xl bg-linear-to-r from-teal-500 to-green-500 pl-5">
-                        <Info className="h-5 w-5 rounded-full bg-blue-500" fill="blue" stroke="white" />
-                        <h1>Barangay Document Tracking</h1>
-                    </div>
-                    <div className="mb-2 flex h-full w-[full] flex-col items-center justify-center gap-y-4 bg-white p-2">
-                        <div className="min-w-4/5">
-                            <div className="flex h-full w-[full] flex-col items-center justify-center rounded-b-2xl bg-white p-2">
-                                <div className="min-w-4/5">
-                                    <div className="flex w-full flex-row items-center justify-evenly p-2">
-                                        {[
-                                            { icon: <FileSearch />, label: 'Preview', status: 'Under review'.toLowerCase() },
-                                            {
-                                                icon: SampleData.status === 'rejected' ? <FileCheck2 /> : <FileCheck2 />,
-                                                label: SampleData.status === 'rejected' ? 'Rejected' : 'Approved',
-                                                status: SampleData.status === 'rejected' ? 'Rejected'.toLowerCase() : 'Approved'.toLowerCase(),
-                                            },
-                                            { icon: <Clock />, label: 'Processing', status: 'Processing'.toLowerCase() },
-                                            { icon: <ShoppingCart />, label: 'For pickup', status: 'For pickup'.toLowerCase() },
-                                            { icon: <Check />, label: 'Claimed', status: 'Claimed'.toLowerCase() },
-                                        ].map((step, index, arr) => (
-                                            <div key={step.label} className="flex flex-row items-center">
-                                                <div className="flex flex-col items-center justify-center gap-y-2">
-                                                    <div
-                                                        className={`flex h-13 w-13 items-center justify-center rounded-full border-3 ${
-                                                            SampleData.status === step.status
-                                                                ? step.status === 'rejected'
-                                                                    ? 'border-red-500 text-red-500'
-                                                                    : 'border-green-500 text-green-500'
-                                                                : arr.findIndex((s) => s.status === SampleData.status) > index
-                                                                  ? 'border-green-500 text-green-500'
-                                                                  : 'border-gray-300 text-gray-500'
-                                                        }`}
-                                                    >
-                                                        {step.icon}
-                                                    </div>
-                                                    <h1
-                                                        className={`text-sm ${
-                                                            SampleData.status === step.status
-                                                                ? step.status === 'rejected'
-                                                                    ? 'text-red-500'
-                                                                    : 'text-green-500'
-                                                                : arr.findIndex((s) => s.status === SampleData.status) > index
-                                                                  ? 'text-green-500'
-                                                                  : 'text-gray-500'
-                                                        }`}
-                                                    >
-                                                        {step.label}
-                                                    </h1>
-                                                </div>
-                                                {index < arr.length - 1 && (
-                                                    <MoveRight
-                                                        width={120}
-                                                        fontSizeAdjust={50}
-                                                        className={`mb-7 ${
-                                                            arr.findIndex((s) => s.status === SampleData.status) > index
-                                                                ? 'text-green-500'
-                                                                : 'text-gray-500'
-                                                        }`}
-                                                    />
-                                                )}
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
+        <UserSettingsLayout title="Document Request Tracking">
+            <div className="space-y-7 *:data-[slot=card]:border *:data-[slot=card]:rounded-md *:data-[slot=card]:shadow-sm *:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card">
+                {
+                    docprocessing.map((doc) => (
+                        <Card className="@container/card relative" key={doc.requested_document_id}>
+                            <div className='bg-emerald-600 rounded-t-md h-9 absolute top-0 w-full'>
+                                <span className='text-white pl-4 flex items-center h-full'>
+                                    {doc.document_name}
+                                </span>
                             </div>
-                            <div className="mt-2 w-full rounded-2xl border-2 shadow-xl shadow-gray-200">
-                                <h1 className="ml-10 p-4 text-xl font-bold">Name: {SampleData.name}</h1>
-                                <div className="ml-10 flex flex-row items-center gap-x-10 p-4">
-                                    <FileText size={120} fill="white" stroke="#18333C" />
-                                    <div className="flex flex-col items-start gap-y-1">
-                                        <h1 className="font-bold">{SampleData.document}</h1>
-                                        <p>Purpose: {SampleData.purpose}</p>
-                                        <p>Payment: {SampleData.payment}</p>
-                                    </div>
-                                </div>
-                                <div className="ml-10 flex max-w-full flex-row justify-between p-4">
-                                    <p>{SampleData.date}</p>
-                                    <CustomDialog
-                                        classname="flex flex-col items-center justify-center"
-                                        trigger={<Button variant="plain">Attachment</Button>}
-                                        children={<img src={SampleData.attachment} className="flex h-max w-max items-center justify-center" alt="" />}
-                                        title="Attachment"
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="flex flex-row gap-10">
-                            <Button variant="primary" className="w-40 disabled:opacity-50" disabled={SampleData.status !== 'rejected'}>
-                                Resubmit
-                            </Button>
-                            <Button
-                                variant="destructive"
-                                className="w-40 disabled:opacity-50"
-                                disabled={['processing', 'for pickup', 'claimed'].includes(SampleData.status)}
-                            >
-                                Cancel
-                            </Button>
-                        </div>
-                    </div>
-                </div>
+                            <CardContent className='flex flex-col'>
+                                <CustomStepper currentStatus={doc.status_id} className='py-10' />
+                                <CustomForm className='grid grid-cols-4 gap-x-5' fields={FetchFirstHalve(doc, setData, errors)} />
+                                <CustomForm fields={FetchSecondHalve(doc, setData, errors)} />
+                                <CustomDialog
+                                    width="w-150"
+                                    trigger={
+                                        <Button variant="link" className="text-sm -mx-4">
+                                            View Attachment
+                                        </Button>
+                                    }
+                                    title="Attachment"
+                                    children={
+                                        <div className="flex justify-center items-center object-cover mt-2">
+                                            <CustomIcon imgSrc={`/storage/${doc.attachment_path}`} />
+                                        </div>
+                                    }
+                                />
+                                <CardFooter className="flex justify-end">
+                                    <Button variant='destructive'>Cancel</Button>
+                                </CardFooter>
+                            </CardContent>
+                        </Card>
+                    ))
+                }
             </div>
-        </UserSettingsLayout>
+        </UserSettingsLayout >
     );
 };
 

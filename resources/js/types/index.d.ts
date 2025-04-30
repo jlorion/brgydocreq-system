@@ -28,7 +28,6 @@ export interface SharedData {
     auth: Auth;
     admins: AdminForm[];
     residents: ResidentFetch[];
-    docrequests: SubmittedDocumentForm[];
     roles: Role[];
     documents: DocumentForm[];
     docprocessing: DocumentProcessingForm[];
