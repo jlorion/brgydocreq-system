@@ -9,14 +9,12 @@ import {
     SidebarRail,
 } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
-import CustomIcon from './CustomIcon';
 import { Link, usePage } from '@inertiajs/react';
 
 interface CustomSidebarProps extends React.ComponentProps<typeof Sidebar> {
     navItems: NavItem[];
     navTitle?: React.ReactNode;
 }
-
 
 
 export function CustomSidebar({ navItems, navTitle, ...props }: CustomSidebarProps) {

@@ -5,6 +5,8 @@ import { LoaderIcon, LayoutDashboard, FileUser, Archive, FileText, Users, Shield
 import { CustomSidebar } from '@/components/custom/CustomSidebar';
 import WebLogo from '../../../assets/web-logo.svg';
 import CustomIcon from '@/components/custom/CustomIcon';
+import { usePage } from '@inertiajs/react';
+import { SharedData } from '@/types';
 
 
 interface AdminLayoutProps {
@@ -14,19 +16,23 @@ interface AdminLayoutProps {
 }
 
 
-
-const navItems = [
-	{ icon: LayoutDashboard, title: 'Dashboard', href: route('admin.dashboard') },
-	{ icon: FileUser, title: 'Document Request', href: route('admin.document-request') },
-	{ icon: LoaderIcon, title: 'On Process', href: route('admin.on-process') },
-	{ icon: Archive, title: 'Archives', href: route('admin.archives') },
-	{ icon: FileText, title: 'Documents', href: route('admin.documents') },
-	{ icon: Users, title: 'Residents', href: route('admin.residents') },
-	{ icon: Shield, title: 'Admins', href: route('admin.admins') },
-];
-
-
 const AdminLayout = ({ children, className, title }: AdminLayoutProps) => {
+	const { auth } = usePage<SharedData>().props;
+
+
+	const navItems = [
+		{ icon: LayoutDashboard, title: 'Dashboard', href: route('admin.dashboard') },
+		{ icon: FileUser, title: 'Document Request', href: route('admin.document-request') },
+		{ icon: LoaderIcon, title: 'On Process', href: route('admin.on-process') },
+		{ icon: Archive, title: 'Archives', href: route('admin.archives') },
+		{ icon: FileText, title: 'Documents', href: route('admin.documents') },
+		{ icon: Users, title: 'Residents', href: route('admin.residents') },
+		...(auth.admin.admin_roleid === 1 ? [
+			{ icon: Shield, title: 'Admins', href: route('admin.admins') }] : []),
+
+	];
+
+
 	return (
 		<div className='box-border h-full w-full'>
 			<SidebarProvider>

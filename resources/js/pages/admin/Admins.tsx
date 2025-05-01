@@ -9,7 +9,7 @@ import InputError from '@/components/custom/InputError';
 import { AdminForm, InviteForm, SharedData } from '@/types';
 import { AdminCustomCard } from '@/components/custom/CustomCard';
 import CustomSelect from '@/components/custom/CustomSelect';
-import { AccountInfo, BarangayOfficerInfo } from '@/data/admin/FetchUpdateAdminsFields';
+import { AccountInfo, BarangayOfficerInfo } from '@/data/admin/AdminsFields';
 import CustomForm from '@/components/custom/CustomFormFields';
 import DefaultProfilePic from '../../../assets/default_profilepic.svg'
 import { toast } from 'sonner';
@@ -121,7 +121,7 @@ const Admins = () => {
                                     onChange={(value) => { inviteSetData('role_id', value), console.log(value) }}
                                     items={roles.map((role) => (
                                         { value: role.role_id, label: role.role_name }
-                                    ))}
+                                    )   )}
                                 />
                                 <InputError message={inviteErrors.role_id} />
                             </div>

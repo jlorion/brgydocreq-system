@@ -14,16 +14,10 @@ class AdminAdminsController extends Controller
 
     public function fetchAdminInfo()
     {
-        $admins = Admin::with(['barangayOfficer.address:address_id,purok', 'role'])
-            ->whereHas('role', function ($query) {
-                $query->where('role_name', '!=', 'super_admin');
-            })
-            ->get();
-
-        // $roles = Role::select('role_id', 'role_name')->where('role_name', '!=', 'super admin')->get();
-
-        $roles = Role::get(['role_id', 'role_name']);
+        $admins = Admin::with(['barangayOfficer.address:address_id,purok', 'role:role_id,role_name'])->get();
+        $roles = Role::select('role_id', 'role_name')->get();
         $puroks = Address::get(['address_id', 'purok']);
+
         $flattenAdmins = $admins->map(function ($admin) {
             return [
                 'admin_id' => $admin->admin_id,
