@@ -1,10 +1,7 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminInvitationController;
-use App\Http\Controllers\User\UserDocumentController;
+use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
-
 use Illuminate\Support\Facades\Mail;
 
 // Route::get('/test-mail', function () {
@@ -21,7 +18,7 @@ use Illuminate\Support\Facades\Mail;
 // });
 
 
-Route::get('/', [UserDocumentController::class, 'showDocument'])->name('landing.home');
+Route::get('/', [UserController::class, 'show'])->name('landing.home');
 Route::inertia('/about-us', 'landing/AboutUs')->name('landing.about-us');
 Route::inertia('/contact-us', 'landing/ContactUs')->name('landing.contact-us');
 

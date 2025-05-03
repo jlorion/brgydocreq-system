@@ -219,6 +219,7 @@ const DocumentRequeset = () => {
                   children={
                     <>
                       <input type="hidden" defaultValue={data.admin_id} />
+                      <input type="hidden" defaultValue={data.user_id} />
                       <input type="hidden" defaultValue={data.requested_document_id} />
                       <input type="hidden" defaultValue={data.status_id} />
                       <CustomForm fields={ApproveFields(data, setData, errors)} />
@@ -258,6 +259,7 @@ const DocumentRequeset = () => {
                   children={
                     <>
                       <input type="hidden" defaultValue={data.admin_id} />
+                      <input type="hidden" defaultValue={data.user_id} />
                       <input type="hidden" defaultValue={data.requested_document_id} />
                       <input type="hidden" defaultValue={data.status_id} />
                       <CustomForm fields={RejectFields(data, setData, errors)} />

@@ -26,6 +26,6 @@ class UserDocumentRequestController extends Controller
 
         $documentRequest = RequestedDocument::create($validate);
 
-        \event(new DocRequestSubmitted($documentRequest));
+        // (new DocRequestSubmitted($documentRequest, ));
     }
 }

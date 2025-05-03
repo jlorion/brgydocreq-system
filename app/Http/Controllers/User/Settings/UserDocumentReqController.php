@@ -19,13 +19,12 @@ class UserDocumentReqController extends Controller
 
 
         $latestStatus = DB::table('notifications as n1')
-        ->select('status_id', 'requested_document_id')
-        ->whereRaw('created_at = (
+            ->select('status_id', 'requested_document_id')
+            ->whereRaw('created_at = (
         SELECT MAX(created_at)
         FROM notifications as n2
         WHERE n1.requested_document_id = n2.requested_document_id
         )');
-
 
 
         $docTracking = collect($latestStatus->get())->keyBy('requested_document_id');

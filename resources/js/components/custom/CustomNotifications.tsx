@@ -1,3 +1,4 @@
+import { formatDistanceToNow, formatDistanceToNowStrict } from 'date-fns';
 import { Check, FileCheck, SmileIcon, X } from 'lucide-react';
 import React from 'react';
 import { FaWalking } from 'react-icons/fa';
@@ -83,7 +84,7 @@ const CustomNotifications = ({ Icon, status = '', notification, updated_at, }: C
                 <div className="flex flex-col pr-3">
                     <h3 className={`text-sm font-medium ${textColor}`}>{status}</h3>
                     <p className="text-sm text-gray-700">{notification || 'No notification provided.'}</p>
-                    <p className="mt-1 text-xs text-gray-500">{updated_at || 'timeless'}</p>
+                    <p className="mt-1 text-xs text-gray-500">{updated_at ? formatDistanceToNowStrict(new Date(updated_at), { addSuffix: true }) : 'timeless'}</p>
                 </div>
             </div>
         </div>

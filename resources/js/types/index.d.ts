@@ -30,6 +30,7 @@ export interface SharedData {
     residents: ResidentFetch[];
     roles: Role[];
     documents: DocumentForm[];
+    notifications: NotificationItem[];
     docprocessing: DocumentProcessingForm[];
     puroks: Purok[];
     status: Status[];
@@ -37,6 +38,11 @@ export interface SharedData {
     [key: string]: unknown;
 }
 
+export interface NotificationItem {
+    notification: string;
+    updated_at: string;
+    status_name: string;
+}
 export interface UserForm {
     user_id: number;
     username: string;

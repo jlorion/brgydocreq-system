@@ -18,7 +18,7 @@ import { toast } from 'sonner'
 const OnProcess = () => {
   const { docprocessing, auth } = usePage<SharedData>().props;
 
-  const { data, setData, post, processing, errors, reset } = useForm<Required<DocumentProcessingForm>>({
+  const { data, setData, post, processing, errors } = useForm<Required<DocumentProcessingForm>>({
     requested_document_id: 0,
     onprocess_id: 0,
     user_id: 0,
@@ -42,6 +42,7 @@ const OnProcess = () => {
 
   const onProcessSubmit: FormEventHandler = (e) => {
     e.preventDefault();
+    console.log("Form data before submission:", data);
     post(route('admin.processing'), {
       onSuccess: () => {
         toast.success('Succesfully updated and send notification');
@@ -270,6 +271,7 @@ const OnProcess = () => {
                   children={
                     <>
                       <input type="hidden" defaultValue={data.admin_id} />
+                      <input type="hidden" defaultValue={data.user_id} />
                       <input type="hidden" defaultValue={data.requested_document_id} />
                       <input type="hidden" defaultValue={data.status_id} />
                       <CustomForm fields={dialogProps.fields(data, setData, errors)} />

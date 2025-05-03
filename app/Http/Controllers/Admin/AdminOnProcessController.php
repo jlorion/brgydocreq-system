@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\DocRequestSubmitted;
 use App\Http\Controllers\Controller;
 use App\Models\DocumentArchive;
 use App\Models\Notifications;
 use App\Models\Processing;
 use App\Models\Status;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class AdminOnProcessController extends Controller
@@ -31,6 +34,7 @@ class AdminOnProcessController extends Controller
             return [
                 'onprocess_id' => $onProcess->onprocess_id,
                 'admin_id' => $onProcess->admin_id,
+                'user_id' => $onProcess->requestedDocument->user->user_id,
                 'status_id' => $onProcess->status_id,
                 'created_at' => $onProcess->created_at,
                 'updated_at' => $onProcess->updated_at,
@@ -44,7 +48,7 @@ class AdminOnProcessController extends Controller
             ];
         });
 
-        // return \response()->json($status);
+        // return \response()->json($flattenOnProcess);
 
         return Inertia::render('admin/OnProcess', [
             'docprocessing' => $flattenOnProcess,
@@ -59,17 +63,21 @@ class AdminOnProcessController extends Controller
             'onprocess_id' => 'required|exists:processings,onprocess_id',
             'requested_document_id' => 'required|exists:requested_documents,requested_document_id',
             'admin_id' => 'required|exists:admins,admin_id',
+            'user_id' => 'required|exists:users,user_id',
             'status_id' => 'required|exists:statuses,status_id',
             'additional_message' => 'nullable|string|max:200',
             'notification' => 'required|string|max:100'
         ]);
 
+
         $processing = collect($validate)->except(['additional_message', 'notification'])->toArray();
 
         DB::transaction(function () use ($validate, $processing) {
-
             $notification = Notifications::create($validate);
-            Processing::findOrFail($validate['onprocess_id'])->update($processing);
+            // $status = $notification->status->status_name;
+
+
+            Log::info('Broadcasting to user', ['user_id' => $validate['user_id']]);
 
             if ($validate['status_id'] === 2) {
                 DocumentArchive::create([

@@ -14,5 +14,12 @@ class Notifications extends Model
         'status_id',
         'additional_message',
         'notification',
+        'updated_at',
+        'created_at'
     ];
+
+    public function status()
+    {
+        return $this->belongsTo(Status::class, 'status_id', 'status_id');
+    }
 }

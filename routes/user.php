@@ -10,10 +10,9 @@ use App\Http\Controllers\User\Auth\UserRegistrationController;
 use App\Http\Controllers\User\Auth\UserResidentReferenceController;
 use App\Http\Controllers\User\Auth\UserVerifyEmailController;
 use App\Http\Controllers\User\Settings\UserDocumentReqController;
-use App\Http\Controllers\User\Settings\UserNotificationController;
 use App\Http\Controllers\User\Settings\UserPasswordController;
 use App\Http\Controllers\User\Settings\UserProfileController;
-use App\Http\Controllers\User\UserDocumentController;
+use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\UserDocumentRequestController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -40,7 +39,7 @@ Route::prefix('user')->name('user.')->group(function () {
 
 	Route::middleware('auth:web')->group(function () {
 
-		Route::get('/', [UserDocumentController::class, 'showDocument'])->name('landing.home');
+		Route::get('/', [UserController::class, 'show'])->name('landing.home');
 		Route::inertia('/contact-us', 'landing/ContactUs')->name('landing.contact-us');
 		Route::inertia('/about-us', 'landing/AboutUs')->name('landing.about-us');
 
@@ -71,7 +70,6 @@ Route::prefix('user')->name('user.')->group(function () {
 			Route::patch('/profile', [UserProfileController::class, 'update'])->name('profile.update');
 			Route::delete('/profile', [UserProfileController::class, 'destroy'])->name('profile.destroy');
 			Route::get('/document-request', [UserDocumentReqController::class, 'fetchDocReq'])->name('document-request');
-			Route::get('/notification', [UserNotificationController::class, 'index'])->name('notification');
 
 			Route::get('/password', [UserPasswordController::class, 'edit'])->name('password.edit');
 			Route::put('/password', [UserPasswordController::class, 'update'])->name('password.update');

@@ -42,14 +42,20 @@ export default function Stepper({ currentStatus, className }: StepperProps) {
 								{step.label}
 							</span>
 						</div>
-						<div className="w-full h-0.5 mb-5 -mx-4">
-							<div
-								className={cn(
-									"h-full w-full bg-gray-300",
-									index <= currentIndex && "bg-green-500"
-								)}
-							></div>
-						</div>
+
+						{index < steps.length - 1 && (
+
+
+							<div className="w-full h-0.5 mb-5 -mx-4">
+								<div
+									className={cn(
+										"h-full w-full bg-gray-300",
+										index <= currentIndex && "bg-green-500"
+									)}
+								></div>
+							</div>
+						)
+						}
 
 					</>
 				);

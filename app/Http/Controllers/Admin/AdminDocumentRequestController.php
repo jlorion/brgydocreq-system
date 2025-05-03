@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\DocRequestSubmitted;
 use App\Http\Controllers\Controller;
 use App\Models\DocumentArchive;
 use App\Models\Notifications;
@@ -12,7 +13,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
-use function PHPSTORM_META\map;
 
 class AdminDocumentRequestController extends Controller
 {
@@ -53,6 +53,7 @@ class AdminDocumentRequestController extends Controller
         $validate = $request->validate([
             'requested_document_id' => 'required|exists:requested_documents,requested_document_id',
             'admin_id' => 'required|exists:admins,admin_id',
+            'user_id' => 'required|exists:users,user_id',
             'status_id' => 'required|exists:statuses,status_id',
             'additional_message' => 'required|string|max:200',
             'notification' => 'required|string|max:100'
@@ -62,6 +63,8 @@ class AdminDocumentRequestController extends Controller
         DB::transaction(function () use ($validate) {
 
             $notification = Notifications::create($validate);
+            $status = $notification->status->status_name;
+
             RequestedDocument::findOrFail($validate['requested_document_id'])
                 ->update([
                     'status_id' => $validate['status_id']
@@ -82,19 +85,23 @@ class AdminDocumentRequestController extends Controller
     {
         $validate = $request->validate([
             'requested_document_id' => 'required|exists:requested_documents,requested_document_id',
+            'user_id' => 'required|exists:users,user_id',
             'admin_id' => 'required|exists:admins,admin_id',
             'status_id' => 'required|exists:statuses,status_id',
             'additional_message' => 'nullable|string|max:200',
             'notification' => 'required|string|max:100'
         ]);
 
+        // return \response()->json($validate);
 
         $processing = collect($validate)->except(['additional_message', 'notification'])->toArray();
 
         $validate['admin_id'] = \auth('admin')->id();
 
         DB::transaction(function () use ($validate, $processing) {
-            Notifications::create($validate);
+            $notification =  Notifications::create($validate);
+            $status = $notification->status->status_name;
+
             Processing::create($processing);
             RequestedDocument::findOrFail($validate['requested_document_id'])
                 ->update([
