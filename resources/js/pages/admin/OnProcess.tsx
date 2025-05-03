@@ -42,10 +42,10 @@ const OnProcess = () => {
 
   const onProcessSubmit: FormEventHandler = (e) => {
     e.preventDefault();
-    console.log("Form data before submission:", data);
     post(route('admin.processing'), {
       onSuccess: () => {
         toast.success('Succesfully updated and send notification');
+        setData('status_name', data.status_name);
       },
       onError: (errors) => {
         console.error("Form Validation error");
@@ -190,21 +190,23 @@ const OnProcess = () => {
   ]
 
   const statusDialogMap = {
-    2: {
-      title: 'Claimed',
-      fields: ClaimedFields,
-      notification: 'You claimed your document at Barangay Office.'
+    6: {
+      title: 'Processing',
+      fields: ProcessingFields,
+      notification: `Your ${data.document_name} is for processing.`
     },
     7: {
       title: 'For Pick-up',
       fields: ForPickUpFields,
-      notification: 'Your request is ready for pick-up.'
+      notification: `Your ${data.document_name} is ready for pick-up.`
     },
-    6: {
-      title: 'Processing',
-      fields: ProcessingFields,
-      notification: 'Your request is for processing.'
+    2: {
+      title: 'Claimed',
+      fields: ClaimedFields,
+      notification: `You claimed your ${data.document_name}`
     },
+
+
   } as const;
 
   return (
@@ -240,6 +242,7 @@ const OnProcess = () => {
               trigger={trigger}
               firstButton={
                 <CustomDialog
+                  autoCloseOnSubmit={true}
                   title={dialogProps.title}
                   onSubmit={onProcessSubmit}
                   width="w-150"
@@ -271,7 +274,6 @@ const OnProcess = () => {
                   children={
                     <>
                       <input type="hidden" defaultValue={data.admin_id} />
-                      <input type="hidden" defaultValue={data.user_id} />
                       <input type="hidden" defaultValue={data.requested_document_id} />
                       <input type="hidden" defaultValue={data.status_id} />
                       <CustomForm fields={dialogProps.fields(data, setData, errors)} />

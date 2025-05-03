@@ -5,14 +5,24 @@ import { Check, Clock, FileCheck2, FileSearch, FileText, Info, MoveRight, Shoppi
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { FetchFirstHalve, FetchSecondHalve } from '@/data/user/DocReqFields'
 import CustomForm from '@/components/custom/CustomFormFields';
-import { useForm, usePage } from '@inertiajs/react';
+import { router, useForm, usePage } from '@inertiajs/react';
 import { DocumentProcessingForm, SharedData } from '@/types';
 import CustomIcon from '@/components/custom/CustomIcon';
 import CustomStepper from '@/components/custom/CustomStepper';
+import { useEffect } from 'react';
+import { only } from 'node:test';
 
 const DocumentRequest = () => {
 
-    const { docprocessing, doctracking } = usePage<SharedData>().props;
+    const { docprocessing } = usePage<SharedData>().props;
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            router.reload({ only: ['docprocessing'] });
+        }, 1000);
+
+        return () => clearInterval(interval);
+    })
 
     const { data, setData, post, processing, errors, reset } = useForm<Required<DocumentProcessingForm>>({
         requested_document_id: 0,
@@ -35,7 +45,6 @@ const DocumentRequest = () => {
         created_at: new Date(),
         updated_at: new Date(),
     })
-
 
 
     return (

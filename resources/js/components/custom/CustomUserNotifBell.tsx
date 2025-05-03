@@ -1,29 +1,71 @@
-import { Bell } from 'lucide-react';
-import React from 'react'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
+import { FaBell } from "react-icons/fa";
+import { GoBellFill } from "react-icons/go";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuGroup,
+	DropdownMenuItem,
+	DropdownMenuTrigger
+} from '../ui/dropdown-menu';
 import { Separator } from '../ui/separator';
 import CustomNotifications from './CustomNotifications';
-import { Link, usePage } from '@inertiajs/react';
-import { NotificationItem, SharedData } from '@/types';
-
+import { Link, router, usePage } from '@inertiajs/react';
+import { SharedData } from '@/types';
+import { useEffect, useRef, useState } from 'react';
 
 const CustomUserNotifBell = () => {
-	const { auth } = usePage<SharedData>().props;
-	
+	const { notifications } = usePage<SharedData>().props;
+	const prevNotificationIdsRef = useRef<number[]>([]);
+	const [newCount, setNewCount] = useState(0);
+	const [menuOpen, setMenuOpen] = useState(false);
+
+	useEffect(() => {
+		const currentIds = notifications.map(n => n.notification_id);
+
+		if (prevNotificationIdsRef.current.length > 0) {
+			const newNotifications = currentIds.filter(
+				id => !prevNotificationIdsRef.current.includes(id)
+			);
+
+			if (newNotifications.length > 0) {
+				setNewCount(prev => prev + newNotifications.length);
+			}
+		}
+
+		prevNotificationIdsRef.current = currentIds;
+	}, [notifications]);
+
+	useEffect(() => {
+		const interval = setInterval(() => {
+			router.reload({ only: ['notifications'] });
+		}, 1000);
+
+		return () => clearInterval(interval);
+	}, []);
+
+	// Reset count when dropdown opens
+	useEffect(() => {
+		if (menuOpen) setNewCount(0);
+	}, [menuOpen]);
+
 	return (
 		<>
-			<DropdownMenu>
-				<DropdownMenuTrigger >
-					<Bell className="h-8 cursor-pointer hover:text-s3" />
+			<DropdownMenu onOpenChange={setMenuOpen}>
+				<DropdownMenuTrigger className="relative focus:outline-none focus:ring-0">
+					<FaBell className="text-green-700 h-8 w-5 cursor-pointer hover:text-green-600" />
+					{newCount > 0 && (
+						<span className='bg-red-600 text-white rounded-full px-[7px] py-[2px] text-[10px] font-semibold absolute bottom-4 cursor-pointer'>
+							{newCount}
+						</span>
+					)}
 				</DropdownMenuTrigger>
-				<DropdownMenuContent className='"w-full max-h-[650px] overflow-y-auto scroll-invisible' align="center" sideOffset={6}>
+				<DropdownMenuContent className="w-full max-h-[650px] overflow-y-auto scroll-invisible" align="center" sideOffset={6}>
 					<DropdownMenuGroup>
-						{/* {newNotification.map((notification, index) => (
-							<>
-								<Link href={route('user.settings.document-request')} key={index}>
-									<DropdownMenuItem >
+						{notifications.map((notification, index) => (
+							<div key={index}>
+								<Link href={route('user.settings.document-request')}>
+									<DropdownMenuItem>
 										<CustomNotifications
-											key={index}
 											status={notification.status_name}
 											notification={notification.notification}
 											updated_at={notification.updated_at}
@@ -31,18 +73,14 @@ const CustomUserNotifBell = () => {
 									</DropdownMenuItem>
 								</Link>
 								<Separator />
-							</>
-						))} */}
+							</div>
+						))}
 					</DropdownMenuGroup>
 				</DropdownMenuContent>
 			</DropdownMenu>
-			{/* {newCount > 0 &&
-				<span className='bg-red-600 text-white rounded-2xl px-[7px] py-[2px] text-xs absolute mb-6 ml-3 cursor-pointer'>
-					{newCount}
-				</span>
-			} */}
+
 		</>
 	);
-}
+};
 
-export default CustomUserNotifBell
+export default CustomUserNotifBell;

@@ -24,7 +24,7 @@ class AdminOnProcessController extends Controller
             'requestedDocument.user.resident:resident_id,resident_firstname,resident_middlename,resident_lastname,resident_suffix',
             'requestedDocument.document:document_id,document_name',
             'status:status_id,status_name'
-        ])->get();
+        ])->latest()->get();
 
         $status = Status::select('status_id', 'status_name')
             ->whereIn('status_name', ['Processing', 'Claimed', 'For Pickup', 'Approved'])
@@ -74,8 +74,9 @@ class AdminOnProcessController extends Controller
 
         DB::transaction(function () use ($validate, $processing) {
             $notification = Notifications::create($validate);
-            // $status = $notification->status->status_name;
 
+            Processing::findOrFail($validate['onprocess_id'])
+                ->update($processing);
 
             Log::info('Broadcasting to user', ['user_id' => $validate['user_id']]);
 

@@ -18,7 +18,7 @@ class AdminArchivesController extends Controller
             'requestedDocument.document:document_id,document_name,price',
             'notification:notification_id,additional_message,notification',
             'status:status_id,status_name'
-        ])->get();
+        ])->latest()->get();
 
 
         $flattenArchives = $archives->map((function ($archives) {

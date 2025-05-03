@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { CustomFormField } from '@/types';
-import React from 'react';
+import React, { useState } from 'react';
 import { Toaster } from 'sonner';
 
 interface CustomDialogProps {
@@ -15,6 +15,9 @@ interface CustomDialogProps {
     onSubmit?: React.FormEventHandler<HTMLFormElement>;
     fields?: CustomFormField
     classname?: string
+    toaster?: boolean;
+    autoCloseOnSubmit?: boolean;
+
 }
 
 const CustomDialog = ({
@@ -28,15 +31,29 @@ const CustomDialog = ({
     height = 'max-h-130',
     onSubmit,
     classname,
+    toaster = false,
+    autoCloseOnSubmit = false
 }: CustomDialogProps) => {
+
+    const [open, setOpen] = useState(false);
+
+    const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+        if (onSubmit) {
+            onSubmit(e); // Call the provided onSubmit handler
+        }
+        if (autoCloseOnSubmit) {
+            setOpen(false); // Close the dialog if autoCloseOnSubmit is true
+        }
+    };
+
     return (
-        <Dialog>
+        <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>{trigger}</DialogTrigger>
             <DialogContent className={`${width}`}>
                 <DialogHeader className="bg-s3 -m-6.5 flex-row items-center justify-start rounded-t-md p-2">
                     <DialogTitle className="pl-4 text-white">{title}</DialogTitle>
                 </DialogHeader>
-                <form onSubmit={onSubmit} className="flex flex-col gap-y-7">
+                <form onSubmit={handleSubmit} className="flex flex-col gap-y-7">
                     <div className={`scroll-invisible mt-4 flex flex-col gap-3 overflow-y-auto ${height} ${classname}`}>
                         <h1 className={subTitleClassName}>{subtitle}</h1>
                         {children}
@@ -45,7 +62,9 @@ const CustomDialog = ({
                         <DialogFooter>{button}</DialogFooter>
                     ) : null}
                 </form>
-                <Toaster richColors position="bottom-left" />
+                {toaster ? (
+                    <Toaster richColors position='bottom-left' />
+                ) : null}
             </DialogContent>
         </Dialog>
     );

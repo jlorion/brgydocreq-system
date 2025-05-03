@@ -1,5 +1,6 @@
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { getStatusColors } from '@/lib/utils';
+import { Toaster } from 'sonner';
 
 interface CustomSheetProps {
     image?: string;
@@ -26,6 +27,7 @@ const CustomSheet = ({
         <Sheet>
             <SheetTrigger asChild>{trigger}</SheetTrigger>
             <SheetContent side="right" className="flex w-120 flex-col p-4">
+                <Toaster richColors position='top-left' />
                 <form onSubmit={onSubmit} className='flex flex-col h-full'>
                     <SheetHeader className="flex items-center justify-center">
                         {statusTitle ? (

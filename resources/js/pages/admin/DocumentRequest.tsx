@@ -7,12 +7,12 @@ import { ColumnDef } from '@tanstack/react-table'
 import { ArrowUpDown } from 'lucide-react'
 import CustomForm from '@/components/custom/CustomFormFields'
 import { SharedData, DocumentProcessingForm } from '@/types'
-import { useForm, usePage } from '@inertiajs/react'
+import { router, useForm, usePage } from '@inertiajs/react'
 import { format } from 'date-fns'
 import CustomDialog from '@/components/custom/CustomDialog'
 import CustomIcon from '@/components/custom/CustomIcon'
 import { RejectFields, ApproveFields, FetchFirstHalve, FetchSecondHalve } from '@/data/admin/DocReqFields'
-import { FormEventHandler } from 'react'
+import { FormEventHandler, useEffect } from 'react'
 import { toast } from 'sonner'
 
 
@@ -20,8 +20,9 @@ const DocumentRequeset = () => {
 
   const { docprocessing, auth } = usePage<SharedData>().props;
 
+
   //update status if rejected and store notifications and if approved update the status to approve
-  const { data, setData, post, processing, errors, reset } = useForm<Required<DocumentProcessingForm>>({
+  const { data, setData, post, processing, errors } = useForm<Required<DocumentProcessingForm>>({
     requested_document_id: 0,
     onprocess_id: 0,
     user_id: 0,
@@ -43,13 +44,21 @@ const DocumentRequeset = () => {
     updated_at: new Date(),
   })
 
-  console.log(auth)
+  // to reload the page every second
+  useEffect(() => {
+    const interval = setInterval(() => {
+      router.reload({ only: ['docprocessing'] });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const rejectSubmit: FormEventHandler = (e) => {
     e.preventDefault()
     post(route('admin.documentreq.reject'), {
       onSuccess: () => {
         toast.success('Updated to rejected')
+        setData('status_name', data.status_name);
       },
       onError: (errors) => {
         console.error('Form submission failed. Validation errors:');
@@ -65,6 +74,7 @@ const DocumentRequeset = () => {
     e.preventDefault();
     post(route('admin.documentreq.approve'), {
       onSuccess: () => {
+        setData('status_name', 'Approved');
         toast.success('Updated to approved')
       },
       onError: (errors) => {
@@ -196,6 +206,7 @@ const DocumentRequeset = () => {
         renderSheet={(trigger, row) => (
           <CustomSheet
             key={row}
+            statusTitle={data.status_name}
             trigger={trigger}
             firstButton={
               data.status_name === 'Under Review' ? (
@@ -209,7 +220,7 @@ const DocumentRequeset = () => {
                       onClick={() => {
                         setData('status_id', 11);
                         setData('admin_id', auth.admin.admin_id);
-                        setData('notification', 'Your request has been successfully approved.');
+                        setData('notification', `Your ${data.document_name} has been successfully approved.`);
                       }}
                       className="w-full"
                       variant="approve">
@@ -219,7 +230,6 @@ const DocumentRequeset = () => {
                   children={
                     <>
                       <input type="hidden" defaultValue={data.admin_id} />
-                      <input type="hidden" defaultValue={data.user_id} />
                       <input type="hidden" defaultValue={data.requested_document_id} />
                       <input type="hidden" defaultValue={data.status_id} />
                       <CustomForm fields={ApproveFields(data, setData, errors)} />
@@ -248,7 +258,7 @@ const DocumentRequeset = () => {
                       onClick={() => {
                         setData('status_id', 1);
                         setData('admin_id', auth.admin.admin_id);
-                        setData('notification', 'Your request has been rejected.');
+                        setData('notification', `Your ${data.document_name} has been rejected.`);
                       }}
                       variant="reject"
                     >
@@ -259,7 +269,6 @@ const DocumentRequeset = () => {
                   children={
                     <>
                       <input type="hidden" defaultValue={data.admin_id} />
-                      <input type="hidden" defaultValue={data.user_id} />
                       <input type="hidden" defaultValue={data.requested_document_id} />
                       <input type="hidden" defaultValue={data.status_id} />
                       <CustomForm fields={RejectFields(data, setData, errors)} />
@@ -268,7 +277,6 @@ const DocumentRequeset = () => {
                 />
               ) : null
             }
-            statusTitle={data.status_name}
             form={
               <>
                 <CustomForm fields={FetchFirstHalve(data, setData, errors)} className="grid grid-cols-2 gap-2" />

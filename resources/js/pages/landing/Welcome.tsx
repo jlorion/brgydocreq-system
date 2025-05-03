@@ -92,6 +92,7 @@ const Welcome = () => {
 
                         {auth.user ? (documents.map((document) => (
                             <CustomDialog
+
                                 key={document.document_id}
                                 title={document.document_name}
                                 onSubmit={submitDocument}

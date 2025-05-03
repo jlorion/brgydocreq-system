@@ -23,7 +23,7 @@ class AdminDocumentRequestController extends Controller
             'user.resident:resident_id,resident_firstname,resident_middlename,resident_lastname,resident_suffix',
             'document:document_id,document_name,price',
             'status:status_id,status_name'
-        ])->get();
+        ])->latest()->get();
 
         $flatterDocRequest = $docRequests->map((function ($docRequest) {
             return [

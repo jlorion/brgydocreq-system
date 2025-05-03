@@ -13,7 +13,7 @@ class AdminResidentsController extends Controller
 {
     public function fetchResidentInfo()
     {
-        $residents = Resident::with(['address:address_id,purok', 'status:status_id,status_name'])->get();
+        $residents = Resident::with(['address:address_id,purok', 'status:status_id,status_name'])->latest()->get();
 
         $flattenResidents = $residents->map(function ($resident) {
             return [

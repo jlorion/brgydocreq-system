@@ -15,7 +15,7 @@ class UserDocumentReqController extends Controller
         $docRequests = RequestedDocument::with([
             'user.resident:resident_id,resident_firstname,resident_middlename,resident_lastname,resident_suffix',
             'document:document_id,document_name,price',
-        ])->get();
+        ])->latest()->get();
 
 
         $latestStatus = DB::table('notifications as n1')

@@ -39,6 +39,7 @@ export interface SharedData {
 }
 
 export interface NotificationItem {
+    notification_id: number;
     notification: string;
     updated_at: string;
     status_name: string;
