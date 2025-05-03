@@ -1,9 +1,7 @@
 import { CustomFormField, DocumentProcessingForm, SharedData } from "@/types";
-import { usePage } from "@inertiajs/react";
 import { format } from "date-fns";
 
 export const FetchFirstHalve = (data: DocumentProcessingForm, setData: (key: keyof DocumentProcessingForm, value: string | Date | null) => void, errors: Partial<Record<keyof DocumentProcessingForm, string>>): CustomFormField[] => {
-	const { docprocessing } = usePage<SharedData>().props;
 
 	return [
 		{

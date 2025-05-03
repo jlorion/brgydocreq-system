@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Address;
 use App\Models\Admin;
 use App\Models\Role;
+use App\Models\Status;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -17,6 +18,9 @@ class AdminAdminsController extends Controller
         $admins = Admin::with(['barangayOfficer.address:address_id,purok', 'role:role_id,role_name'])->get();
         $roles = Role::select('role_id', 'role_name')->get();
         $puroks = Address::get(['address_id', 'purok']);
+        $status = Status::select('status_id', 'status_name')
+            ->whereIn('status_name', ['Active', 'Inactive', 'Revoke', 'Suspend'])
+            ->get();
 
         $flattenAdmins = $admins->map(function ($admin) {
             return [
@@ -24,6 +28,7 @@ class AdminAdminsController extends Controller
                 'admin_username' => $admin->admin_username,
                 'admin_email' => $admin->admin_email,
                 'admin_photopath' => $admin->admin_photopath,
+                'admin_status' => $admin->status_id,
                 'admin_phonenum' => $admin->admin_phonenum,
                 'admin_roleid' => $admin->role->role_id,
                 'admin_role' => $admin->role->role_name,
@@ -48,7 +53,8 @@ class AdminAdminsController extends Controller
         return Inertia::render('admin/Admins', [
             'admins' => $flattenAdmins,
             'roles' => $roles,
-            'puroks' => $puroks
+            'puroks' => $puroks,
+            'status' => $status
         ]);
     }
 

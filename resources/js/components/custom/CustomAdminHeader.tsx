@@ -25,13 +25,12 @@ interface CustomAdminHeaderProps {
 
 export function CustomAdminHeader({ breadcrumbs = [], mainNavItems = [], rightNavItems = [], leftNavItems, className }: CustomAdminHeaderProps) {
 	const { auth } = usePage<SharedData>().props;
-	const { headerProps } = UseHeaderScroll();
 
 	// console.log(auth)
 
 	return (
 		<>
-			<div {...headerProps} className={`${className} ${headerProps.className} bg-white border`}>
+			<div className={`${className} mx-full sticky top-0 z-50 flex h-16 items-center transition-all duration-300 ease-in-out bg-white border`}>
 				{/* Mobile Menu */}
 				<div className="lg:hidden">
 					<Sheet>

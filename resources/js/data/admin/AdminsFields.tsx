@@ -3,7 +3,7 @@ import { usePage } from "@inertiajs/react";
 import { format } from "date-fns";
 
 export const AccountInfo = (data: AdminForm, setData: (key: keyof AdminForm, value: string | number | null) => void, errors: Partial<Record<keyof AdminForm, string>>): CustomFormField[] => {
-	const { roles } = usePage<SharedData>().props
+	const { roles, status } = usePage<SharedData>().props
 
 	return [
 		{
@@ -48,6 +48,20 @@ export const AccountInfo = (data: AdminForm, setData: (key: keyof AdminForm, val
 			tabIndex: -3,
 			onChange: (e) => setData('admin_email', e.target.value),
 			errorMessage: errors.admin_email,
+		},
+		{
+			label: 'Status',
+			type: 'select',
+			id: 'purok',
+			disabled: data.admin_status === null,
+			value: data.admin_status ?? 0,
+			tabIndex: -13,
+			onChange: (value: number) => setData('admin_status', value),
+			errorMessage: errors.admin_status,
+			selectItems: status.map((purok) => ({
+				label: purok.status_name,
+				value: purok.status_id,
+			}))
 		},
 	]
 }

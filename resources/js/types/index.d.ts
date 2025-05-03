@@ -27,7 +27,7 @@ export interface NavItem {
 export interface SharedData {
     auth: Auth;
     admins: AdminForm[];
-    residents: ResidentFetch[];
+    residents: ResidentForm[];
     roles: Role[];
     documents: DocumentForm[];
     notifications: NotificationItem[];
@@ -116,6 +116,7 @@ export interface DocumentProcessingForm {
 
 export interface AdminForm {
     admin_id: number;
+    admin_status: number;
     admin_username: string;
     admin_email: string;
     admin_photopath: File | null;
@@ -135,7 +136,7 @@ export interface AdminForm {
     officer_purokid: number | null;
 }
 
-export interface ResidentFetch {
+export interface ResidentForm {
     resident_id: number;
     resident_firstname: string;
     resident_middlename: string;
@@ -201,7 +202,7 @@ interface BaseFormField {
 interface TextField extends BaseFormField {
     type: 'text' | 'email' | 'password' | 'number';
     placeholder?: string;
-    value?: string | number;
+    value?: string | number | null;
     autoComplete?: string;
     autofocus?: boolean;
     onChange?: (e: ChangeEvent<HTMLInputElement>) => void;

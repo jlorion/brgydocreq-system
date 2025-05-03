@@ -1,6 +1,5 @@
 import { CustomDisplayCard } from '@/components/custom/CustomCard';
 import { CustomDataTable } from '@/components/custom/CustomDataTable';
-import CustomForm from '@/components/custom/CustomFormFields';
 import CustomIcon from '@/components/custom/CustomIcon';
 import CustomSheet from '@/components/custom/CustomSheet';
 import { Button } from '@/components/ui/button';
@@ -165,17 +164,12 @@ export default function Dashboard() {
                 renderSheet={(trigger, row) => (
                     <CustomSheet
                         trigger={trigger}
-                        firstButton="Approve"
-                        firstButtonVariant="approve"
-                        secondButton="Reject"
-                        secondButtonVariant="reject"
+                        firstButton="View"
                         statusTitle="Under Review"
                         form={
-                            <>
-                                <CustomForm fields={DocumentRequestFields} className="grid grid-cols-2 gap-2" />
-                                <CustomForm fields={PurposeofRequestField} className="grid grid-cols-1 pt-2" />
-                                <CustomForm fields={ViewAttachment} className="flex justify-center pt-2" />
-                            </>
+                            <div>
+                                nigga
+                            </div>
                         }
                     />
                 )}

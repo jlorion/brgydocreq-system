@@ -14,7 +14,9 @@ class AdminDocumentsController extends Controller
     public function fetchDocumentInfo()
     {
         $documents = Document::all()->each->makeHidden(['created_at', 'updated_at']);
-        $status = Status::all();
+        $status = Status::select('status_id', 'status_name')
+            ->whereIn('status_name', ['available', 'unavailable'])
+            ->get();
 
         // return \response()->json($documents);
 

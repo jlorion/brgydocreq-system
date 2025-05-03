@@ -3,22 +3,22 @@ import CustomForm from '@/components/custom/CustomFormFields';
 import CustomSheet from '@/components/custom/CustomSheet';
 import { Button } from '@/components/ui/button';
 import AdminLayout from '@/layouts/admin/AdminLayout';
-import { ResidentFetch, SharedData } from '@/types';
+import { ResidentForm, SharedData } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { ColumnDef } from '@tanstack/react-table';
 import { ArrowUpDown, LoaderCircle, PlusCircle } from 'lucide-react';
 import { getStatusColors } from '@/lib/utils';
-import { FetchUpdateResidentsFields } from '@/data/admin/FetchUpdateResidentsFields';
-import { AddResidentsFields } from '@/data/admin/AddResidentsFields';
+import { FetchUpdateResidentsFields, AddResidentsFields, } from '@/data/admin/ResidentsFields';
 import { FormEventHandler } from 'react';
 import CustomDialog from '@/components/custom/CustomDialog';
+import { toast } from 'sonner';
 
 
 const Residents = () => {
 
     const { residents } = usePage<SharedData>().props
 
-    const dataResident: ResidentFetch[] = residents.map((resident) => ({
+    const dataResident: ResidentForm[] = residents.map((resident) => ({
         resident_id: resident.resident_id,
         resident_firstname: resident.resident_firstname,
         resident_middlename: resident.resident_middlename,
@@ -34,8 +34,7 @@ const Residents = () => {
         resident_birthdate: resident.resident_birthdate
     }));
 
-    // update and fetch residents 
-    const { data: updateData, setData: updateSetData, patch: updatePatch, processing: updateProcessing, errors: updateErrors } = useForm<Required<ResidentFetch>>({
+    const { data, setData, patch, post, processing, errors, reset } = useForm<Required<ResidentForm>>({
         resident_id: 0,
         resident_purokid: null,
         resident_statusid: null,
@@ -54,7 +53,10 @@ const Residents = () => {
 
     const updateSubmit: FormEventHandler = (e) => {
         e.preventDefault();
-        updatePatch(route('admin.residents.update', updateData.resident_id), {
+        patch(route('admin.residents.update', data.resident_id), {
+            onSuccess: () => {
+                toast.success("Resident's information updated successfully");
+            },
             onError: (errors) => {
                 console.error('Form submission failed. Validation errors:');
                 Object.entries(errors).forEach(([field, message]) => {
@@ -64,9 +66,24 @@ const Residents = () => {
         })
     }
 
+    const addSubmit: FormEventHandler = (e) => {
+        e.preventDefault();
+        post(route('admin.residents.store'), {
+            onSuccess: () => {
+                toast.success('Resident successfully added')
+                reset()
+            },
+            onError: (errors) => {
+                console.error('Form submission failed. Validation errors:');
+                Object.entries(errors).forEach(([field, message]) => {
+                    console.error(`Field: ${field}, Error: ${message}`);
+                });
+            },
+        })
+    }
 
-    const populateSheet = (resident: ResidentFetch) => {
-        updateSetData({
+    const populateSheet = (resident: ResidentForm) => {
+        setData({
             resident_id: resident.resident_id,
             resident_purokid: resident.resident_purokid,
             resident_statusid: resident.resident_statusid,
@@ -83,35 +100,8 @@ const Residents = () => {
         });
     }
 
-    // add resdients
-    const { data: addData, setData: addSetData, post: addPost, processing: addProcessing, errors: addErrors } = useForm<Omit<ResidentFetch, 'resident_id'>>({
-        resident_firstname: '',
-        resident_middlename: '',
-        resident_purokid: null,
-        resident_statusid: null,
-        resident_lastname: '',
-        resident_suffix: '',
-        resident_birthdate: '',
-        resident_gender: '',
-        resident_precinct: '',
-        resident_householdnum: '',
-        resident_status: '',
-        resident_purok: '',
-    });
 
-    const addSubmit: FormEventHandler = (e) => {
-        e.preventDefault();
-        addPost(route('admin.residents.store'), {
-            onError: (errors) => {
-                console.error('Form submission failed. Validation errors:');
-                Object.entries(errors).forEach(([field, message]) => {
-                    console.error(`Field: ${field}, Error: ${message}`);
-                });
-            },
-        })
-    }
-
-    const columns: ColumnDef<ResidentFetch>[] = [
+    const columns: ColumnDef<ResidentForm>[] = [
         {
             accessorKey: 'resident_fullname',
             header: () => <div className='text-center'>Resident's Name</div>,
@@ -197,7 +187,7 @@ const Residents = () => {
             <div className="h-full w-full p-2 pt-5">
                 <div className="flex flex-col items-center justify-between pr-2">
                     <CustomDataTable
-                        onRowClick={(row: ResidentFetch) => populateSheet(row)}
+                        onRowClick={(row: ResidentForm) => populateSheet(row)}
                         columns={columns}
                         data={dataResident}
                         additionalComponent={
@@ -205,12 +195,11 @@ const Residents = () => {
                                 title='Add Resident'
                                 onSubmit={addSubmit}
                                 button={
-                                    <Button disabled={addProcessing}>
-                                        {addProcessing && <LoaderCircle className="h-4 w-4 animate-spin" />}
+                                    <Button disabled={processing}>
                                         Submit
                                     </Button>}
                                 children={
-                                    <CustomForm fields={AddResidentsFields(addData, addSetData, addErrors)} className='grid grid-cols-3 gap-x-5' />
+                                    <CustomForm fields={AddResidentsFields(data, setData, errors)} className='grid grid-cols-3 gap-x-5' />
                                 }
                                 trigger={
                                     <Button>
@@ -227,15 +216,14 @@ const Residents = () => {
                                 key={row}
                                 trigger={trigger}
                                 firstButton={
-                                    <Button disabled={updateProcessing} className='text-center w-full'>
-                                        {updateProcessing && <LoaderCircle className="h-4 w-4 animate-spin" />}
+                                    <Button disabled={processing} className='text-center w-full'>
                                         Save
                                     </Button>}
-                                statusTitle={updateData.resident_status}
+                                statusTitle={data.resident_status}
                                 form={
                                     <>
-                                        <input type="text" hidden defaultValue={updateData.resident_id} />
-                                        <CustomForm fields={FetchUpdateResidentsFields(updateData, updateSetData, updateErrors)} className="grid grid-cols-2 gap-2" />
+                                        <input type="text" hidden defaultValue={data.resident_id} />
+                                        <CustomForm fields={FetchUpdateResidentsFields(data, setData, errors)} className="grid grid-cols-2 gap-2" />
                                     </>
                                 } />
                         )}

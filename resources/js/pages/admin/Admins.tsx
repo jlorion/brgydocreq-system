@@ -41,6 +41,7 @@ const Admins = () => {
 
     // update and fetch admin
     const { data: updateData, setData: updateSetData, post: updatePost, processing: updateProcessing, errors: updateErrors } = useForm<Required<AdminForm>>({
+        admin_status: 0,
         admin_id: 0,
         admin_photopath: null,
         admin_roleid: null,
@@ -85,6 +86,7 @@ const Admins = () => {
             admin_id: admin.admin_id,
             admin_username: admin.admin_username,
             admin_email: admin.admin_email,
+            admin_status: admin.admin_status,
             admin_photopath: admin.admin_photopath,
             admin_phonenum: admin.admin_phonenum,
             admin_roleid: admin.admin_roleid,
@@ -121,7 +123,7 @@ const Admins = () => {
                                     onChange={(value) => { inviteSetData('role_id', value), console.log(value) }}
                                     items={roles.map((role) => (
                                         { value: role.role_id, label: role.role_name }
-                                    )   )}
+                                    ))}
                                 />
                                 <InputError message={inviteErrors.role_id} />
                             </div>
@@ -141,6 +143,7 @@ const Admins = () => {
                 {admins.map((admin, index) => (
                     <CustomDialog
                         key={index}
+                        toaster={true}
                         title='Administrator Profile'
                         button={<Button type='submit' disabled={updateProcessing} variant="primary">Save</Button>}
                         trigger={

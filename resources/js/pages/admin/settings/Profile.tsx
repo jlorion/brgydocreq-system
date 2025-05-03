@@ -1,7 +1,7 @@
 import { AdminForm, type SharedData } from '@/types';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
-import { AccountInfo, BarangayOfficerInfo } from '@/data/admin/FetchUpdateProfileFields';
+import { AccountInfo, BarangayOfficerInfo } from '@/data/admin/ProfileFields';
 import DeleteUser from '@/components/custom/delete-user';
 import { Button } from '@/components/ui/button';
 import AdminSettingsLayout from '@/layouts/admin/AdminSettingsLayout';

@@ -36,8 +36,9 @@ class AdminResidentsController extends Controller
         // return \response()->json($flattenResidents);
 
         $puroks = Address::get(['address_id', 'purok']);
-        $status = Status::get(['status_id', 'status_name']);
-
+        $status = Status::select(['status_id', 'status_name'])
+            ->whereIn('status_name', ['Active', 'Migrated', 'Deceased', 'Blacklisted'])
+            ->get();
 
         return  Inertia::render('admin/Residents', [
             'residents' => $flattenResidents,

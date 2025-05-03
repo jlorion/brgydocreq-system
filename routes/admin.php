@@ -30,7 +30,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 	Route::middleware(['auth:admin', 'verified:admin'])->group(function () {
 
-		Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+		Route::get('/dashboard', [AdminDashboardController::class, 'show'])->name('dashboard');
 		Route::get('/document-request', [AdminDocumentRequestController::class, 'fetchDocReq'])->name('document-request');
 		Route::post('/document-request/reject', [AdminDocumentRequestController::class, 'rejectDocReq'])->name('documentreq.reject');
 		Route::post('/document-request/approve', [AdminDocumentRequestController::class, 'approveDocReq'])->name('documentreq.approve');
@@ -42,9 +42,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
 		Route::post('/documents/store', [AdminDocumentsController::class, 'storeDocumentInfo'])->name('documents.store');
 		Route::get('/residents', [AdminResidentsController::class, 'fetchResidentInfo'])->name('residents');
 		Route::patch('/residents/{resident_id}', [AdminResidentsController::class, 'updateResidentInfo'])->name('residents.update');
-		Route::post('/residents/store', [AdminResidentsController::class, 'storeResidentInfo'])->name('residents.store');	
+		Route::post('/residents/store', [AdminResidentsController::class, 'storeResidentInfo'])->name('residents.store');
 		Route::post('logout', [AdminAuthSessionController::class, 'destroy'])->name('logout');
-		
+
 		Route::middleware('super_admin')->group(function () {
 			Route::get('/admins', [AdminAdminsController::class, 'fetchAdminInfo'])->name('admins');
 			Route::post('/admins/{admin_id}', [AdminAdminsController::class, 'updateAdminInfo'])->name('admins.update');

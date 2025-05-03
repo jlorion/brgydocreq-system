@@ -6,10 +6,7 @@ import { useForm, usePage } from '@inertiajs/react';
 import { DocumentForm, SharedData } from '@/types';
 import { LoaderCircleIcon, PlusCircle } from 'lucide-react';
 import CustomForm from '@/components/custom/CustomFormFields';
-import { fetchUpdateFirstHalve } from '@/data/admin/FetchUpdateDocumentFields'
-import { fetchUpdateSecondHalve } from '@/data/admin/FetchUpdateDocumentFields'
-import { addFirstHalve } from '@/data/admin/AddDocumentFields'
-import { addSecondHalve } from '@/data/admin/AddDocumentFields'
+import { fetchUpdateFirstHalve, fetchUpdateSecondHalve, addFirstHalve, addSecondHalve } from '@/data/admin/DocumentFields'
 import { FormEventHandler } from 'react';
 import DefaultDocPic from '../../../assets/default_documentpic.svg'
 
@@ -56,7 +53,6 @@ export default function Documents() {
     }
 
     //add document
-
     const { data: addData, setData: addSetData, post: addPost, processing: addProcessing, errors: addErrors } = useForm<Omit<DocumentForm, 'document_id'>>({
         status_id: null,
         document_name: '',
