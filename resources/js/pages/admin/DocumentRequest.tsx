@@ -58,7 +58,7 @@ const DocumentRequeset = () => {
     post(route('admin.documentreq.reject'), {
       onSuccess: () => {
         toast.success('Updated to rejected')
-        setData('status_name', data.status_name);
+        setData('status_name', 'Rejected');
       },
       onError: (errors) => {
         console.error('Form submission failed. Validation errors:');

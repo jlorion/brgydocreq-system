@@ -16,6 +16,7 @@ class AdminAuthSessionController extends Controller
 {
     public function create(Request $request): Response
     {
+
         // dd(Hash::make('mark123456'));
 
         return Inertia::render('admin/auth/Login', [

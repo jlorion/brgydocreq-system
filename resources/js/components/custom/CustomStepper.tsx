@@ -25,10 +25,9 @@ export default function Stepper({ currentStatus, className }: StepperProps) {
 			{steps.map((step, index) => {
 				const Icon = step.icon;
 				const isCompleted = index <= currentIndex;
-
 				return (
 					<>
-						<div key={step.value} className="flex-1 flex flex-col items-center relative">
+						<div key={index} className="flex-1 flex flex-col items-center relative">
 							<div
 								className={cn(
 									"flex items-center justify-center w-12 h-12 rounded-full border-2 transition-colors duration-300 z-20",
@@ -44,8 +43,6 @@ export default function Stepper({ currentStatus, className }: StepperProps) {
 						</div>
 
 						{index < steps.length - 1 && (
-
-
 							<div className="w-full h-0.5 mb-5 -mx-4">
 								<div
 									className={cn(

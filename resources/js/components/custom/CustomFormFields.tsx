@@ -74,7 +74,7 @@ const CustomForm = ({ fields, className, title }: CustomFormProps) => {
                                 type="text"
                                 id={field.id}
                                 placeholder="0.00"
-                                value={field.value}
+                                value={field.value ?? ''}
                                 tabIndex={field.tabIndex}
                                 disabled={field.disabled}
                                 onChange={field.onChange}
@@ -90,7 +90,7 @@ const CustomForm = ({ fields, className, title }: CustomFormProps) => {
                     <Input
                         type={field.type}
                         placeholder={field.placeholder}
-                        value={field.value}
+                        value={field.value ?? ''}
                         pattern={field.pattern}
                         autoFocus={field.autofocus}
                         maxLength={field.maxLength}

@@ -24,8 +24,6 @@ class UserDocumentRequestController extends Controller
             $validate['attachment_path'] = $request->file('attachment_path')->store('user/attachments', 'public');
         }
 
-        $documentRequest = RequestedDocument::create($validate);
-
-        // (new DocRequestSubmitted($documentRequest, ));
+        RequestedDocument::create($validate);
     }
 }

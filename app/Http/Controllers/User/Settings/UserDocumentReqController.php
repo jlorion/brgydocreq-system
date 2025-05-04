@@ -5,6 +5,8 @@ namespace App\Http\Controllers\User\Settings;
 use App\Http\Controllers\Controller;
 use App\Models\RequestedDocument;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 
 class UserDocumentReqController extends Controller
@@ -47,10 +49,32 @@ class UserDocumentReqController extends Controller
             ];
         }));
 
-        // return \response()->json($latestStatus);
+        // return \response()->json($flattenDocRequest);
 
         return Inertia::render('user/settings/DocumentRequest', [
             'docprocessing' => $flattenDocRequest,
         ]);
+    }
+
+    public function deleteDocReq(Request $request)
+    {
+        $validate = $request->validate([
+            'requested_document_id' => 'exists:requested_documents,requested_document_id',
+            'status_id' => 'exists:statuses,status_id',
+            'document_id' => 'exists:documents,document_id',
+            'user_id' => 'exists:users,user_id',
+        ]);
+
+        DB::transaction(function () use ($validate) {
+            $docRequest = RequestedDocument::findOrFail($validate['requested_document_id']);
+
+            if ((int) $validate['status_id'] === 5) {
+                $docRequest->delete();
+            } else {
+                throw ValidationException::withMessages([
+                    'message' => 'You cannot delete the request once the document is approved.',
+                ])->status(422);
+            }
+        });
     }
 }

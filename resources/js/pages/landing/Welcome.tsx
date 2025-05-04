@@ -37,7 +37,7 @@ const Welcome = () => {
             preserveState: true,
             onSuccess: () => {
                 toast.success('Succesfully submitted');
-                reset()
+                reset();
             },
             onError: (errors) => {
                 console.error('Form submission failed. Validation errors:');
@@ -92,7 +92,6 @@ const Welcome = () => {
 
                         {auth.user ? (documents.map((document) => (
                             <CustomDialog
-
                                 key={document.document_id}
                                 title={document.document_name}
                                 onSubmit={submitDocument}
