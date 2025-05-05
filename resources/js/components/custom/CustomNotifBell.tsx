@@ -13,7 +13,7 @@ import { SharedData } from '@/types';
 import { useEffect, useRef, useState } from 'react';
 
 const CustomNotifBell = () => {
-	const { notifications } = usePage<SharedData>().props;
+	const { notifications, guard } = usePage<SharedData>().props;
 	const prevNotificationIdsRef = useRef<number[]>([]);
 	const [newCount, setNewCount] = useState(0);
 	const [menuOpen, setMenuOpen] = useState(false);
@@ -58,19 +58,35 @@ const CustomNotifBell = () => {
 						</span>
 					)}
 				</DropdownMenuTrigger>
-				<DropdownMenuContent className="w-full max-h-[650px] overflow-y-auto scroll-invisible" align="center" sideOffset={6}>
+				<DropdownMenuContent className="max-w-[510px] max-h-[650px] overflow-y-auto scroll-invisible" align="center" sideOffset={6}>
 					<DropdownMenuGroup>
 						{notifications.map((notification, index) => (
 							<div key={index}>
-								<Link href={route('user.settings.document-request')}>
-									<DropdownMenuItem>
-										<CustomNotifications
-											status={notification.status_name}
-											notification={notification.notification}
-											updated_at={notification.updated_at}
-										/>
-									</DropdownMenuItem>
-								</Link>
+								{guard === 'user' ? (
+
+									<Link href={route('user.settings.document-request')}>
+										<DropdownMenuItem>
+											<CustomNotifications
+												status={notification.status_name}
+												notification={notification.notification}
+												updated_at={notification.updated_at}
+											/>
+										</DropdownMenuItem>
+									</Link>
+								) : guard === 'admin' ? (
+									<Link href={route('admin.document-request')}>
+										<DropdownMenuItem>
+											<CustomNotifications
+												status={notification.status_name}
+												notification={notification.notification}
+												updated_at={notification.updated_at}
+											/>
+										</DropdownMenuItem>
+									</Link>
+								) : (
+									null
+								)
+								}
 								<Separator />
 							</div>
 						))}

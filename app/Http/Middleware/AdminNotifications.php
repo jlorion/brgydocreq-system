@@ -2,14 +2,14 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Notifications as ModelsNotifications;
+use App\Models\Notifications;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Symfony\Component\HttpFoundation\Response;
 
-class Notifications
+class AdminNotifications
 {
     /**
      * Handle an incoming request.
@@ -21,17 +21,13 @@ class Notifications
 
         Inertia::share([
             'notifications' => function () {
-                if (Auth::guard('web')->check()) {
+                if (Auth::guard('admin')->check()) {
 
-                    $user = Auth::guard('web')->id();
-
-                    return ModelsNotifications::with([
+                    return  Notifications::with([
                         'status:status_id,status_name',
                         'requestedDocument.user:user_id'
                     ])
-                        ->whereHas('requestedDocument.user', function ($query) use ($user) {
-                            $query->where('user_id', $user);
-                        })
+                        ->where('status_id', 5)
                         ->latest()
                         ->get()
                         ->map(function ($notification) {
@@ -44,13 +40,8 @@ class Notifications
                                 'updated_at' => $notification->updated_at,
                             ];
                         });
-                } elseif (Auth::guard('admin')->check()) {
-                    // Add admin-specific notification logic here if needed
-                    return []; // Or fetch admin-specific notifications
                 }
-
-                return [];
-            },
+            }
         ]);
 
         return $next($request);

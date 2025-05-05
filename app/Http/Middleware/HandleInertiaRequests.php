@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Middleware;
 use Tighten\Ziggy\Ziggy;
 
@@ -36,6 +37,7 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+
 
         $admin = $request->user('admin');
         $user = $request->user('web');
@@ -92,7 +94,14 @@ class HandleInertiaRequests extends Middleware
             'ziggy' => fn(): array => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
-            ]
+            ],
+
+            'guard' => function () {
+                if (Auth::guard('admin')->check()) return 'admin';
+                if (Auth::guard('web')->check()) return 'user';
+                return null;
+            },
+
         ];
     }
 }

@@ -8,8 +8,6 @@ use App\Models\DocumentArchive;
 use App\Models\RequestedDocument;
 use App\Models\Resident;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class AdminDashboardController extends Controller
@@ -25,9 +23,7 @@ class AdminDashboardController extends Controller
         $totalBarangayOfficers = BarangayOfficer::latest()->get()->count();
 
 
-        // return \response()->json($totalArchives);
 
-
-        return  Inertia::render('admin/Dashboard');
+        return  Inertia::render('admin/Dashboard', []);
     }
 }

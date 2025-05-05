@@ -29,6 +29,7 @@ export interface SharedData {
     admins: AdminForm[];
     residents: ResidentForm[];
     roles: Role[];
+    guard: 'admin' | 'user' | null;
     documents: DocumentForm[];
     notifications: NotificationItem[];
     docprocessing: DocumentProcessingForm[];
@@ -43,6 +44,7 @@ export interface NotificationItem {
     notification: string;
     updated_at: string;
     status_name: string;
+    additional_message: string;
 }
 export interface UserForm {
     user_id: number;

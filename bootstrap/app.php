@@ -1,9 +1,10 @@
 <?php
 
+use App\Http\Middleware\AdminNotifications;
 use App\Http\Middleware\AdminRoleBased;
 use App\Http\Middleware\HandleAppearance;
 use App\Http\Middleware\HandleInertiaRequests;
-use App\Http\Middleware\Notifications;
+use App\Http\Middleware\UserNotifications;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -18,6 +19,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'super_admin' => AdminRoleBased::class,
+            'user_notification' => UserNotifications::class,
+            'admin_notification' => AdminNotifications::class,
         ]);
 
         $middleware->encryptCookies(except: ['appearance']);
@@ -26,11 +29,9 @@ return Application::configure(basePath: dirname(__DIR__))
             HandleAppearance::class,
             HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
-            Notifications::class,
 
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();
-

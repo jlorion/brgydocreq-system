@@ -40,7 +40,7 @@ class UserDocumentRequestController extends Controller
 
             Notifications::create([
                 'requested_document_id' => $requestedDocId->getKey(),
-                'notification' => "{$name->resident->resident_firstname}, {$name->resident->resident_lastname} requested a 1validate['document_name'].",
+                'notification' => "{$name->resident->resident_firstname}, {$name->resident->resident_lastname} requested a {$validate['document_name']}.",
                 'status_id' => 5,
             ]);
         });

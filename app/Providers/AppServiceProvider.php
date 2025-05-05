@@ -41,5 +41,7 @@ class AppServiceProvider extends ServiceProvider
 
             return route('user.landing.home');
         });
+
+       
     }
 }
