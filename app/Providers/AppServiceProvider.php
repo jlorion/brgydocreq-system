@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Notifications;
 use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Auth\Middleware\RedirectIfAuthenticated;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\ServiceProvider;
 use Inertia\Inertia;
@@ -39,7 +41,5 @@ class AppServiceProvider extends ServiceProvider
 
             return route('user.landing.home');
         });
-
-
     }
 }

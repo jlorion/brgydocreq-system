@@ -1,7 +1,8 @@
 import CustomProfilePic from '@/components/custom/CustomProfilePic';
 
 import { CustomSidebar } from '@/components/custom/CustomSidebar';
-import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
+import { CustomUserHeader } from '@/components/custom/CustomUserHeader';
+import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Bell, CircleUser, FileInput, KeyRound, SunMoon } from 'lucide-react';
 

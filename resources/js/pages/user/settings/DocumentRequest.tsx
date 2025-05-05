@@ -1,8 +1,7 @@
 import CustomDialog from '@/components/custom/CustomDialog';
 import { Button } from '@/components/ui/button';
 import UserSettingsLayout from '@/layouts/user/UserSettingsLayout';
-import { Check, Clock, FileCheck2, FileSearch, FileText, Info, MoveRight, ShoppingCart } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardFooter, } from '@/components/ui/card';
 import { FetchFirstHalve, FetchSecondHalve } from '@/data/user/DocReqFields'
 import CustomForm from '@/components/custom/CustomFormFields';
 import { router, useForm, usePage } from '@inertiajs/react';

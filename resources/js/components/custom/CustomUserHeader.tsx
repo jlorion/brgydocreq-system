@@ -10,9 +10,9 @@ import { UseHeaderScroll } from '@/hooks/UseHeaderScroll';
 import { cn } from '@/lib/utils';
 import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { Bell, ChevronDown, Menu } from 'lucide-react';
+import { ChevronDown, Menu } from 'lucide-react';
 import { CustomMenuContent } from './CustomMenuContent';
-import CustomUserNotifBell from './CustomUserNotifBell';
+import CustomNotifBell from './CustomNotifBell';
 
 
 interface CustomUserHeaderProps {
@@ -42,7 +42,7 @@ export function CustomUserHeader({ breadcrumbs = [], mainNavItems = [], rightNav
                         <SheetTrigger asChild>
                             <Button variant="ghost" size="icon" className="mr-2 h-[34px] w-[34px]">
                                 <Menu className="h-5 w-5" />
-                                
+
                             </Button>
                         </SheetTrigger>
                         <SheetContent side="left" className="bg-sidebar flex h-full w-64 flex-col items-stretch justify-between">
@@ -112,7 +112,7 @@ export function CustomUserHeader({ breadcrumbs = [], mainNavItems = [], rightNav
                     {auth.user ? (
                         <>
                             <div className="ml-auto flex items-center gap-x-10">
-                                <CustomUserNotifBell />
+                                <CustomNotifBell />
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
                                         <Button variant="ghost" className="flex items-center gap-x-5">

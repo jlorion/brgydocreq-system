@@ -22,4 +22,9 @@ class Notifications extends Model
     {
         return $this->belongsTo(Status::class, 'status_id', 'status_id');
     }
+
+    public function requestedDocument()
+    {
+        return $this->belongsTo(RequestedDocument::class, 'requested_document_id', 'requested_document_id');
+    }
 }

@@ -1,5 +1,4 @@
 import { FaBell } from "react-icons/fa";
-import { GoBellFill } from "react-icons/go";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -13,7 +12,7 @@ import { Link, router, usePage } from '@inertiajs/react';
 import { SharedData } from '@/types';
 import { useEffect, useRef, useState } from 'react';
 
-const CustomUserNotifBell = () => {
+const CustomNotifBell = () => {
 	const { notifications } = usePage<SharedData>().props;
 	const prevNotificationIdsRef = useRef<number[]>([]);
 	const [newCount, setNewCount] = useState(0);
@@ -83,4 +82,4 @@ const CustomUserNotifBell = () => {
 	);
 };
 
-export default CustomUserNotifBell;
+export default CustomNotifBell;

@@ -242,7 +242,6 @@ const OnProcess = () => {
               trigger={trigger}
               firstButton={
                 <CustomDialog
-                  autoCloseOnSubmit={true}
                   title={dialogProps.title}
                   onSubmit={onProcessSubmit}
                   width="w-150"

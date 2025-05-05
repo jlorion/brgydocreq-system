@@ -36,8 +36,7 @@ const AdminLayout = ({ children, className, title }: AdminLayoutProps) => {
 	return (
 		<div className='box-border h-full w-full'>
 			<SidebarProvider>
-				<CustomSidebar navItems={navItems} navTitle={<CustomIcon imgSrc={WebLogo} />
-				} />
+				<CustomSidebar navItems={navItems} navTitle={<CustomIcon imgSrc={WebLogo} />} />
 				<SidebarInset>
 					<CustomAdminHeader className='px-5' leftNavItems={
 						<> <SidebarTrigger />

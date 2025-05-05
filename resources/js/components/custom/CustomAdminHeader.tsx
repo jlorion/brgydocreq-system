@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList, navigationMenuTriggerStyle } from '@/components/ui/navigation-menu';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { UseHeaderScroll } from '@/hooks/UseHeaderScroll';
 import { cn } from '@/lib/utils';
 import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
@@ -13,7 +12,7 @@ import { ChevronDown, Menu } from 'lucide-react';
 import { CustomMenuContent } from './CustomMenuContent';
 import React from 'react';
 import DefaultProfilePic from '../../../assets/default_profilepic.svg'
-
+import CustomNotifBell from './CustomNotifBell';
 
 interface CustomAdminHeaderProps {
 	breadcrumbs?: BreadcrumbItem[];
@@ -25,8 +24,6 @@ interface CustomAdminHeaderProps {
 
 export function CustomAdminHeader({ breadcrumbs = [], mainNavItems = [], rightNavItems = [], leftNavItems, className }: CustomAdminHeaderProps) {
 	const { auth } = usePage<SharedData>().props;
-
-	// console.log(auth)
 
 	return (
 		<>
@@ -105,7 +102,7 @@ export function CustomAdminHeader({ breadcrumbs = [], mainNavItems = [], rightNa
 					{auth.admin && (
 						<>
 							<div className="ml-auto flex items-center gap-x-10">
-
+								<CustomNotifBell />
 								<DropdownMenu>
 									<DropdownMenuTrigger asChild>
 										<Button variant="ghost" className="flex items-center gap-x-5">

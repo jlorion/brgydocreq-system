@@ -1,5 +1,5 @@
 import { formatDistanceToNow, formatDistanceToNowStrict } from 'date-fns';
-import { Check, FileCheck, SmileIcon, X } from 'lucide-react';
+import { Check, FileCheck, FileSearch, SmileIcon, X } from 'lucide-react';
 import React from 'react';
 import { FaWalking } from 'react-icons/fa';
 import { GrCycle } from 'react-icons/gr';
@@ -59,6 +59,16 @@ const notificationColors: Record<string, { bgFirstColor: string; bgColor: string
         Icon: (
             <div className="flex h-12 w-12 items-center justify-center rounded-full border bg-[#FFA500]">
                 <FaWalking className="h-8 w-8 text-amber-50" />
+            </div>
+        ),
+    },
+    'under review': {
+        bgFirstColor: '#FFA500',
+        bgColor: 'bg-orange-500/10',
+        textColor: 'text-orange-400',
+        Icon: (
+            <div className="flex h-12 w-12 items-center justify-center rounded-full border bg-[#FFA500]">
+                <FileSearch className="h-8 w-8 text-amber-50" />
             </div>
         ),
     },

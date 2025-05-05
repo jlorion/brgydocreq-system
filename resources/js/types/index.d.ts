@@ -88,6 +88,7 @@ export interface DocumentForm {
 export interface DocumentReqForm {
     user_id: number;
     document_id: number;
+    document_name: string;
     requested_purpose: string;
     attachment_path: File | null;
 }

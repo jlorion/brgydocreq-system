@@ -78,7 +78,6 @@ class AdminOnProcessController extends Controller
             Processing::findOrFail($validate['onprocess_id'])
                 ->update($processing);
 
-            Log::info('Broadcasting to user', ['user_id' => $validate['user_id']]);
 
             if ($validate['status_id'] === 2) {
                 DocumentArchive::create([

@@ -28,6 +28,7 @@ const Welcome = () => {
         document_id: 0,
         attachment_path: null,
         requested_purpose: '',
+        document_name: ''
     })
 
     const submitDocument: FormEventHandler = (e) => {
@@ -102,6 +103,7 @@ const Welcome = () => {
                                         title={document.document_name}
                                         onClick={() => {
                                             setData('document_id', document.document_id);
+                                            setData('document_name', document.document_name);
                                             setData('user_id', auth.user.user_id)
                                         }}
                                         content={document.description} />
@@ -111,6 +113,7 @@ const Welcome = () => {
                                     <>
                                         <input type='hidden' defaultValue={data.document_id} />
                                         <input type='hidden' defaultValue={data.user_id} />
+                                        <input type='hidden' defaultValue={data.document_name} />
                                         <CustomForm fields={DocumentRequestFields(data, setData, errors)} />
                                     </>
                                 }
