@@ -100,7 +100,6 @@ class AdminDocumentRequestController extends Controller
 
         DB::transaction(function () use ($validate, $processing) {
             $notification =  Notifications::create($validate);
-            $status = $notification->status->status_name;
 
             Processing::create($processing);
             RequestedDocument::findOrFail($validate['requested_document_id'])

@@ -33,9 +33,4 @@ class RequestedDocument extends Model
         return $this->belongsTo(Status::class, 'status_id', 'status_id');
     }
 
-    public function latestNotification()
-    {
-        return $this->hasOne(Notifications::class, 'requested_document_id', 'requested_document_id')
-            ->latestOfMany('updated_at');
-    }
 }

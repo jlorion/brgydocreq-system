@@ -37,6 +37,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
 			Route::get('/document-request', [AdminDocumentRequestController::class, 'fetchDocReq'])->name('document-request');
 			Route::get('/residents', [AdminResidentsController::class, 'fetchResidentInfo'])->name('residents');
 			Route::get('/archives', [AdminArchivesController::class, 'fetchArchives'])->name('archives');
+
+			Route::middleware('super_admin')->group(function () {
+				Route::get('/admins', [AdminAdminsController::class, 'fetchAdminInfo'])->name('admins');
+				Route::post('/admins/{admin_id}', [AdminAdminsController::class, 'updateAdminInfo'])->name('admins.update');
+				Route::post('/invite', [AdminInvitationController::class, 'sendInvitation'])->name('invite');
+			});
 		});
 
 		Route::post('/document-request/reject', [AdminDocumentRequestController::class, 'rejectDocReq'])->name('documentreq.reject');
@@ -47,13 +53,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
 		Route::patch('/residents/{resident_id}', [AdminResidentsController::class, 'updateResidentInfo'])->name('residents.update');
 		Route::post('/residents/store', [AdminResidentsController::class, 'storeResidentInfo'])->name('residents.store');
 		Route::post('logout', [AdminAuthSessionController::class, 'destroy'])->name('logout');
-
-
-		Route::middleware('super_admin')->group(function () {
-			Route::get('/admins', [AdminAdminsController::class, 'fetchAdminInfo'])->name('admins');
-			Route::post('/admins/{admin_id}', [AdminAdminsController::class, 'updateAdminInfo'])->name('admins.update');
-			Route::post('/invite', [AdminInvitationController::class, 'sendInvitation'])->name('invite');
-		});
 
 		Route::prefix('/settings')->name('settings.')->group(function () {
 			Route::redirect('settings', 'settings/Profile');

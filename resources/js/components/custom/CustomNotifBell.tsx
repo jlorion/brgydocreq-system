@@ -14,6 +14,8 @@ import { useEffect, useRef, useState } from 'react';
 
 const CustomNotifBell = () => {
 	const { notifications, guard } = usePage<SharedData>().props;
+	// console.log('user', guard === 'user');
+	// console.log('admin', guard === 'admin');
 	const prevNotificationIdsRef = useRef<number[]>([]);
 	const [newCount, setNewCount] = useState(0);
 	const [menuOpen, setMenuOpen] = useState(false);

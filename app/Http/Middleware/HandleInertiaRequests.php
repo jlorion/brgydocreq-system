@@ -100,6 +100,7 @@ class HandleInertiaRequests extends Middleware
                 if (Auth::guard('admin')->check()) return 'admin';
                 if (Auth::guard('web')->check()) return 'user';
                 return null;
+                
             },
 
         ];

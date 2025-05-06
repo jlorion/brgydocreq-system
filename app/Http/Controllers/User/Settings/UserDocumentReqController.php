@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User\Settings;
 
 use App\Http\Controllers\Controller;
+use App\Models\Notifications;
 use App\Models\RequestedDocument;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -17,18 +18,29 @@ class UserDocumentReqController extends Controller
         $docRequests = RequestedDocument::with([
             'user.resident:resident_id,resident_firstname,resident_middlename,resident_lastname,resident_suffix',
             'document:document_id,document_name,price',
-            'latestNotification'
         ])->latest('updated_at')->get();
 
 
-        $flattenDocRequest = $docRequests->map((function ($docRequest) {
-            $status = $docRequest->status_id ?? 5;
+        $latestStatus = DB::table('notifications as n1')
+            ->select('status_id', 'requested_document_id', 'additional_message')
+            ->whereRaw('created_at = (
+        SELECT MAX(created_at)
+        FROM notifications as n2
+        WHERE n1.requested_document_id = n2.requested_document_id
+        )');
+
+        $docTracking = collect($latestStatus->get())->keyBy('requested_document_id');
+
+
+        $flattenDocRequest = $docRequests->map((function ($docRequest) use ($docTracking) {
+            $status = $docTracking[$docRequest->requested_document_id]->status_id ?? 5;
+            $additional_message = $docTracking[$docRequest->requested_document_id]->additional_message ?? null;
 
             return [
                 'requested_document_id' => $docRequest->requested_document_id,
                 'user_id' => $docRequest->user_id,
                 'status_name' => $docRequest->status->status_name,
-                'additional_message' => $docRequest->latestNotification->additional_message,
+                'additional_message' => $additional_message,
                 'resident_firstname' => $docRequest->user->resident->resident_firstname,
                 'resident_lastname' => $docRequest->user->resident->resident_lastname,
                 'document_id' => $docRequest->document_id,
@@ -40,6 +52,7 @@ class UserDocumentReqController extends Controller
                 'status_id' => $status,
             ];
         }));
+
 
         // return \response()->json($flattenDocRequest);
 

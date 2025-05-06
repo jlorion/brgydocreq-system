@@ -14,6 +14,7 @@ import { toast, Toaster } from 'sonner';
 const DocumentRequest = () => {
 
     const { docprocessing } = usePage<SharedData>().props;
+    console.log(docprocessing);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -103,12 +104,9 @@ const DocumentRequest = () => {
                                     </h2>
                                     <div className='flex gap-x-5'>
                                         <Link
-                                            href={route('user.landing.services', {
-
-                                            })} 
+                                            href='/user#services'
                                         >
                                             <Button>
-
                                                 Edit Request
                                             </Button>
                                         </Link>
