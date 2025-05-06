@@ -4,7 +4,7 @@ import UserSettingsLayout from '@/layouts/user/UserSettingsLayout';
 import { Card, CardContent, CardFooter, } from '@/components/ui/card';
 import { FetchFirstHalve, FetchSecondHalve } from '@/data/user/DocReqFields'
 import CustomForm from '@/components/custom/CustomFormFields';
-import { router, useForm, usePage } from '@inertiajs/react';
+import { Link, router, useForm, usePage } from '@inertiajs/react';
 import { DocumentProcessingForm, SharedData } from '@/types';
 import CustomIcon from '@/components/custom/CustomIcon';
 import CustomStepper from '@/components/custom/CustomStepper';
@@ -51,7 +51,7 @@ const DocumentRequest = () => {
         post(route('user.settings.delete.document-request'), {
             preserveScroll: true,
             onSuccess: () => {
-                toast.success('Request cancelled successfully');
+                toast.success('Request deleted successfully');
             },
             onError: (errors) => {
                 toast.error('Request deletion failed');
@@ -70,55 +70,119 @@ const DocumentRequest = () => {
             <div className="space-y-7 *:data-[slot=card]:border *:data-[slot=card]:rounded-md *:data-[slot=card]:shadow-sm *:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card">
                 {
                     docprocessing.map((doc) => (
-                        <Card className="@container/card relative" key={doc.requested_document_id}>
-                            <div className='bg-emerald-600 rounded-t-md h-9 absolute top-0 w-full'>
-                                <span className='text-white pl-4 flex items-center h-full'>
-                                    {doc.document_name}
-                                </span>
-                            </div>
-                            <CardContent className='flex flex-col'>
-                                <CustomStepper key={doc.requested_document_id} currentStatus={doc.status_id} className='py-10' />
-                                <CustomForm className='grid grid-cols-4 gap-x-5' fields={FetchFirstHalve(doc, setData, errors)} />
-                                <CustomForm fields={FetchSecondHalve(doc, setData, errors)} />
-                                <CustomDialog
-                                    width="w-150"
-                                    trigger={
-                                        <Button variant="link" className="text-sm -mx-4">
-                                            View Attachment
-                                        </Button>
-                                    }
-                                    title="Attachment"
-                                    children={
-                                        <div className="flex justify-center items-center object-cover mt-2">
-                                            <CustomIcon imgSrc={`/storage/${doc.attachment_path}`} />
-                                        </div>
+                        doc.status_id === 1 ? (
+                            <Card className="@container/card relative" key={doc.requested_document_id}>
+                                <div className='bg-emerald-600 rounded-t-md h-9 absolute top-0 w-full'>
+                                    <span className='text-white pl-4 flex items-center h-full'>
+                                        {doc.document_name}
+                                    </span>
+                                </div>
+                                <CardContent className='flex flex-col opacity-50'>
+                                    <CustomStepper key={doc.requested_document_id} currentStatus={doc.status_id} className='py-10' />
+                                    <CustomForm className='grid grid-cols-4 gap-x-5' fields={FetchFirstHalve(doc, setData, errors)} />
+                                    <CustomForm fields={FetchSecondHalve(doc, setData, errors)} />
+                                    <CustomDialog
+                                        width="w-150"
+                                        trigger={
+                                            <Button variant="link" className="text-sm -mx-4">
+                                                View Attachment
+                                            </Button>
+                                        }
+                                        title="Attachment"
+                                        children={
+                                            <div className="flex justify-center items-center object-cover mt-2">
+                                                <CustomIcon imgSrc={`/storage/${doc.attachment_path}`} />
+                                            </div>
 
-                                    }
-                                />
-                            </CardContent>
-                            <CardFooter className="flex justify-between items-center">
-                                <p className="text-xs text-amber-500 p-2 rounded-md">
-                                    Note: You cannot delete the request once the document is approved.
-                                </p>
-                                <form onSubmit={cancelRequest}>
-                                    <input type="hidden" value={data.user_id} />
-                                    <input type="hidden" value={data.requested_document_id} />
-                                    <input type="hidden" value={data.document_id} />
-                                    <input type="hidden" value={data.status_id} />
-                                    <Button
-                                        variant='destructive'
-                                        disabled={processing}
-                                        onClick={() => {
-                                            setData('user_id', doc.user_id);
-                                            setData('requested_document_id', doc.requested_document_id);
-                                            setData('document_id', doc.document_id);
-                                            setData('status_id', doc.status_id);
-                                        }}>
-                                        Delete Request
-                                    </Button>
-                                </form>
-                            </CardFooter>
-                        </Card>
+                                        }
+                                    />
+                                </CardContent>
+                                <CardFooter className="flex justify-between items-center">
+                                    <h2 className='text-xs text-red-700 bg-red-100 p-2 rounded-md'>
+                                        <strong>{doc.status_name}:</strong> {doc.additional_message}
+                                    </h2>
+                                    <div className='flex gap-x-5'>
+                                        <Link
+                                            href={route('user.landing.services', {
+
+                                            })} 
+                                        >
+                                            <Button>
+
+                                                Edit Request
+                                            </Button>
+                                        </Link>
+                                        <form onSubmit={cancelRequest}>
+                                            <input type="hidden" value={data.user_id} />
+                                            <input type="hidden" value={data.requested_document_id} />
+                                            <input type="hidden" value={data.document_id} />
+                                            <input type="hidden" value={data.status_id} />
+                                            <Button
+                                                variant='destructive'
+                                                disabled={processing}
+                                                onClick={() => {
+                                                    setData('user_id', doc.user_id);
+                                                    setData('requested_document_id', doc.requested_document_id);
+                                                    setData('document_id', doc.document_id);
+                                                    setData('status_id', doc.status_id);
+                                                }}>
+                                                Delete Request
+                                            </Button>
+                                        </form>
+                                    </div>
+                                </CardFooter>
+                            </Card>
+                        ) : (
+                            <Card className="@container/card relative" key={doc.requested_document_id}>
+                                <div className='bg-emerald-600 rounded-t-md h-9 absolute top-0 w-full'>
+                                    <span className='text-white pl-4 flex items-center h-full'>
+                                        {doc.document_name}
+                                    </span>
+                                </div>
+                                <CardContent className='flex flex-col'>
+                                    <CustomStepper key={doc.requested_document_id} currentStatus={doc.status_id} className='py-10' />
+                                    <CustomForm className='grid grid-cols-4 gap-x-5' fields={FetchFirstHalve(doc, setData, errors)} />
+                                    <CustomForm fields={FetchSecondHalve(doc, setData, errors)} />
+                                    <CustomDialog
+                                        width="w-150"
+                                        trigger={
+                                            <Button variant="link" className="text-sm -mx-4">
+                                                View Attachment
+                                            </Button>
+                                        }
+                                        title="Attachment"
+                                        children={
+                                            <div className="flex justify-center items-center object-cover mt-2">
+                                                <CustomIcon imgSrc={`/storage/${doc.attachment_path}`} />
+                                            </div>
+
+                                        }
+                                    />
+                                </CardContent>
+                                <CardFooter className="flex justify-between items-center">
+                                    <p className="text-xs text-amber-500 bg-amber-100 p-2 rounded-md">
+                                        Note: You cannot delete the request once the document is approved.
+                                    </p>
+                                    <form onSubmit={cancelRequest}>
+                                        <input type="hidden" value={data.user_id} />
+                                        <input type="hidden" value={data.requested_document_id} />
+                                        <input type="hidden" value={data.document_id} />
+                                        <input type="hidden" value={data.status_id} />
+                                        <Button
+                                            variant='destructive'
+                                            disabled={processing}
+                                            onClick={() => {
+                                                setData('user_id', doc.user_id);
+                                                setData('requested_document_id', doc.requested_document_id);
+                                                setData('document_id', doc.document_id);
+                                                setData('status_id', doc.status_id);
+                                            }}>
+                                            Delete Request
+                                        </Button>
+                                    </form>
+                                </CardFooter>
+                            </Card>
+                        )
                     )
                     )
                 }

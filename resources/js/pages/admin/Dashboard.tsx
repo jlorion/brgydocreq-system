@@ -105,7 +105,7 @@ export default function Dashboard() {
         },
     ];
     return (
-        <AdminLayout className="" title="Dashboard">
+        <AdminLayout className="s" title="Dashboard">
             <div className="grid grid-cols-1 @xl/main:grid-cols-2 @5xl/main:grid-cols-4 @5xl/main:gap-5">
                 <CustomDisplayCard
                     title="8,689"

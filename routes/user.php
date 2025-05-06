@@ -40,9 +40,9 @@ Route::prefix('user')->name('user.')->group(function () {
 	Route::middleware('auth:web')->group(function () {
 
 		Route::middleware('user_notification')->group(function () {
-			Route::get('/', [UserController::class, 'show'])->name('landing.home');
-			Route::inertia('/contact-us', 'landing/ContactUs')->name('landing.contact-us');
-			Route::inertia('/about-us', 'landing/AboutUs')->name('landing.about-us');
+			Route::get('/', [UserController::class, 'showWelcome'])->name('landing.home');
+			Route::get('/contact-us', [UserController::class, 'showContact'])->name('landing.contact-us');
+			Route::get('/about-us', [UserController::class, 'showAbout'])->name('landing.about-us');
 		});
 
 		Route::get('verify-email', UserEmailVerificationPromptController::class)

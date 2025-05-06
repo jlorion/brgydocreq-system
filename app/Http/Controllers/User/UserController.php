@@ -11,12 +11,23 @@ use Inertia\Inertia;
 
 class UserController extends Controller
 {
-    public function show()
+    public function showWelcome()
     {
         $documents = Document::all()->each->makeHidden(['created_at', 'updated_at']);
 
         return Inertia::render('landing/Welcome', [
             'documents' => $documents,
         ]);
+    }
+    public function showAbout()
+    {
+
+        return Inertia::render('landing/AboutUs');
+    }
+
+    public function showContact()
+    {
+
+        return Inertia::render('landing/ContactUs');
     }
 }

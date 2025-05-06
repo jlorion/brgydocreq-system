@@ -49,6 +49,7 @@ const Welcome = () => {
         })
     }
 
+
     return (
 
         <>
@@ -156,11 +157,21 @@ const Welcome = () => {
                                 appointed barrio captain was Mr. Roberto de Rotas but was not able to function well because when logging concessions
                                 had stopped and withdrawn from the area, he also moved out to the place.
                             </article>
-                            <Link href={route('landing.about-us')}>
-                                <Button variant="primary" className="w-36">
-                                    Learn More
-                                </Button>
-                            </Link>
+                            {
+                                auth.user ? (
+                                    <Link href={route('user.landing.about-us')}>
+                                        <Button variant="primary" className="w-36">
+                                            Learn More
+                                        </Button>
+                                    </Link>
+                                ) : (
+                                    <Link href={route('landing.about-us')}>
+                                        <Button variant="primary" className="w-36">
+                                            Learn More
+                                        </Button>
+                                    </Link>
+                                )
+                            }
                         </div>
                     </div>
 

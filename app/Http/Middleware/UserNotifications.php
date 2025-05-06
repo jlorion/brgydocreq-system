@@ -22,6 +22,7 @@ class UserNotifications
         Inertia::share([
             'notifications' => function () {
                 if (Auth::guard('web')->check()) {
+
                     $user = Auth::guard('web')->id();
 
                     return Notifications::with([

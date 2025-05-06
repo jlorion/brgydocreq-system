@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Mail;
 // });
 
 
-Route::get('/', [UserController::class, 'show'])->name('landing.home');
+Route::get('/', [UserController::class, 'showWelcome'])->name('landing.home');
 Route::inertia('/about-us', 'landing/AboutUs')->name('landing.about-us');
 Route::inertia('/contact-us', 'landing/ContactUs')->name('landing.contact-us');
 
