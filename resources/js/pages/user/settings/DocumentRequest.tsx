@@ -2,19 +2,19 @@ import CustomDialog from '@/components/custom/CustomDialog';
 import { Button } from '@/components/ui/button';
 import UserSettingsLayout from '@/layouts/user/UserSettingsLayout';
 import { Card, CardContent, CardFooter, } from '@/components/ui/card';
-import { FetchFirstHalve, FetchSecondHalve } from '@/data/user/DocReqFields'
+import { FetchFirstHalve, FetchSecondHalve, Resubmit } from '@/data/user/DocumentRequestFields'
 import CustomForm from '@/components/custom/CustomFormFields';
 import { Link, router, useForm, usePage } from '@inertiajs/react';
 import { DocumentProcessingForm, SharedData } from '@/types';
 import CustomIcon from '@/components/custom/CustomIcon';
 import CustomStepper from '@/components/custom/CustomStepper';
-import { FormEventHandler, useEffect } from 'react';
+import { FormEventHandler, useEffect, useState } from 'react';
 import { toast, Toaster } from 'sonner';
 
 const DocumentRequest = () => {
 
     const { docprocessing } = usePage<SharedData>().props;
-    console.log(docprocessing);
+    // console.log(docprocessing);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -24,7 +24,7 @@ const DocumentRequest = () => {
         return () => clearInterval(interval);
     })
 
-    const { data, setData, post, processing, errors } = useForm<Required<DocumentProcessingForm>>({
+    const { data, setData, post, processing, errors, reset } = useForm<Required<DocumentProcessingForm>>({
         requested_document_id: 0,
         onprocess_id: 0,
         user_id: 0,
@@ -64,6 +64,27 @@ const DocumentRequest = () => {
         })
     }
 
+    const resubmitRequest: FormEventHandler = (e) => {
+        e.preventDefault();
+
+        post(route('user.settings.resubmit.document-request'), {
+            preserveScroll: true,
+            onSuccess: () => {
+                toast.success('Request successfully resubmitted');
+                reset()
+                setEditMode(null);
+            },
+            onError: (errors) => {
+                Object.entries(errors).forEach(([field, message]) => {
+                    console.error(`Field: ${field}, Error: ${message}`);
+                });
+
+            }
+        })
+    }
+
+    const [editMode, setEditMode] = useState<number | null>(null)
+
 
     return (
         <UserSettingsLayout title="Document Request Tracking">
@@ -78,55 +99,70 @@ const DocumentRequest = () => {
                                         {doc.document_name}
                                     </span>
                                 </div>
-                                <CardContent className='flex flex-col opacity-50'>
+                                <CardContent className={`flex flex-col ${editMode === doc.requested_document_id ? null : 'opacity-50'}`}>
                                     <CustomStepper key={doc.requested_document_id} currentStatus={doc.status_id} className='py-10' />
                                     <CustomForm className='grid grid-cols-4 gap-x-5' fields={FetchFirstHalve(doc, setData, errors)} />
-                                    <CustomForm fields={FetchSecondHalve(doc, setData, errors)} />
-                                    <CustomDialog
-                                        width="w-150"
-                                        trigger={
-                                            <Button variant="link" className="text-sm -mx-4">
-                                                View Attachment
-                                            </Button>
-                                        }
-                                        title="Attachment"
-                                        children={
-                                            <div className="flex justify-center items-center object-cover mt-2">
-                                                <CustomIcon imgSrc={`/storage/${doc.attachment_path}`} />
-                                            </div>
 
-                                        }
-                                    />
+                                    {editMode === doc.requested_document_id ? (
+                                        <form onSubmit={resubmitRequest}>
+                                            <CustomForm fields={Resubmit(data, setData, errors)} />
+                                            <input type="hidden" value={data.user_id} />
+                                            <input type="hidden" value={data.document_id} />
+                                            <input type="hidden" value={data.status_id} />
+                                            <input type='hidden' defaultValue={data.document_name} />
+                                            <input type='hidden' defaultValue={data.requested_document_id} />
+                                        </form>
+                                    ) : (
+                                        <>
+                                            <CustomForm fields={FetchSecondHalve(doc, setData, errors)} />
+                                            <CustomDialog
+                                                width="w-150"
+                                                trigger={
+                                                    <Button variant="link" className="text-sm -mx-4">
+                                                        View Attachment
+                                                    </Button>
+                                                }
+                                                title="Attachment"
+                                                children={
+                                                    <div className="flex justify-center items-center object-cover mt-2">
+                                                        <CustomIcon imgSrc={`/storage/${doc.attachment_path}`} />
+                                                    </div>
+
+                                                }
+                                            />
+                                        </>
+                                    )}
                                 </CardContent>
                                 <CardFooter className="flex justify-between items-center">
                                     <h2 className='text-xs text-red-700 bg-red-100 p-2 rounded-md'>
                                         <strong>{doc.status_name}:</strong> {doc.additional_message}
                                     </h2>
                                     <div className='flex gap-x-5'>
-                                        <Link
-                                            href='/user#services'
-                                        >
-                                            <Button>
-                                                Edit Request
-                                            </Button>
-                                        </Link>
-                                        <form onSubmit={cancelRequest}>
-                                            <input type="hidden" value={data.user_id} />
-                                            <input type="hidden" value={data.requested_document_id} />
-                                            <input type="hidden" value={data.document_id} />
-                                            <input type="hidden" value={data.status_id} />
+                                        <Button onClick={() => {
+                                            setData('user_id', doc.user_id);
+                                            setData('document_id', doc.document_id);
+                                            setData('status_id', 5);
+                                            setData('requested_document_id', doc.requested_document_id);
+                                            setData('document_name', doc.document_name);
+                                            setEditMode(prev => (prev === doc.requested_document_id ? null : doc.requested_document_id));
+                                        }}>
+                                            {editMode === doc.requested_document_id ? 'Cancel Edit' : 'Edit Request'}
+                                        </Button>
+
+                                        {editMode === doc.requested_document_id ? (
                                             <Button
-                                                variant='destructive'
                                                 disabled={processing}
-                                                onClick={() => {
-                                                    setData('user_id', doc.user_id);
-                                                    setData('requested_document_id', doc.requested_document_id);
-                                                    setData('document_id', doc.document_id);
-                                                    setData('status_id', doc.status_id);
+                                                className={editMode === doc.requested_document_id ? 'bg-blue-700 hover:bg-blue-600' : ''}
+                                                onClick={(e) => {
+                                                    resubmitRequest(e);
                                                 }}>
-                                                Delete Request
+                                                Resubmit Request
                                             </Button>
-                                        </form>
+                                        ) : (
+                                            null
+                                        )
+                                        }
+
                                     </div>
                                 </CardFooter>
                             </Card>
@@ -158,7 +194,7 @@ const DocumentRequest = () => {
                                     />
                                 </CardContent>
                                 <CardFooter className="flex justify-between items-center">
-                                    <p className="text-xs text-amber-500 bg-amber-100 p-2 rounded-md">
+                                    <p className="text-xs text-amber-500 bg-amber-50 p-2 rounded-md">
                                         Note: You cannot delete the request once the document is approved.
                                     </p>
                                     <form onSubmit={cancelRequest}>

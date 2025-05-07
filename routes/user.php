@@ -73,6 +73,7 @@ Route::prefix('user')->name('user.')->group(function () {
 			Route::delete('/profile', [UserProfileController::class, 'destroy'])->name('profile.destroy');
 			Route::get('/document-request', [UserDocumentReqController::class, 'fetchDocReq'])->name('document-request');
 			Route::post('/document-request/delete-request', [UserDocumentReqController::class, 'deleteDocReq'])->name('delete.document-request');
+			Route::post('/document-request/resubmit-request', [UserDocumentReqController::class, 'resubmitDocReq'])->name('resubmit.document-request');
 
 			Route::get('/password', [UserPasswordController::class, 'edit'])->name('password.edit');
 			Route::put('/password', [UserPasswordController::class, 'update'])->name('password.update');
