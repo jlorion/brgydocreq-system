@@ -26,7 +26,7 @@ class UserPasswordResetLinkController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
         $request->validate([
             'email' => 'required|email',
@@ -36,6 +36,6 @@ class UserPasswordResetLinkController extends Controller
             $request->only('email')
         );
 
-        return back()->with('status', __('A reset link will be sent if the account exists.'));
+        // return back()->with('status', __('A reset link will be sent if the account exists.'));
     }
 }

@@ -19,7 +19,7 @@ const Admins = () => {
     const { admins, roles } = usePage<SharedData>().props
 
     // invite admin
-    const { data: inviteData, setData: inviteSetData, post: invitePost, processing: inviteProcessing, errors: inviteErrors } = useForm<Required<InviteForm>>({
+    const { data: inviteData, setData: inviteSetData, post: invitePost, processing: inviteProcessing, errors: inviteErrors, reset } = useForm<Required<InviteForm>>({
         email: '',
         role_id: null,
     });
@@ -28,7 +28,7 @@ const Admins = () => {
         e.preventDefault();
         invitePost(route('admin.invite'), {
             onSuccess: () => {
-                toast.success('Succesfully updated')
+                toast.success('Invitation sent successfully')
             },
             onError: (errors) => {
                 console.error('Form submission failed. Validation errors:');
@@ -70,6 +70,7 @@ const Admins = () => {
             forceFormData: true,
             onSuccess: () => {
                 toast.success('Succesfully updated')
+                reset()
             },
             onError: (errors) => {
                 console.error('Form submission failed. Validation errors:');
@@ -109,34 +110,38 @@ const Admins = () => {
     return (
         <AdminLayout title='Administrator'>
             <div className='flex flex-row justify-end'>
-                <CustomDialog trigger={
-                    <Button className='w-1/7'>Invite</Button>
-                } children={
-                    <>
-                        <div className='flex gap-x-4'>
-                            <Input id='email' value={inviteData.email} onChange={(e) => inviteSetData('email', e.target.value)} placeholder='Email' required />
-                            <InputError message={inviteErrors.email} />
-                            <div className='w-1/2'>
-                                <CustomSelect
-                                    placeholder='Role'
-                                    value={inviteData.role_id}
-                                    onChange={(value) => { inviteSetData('role_id', value), console.log(value) }}
-                                    items={roles.map((role) => (
-                                        { value: role.role_id, label: role.role_name }
-                                    ))}
-                                />
-                                <InputError message={inviteErrors.role_id} />
+                <CustomDialog
+                    toaster={true}
+                    trigger={
+                        <Button className='w-1/7'>Invite</Button>
+                    } children={
+                        <>
+                            <div className='flex gap-x-4'>
+                                <div className='flex-1'>
+                                    <Input id='email' value={inviteData.email} onChange={(e) => inviteSetData('email', e.target.value)} placeholder='Email' required />
+                                    <InputError message={inviteErrors.email} />
+                                </div>
+                                <div className='w-1/3'>
+                                    <CustomSelect
+                                        placeholder='Role'
+                                        value={inviteData.role_id}
+                                        onChange={(value) => { inviteSetData('role_id', value), console.log(value) }}
+                                        items={roles.map((role) => (
+                                            { value: role.role_id, label: role.role_name }
+                                        ))}
+                                    />
+                                    <InputError message={inviteErrors.role_id} />
+                                </div>
                             </div>
-                        </div>
-                    </>
+                        </>
 
-                } button={
-                    <Button type='submit' disabled={inviteProcessing}>
-                        {inviteProcessing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                        Send
-                    </Button>
+                    } button={
+                        <Button type='submit' disabled={inviteProcessing}>
+                            {inviteProcessing && <LoaderCircle className="h-4 w-4 animate-spin" />}
+                            Send
+                        </Button>
 
-                } title='Invite Administrator' width='w-130' onSubmit={inviteSubmit} />
+                    } title='Invite Administrator' width='w-130' onSubmit={inviteSubmit} />
 
             </div>
             <div className='grid grid-cols-3 gap-x-3'>

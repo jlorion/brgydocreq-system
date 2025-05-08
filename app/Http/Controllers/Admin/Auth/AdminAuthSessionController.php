@@ -21,7 +21,6 @@ class AdminAuthSessionController extends Controller
 
         return Inertia::render('admin/auth/Login', [
             'canResetPassword' => Route::has('forgot-password'),
-            'status' => $request->session()->get('status'),
         ]);
     }
 

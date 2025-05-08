@@ -16,11 +16,10 @@ class UserAuthSessionController extends Controller
     /**
      * Show the login page.
      */
-    public function create(Request $request): Response
+    public function create(): Response
     {
         return Inertia::render('user/auth/Login', [
-            'canResetPassword' => Route::has('password.request'),
-            'status' => $request->session()->get('status'),
+            'canResetPassword' => Route::has('user.forgot-password'),
         ]);
     }
 

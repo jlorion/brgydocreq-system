@@ -50,6 +50,11 @@ class User extends Authenticatable
             'user_password' => 'hashed',
         ];
     }
+    
+    // public function getEmailForPasswordReset()
+    // {
+    //     return $this->user_email;
+    // }
 
     public function getAuthPassword()
     {
@@ -60,6 +65,4 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Resident::class, 'resident_id', 'resident_id');
     }
-
-    
 }

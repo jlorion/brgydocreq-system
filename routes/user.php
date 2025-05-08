@@ -17,6 +17,11 @@ use App\Http\Controllers\User\UserDocumentRequestController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+
+Route::middleware('guest:web')->group(function () {
+	Route::get('/reset-password/{token}', [UserNewPasswordController::class, 'create'])->name('password.reset');
+});
+
 Route::prefix('user')->name('user.')->group(function () {
 	Route::middleware(['guest:web'])->group(function () {
 
@@ -30,9 +35,7 @@ Route::prefix('user')->name('user.')->group(function () {
 
 		Route::get('/forgot-password', [UserPasswordResetLinkController::class, 'create'])->name('forgot-password');
 
-		Route::post('/forgot-password', [UserPasswordResetLinkController::class, 'store'])->name('password.email');
-
-		Route::get('/reset-password/{token}', [UserNewPasswordController::class, 'create'])->name('password.reset');
+		Route::post('/forgot-password/email', [UserPasswordResetLinkController::class, 'store'])->name('password.email');
 
 		Route::post('/reset-password', [UserNewPasswordController::class, 'store'])->name('password.store');
 	});

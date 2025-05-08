@@ -10,24 +10,33 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthSplitLayout from '@/layouts/shared/AuthSplitLayout';
 import ForgotPass from '../../../../assets/forgot-password.svg';
+import { toast, Toaster } from 'sonner';
 
-export default function ForgotPassword({ status }: { status?: string }) {
-    const { data, setData, post, processing, errors } = useForm<Required<{ email: string }>>({
+export default function ForgotPassword() {
+    const { data, setData, post, processing, errors, reset } = useForm<Required<{ email: string }>>({
         email: '',
     });
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-
-        post(route('password.email'));
+        post(route('user.password.email'), {
+            onSuccess: () => {
+                toast.success('Password reset link sent to your email address.');
+                reset()
+            },
+            onError: (errors) => {
+                console.error('Form submission failed. Validation errors:');
+                Object.entries(errors).forEach(([field, message]) => {
+                    console.error(`Field: ${field}, Error: ${message}`);
+                });
+            },
+        });
     };
 
     return (
         <AuthSplitLayout title="Forgot password" description="Enter your email to receive a password reset link" image={ForgotPass}>
             <Head title="Forgot password" />
-
-            {status && <div className="mb-4 text-center text-sm font-medium text-green-600">{status}</div>}
-
+            <Toaster richColors position='top-right' />
             <div className="space-y-6">
                 <form onSubmit={submit}>
                     <div className="grid gap-2">
@@ -37,6 +46,7 @@ export default function ForgotPassword({ status }: { status?: string }) {
                             type="email"
                             name="email"
                             autoComplete="off"
+                            required
                             tabIndex={1}
                             value={data.email}
                             autoFocus

@@ -9,7 +9,6 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthSplitLayout from '@/layouts/shared/AuthSplitLayout';
-import { Eye, EyeOff } from 'lucide-react';
 import LoginImage from '../../../../assets/login-side-image.svg';
 
 type LoginForm = {
@@ -19,11 +18,10 @@ type LoginForm = {
 };
 
 interface LoginProps {
-    status?: string;
     canResetPassword: boolean;
 }
 
-export default function Login({ status, canResetPassword }: LoginProps) {
+export default function Login({ canResetPassword }: LoginProps) {
     const { data, setData, post, processing, errors, reset } = useForm<Required<LoginForm>>({
         username: '',
         user_password: '',
@@ -54,6 +52,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                             id="username"
                             type="text"
                             autoFocus
+                            required
                             tabIndex={1}
                             autoComplete="username"
                             value={data.username}
@@ -68,13 +67,14 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                         <Input
                             id="password"
                             type="password"
+                            required
                             tabIndex={2}
                             autoComplete="current-password"
                             value={data.user_password}
                             onChange={(e) => setData('user_password', e.target.value)}
                             placeholder="Enter your password"
-                            icon={(showPassword) => (showPassword ? <Eye/> : <EyeOff/>)}
                         />
+                        <InputError message={errors.user_password} />
 
                         <div className="flex items-center justify-between">
                             <div className="ml-2 flex items-center space-x-3">
@@ -97,7 +97,6 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                             </div>
                         </div>
 
-                        <InputError message={errors.user_password} />
                     </div>
 
                     <Button type="submit" variant="primary" className="mt-5 w-full" tabIndex={5} disabled={processing}>
@@ -114,7 +113,6 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                 </div>
             </form>
 
-            {status && <div className="mb-4 text-center text-sm font-medium text-green-600">{status}</div>}
         </AuthSplitLayout >
     );
 }

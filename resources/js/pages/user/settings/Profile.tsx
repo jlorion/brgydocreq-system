@@ -53,7 +53,7 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
     return (
         <>
             <Head title="Profile settings" />
-            <Toaster richColors position='top-right'/>
+            <Toaster richColors position='top-right' />
             <UserSettingsLayout title='Profile information'>
                 <form onSubmit={submit} className='space-y-5'>
                     <CustomForm className='grid grid-cols-3 gap-x-5' fields={AccountInfo(data, setData, errors)} />

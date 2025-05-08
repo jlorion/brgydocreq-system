@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
@@ -21,7 +22,7 @@ class UserNewPasswordController extends Controller
      */
     public function create(Request $request): Response
     {
-        return Inertia::render('user/auth/reset-password', [
+        return Inertia::render('user/auth/ResetPassword', [
             'email' => $request->email,
             'token' => $request->route('token'),
         ]);
@@ -47,10 +48,11 @@ class UserNewPasswordController extends Controller
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function ($user) use ($request) {
                 $user->forceFill([
-                    'password' => Hash::make($request->password),
+                    'user_password' => Hash::make($request->password),
                     'remember_token' => Str::random(60),
                 ])->save();
 
+                Auth::guard('web')->login($user);
                 event(new PasswordReset($user));
             }
         );
@@ -59,7 +61,7 @@ class UserNewPasswordController extends Controller
         // the application's home authenticated view. If there is an error we can
         // redirect them back to where they came from with their error message.
         if ($status == Password::PasswordReset) {
-            return to_route('login')->with('status', __($status));
+            return to_route('user.landing.home')->with('status', __($status));
         }
 
         throw ValidationException::withMessages([
