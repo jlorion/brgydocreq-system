@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import AdminSettingsLayout from '@/layouts/admin/AdminSettingsLayout';
 import CustomForm from '@/components/custom/CustomFormFields';
 import { NotebookPenIcon } from 'lucide-react';
+import { toast, Toaster } from 'sonner';
 
 
 export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: boolean; status?: string }) {
@@ -39,12 +40,16 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
         e.preventDefault();
         patch(route('admin.settings.profile.update'), {
             preserveScroll: true,
+            onSuccess: () => {
+                toast.success('Updated Successfully')
+            }
         });
     };
 
     return (
         <>
             <Head title="Profile settings" />
+            <Toaster richColors position='top-right' />
             <AdminSettingsLayout title='Profile information'>
                 <form onSubmit={submit} className="space-y-6">
                     <CustomForm className='grid grid-cols-3 gap-x-5' fields={AccountInfo(data, setData, errors)} />

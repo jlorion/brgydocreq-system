@@ -7,10 +7,10 @@ import { NavigationMenu, NavigationMenuItem, NavigationMenuList, navigationMenuT
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';
-import { Link, usePage } from '@inertiajs/react';
+import { Link, router, usePage } from '@inertiajs/react';
 import { ChevronDown, Menu } from 'lucide-react';
 import { CustomMenuContent } from './CustomMenuContent';
-import React from 'react';
+import React, { useEffect } from 'react';
 import DefaultProfilePic from '../../../assets/default_profilepic.svg'
 import CustomNotifBell from './CustomNotifBell';
 
@@ -24,6 +24,14 @@ interface CustomAdminHeaderProps {
 
 export function CustomAdminHeader({ breadcrumbs = [], mainNavItems = [], rightNavItems = [], leftNavItems, className }: CustomAdminHeaderProps) {
 	const { auth } = usePage<SharedData>().props;
+
+	useEffect(() => {
+		const interval = setInterval(() => {
+			router.reload({ only: ['auth'] });
+		}, 1000);
+
+		return () => clearInterval(interval);
+	}, []);
 
 	return (
 		<>

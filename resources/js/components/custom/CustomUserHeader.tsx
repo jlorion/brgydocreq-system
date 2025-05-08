@@ -1,6 +1,6 @@
 import { Breadcrumbs } from '@/components/custom/breadcrumbs';
 import CustomIcon from '@/components/custom/CustomIcon';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList, navigationMenuTriggerStyle } from '@/components/ui/navigation-menu';
@@ -9,11 +9,12 @@ import { useInitials } from '@/hooks/UseInitials';
 import { UseHeaderScroll } from '@/hooks/UseHeaderScroll';
 import { cn } from '@/lib/utils';
 import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';
-import { Link, usePage } from '@inertiajs/react';
+import { Link, router, usePage } from '@inertiajs/react';
 import { ChevronDown, Menu } from 'lucide-react';
 import { CustomMenuContent } from './CustomMenuContent';
 import CustomNotifBell from './CustomNotifBell';
 import DefaultProfilePic from '../../../assets/default_profilepic.svg'
+import { useEffect } from 'react';
 
 
 interface CustomUserHeaderProps {
@@ -32,6 +33,13 @@ export function CustomUserHeader({ breadcrumbs = [], mainNavItems = [], rightNav
 
     const isActive = url === '/about-us' || url === '/contact-us  '
 
+    useEffect(() => {
+        const interval = setInterval(() => {
+            router.reload({ only: ['auth'] });
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, []);
 
     return (
         <>
@@ -118,7 +126,7 @@ export function CustomUserHeader({ breadcrumbs = [], mainNavItems = [], rightNav
                                     <DropdownMenuTrigger asChild>
                                         <Button variant="ghost" className="flex items-center gap-x-5">
                                             <Avatar className="size-8 overflow-hidden rounded-full">
-                                            <AvatarImage src={auth.user.user_photopath ? `/storage/${auth.user.user_photopath}` : DefaultProfilePic} alt={auth.user.username} />
+                                                <AvatarImage src={auth.user.user_photopath ? `/storage/${auth.user.user_photopath}` : DefaultProfilePic} alt={auth.user.username} />
                                             </Avatar>
                                             <div className="flex flex-col items-start gap-1 text-sm">
                                                 {auth.user.username}

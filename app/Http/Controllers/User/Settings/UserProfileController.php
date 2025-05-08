@@ -54,23 +54,27 @@ class UserProfileController extends Controller
     public function uploadPic(Request $request)
     {
         $validate = $request->validate([
-            'user_photopath' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
+            'photopath' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
         ]);
+
+
 
         $user = $request->user('web');
 
-        if ($request->hasFile('user_photopath')) {
+        if ($request->hasFile('photopath')) {
             if ($user->user_photopath) {
                 Storage::disk('public')->delete($user->user_photopath);
             }
 
-            $file = $request->file('user_photopath');
+            $file = $request->file('photopath');
             $filename = uniqid() . '.' . $file->getClientOriginalExtension();
             $path = $file->storeAs('user/profile_pic', $filename, 'public');
-            $validate['user_photopath'] = $path;
+            $validate['photopath'] = $path;
         }
 
-        $user->update($validate);
+        $user->update([
+            'user_photopath' => $validate['photopath']
+        ]);
 
         //or  $request->user('web')->fill($validate)->save();
 

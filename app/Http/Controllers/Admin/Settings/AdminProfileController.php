@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Admin\Settings;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Settings\ProfileUpdateRequest;
 use App\Models\Address;
 use App\Models\Role;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -52,6 +52,33 @@ class AdminProfileController extends Controller
         $admin->update($validate);
 
         return to_route('admin.settings.profile.edit');
+    }
+
+    public function uploadPic(Request $request)
+    {
+        $validate = $request->validate([
+            'photopath' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        $admin = $request->user('admin');
+
+        if ($request->hasFile('photopath')) {
+            if ($admin->admin_photopath) {
+                Storage::disk('public')->delete($admin->admin_photopath);
+            }
+
+            $file = $request->file('photopath');
+            $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+            $path = $file->storeAs('admin/profile_pic', $filename, 'public');
+            $validate['photopath'] = $path;
+        }
+
+        $admin->update([
+            'admin_photopath' => $validate['photopath']
+        ]);
+
+        //or  $request->user('web')->fill($validate)->save();
+
     }
 
 

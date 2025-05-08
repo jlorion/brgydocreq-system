@@ -59,6 +59,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 			Route::get('/profile', [AdminProfileController::class, 'edit'])->name('profile.edit');
 			Route::patch('/profile', [AdminProfileController::class, 'update'])->name('profile.update');
+			Route::post('/profile/upload-pic', [AdminProfileController::class, 'uploadPic'])->name('upload.pic');
 			Route::delete('/profile', [AdminProfileController::class, 'destroy'])->name('profile.destroy');
 
 			Route::get('/password', [AdminPasswordController::class, 'edit'])->name('password.edit');
