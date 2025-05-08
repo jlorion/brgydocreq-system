@@ -29,13 +29,15 @@ class UserProfileController extends Controller
     public function update(Request $request): RedirectResponse
     {
         $validate = $request->validate([
-            'username' => 'required|unique:users,username',
-            'user_email' => 'required|email|unique:users,user_email,',
+            'username' => 'required|unique:users,username,' . $request->user('web')->user_id . ',user_id',
+            'user_email' => 'required|email|unique:users,user_email,' . $request->user('web')->user_id . ',user_id',
             'user_photopath' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
             'user_phonenum' => ['required', 'regex:/^09\d{9}$/'],
         ]);
 
         $user = $request->user('web');
+
+        // return response()->json($user);
 
         if ($user->isDirty('email')) {
             $user->email_verified_at = null;

@@ -16,6 +16,7 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm<Required<AdminForm>>({
         admin_id: auth.admin.admin_id,
         admin_username: auth.admin.admin_username,
+        admin_status: auth.admin.admin_status,
         admin_email: auth.admin.admin_email,
         admin_phonenum: auth.admin.admin_phonenum,
         admin_photopath: auth.admin.admin_photopath,
