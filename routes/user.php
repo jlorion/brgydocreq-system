@@ -70,6 +70,7 @@ Route::prefix('user')->name('user.')->group(function () {
 
 			Route::get('/profile', [UserProfileController::class, 'edit'])->name('profile.edit');
 			Route::patch('/profile', [UserProfileController::class, 'update'])->name('profile.update');
+			Route::post('/profile/upload-pic', [UserProfileController::class, 'uploadPic'])->name('upload.pic');
 			Route::delete('/profile', [UserProfileController::class, 'destroy'])->name('profile.destroy');
 			Route::get('/document-request', [UserDocumentReqController::class, 'fetchDocReq'])->name('document-request');
 			Route::post('/document-request/delete-request', [UserDocumentReqController::class, 'deleteDocReq'])->name('delete.document-request');

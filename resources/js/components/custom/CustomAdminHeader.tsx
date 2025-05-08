@@ -108,7 +108,6 @@ export function CustomAdminHeader({ breadcrumbs = [], mainNavItems = [], rightNa
 										<Button variant="ghost" className="flex items-center gap-x-5">
 											<Avatar className="size-8 overflow-hidden rounded-full">
 												<AvatarImage src={auth.admin.admin_photopath ? `/storage/${auth.admin.admin_photopath}` : DefaultProfilePic} alt={auth.admin.admin_username} />
-
 											</Avatar>
 											<div className="flex flex-col items-start gap-1 text-sm">
 												{auth.admin.admin_username}

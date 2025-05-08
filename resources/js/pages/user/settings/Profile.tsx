@@ -8,13 +8,14 @@ import UserSettingsLayout from '@/layouts/user/UserSettingsLayout';
 import CustomForm from '@/components/custom/CustomFormFields';
 import { Button } from '@/components/ui/button';
 import { NotebookPenIcon } from 'lucide-react';
+import { toast, Toaster } from 'sonner';
 
 
 
 export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: boolean; status?: string }) {
     const { auth } = usePage<SharedData>().props;
 
-    const { data, setData, patch, errors, processing, recentlySuccessful } = useForm<Required<UserForm>>({
+    const { data, setData, patch, errors, processing } = useForm<Required<UserForm>>({
         user_id: auth.user.user_id,
         username: auth.user.username,
         user_email: auth.user.user_email,
@@ -37,6 +38,9 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
         e.preventDefault();
         patch(route('user.settings.profile.update'), {
             preserveScroll: true,
+            onSuccess: () => {
+                toast.success('Updated successfully')
+            },
             onError: (errors) => {
                 console.error('Form submission failed. Validation errors:');
                 Object.entries(errors).forEach(([field, message]) => {
@@ -49,6 +53,7 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
     return (
         <>
             <Head title="Profile settings" />
+            <Toaster richColors position='top-right'/>
             <UserSettingsLayout title='Profile information'>
                 <form onSubmit={submit} className='space-y-5'>
                     <CustomForm className='grid grid-cols-3 gap-x-5' fields={AccountInfo(data, setData, errors)} />

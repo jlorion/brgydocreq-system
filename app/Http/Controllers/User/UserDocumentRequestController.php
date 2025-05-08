@@ -28,7 +28,6 @@ class UserDocumentRequestController extends Controller
             $validate['attachment_path'] = $request->file('attachment_path')->store('user/attachments', 'public');
         }
 
-
         // return response()->json($name->resident->resident_firstname);
 
         DB::transaction(function () use ($validate) {

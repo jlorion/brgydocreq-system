@@ -13,6 +13,7 @@ import { Link, usePage } from '@inertiajs/react';
 import { ChevronDown, Menu } from 'lucide-react';
 import { CustomMenuContent } from './CustomMenuContent';
 import CustomNotifBell from './CustomNotifBell';
+import DefaultProfilePic from '../../../assets/default_profilepic.svg'
 
 
 interface CustomUserHeaderProps {
@@ -117,10 +118,7 @@ export function CustomUserHeader({ breadcrumbs = [], mainNavItems = [], rightNav
                                     <DropdownMenuTrigger asChild>
                                         <Button variant="ghost" className="flex items-center gap-x-5">
                                             <Avatar className="size-8 overflow-hidden rounded-full">
-                                                <AvatarImage src={auth.user.user_photopath} alt={auth.user.username} />
-                                                <AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
-                                                    {getInitials(auth.user.username)}
-                                                </AvatarFallback>
+                                            <AvatarImage src={auth.user.user_photopath ? `/storage/${auth.user.user_photopath}` : DefaultProfilePic} alt={auth.user.username} />
                                             </Avatar>
                                             <div className="flex flex-col items-start gap-1 text-sm">
                                                 {auth.user.username}

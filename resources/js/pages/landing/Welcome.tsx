@@ -95,6 +95,7 @@ const Welcome = () => {
                         {auth.user ? (documents.map((document) => (
                             <CustomDialog
                                 key={document.document_id}
+                                toaster={true}
                                 title={document.document_name}
                                 onSubmit={submitDocument}
                                 trigger={

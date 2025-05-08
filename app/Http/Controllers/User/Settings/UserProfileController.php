@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -50,6 +51,30 @@ class UserProfileController extends Controller
         return to_route('user.settings.profile.edit');
     }
 
+    public function uploadPic(Request $request)
+    {
+        $validate = $request->validate([
+            'user_photopath' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        $user = $request->user('web');
+
+        if ($request->hasFile('user_photopath')) {
+            if ($user->user_photopath) {
+                Storage::disk('public')->delete($user->user_photopath);
+            }
+
+            $file = $request->file('user_photopath');
+            $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+            $path = $file->storeAs('user/profile_pic', $filename, 'public');
+            $validate['user_photopath'] = $path;
+        }
+
+        $user->update($validate);
+
+        //or  $request->user('web')->fill($validate)->save();
+
+    }
 
     /**
      * Delete the user's account.
