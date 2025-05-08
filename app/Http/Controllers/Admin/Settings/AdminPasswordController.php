@@ -35,7 +35,7 @@ class AdminPasswordController extends Controller
         ]);
 
         $request->user()->update([
-            'password' => Hash::make($validated['password']),
+            'admin_password' => Hash::make($validated['password']),
         ]);
 
         return back();
