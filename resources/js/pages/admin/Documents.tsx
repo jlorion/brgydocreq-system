@@ -2,7 +2,7 @@ import CustomDialog from '@/components/custom/CustomDialog';
 import { Button } from '@/components/ui/button';
 import AdminLayout from '@/layouts/admin/AdminLayout';
 import { DocumentCustomCard } from '@/components/custom/CustomCard';
-import { useForm, usePage } from '@inertiajs/react';
+import { Head, useForm, usePage } from '@inertiajs/react';
 import { DocumentForm, SharedData } from '@/types';
 import { LoaderCircleIcon, PlusCircle } from 'lucide-react';
 import CustomForm from '@/components/custom/CustomFormFields';
@@ -75,6 +75,7 @@ export default function Documents() {
 
     return (
         <AdminLayout title='Documents'>
+            <Head title="Documents" />
             <div className='flex justify-end'>
                 <CustomDialog
                     title='Add Document'

@@ -7,7 +7,7 @@ import { ArrowUpDown } from 'lucide-react'
 import CustomSheet from '@/components/custom/CustomSheet'
 import CustomForm from '@/components/custom/CustomFormFields'
 import { SharedData, DocumentProcessingForm } from '@/types'
-import { useForm, usePage } from '@inertiajs/react'
+import { Head, useForm, usePage } from '@inertiajs/react'
 import { format } from 'date-fns'
 import { FetchFirstHalve, FetchSecondHalve } from '@/data/admin/OnProcessFields';
 import { FormEventHandler, useEffect } from 'react'
@@ -211,6 +211,7 @@ const OnProcess = () => {
 
   return (
     <AdminLayout className='p-5' title='On Process'>
+      <Head title="On Process" />
       <CustomDataTable
         columns={columns}
         data={onProcessData}

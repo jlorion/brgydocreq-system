@@ -8,7 +8,7 @@ import { FetchFirstHalve, FetchSecondHalve, ViewFields } from '@/data/admin/DocR
 import AdminLayout from '@/layouts/admin/AdminLayout'
 import { getStatusColors } from '@/lib/utils'
 import { DocumentProcessingForm, SharedData } from '@/types'
-import { useForm, usePage } from '@inertiajs/react'
+import { Head, useForm, usePage } from '@inertiajs/react'
 import { ColumnDef } from '@tanstack/react-table'
 import { format } from 'date-fns'
 import { ArrowUpDown } from 'lucide-react'
@@ -181,6 +181,7 @@ const Archives = () => {
 
   return (
     <AdminLayout className='p-5' title='Archives'>
+      <Head title="Archives" />
       <CustomDataTable columns={columns}
         data={onProcessData}
         filterColumn='document_name'

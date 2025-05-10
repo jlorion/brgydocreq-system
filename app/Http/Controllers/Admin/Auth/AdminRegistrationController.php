@@ -52,6 +52,7 @@ class AdminRegistrationController extends Controller
             ['officer_birthdate', $validate['officer_birthdate']],
             ['officer_householdnum', $validate['officer_householdnum']],
         ])->first();
+        
 
         if (!$barangayOfficer) {
             throw ValidationException::withMessages([

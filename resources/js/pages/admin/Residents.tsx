@@ -4,7 +4,7 @@ import CustomSheet from '@/components/custom/CustomSheet';
 import { Button } from '@/components/ui/button';
 import AdminLayout from '@/layouts/admin/AdminLayout';
 import { ResidentForm, SharedData } from '@/types';
-import { useForm, usePage } from '@inertiajs/react';
+import { Head, useForm, usePage } from '@inertiajs/react';
 import { ColumnDef } from '@tanstack/react-table';
 import { ArrowUpDown, LoaderCircle, PlusCircle } from 'lucide-react';
 import { getStatusColors } from '@/lib/utils';
@@ -184,6 +184,7 @@ const Residents = () => {
     ]
     return (
         <AdminLayout title='Residents'>
+            <Head title="Residents" />
             <div className="h-full w-full p-2 pt-5">
                 <div className="flex flex-col items-center justify-between pr-2">
                     <CustomDataTable

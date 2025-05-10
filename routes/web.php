@@ -26,7 +26,5 @@ Route::get('/', [UserController::class, 'showWelcome'])->name('landing.home');
 Route::inertia('/about-us', 'landing/AboutUs')->name('landing.about-us');
 Route::inertia('/contact-us', 'landing/ContactUs')->name('landing.contact-us');
 
-
-
 require __DIR__ . '/admin.php';
 require __DIR__ . '/user.php';

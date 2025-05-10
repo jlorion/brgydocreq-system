@@ -2,7 +2,7 @@ import CustomDialog from '@/components/custom/CustomDialog';
 import { Button } from '@/components/ui/button';
 import AdminLayout from '@/layouts/admin/AdminLayout';
 import { Input } from '@/components/ui/input';
-import { useForm, usePage } from '@inertiajs/react';
+import { Head, useForm, usePage } from '@inertiajs/react';
 import { FormEventHandler, } from 'react';
 import { LoaderCircle } from 'lucide-react';
 import InputError from '@/components/custom/InputError';
@@ -114,7 +114,9 @@ const Admins = () => {
 
 
     return (
+
         <AdminLayout title='Administrator'>
+            <Head title="Administrator" />
             <div className='flex flex-row justify-end'>
                 <CustomDialog
                     toaster={true}

@@ -4,6 +4,7 @@ import CustomIcon from '@/components/custom/CustomIcon';
 import CustomSheet from '@/components/custom/CustomSheet';
 import { Button } from '@/components/ui/button';
 import AdminLayout from '@/layouts/admin/AdminLayout';
+import { Head } from '@inertiajs/react';
 import { ColumnDef } from '@tanstack/react-table';
 import { Archive, ArrowUpDown, ChartSpline, FileText, Users } from 'lucide-react';
 
@@ -106,6 +107,7 @@ export default function Dashboard() {
     ];
     return (
         <AdminLayout className="s" title="Dashboard">
+            <Head title="Dashboard" />
             <div className="grid grid-cols-1 @xl/main:grid-cols-2 @5xl/main:grid-cols-4 @5xl/main:gap-5">
                 <CustomDisplayCard
                     title="8,689"

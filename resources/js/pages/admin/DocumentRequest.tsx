@@ -7,7 +7,7 @@ import { ColumnDef } from '@tanstack/react-table'
 import { ArrowUpDown } from 'lucide-react'
 import CustomForm from '@/components/custom/CustomFormFields'
 import { SharedData, DocumentProcessingForm } from '@/types'
-import { router, useForm, usePage } from '@inertiajs/react'
+import { Head, router, useForm, usePage } from '@inertiajs/react'
 import { format } from 'date-fns'
 import CustomDialog from '@/components/custom/CustomDialog'
 import CustomIcon from '@/components/custom/CustomIcon'
@@ -197,6 +197,7 @@ const DocumentRequeset = () => {
 
   return (
     <AdminLayout className='p-5 ' title='Document Request'>
+      <Head title="Document Request" />
       <CustomDataTable
         columns={columns}
         data={onProcessData}
