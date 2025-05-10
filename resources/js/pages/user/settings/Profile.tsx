@@ -1,7 +1,7 @@
 import { UserForm, type SharedData } from '@/types';
 import { Head, useForm, usePage } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
-import DeleteUser from '@/components/custom/DeleteAccount';
+import DeleteUser from '@/components/custom/DeleteUser';
 import { AccountInfo } from '@/data/user/ProfileFields';
 import { ResidentInfo } from '@/data/user/ProfileFields';
 import UserSettingsLayout from '@/layouts/user/UserSettingsLayout';

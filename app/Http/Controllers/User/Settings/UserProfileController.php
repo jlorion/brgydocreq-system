@@ -89,7 +89,7 @@ class UserProfileController extends Controller
             'password' => ['required', 'current_password'],
         ]);
 
-        $user = $request->user();
+        $user = $request->user('web');
 
         Auth::logout();
 
@@ -98,6 +98,6 @@ class UserProfileController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return \to_route('user.login');
     }
 }

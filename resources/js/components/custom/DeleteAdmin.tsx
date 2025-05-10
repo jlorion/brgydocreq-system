@@ -8,14 +8,14 @@ import HeadingSmall from '@/components/custom/HeadingSmall';
 
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
-export default function DeleteAccount() {
+export default function DeleteAdmin() {
     const passwordInput = useRef<HTMLInputElement>(null);
     const { data, setData, delete: destroy, processing, reset, errors, clearErrors } = useForm<Required<{ password: string }>>({ password: '' });
 
-    const deleteUser: FormEventHandler = (e) => {
+    const deleteAdmin: FormEventHandler = (e) => {
         e.preventDefault();
 
-        destroy(route('user.settings.profile.destroy'), {
+        destroy(route('admin.settings.profile.destroy'), {
             preserveScroll: true,
             onSuccess: () => closeModal(),
             onError: () => passwordInput.current?.focus(),
@@ -47,7 +47,7 @@ export default function DeleteAccount() {
                             Once your account is deleted, all of its resources and data will also be permanently deleted. Please enter your password
                             to confirm you would like to permanently delete your account.
                         </DialogDescription>
-                        <form className="space-y-6" onSubmit={deleteUser}>
+                        <form className="space-y-6" onSubmit={deleteAdmin}>
                             <div className="grid gap-2">
                                 <Label htmlFor="password" className="sr-only">
                                     Password

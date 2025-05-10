@@ -91,7 +91,7 @@ class AdminProfileController extends Controller
             'password' => ['required', 'current_password'],
         ]);
 
-        $user = $request->user();
+        $user = $request->user('admin');
 
         Auth::logout();
 
@@ -100,6 +100,6 @@ class AdminProfileController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return \to_route('admin.login');
     }
 }
