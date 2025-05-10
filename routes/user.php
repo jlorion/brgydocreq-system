@@ -18,9 +18,6 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 
-Route::middleware('guest:web')->group(function () {
-	Route::get('/reset-password/{token}', [UserNewPasswordController::class, 'create'])->name('password.reset');
-});
 
 Route::prefix('user')->name('user.')->group(function () {
 	Route::middleware(['guest:web'])->group(function () {
@@ -37,7 +34,7 @@ Route::prefix('user')->name('user.')->group(function () {
 
 		Route::post('/forgot-password/email', [UserPasswordResetLinkController::class, 'store'])->name('password.email');
 
-		Route::post('/reset-password', [UserNewPasswordController::class, 'store'])->name('password.store');
+		Route::post('/reset-password/user', [UserNewPasswordController::class, 'store'])->name('password.store');
 	});
 
 	Route::middleware('auth:web')->group(function () {

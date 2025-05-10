@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class Admin extends Authenticatable
 
 {
+    /** @use HasFactory<\Database\Factories\UserFactory> */
+    use HasFactory, Notifiable;
+
     protected $primaryKey = 'admin_id';
 
     protected $fillable = [
@@ -15,7 +19,7 @@ class Admin extends Authenticatable
         'role_id',
         'admin_username',
         'admin_phonenum',
-        'admin_email',
+        'email',
         'admin_password',
         'admin_photopath'
     ];

@@ -9,12 +9,15 @@ use App\Http\Controllers\Admin\AdminOnProcessController;
 use App\Http\Controllers\Admin\AdminResidentsController;
 use App\Http\Controllers\Admin\Auth\AdminAuthSessionController;
 use App\Http\Controllers\Admin\Auth\AdminInvitationController;
+use App\Http\Controllers\Admin\Auth\AdminNewPasswordController;
 use App\Http\Controllers\Admin\Auth\AdminPasswordResetLinkController;
 use App\Http\Controllers\Admin\Settings\AdminPasswordController;
 use App\Http\Controllers\Admin\Settings\AdminProfileController;
 use App\Http\Controllers\Admin\Auth\AdminRegistrationController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+
+
 
 Route::prefix('admin')->name('admin.')->group(function () {
 
@@ -26,6 +29,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
 		Route::get('/login', [AdminAuthSessionController::class, 'create'])->name('login');
 		Route::post('/login/store', [AdminAuthSessionController::class, 'store'])->name('login.store');
 		Route::get('/forgot-password', [AdminPasswordResetLinkController::class, 'create'])->name('forgot-password');
+
+		Route::post('/forgot-password/email', [AdminPasswordResetLinkController::class, 'store'])->name('password.email');
+
+		Route::post('/reset-password/admin', [AdminNewPasswordController::class, 'store'])->name('password.store');
 	});
 
 	Route::middleware(['auth:admin', 'verified:admin'])->group(function () {

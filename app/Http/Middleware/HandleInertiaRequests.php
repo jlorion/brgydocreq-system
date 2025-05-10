@@ -58,7 +58,7 @@ class HandleInertiaRequests extends Middleware
                 'user' => $user ? [
                     'user_id' => $user->user_id,
                     'username' => $user->username,
-                    'user_email' => $user->user_email,
+                    'user_email' => $user->email,
                     'user_phonenum' => $user->user_phonenum,
                     'user_photopath' => $user->user_photopath,
                     'resident_firstname' => $user->resident->resident_firstname,
@@ -75,7 +75,7 @@ class HandleInertiaRequests extends Middleware
                 'admin' => $admin ? [
                     'admin_id' => $admin->admin_id,
                     'admin_username' => $admin->admin_username,
-                    'admin_email' => $admin->admin_email,
+                    'admin_email' => $admin->email,
                     'admin_phonenum' => $admin->admin_phonenum,
                     'admin_role' => $admin->role->role_name,
                     'admin_roleid' => $admin->role->role_id,

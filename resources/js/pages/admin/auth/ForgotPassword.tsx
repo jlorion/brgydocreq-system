@@ -2,32 +2,39 @@
 import { Head, useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
-
 import TextLink from '@/components/custom/CustomTextLink';
 import InputError from '@/components/custom/InputError';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthSplitLayout from '@/layouts/shared/AuthSplitLayout';
-import ForgotPass from '../../../assets/forgot-password.svg';
+import ForgotPass from '../../../../assets/forgot-password.svg';
+import { toast, Toaster } from 'sonner';
 
-export default function ForgotPassword({ status }: { status?: string }) {
-    const { data, setData, post, processing, errors } = useForm<Required<{ email: string }>>({
+export default function ForgotPassword() {
+    const { data, setData, post, processing, errors, reset } = useForm<Required<{ email: string }>>({
         email: '',
     });
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-
-        post(route('password.email'));
+        post(route('admin.password.email'), {
+            onSuccess: () => {
+                toast.success('Password reset link sent to your email address.');
+                reset()
+            },
+            onError: (errors) => {
+                Object.entries(errors).forEach(([field, message]) => {
+                    console.error(`Field: ${field}, Message: ${message}`)
+                })
+            }
+        });
     };
 
     return (
         <AuthSplitLayout title="Forgot password" description="Enter your email to receive a password reset link" image={ForgotPass}>
             <Head title="Forgot password" />
-
-            {status && <div className="mb-4 text-center text-sm font-medium text-green-600">{status}</div>}
-
+            <Toaster richColors position='top-right' />
             <div className="space-y-6">
                 <form onSubmit={submit}>
                     <div className="grid gap-2">

@@ -17,11 +17,12 @@ return new class extends Migration
             $table->foreignId('role_id')->constrained('roles', 'role_id')->onDelete('cascade');
             $table->unsignedBigInteger('status_id')->default(3);
             $table->foreign('status_id')->references('status_id')->on('statuses')->onDelete('cascade');
-            $table->string('admin_username');
+            $table->string('admin_username')->unique();
+            $table->string('email')->unique();
             $table->string('admin_phonenum');
-            $table->string('admin_email');
             $table->string('admin_password');
             $table->string('admin_photopath')->nullable();
+            $table->rememberToken();
             $table->timestamps();
         });
     }

@@ -25,7 +25,7 @@ export const DocumentCustomCard = ({ image, title, content, alt, onClick, descri
                 type='button'
                 aria-label={title}
             >
-                <CustomIcon imgSrc={image} alt={alt} className="w-full h-2/3 rounded-t-md border border-gray-300 object-cover" />
+                <CustomIcon imgSrc={image} alt={alt} className="w-full h-2/3 rounded-t-md border border-gray-300" />
                 <Card className="gap-2 rounded-b-md border border-gray-300 py-3 w-full">
                     <CardHeader className="px-4">
                         <CardTitle className="text-s3 text-center text-xl font-semibold">{title}</CardTitle>

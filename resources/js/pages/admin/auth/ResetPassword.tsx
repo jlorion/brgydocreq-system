@@ -21,21 +21,18 @@ type ResetPasswordForm = {
     password_confirmation: string;
 };
 
-
 export default function ResetPassword({ token, email, guard }: ResetPasswordProps) {
     const { data, setData, post, processing, errors, reset } = useForm<Required<ResetPasswordForm>>({
         token: token,
         email: email,
         password: '',
         password_confirmation: '',
-    });
 
+    });
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        const routeName = guard === 'admin' ? 'admin.password.store' : 'user.password.store'
-
-        post(route(routeName), {
+        post(route('admin.password.store'), {
             onFinish: () => reset('password', 'password_confirmation'),
             onError: (errors) => {
                 console.error('Form submission failed. Validation errors:');
@@ -46,10 +43,7 @@ export default function ResetPassword({ token, email, guard }: ResetPasswordProp
         });
     };
 
-    console.log('guard', guard);
-
-    console.log('Reset email value:', data.email);
-
+    // console.log(guard)
     return (
         <AuthLayout title="Reset password" description="Please enter your new password below" image={ResetPasswords}>
             <Head title="Reset password" />

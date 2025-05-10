@@ -21,7 +21,7 @@ class User extends Authenticatable
 
     protected $fillable = [
         'username',
-        'user_email',
+        'email',
         'user_password',
         'user_phonenum',
         'user_photopath',
@@ -50,11 +50,7 @@ class User extends Authenticatable
             'user_password' => 'hashed',
         ];
     }
-    
-    // public function getEmailForPasswordReset()
-    // {
-    //     return $this->user_email;
-    // }
+
 
     public function getAuthPassword()
     {

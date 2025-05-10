@@ -52,6 +52,8 @@ class UserRegistrationController extends Controller
             'user_phonenum' => $residentReference->phone_number,
             'user_password' => Hash::make($validated['password']),
         ]);
+
+        
         $residentReference->update(['used' => true]);
         
 

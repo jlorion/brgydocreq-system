@@ -1,7 +1,6 @@
 import { Head, useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
-
 import TextLink from '@/components/custom/CustomTextLink';
 import InputError from '@/components/custom/InputError';
 import { Button } from '@/components/ui/button';
