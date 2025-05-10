@@ -1,6 +1,5 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import CustomIcon from './CustomIcon';
-import { LucideIcon, User } from 'lucide-react';
 
 interface CustomCardProps {
     image?: string;
@@ -25,7 +24,7 @@ export const DocumentCustomCard = ({ image, title, content, alt, onClick, descri
                 type='button'
                 aria-label={title}
             >
-                <CustomIcon imgSrc={image} alt={alt} className="w-full h-2/3 rounded-t-md border border-gray-300" />
+                <CustomIcon imgSrc={image} alt={alt} className="w-full h-2/3 rounded-t-md border object-cover border-gray-300" />
                 <Card className="gap-2 rounded-b-md border border-gray-300 py-3 w-full">
                     <CardHeader className="px-4">
                         <CardTitle className="text-s3 text-center text-xl font-semibold">{title}</CardTitle>
@@ -77,7 +76,7 @@ export const AdminCustomCard = ({ image, title, content, alt, onClick, descripti
                 type='button'
                 aria-label={title}
             >
-                <CustomIcon imgSrc={image} alt={alt} className="h-full w-full rounded-t-md border border-gray-300 object-contain " />
+                <CustomIcon imgSrc={image} alt={alt} className="h-full w-full rounded-t-md border border-gray-300 object-cover" />
                 <Card className="gap-2 rounded-b-md border border-gray-300 w-full pt-4">
                     <CardHeader>
                         <CardTitle className="text-s3 text-center text-lg font-semibold">{title}</CardTitle>

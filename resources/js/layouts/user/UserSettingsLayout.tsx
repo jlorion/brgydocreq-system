@@ -22,12 +22,6 @@ const sidebarNavItems: NavItem[] = [
         href: route('user.settings.password.edit'),
         icon: KeyRound,
     },
-
-    {
-        title: 'Appearance',
-        href: route('user.settings.appearance'),
-        icon: SunMoon,
-    },
 ];
 
 interface UserSettingsLayoutProps {

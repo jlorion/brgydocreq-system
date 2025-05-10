@@ -183,7 +183,7 @@ const Residents = () => {
 
     ]
     return (
-        <AdminLayout>
+        <AdminLayout title='Residents'>
             <div className="h-full w-full p-2 pt-5">
                 <div className="flex flex-col items-center justify-between pr-2">
                     <CustomDataTable

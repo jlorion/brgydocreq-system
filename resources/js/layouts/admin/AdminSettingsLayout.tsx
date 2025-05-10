@@ -15,11 +15,6 @@ const sidebarNavItems: NavItem[] = [
         href: route('admin.settings.password.edit'),
         icon: KeyRound,
     },
-    {
-        title: 'Appearance',
-        href: route('admin.settings.appearance'),
-        icon: SunMoon,
-    },
 ];
 
 

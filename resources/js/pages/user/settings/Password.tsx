@@ -43,7 +43,7 @@ export default function Password() {
 
     return (
         <>
-            <Head title="Password settings" />
+            <Head title="Password" />
             <Toaster richColors position='top-right' />
             <UserSettingsLayout title="Change password">
                 <div className="space-y-6">

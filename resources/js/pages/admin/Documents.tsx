@@ -74,7 +74,7 @@ export default function Documents() {
     }
 
     return (
-        <AdminLayout>
+        <AdminLayout title='Documents'>
             <div className='flex justify-end'>
                 <CustomDialog
                     title='Add Document'

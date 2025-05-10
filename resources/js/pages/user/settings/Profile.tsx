@@ -52,7 +52,7 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
 
     return (
         <>
-            <Head title="Profile settings" />
+            <Head title="Profile" />
             <Toaster richColors position='top-right' />
             <UserSettingsLayout title='Profile information'>
                 <form onSubmit={submit} className='space-y-5'>
