@@ -48,7 +48,7 @@ class UserRegistrationController extends Controller
         $user = User::create([
             'username' => $validated['username'],
             'resident_id' => $residentReference->resident_id,
-            'user_email' => $residentReference->email,
+            'email' => $residentReference->email,
             'user_phonenum' => $residentReference->phone_number,
             'user_password' => Hash::make($validated['password']),
         ]);

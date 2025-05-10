@@ -22,6 +22,7 @@ const CustomForm = ({ fields, className, title }: CustomFormProps) => {
                         placeholder={field.placeholder}
                         value={field.value}
                         tabIndex={field.tabIndex}
+                        required
                         disabled={field.disabled}
                         autoFocus={field.autoFocus}
                         onChange={field.onChange}
@@ -94,6 +95,7 @@ const CustomForm = ({ fields, className, title }: CustomFormProps) => {
                         pattern={field.pattern}
                         autoFocus={field.autofocus}
                         maxLength={field.maxLength}
+                        required={field.required}
                         disabled={field.disabled}
                         autoComplete={field.autoComplete}
                         tabIndex={field.tabIndex}

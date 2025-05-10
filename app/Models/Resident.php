@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Resident extends Model
 {
     use HasFactory;
-    
+
     protected $primaryKey = 'resident_id';
 
     /**
@@ -40,5 +40,9 @@ class Resident extends Model
     {
         return $this->belongsTo(Status::class, 'status_id', 'status_id');
     }
-
+    
+    public function user()
+    {
+        return $this->hasOne(User::class);
+    }
 }

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Validation\ValidationException;
 
 
@@ -31,9 +32,10 @@ class UserResidentReferenceController extends Controller
             'resident_suffix' => 'nullable|string|max:255',
             'resident_householdnum' => 'required|string|max:255',
             'resident_birthdate' => 'required|date',
-            'email' => 'required|string|email|max:255',
-            'phone_number' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'phone_number' => 'required|regex:/^09\d{9}$/',
         ]);
+
 
         $resident = Resident::where([
             ['resident_firstname', $validated['resident_firstname']],
@@ -44,6 +46,12 @@ class UserResidentReferenceController extends Controller
             ['resident_householdnum', $validated['resident_householdnum']],
         ])->first();
 
+
+        if (User::where('resident_id', $resident->resident_id)->exists()) {
+            throw ValidationException::withMessages([
+                'message' => 'This resident already has an account.',
+            ]);
+        }
 
         if (!$resident) {
             throw ValidationException::withMessages([
@@ -62,6 +70,5 @@ class UserResidentReferenceController extends Controller
         ]);
 
         Mail::to($validated['email'])->send(new ReferenceNumberMail($refNumber));
-
     }
 }

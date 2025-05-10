@@ -35,6 +35,9 @@ const ResidentReference = () => {
                 if (errors.message === 'Record not found') {
                     toast.error('Record not found.')
                 }
+                if (errors.message === 'This resident already has an account.') {
+                    toast.error('This resident already has an account.')
+                }
             },
         })
     }

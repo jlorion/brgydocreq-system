@@ -193,6 +193,7 @@ interface BaseFormField {
     id?: string;
     label?: string;
     tabIndex?: number;
+    required?: boolean;
     autoFocus?: boolean;
     disabled?: boolean;
     maxLength?: number;

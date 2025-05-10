@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id('user_id');
-            $table->foreignId('resident_id')->constrained('residents', 'resident_id')->onDelete('cascade');
+            $table->foreignId('resident_id')->unique()->constrained('residents', 'resident_id')->onDelete('cascade');
             $table->unsignedBigInteger('status_id')->default(3);
             $table->foreign('status_id')->references('status_id')->on('statuses')->onDelete('cascade');
             $table->string('username')->unique();
