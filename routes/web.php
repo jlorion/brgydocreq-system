@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\Auth\AdminInvitationController;
 use App\Http\Controllers\User\Auth\UserNewPasswordController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,7 @@ Route::get('/test-mail', function () {
 
 
 Route::get('/reset-password/{token}', [UserNewPasswordController::class, 'create'])->name('password.reset');
+Route::get('/register', [AdminInvitationController::class, 'show'])->name('register');
 Route::get('/', [UserController::class, 'showWelcome'])->name('landing.home');
 Route::inertia('/about-us', 'landing/AboutUs')->name('landing.about-us');
 Route::inertia('/contact-us', 'landing/ContactUs')->name('landing.contact-us');

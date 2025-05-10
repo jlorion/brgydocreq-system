@@ -26,7 +26,7 @@ class AdminAdminsController extends Controller
             return [
                 'admin_id' => $admin->admin_id,
                 'admin_username' => $admin->admin_username,
-                'admin_email' => $admin->admin_email,
+                'admin_email' => $admin->email,
                 'admin_photopath' => $admin->admin_photopath,
                 'admin_status' => $admin->status_id,
                 'admin_phonenum' => $admin->admin_phonenum,

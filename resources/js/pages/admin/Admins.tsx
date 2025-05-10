@@ -29,12 +29,17 @@ const Admins = () => {
         invitePost(route('admin.invite'), {
             onSuccess: () => {
                 toast.success('Invitation sent successfully')
+                reset()
             },
             onError: (errors) => {
                 console.error('Form submission failed. Validation errors:');
                 Object.entries(errors).forEach(([field, message]) => {
                     console.error(`Field: ${field}, Error: ${message}`);
                 });
+
+                if (errors.message === 'This Barangay Officer already has an account.') {
+                    toast.error('This Barangay Officer already has an account.')
+                }
             },
         });
     }
@@ -77,6 +82,7 @@ const Admins = () => {
                 Object.entries(errors).forEach(([field, message]) => {
                     console.error(`Field: ${field}, Error: ${message}`);
                 });
+
             },
         })
     }
@@ -125,10 +131,12 @@ const Admins = () => {
                                     <CustomSelect
                                         placeholder='Role'
                                         value={inviteData.role_id}
-                                        onChange={(value) => { inviteSetData('role_id', value), console.log(value) }}
-                                        items={roles.map((role) => (
-                                            { value: role.role_id, label: role.role_name }
-                                        ))}
+                                        onChange={(value) => inviteSetData('role_id', value)}
+                                        items={roles
+                                            .filter(role => role.role_id !== 1)
+                                            .map((role) => (
+                                                { value: role.role_id, label: role.role_name }
+                                            ))}
                                     />
                                     <InputError message={inviteErrors.role_id} />
                                 </div>

@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('resident_references', function (Blueprint $table) {
             $table->id('reference_id');
             $table->foreignId('resident_id')->constrained('residents', 'resident_id')->cascadeOnDelete();
-            $table->string('email')->index();
-            $table->string('phone_number')->index();
+            $table->string('email');
+            $table->string('phone_number');
             $table->string('reference_number');
             $table->timestamp('expires_at');
             $table->boolean('used')->default(false);

@@ -10,6 +10,7 @@ export const PersonalDetails = (data: AdminRegisterForm, setData: (key: keyof Ad
 			type: 'text',
 			id: 'first_name',
 			placeholder: 'John',
+			required: true,
 			autofocus: true,
 			value: data.officer_firstname,
 			tabIndex: 1,
@@ -23,6 +24,7 @@ export const PersonalDetails = (data: AdminRegisterForm, setData: (key: keyof Ad
 			id: 'middle_name',
 			placeholder: 'Santos',
 			value: data.officer_middlename,
+			required: true,
 			tabIndex: 2,
 			autoComplete: 'additional-name',
 			onChange: (e) => setData('officer_middlename', e.target.value),
@@ -33,6 +35,7 @@ export const PersonalDetails = (data: AdminRegisterForm, setData: (key: keyof Ad
 			label: 'Last Name',
 			type: 'text',
 			id: 'last_name',
+			required: true,
 			placeholder: 'Doe',
 			value: data.officer_lastname,
 			tabIndex: 3,
@@ -55,16 +58,18 @@ export const PersonalDetails = (data: AdminRegisterForm, setData: (key: keyof Ad
 			label: 'Birthdate',
 			type: 'date',
 			id: 'birthdate',
+			required: true,
 			tabIndex: 5,
 			value: data.officer_birthdate ? new Date(data.officer_birthdate) : null,
 			onChange: (date: Date | null) => {
-							setData('officer_birthdate', date ? format(date, 'yyyy-MM-dd') : '');
-						},
+				setData('officer_birthdate', date ? format(date, 'yyyy-MM-dd') : '');
+			},
 			errorMessage: errors.officer_birthdate,
 		},
 		{
 			label: 'House or Building Serial Number',
 			type: 'text',
+			required: true,
 			id: 'house_serial_number',
 			placeholder: '0004',
 			value: data.officer_householdnum,
@@ -85,6 +90,7 @@ export const AccountDetails = (data: AdminRegisterForm, setData: (key: keyof Adm
 			label: 'Email',
 			type: 'email',
 			id: 'email',
+			required: true,
 			disabled: true,
 			placeholder: 'john@gmail.com',
 			value: data.admin_email,
@@ -98,16 +104,24 @@ export const AccountDetails = (data: AdminRegisterForm, setData: (key: keyof Adm
 			type: 'text',
 			id: 'phone_number',
 			placeholder: '09123456789',
+			required: true,
 			value: data.admin_phonenum,
 			tabIndex: 8,
 			autoComplete: 'tel',
-			onChange: (e) => setData('admin_phonenum', e.target.value),
+			onChange: (e) => {
+				const value = e.target.value;
+				// Accept only digits, and trim if over 11
+				if (/^\d{0,11}$/.test(value)) {
+					setData('admin_phonenum', value);
+				}
+			},
 			errorMessage: errors.admin_phonenum,
 		},
 		{
 			label: 'Username',
 			type: 'text',
 			id: 'username',
+			required: true,
 			placeholder: 'john_doe',
 			value: data.admin_username,
 			tabIndex: 9,
@@ -120,6 +134,7 @@ export const AccountDetails = (data: AdminRegisterForm, setData: (key: keyof Adm
 			type: 'text',
 			id: 'role',
 			value: data.admin_role,
+			required: true,
 			tabIndex: 10,
 			autoComplete: 'role',
 			disabled: true,
@@ -131,6 +146,7 @@ export const AccountDetails = (data: AdminRegisterForm, setData: (key: keyof Adm
 			type: 'password',
 			id: 'password',
 			value: data.admin_password,
+			required: true,
 			tabIndex: 11,
 			autoComplete: 'new-password',
 			onChange: (e) => setData('admin_password', e.target.value),
@@ -140,6 +156,7 @@ export const AccountDetails = (data: AdminRegisterForm, setData: (key: keyof Adm
 			label: 'Confirm Password',
 			type: 'password',
 			id: 'confirm_password',
+			required: true,
 			value: data.admin_password_confirmation,
 			tabIndex: 12,
 			autoComplete: 'new-password',

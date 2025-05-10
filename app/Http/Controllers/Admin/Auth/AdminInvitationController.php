@@ -4,11 +4,15 @@ namespace App\Http\Controllers\Admin\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Mail\AdminInvitationMail;
+use App\Models\Admin;
 use App\Models\AdminInvitation;
 use App\Models\Role;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 
 class AdminInvitationController extends Controller
@@ -16,69 +20,62 @@ class AdminInvitationController extends Controller
     public function sendInvitation(Request $request)
     {
         // Validate the request
-        $validated = $request->validate([
-            'email' => 'required|email|unique:admin_invitations,email',
+        $validate = $request->validate([
+            'email' => 'required|email',
             'role_id' => 'required|exists:roles,role_id',
         ]);
 
-        $token = Str::random(32);
+        if (Admin::whereEmail($validate['email'])->exists()) {
+            throw ValidationException::withMessages([
+                'message' => 'This Barangay Officer already has an account.'
+            ]);
+        }
+
+        $token = Str::random(50);
+
         AdminInvitation::create([
-            'email' => $validated['email'],
-            'role_id' => $validated['role_id'],
-            'invite_token' => $token,
+            'email' => $validate['email'],
+            'role_id' => $validate['role_id'],
+            'invite_token' => Hash::make($token),
             'expires_at' => now()->addHours(24),
         ]);
 
-        $roleName = Role::where('role_id', $validated['role_id'])->value('role_name');
+        $roleName = Role::where('role_id', $validate['role_id'])->value('role_name');
 
-        Mail::to($validated['email'])->send(new AdminInvitationMail($token, $roleName));
+        $url = URL::signedRoute('register', [
+            'invite_token' => $token,
+            'email' => $validate['email'],
+            'role_name' => $roleName,
+        ]);
+
+
+        Mail::to($validate['email'])->send(new AdminInvitationMail($url, $roleName));
 
         // return response()->json(['message' => 'Invitation sent successfully.', 'token' => $token]);
     }
 
-    public function validateToken(Request $request)
+    public function show(Request $request)
     {
-        $token = $request->query('token');
 
-
-        $invitation = AdminInvitation::with('role')
-            ->where('invite_token', $token)
-            ->where('expires_at', '>', now())
-            ->first();
-
-        if (!$invitation || $invitation->used) {
-            \redirect()->route('admin.register');
+        if (! $request->hasValidSignature()) {
+            abort(403, 'Invalid or expired invitation link.');
         }
 
-        session([
-            'invite_token' => $token,
-            'role_name' => $invitation->role->role_name,
-            'email' => $invitation->email
-        ]);
+        $invitation = AdminInvitation::where('email', $request->email)->latest('created_at')->first();
 
-
-        return redirect()->route('admin.register');
-    }
-
-    public function show()
-    {
-        $inviteToken = session('invite_token');
-        $email = session('email');
-        $roleName = session('role_name');
-
-        $invitation = AdminInvitation::with('role')
-            ->where('invite_token', $inviteToken)
-            ->where('expires_at', '>', now())
-            ->first();
-
-        if ($invitation->used || !$invitation) {
-            abort(403, 'Invalid or expired invitation token.');
+        if (
+            !$invitation ||
+            !Hash::check($request->invite_token, $invitation->invite_token) ||
+            $invitation->expires_at <= now() ||
+            $invitation->used
+        ) {
+            \abort(403, 'Invalid or expired invitation token.');
         }
 
         return Inertia::render('admin/auth/Register', [
-            'invite_token' => $inviteToken,
-            'email' => $email,
-            'role_name' => $roleName,
+            'invite_token' => $request->query('invite_token'),
+            'email' => $request->query('email'),
+            'role_name' => $request->query('role_name'),
         ]);
     }
 }

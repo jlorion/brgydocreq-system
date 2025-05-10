@@ -22,9 +22,6 @@ use Inertia\Inertia;
 Route::prefix('admin')->name('admin.')->group(function () {
 
 	Route::middleware(['guest:admin'])->group(function () {
-		Route::get('/register/validate', [AdminInvitationController::class, 'validateToken'])->name('register.validate');
-		Route::get('/register', [AdminInvitationController::class, 'show'])->name('register');
-
 		Route::post('/register/store', [AdminRegistrationController::class, 'store'])->name('register.store');
 		Route::get('/login', [AdminAuthSessionController::class, 'create'])->name('login');
 		Route::post('/login/store', [AdminAuthSessionController::class, 'store'])->name('login.store');

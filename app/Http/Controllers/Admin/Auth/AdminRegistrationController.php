@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Illuminate\Validation\ValidationException;
 
 class AdminRegistrationController extends Controller
 {
@@ -24,17 +25,22 @@ class AdminRegistrationController extends Controller
             'officer_suffix' => 'nullable|string|max:255',
             'officer_birthdate' => 'required|date',
             'officer_householdnum' => 'required|string|max:255',
-            'admin_phonenum' => 'required|string|max:255',
+            'admin_phonenum' => 'required|regex:/^09\d{9}$/',
             'admin_username' => 'required|string|unique:admins',
             'admin_email' => 'exists:admin_invitations,email',
             'admin_role' => 'exists:roles,role_name',
-            'invite_token' => 'exists:admin_invitations,invite_token',
+            'invite_token' => 'required|string',
             'admin_password' =>  ['required', 'confirmed', Rules\Password::defaults()]
         ]);
 
-        $invitation = AdminInvitation::where('invite_token', $validate['invite_token'])->where('expires_at', '>', now())->first();
+        $invitation = AdminInvitation::where('email', $validate['admin_email'])->latest('created_at')->first();
 
-        if (!$invitation || $invitation->used) {
+        if (
+            !$invitation ||
+            !Hash::check($validate['invite_token'], $invitation->invite_token) ||
+            $invitation->expires_at <= now() ||
+            $invitation->used
+        ) {
             \abort(403, 'Invalid or expired invitation token.');
         }
 
@@ -48,13 +54,15 @@ class AdminRegistrationController extends Controller
         ])->first();
 
         if (!$barangayOfficer) {
-            abort(404, 'Record Not Found');
+            throw ValidationException::withMessages([
+                'message' => 'Record not found'
+            ]);
         }
 
         $admin = Admin::create([
             'officer_id' => $barangayOfficer->officer_id,
             'role_id' => $invitation->role_id,
-            'admin_email' => $invitation->email,
+            'email' => $invitation->email,
             'admin_username' => $validate['admin_username'],
             'admin_phonenum' => $validate['admin_phonenum'],
             'admin_password' => Hash::make($validate['admin_password']),
@@ -65,7 +73,6 @@ class AdminRegistrationController extends Controller
         event(new Registered($admin));
 
         Auth::guard('admin')->login($admin);
-
 
         return to_route('admin.dashboard');
     }

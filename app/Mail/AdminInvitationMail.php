@@ -3,12 +3,10 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Log;
 
 class AdminInvitationMail extends Mailable
 {
@@ -22,9 +20,8 @@ class AdminInvitationMail extends Mailable
 
     public function __construct($registrationLink, $role)
     {
-
-        $this->registrationLink = route('admin.register.validate', ['token' => $registrationLink]);
         $this->role = $role;
+        $this->registrationLink = $registrationLink;
     }
 
     /**
@@ -46,7 +43,7 @@ class AdminInvitationMail extends Mailable
             view: 'admin_invitation',
             with: [
                 'registrationLink' => $this->registrationLink,
-                'role' => $this->role,
+                'role' => $this->role
             ]
         );
     }

@@ -110,7 +110,7 @@ const CustomForm = ({ fields, className, title }: CustomFormProps) => {
 
     return (
         <div className="flex flex-col">
-            {title && <h1 className="pb-2 font-normal">{title}</h1>}
+            {title && <h1 className="pb-2 font-normal text-[15px]">{title}</h1>}
             <div className={className}>
                 {fields.map((field, index) => (
                     <div key={index} className="pb-3">
