@@ -45,7 +45,7 @@ export default function Password() {
         <>
             <Head title="Password" />
             <Toaster richColors position='top-right' />
-            <UserSettingsLayout title="Change password">
+            <UserSettingsLayout title="Change Password">
                 <div className="space-y-6">
                     <form onSubmit={updatePassword} className="space-y-6">
                         <div className="grid max-w-sm gap-2">

@@ -1,6 +1,6 @@
 import { Head } from '@inertiajs/react';
 import AppearanceTabs from '@/components/custom/appearance-tabs';
-import HeadingSmall from '@/components/custom/heading-small';
+import HeadingSmall from '@/components/custom/HeadingSmall';
 import UserSettingsLayout from '@/layouts/user/UserSettingsLayout';
 
 export default function Appearance() {

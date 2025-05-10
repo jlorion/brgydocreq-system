@@ -1,23 +1,21 @@
 import { useForm } from '@inertiajs/react';
 import { FormEventHandler, useRef } from 'react';
-
 import InputError from '@/components/custom/InputError';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-
-import HeadingSmall from '@/components/custom/heading-small';
+import HeadingSmall from '@/components/custom/HeadingSmall';
 
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
-export default function DeleteUser() {
+export default function DeleteAccount() {
     const passwordInput = useRef<HTMLInputElement>(null);
     const { data, setData, delete: destroy, processing, reset, errors, clearErrors } = useForm<Required<{ password: string }>>({ password: '' });
 
     const deleteUser: FormEventHandler = (e) => {
         e.preventDefault();
 
-        destroy(route('profile.destroy'), {
+        destroy(route('user.settings.profile.destroy'), {
             preserveScroll: true,
             onSuccess: () => closeModal(),
             onError: () => passwordInput.current?.focus(),
@@ -43,7 +41,7 @@ export default function DeleteUser() {
                     <DialogTrigger asChild>
                         <Button variant="destructive">Delete account</Button>
                     </DialogTrigger>
-                    <DialogContent>
+                    <DialogContent className='w-1/2'>
                         <DialogTitle>Are you sure you want to delete your account?</DialogTitle>
                         <DialogDescription>
                             Once your account is deleted, all of its resources and data will also be permanently deleted. Please enter your password

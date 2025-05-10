@@ -2,7 +2,7 @@ import { AdminForm, type SharedData } from '@/types';
 import { Head, useForm, usePage } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
 import { AccountInfo, BarangayOfficerInfo } from '@/data/admin/ProfileFields';
-import DeleteUser from '@/components/custom/delete-user';
+import DeleteUser from '@/components/custom/DeleteAccount';
 import { Button } from '@/components/ui/button';
 import AdminSettingsLayout from '@/layouts/admin/AdminSettingsLayout';
 import CustomForm from '@/components/custom/CustomFormFields';

@@ -1,7 +1,7 @@
 import { UserForm, type SharedData } from '@/types';
 import { Head, useForm, usePage } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
-import DeleteUser from '@/components/custom/delete-user';
+import DeleteUser from '@/components/custom/DeleteAccount';
 import { AccountInfo } from '@/data/user/ProfileFields';
 import { ResidentInfo } from '@/data/user/ProfileFields';
 import UserSettingsLayout from '@/layouts/user/UserSettingsLayout';
@@ -54,7 +54,7 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
         <>
             <Head title="Profile" />
             <Toaster richColors position='top-right' />
-            <UserSettingsLayout title='Profile information'>
+            <UserSettingsLayout title='Profile Information'>
                 <form onSubmit={submit} className='space-y-5'>
                     <CustomForm className='grid grid-cols-3 gap-x-5' fields={AccountInfo(data, setData, errors)} />
                     <div className='flex justify-end'>
