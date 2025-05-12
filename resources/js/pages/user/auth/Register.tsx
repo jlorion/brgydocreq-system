@@ -58,7 +58,7 @@ export default function Register() {
                             disabled={processing}
                             placeholder="Enter your username"
                         />
-                        <InputError message={errors.username} className="mt-2" />
+                        <InputError message={errors.username} />
                     </div>
 
                     <div className="grid gap-2">

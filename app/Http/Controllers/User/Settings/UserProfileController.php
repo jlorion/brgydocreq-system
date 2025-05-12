@@ -31,8 +31,7 @@ class UserProfileController extends Controller
     {
         $validate = $request->validate([
             'username' => 'required|unique:users,username,' . $request->user('web')->user_id . ',user_id',
-            'user_email' => 'required|email|unique:users,user_email,' . $request->user('web')->user_id . ',user_id',
-            'user_photopath' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
+            'user_email' => 'required|email|unique:users,email,' . $request->user('web')->user_id . ',user_id',
             'user_phonenum' => ['required', 'regex:/^09\d{9}$/'],
         ]);
 

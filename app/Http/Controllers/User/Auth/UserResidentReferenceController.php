@@ -47,15 +47,15 @@ class UserResidentReferenceController extends Controller
         ])->first();
 
 
-        if (User::where('resident_id', $resident->resident_id)->exists()) {
-            throw ValidationException::withMessages([
-                'message' => 'This resident already has an account.',
-            ]);
-        }
-
         if (!$resident) {
             throw ValidationException::withMessages([
                 'message' => 'Record not found',
+            ]);
+        }
+
+        if (User::where('resident_id', $resident->resident_id)->exists()) {
+            throw ValidationException::withMessages([
+                'message' => 'This resident already has an account.',
             ]);
         }
 
@@ -67,7 +67,7 @@ class UserResidentReferenceController extends Controller
             'phone_number' => $validated['phone_number'],
             'reference_number' => $refNumber,
             'expires_at' => now()->addMinutes(10),
-        ]);
+        ]); 
 
         Mail::to($validated['email'])->send(new ReferenceNumberMail($refNumber));
     }

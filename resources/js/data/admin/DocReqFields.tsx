@@ -77,6 +77,7 @@ export const RejectFields = (data: DocumentProcessingForm, setData: (key: keyof 
 			id: 'request_rejected',
 			value: data.additional_message,
 			autoFocus: true,
+			required: true,
 			tabIndex: 1,
 			onChange: (e) => setData('additional_message', e.target.value),
 			errorMessage: errors.additional_message,

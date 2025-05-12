@@ -8,6 +8,7 @@ export const AccountInfo = (data: UserForm, setData: (key: keyof UserForm, value
 			label: 'Username',
 			type: 'text',
 			id: 'username',
+			required: true,
 			value: data.username,
 			tabIndex: -1,
 			onChange: (e) => setData('username', e.target.value),
@@ -17,6 +18,7 @@ export const AccountInfo = (data: UserForm, setData: (key: keyof UserForm, value
 			label: 'Email',
 			type: 'email',
 			id: 'email',
+			required: true,
 			value: data.user_email,
 			tabIndex: -2,
 			onChange: (e) => setData('user_email', e.target.value),
@@ -27,9 +29,16 @@ export const AccountInfo = (data: UserForm, setData: (key: keyof UserForm, value
 			label: 'Phone number',
 			type: 'text',
 			id: 'phone_num',
+			required: true,
 			value: data.user_phonenum,
 			tabIndex: -3,
-			onChange: (e) => setData('user_phonenum', e.target.value),
+			onChange: (e) => {
+				const value = e.target.value;
+				// Accept only digits, and trim if over 11
+				if (/^\d{0,11}$/.test(value)) {
+					setData('user_phonenum', value);
+				}
+			},
 			errorMessage: errors.user_phonenum,
 		},
 	]

@@ -57,7 +57,7 @@ const Register = ({ email, role_name, invite_token, }: RegisterProps) => {
 
 	return (
 		<>
-			<Head title="Profile" />
+			<Head title="Administrator Registration" />
 			<Toaster richColors position='top-right' />
 			<AuthCardLayout title='Administrator Registration' description='Create an account to access the admin panel'>
 				<form onSubmit={handleSubmit}>

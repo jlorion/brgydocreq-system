@@ -73,7 +73,12 @@ export const ResidentReferenceFields = (data: ResidentVerificationForm, setData:
 			required: true,
 			tabIndex: 6,
 			autoComplete: 'address-line1',
-			onChange: (e) => setData('resident_householdnum', e.target.value),
+			onChange: (e) => {
+				const value = e.target.value;
+				if (/^\d{0,4}$/.test(value)) {
+					setData('resident_householdnum', value);
+				}
+			},
 			errorMessage: errors.resident_householdnum,
 		},
 

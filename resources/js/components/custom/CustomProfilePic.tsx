@@ -6,6 +6,7 @@ import { CameraIcon } from 'lucide-react';
 import { Button } from '../ui/button';
 import { FormEventHandler, useRef, useState } from 'react';
 import { toast } from 'sonner';
+import InputError from './InputError';
 
 const CustomProfilePic = () => {
 	const { auth } = usePage<SharedData>().props;
@@ -97,9 +98,7 @@ const CustomProfilePic = () => {
 						<span className='text-muted-foreground truncate text-sm'>{auth.user.user_email}</span>
 					</div>
 
-					{errors.photopath && (
-						<p className='text-sm text-red-500 mt-2'>{errors.photopath}</p>
-					)}
+					<InputError message={errors.photopath} />
 
 					<Button type='submit' className={`${!data.photopath ? 'opacity-75' : null}`} disabled={!data.photopath || processing}>
 						{processing ? 'Uploading...' : 'Upload Photo'}
@@ -137,10 +136,8 @@ const CustomProfilePic = () => {
 						<span className='truncate font-medium'>{auth.admin.admin_username}</span>
 						<span className='text-muted-foreground truncate text-sm'>{auth.admin.admin_role}</span>
 					</div>
-
-					{errors.photopath && (
-						<p className='text-sm text-red-500 mt-2'>{errors.photopath}</p>
-					)}
+					
+					<InputError message={errors.photopath} />
 
 					<Button type='submit' className={`${!data.photopath ? 'opacity-75' : null}`} disabled={!data.photopath || processing}>
 						{processing ? 'Uploading...' : 'Upload Photo'}

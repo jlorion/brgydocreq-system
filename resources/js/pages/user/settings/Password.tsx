@@ -23,7 +23,7 @@ export default function Password() {
         put(route('user.settings.password.update'), {
             preserveScroll: true,
             onSuccess: () => {
-                toast.success('Password succesfully changed')
+                toast.success('Password Changed Successfully')
                 reset()
 
             },
@@ -54,6 +54,7 @@ export default function Password() {
                             <Input
                                 id="current_password"
                                 ref={currentPasswordInput}
+                                required
                                 value={data.current_password}
                                 onChange={(e) => setData('current_password', e.target.value)}
                                 type="password"
@@ -75,6 +76,7 @@ export default function Password() {
                                 onChange={(e) => setData('password', e.target.value)}
                                 type="password"
                                 className="mt-1 block w-full"
+                                required
                                 autoComplete="new-password"
                                 placeholder="New password"
                             />
@@ -91,6 +93,7 @@ export default function Password() {
                                 onChange={(e) => setData('password_confirmation', e.target.value)}
                                 type="password"
                                 className="mt-1 block w-full"
+                                required
                                 autoComplete="new-password"
                                 placeholder="Confirm password"
                             />

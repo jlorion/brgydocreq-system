@@ -22,7 +22,7 @@ const CustomForm = ({ fields, className, title }: CustomFormProps) => {
                         placeholder={field.placeholder}
                         value={field.value}
                         tabIndex={field.tabIndex}
-                        required
+                        required={field.required}
                         disabled={field.disabled}
                         autoFocus={field.autoFocus}
                         onChange={field.onChange}

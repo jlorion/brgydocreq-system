@@ -78,6 +78,7 @@ export default function ResetPassword({ token, email, guard }: ResetPasswordProp
                             name="password"
                             autoComplete="new-password"
                             value={data.password}
+                            required
                             className="mt-1 block w-full"
                             autoFocus
                             onChange={(e) => setData('password', e.target.value)}
@@ -93,6 +94,7 @@ export default function ResetPassword({ token, email, guard }: ResetPasswordProp
                             type="password"
                             name="password_confirmation"
                             autoComplete="new-password"
+                            required
                             value={data.password_confirmation}
                             className="mt-1 block w-full"
                             onChange={(e) => setData('password_confirmation', e.target.value)}

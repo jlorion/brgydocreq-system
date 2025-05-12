@@ -57,6 +57,7 @@ export default function DeleteUser() {
                                     id="password"
                                     type="password"
                                     name="password"
+                                    required
                                     ref={passwordInput}
                                     value={data.password}
                                     onChange={(e) => setData('password', e.target.value)}

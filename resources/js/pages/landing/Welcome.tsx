@@ -23,7 +23,7 @@ const Welcome = () => {
 
     const { documents, auth } = usePage<SharedData>().props;
 
-    const { data, setData, post, processing, errors, reset } = useForm<Required<DocumentReqForm>>({
+    const { data, setData, post, processing, errors, reset, } = useForm<Required<DocumentReqForm>>({
         user_id: 0,
         document_id: 0,
         attachment_path: null,
@@ -46,7 +46,10 @@ const Welcome = () => {
                     console.error(`Field: ${field}, Error: ${message}`);
                 });
             },
-        })
+
+        }
+
+        )
     }
 
 
