@@ -136,8 +136,10 @@ const DocumentRequeset = () => {
 
   const columns: ColumnDef<DocumentProcessingForm>[] = [
     {
-      accessorKey: "applicant_name",
+      accessorFn: row => `${row.resident_lastname}, ${row.resident_firstname}`.trim(),
+      id: "applicant_name",
       header: () => <div className='text-center'>Applicant's Name</div>,
+      enableGlobalFilter: true,
       cell: ({ row }) => {
         const { resident_firstname, resident_lastname } = row.original
         const name = [
@@ -150,6 +152,7 @@ const DocumentRequeset = () => {
     },
     {
       accessorKey: "document_name",
+      enableGlobalFilter: true,
       header: ({ column }) => {
         return (
           <div className='text-center'>
@@ -168,21 +171,32 @@ const DocumentRequeset = () => {
       ),
     },
     {
-      accessorKey: "created_at",
+      accessorFn: row => row.created_at ? format(new Date(row.created_at), "MMM dd, yyyy hh:mm aa") : '',
+      id: "created_at",
+      enableGlobalFilter: true,
       header: () => <div className='text-center'>Date Requested</div>,
       cell: ({ row }) => {
         const date = row.getValue('created_at') as string;
-        const formatDate = date ? format(new Date(date), "MMM. dd, yyyy '@' hh:mmaaa") : '';
+        return <div className="capitalize text-center">{date}</div>;
+      },
+    },
 
-        return <div className="capitalize text-center">{formatDate}</div>
+    {
+      accessorFn: row => row.updated_at ? format(new Date(row.updated_at), "MMM dd, yyyy hh:mm aa") : '',
+      id: "updated_at",
+      enableGlobalFilter: true,
+      header: () => <div className='text-center'>Date A/R/Resubmitted</div>,
+      cell: ({ row }) => {
+        const date = row.getValue('updated_at') as string;
+        return <div className="capitalize text-center">{date}</div>;
       },
     },
     {
       accessorKey: "status_name",
+      enableGlobalFilter: true,
       header: () => <div className='text-center'>Status</div>,
       cell: ({ row }) => {
         const status = row.getValue("status_name") as string;
-
         return (
           <div className='flex justify-center items-center'>
             <div className={`rounded w-28 py-1 capitalize text-center ${getStatusColors(status)}`}>
@@ -202,8 +216,7 @@ const DocumentRequeset = () => {
         columns={columns}
         data={onProcessData}
         onRowClick={(row: DocumentProcessingForm) => populateSheet(row)}
-        filterColumn='applicant_name'
-        searchPlaceHolder="Search applicant's name"
+        searchPlaceHolder="Search"
         renderSheet={(trigger, row) => (
           <CustomSheet
             key={row}

@@ -164,7 +164,7 @@ const OnProcess = () => {
     },
     {
       accessorKey: "updated_at",
-      header: () => <div className='text-center'>Date Updated</div>,
+      header: () => <div className='text-center'>Date P/F/C</div>,
       cell: ({ row }) => {
         const date = row.getValue('updated_at') as string;
         const formatDate = date ? format(new Date(date), "MMM. dd, yyyy '@' hh:mmaaa") : '';

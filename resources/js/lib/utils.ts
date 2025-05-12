@@ -1,3 +1,4 @@
+import { rankItem } from '@tanstack/match-sorter-utils';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -29,3 +30,8 @@ export const getStatusColors = (status: string) => {
 
     return statusColors[keyStatus] || statusColors.default;
 };
+
+export function fuzzyFilter<T>(row: any, columnId: string, value: string) {
+    const itemRank = rankItem(row.getValue(columnId), value);
+    return itemRank.passed;
+}

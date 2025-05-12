@@ -23,7 +23,7 @@ class AdminDocumentRequestController extends Controller
             'user.resident:resident_id,resident_firstname,resident_middlename,resident_lastname,resident_suffix',
             'document:document_id,document_name,price',
             'status:status_id,status_name'
-        ])->latest()->get();
+        ])->latest('updated_at')->get();
 
         $flatterDocRequest = $docRequests->map((function ($docRequest) {
             return [
@@ -37,6 +37,7 @@ class AdminDocumentRequestController extends Controller
                 'attachment_path' => $docRequest->attachment_path,
                 'amount' => $docRequest->document->price,
                 'created_at' => $docRequest->created_at,
+                'updated_at' => $docRequest->updated_at,
                 'status_name' => $docRequest->status->status_name
             ];
         }));

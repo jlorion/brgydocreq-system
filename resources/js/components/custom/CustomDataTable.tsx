@@ -9,6 +9,7 @@ import {
     getCoreRowModel,
     getFilteredRowModel,
     getPaginationRowModel,
+    GlobalFiltering,
     getSortedRowModel,
     useReactTable,
 } from '@tanstack/react-table';
@@ -22,23 +23,24 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { formatText } from '@/lib/utils';
+import { formatText, fuzzyFilter } from '@/lib/utils';
+import { rankItem } from '@tanstack/match-sorter-utils';
 
 interface CustomDataTableProps<T> {
     columns: ColumnDef<T>[];
     data: T[];
-    filterColumn: string;
     searchPlaceHolder?: string;
     renderSheet: (trigger: React.ReactNode, row: any) => React.ReactNode;
     onRowClick?: (row: T) => void;
     additionalComponent?: React.ReactNode;
 }
 
-export function CustomDataTable<T>({ data, columns, filterColumn, searchPlaceHolder, renderSheet, onRowClick, additionalComponent }: CustomDataTableProps<T>) {
+export function CustomDataTable<T>({ data, columns, searchPlaceHolder, renderSheet, onRowClick, additionalComponent }: CustomDataTableProps<T>) {
     const [sorting, setSorting] = React.useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
     const [rowSelection, setRowSelection] = React.useState({});
+    const [globalFilter, setGlobalFilter] = React.useState('');
     const [pagination, setPagination] = React.useState({
         pageIndex: 0,
         pageSize: 10,
@@ -55,9 +57,13 @@ export function CustomDataTable<T>({ data, columns, filterColumn, searchPlaceHol
         getPaginationRowModel: getPaginationRowModel(),
         getSortedRowModel: getSortedRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
+
         onColumnVisibilityChange: setColumnVisibility,
         onRowSelectionChange: setRowSelection,
         onPaginationChange: setPagination,
+        onGlobalFilterChange: setGlobalFilter,
+
+        globalFilterFn: fuzzyFilter,
 
         state: {
             sorting,
@@ -65,6 +71,7 @@ export function CustomDataTable<T>({ data, columns, filterColumn, searchPlaceHol
             columnVisibility,
             rowSelection,
             pagination,
+            globalFilter,
         },
     });
 
@@ -77,8 +84,8 @@ export function CustomDataTable<T>({ data, columns, filterColumn, searchPlaceHol
             <div className="flex items-center pb-6 gap-x-4">
                 <Input
                     placeholder={searchPlaceHolder}
-                    value={(table.getColumn(filterColumn)?.getFilterValue() as string) ?? ''}
-                    onChange={(event) => table.getColumn(filterColumn)?.setFilterValue(event.target.value)}
+                    value={globalFilter}
+                    onChange={(event) => setGlobalFilter(event.target.value)}
                     className="max-w-sm py-5 shadow-sm"
                     icon={<SearchIcon className="h-5" />}
                 />
