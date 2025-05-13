@@ -24,7 +24,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { formatText, fuzzyFilter } from '@/lib/utils';
-import { rankItem } from '@tanstack/match-sorter-utils';
 
 interface CustomDataTableProps<T> {
     columns: ColumnDef<T>[];

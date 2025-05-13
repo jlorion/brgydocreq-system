@@ -108,7 +108,8 @@ const Archives = () => {
   // columns for table
   const columns: ColumnDef<DocumentProcessingForm>[] = [
     {
-      accessorKey: "applicant_name",
+      accessorFn: row => `${row.resident_lastname}, ${row.resident_firstname}`.trim(),
+      id: "applicant_name",
       header: () => <div className='text-center'>Applicant's Name</div>,
       cell: ({ row }) => {
         const { resident_firstname, resident_lastname } = row.original
@@ -140,7 +141,8 @@ const Archives = () => {
       ),
     },
     {
-      accessorKey: "archived_by",
+      accessorFn: row => `${row.officer_lastname}, ${row.officer_firstname}`.trim(),
+      id: "archived_by",
       header: () => <div className='text-center'>Archived By</div>,
       cell: ({ row }) => {
         const { officer_firstname, officer_lastname } = row.original
@@ -153,13 +155,12 @@ const Archives = () => {
       },
     },
     {
-      accessorKey: "updated_at",
+      accessorFn: row => row.created_at ? format(new Date(row.created_at), "MMM dd, yyyy hh:mm aa") : '',
+      id: "created_at",
       header: () => <div className='text-center'>Date Archived</div>,
       cell: ({ row }) => {
-        const date = row.getValue('updated_at') as string;
-        const formatDate = date ? format(new Date(date), "MMM. dd, yyyy '@' hh:mmaaa") : '';
-
-        return <div className="capitalize text-center">{formatDate}</div>
+        const date = row.getValue('created_at') as string;
+        return <div className="capitalize text-center">{date}</div>;
       },
     },
     {
@@ -184,9 +185,8 @@ const Archives = () => {
       <Head title="Archives" />
       <CustomDataTable columns={columns}
         data={onProcessData}
-        filterColumn='document_name'
         onRowClick={(row: DocumentProcessingForm) => (populateSheet(row))}
-        searchPlaceHolder="Search administrator's name"
+        searchPlaceHolder="Search"
         renderSheet={(trigger, row) => (
           <CustomSheet
             key={row}

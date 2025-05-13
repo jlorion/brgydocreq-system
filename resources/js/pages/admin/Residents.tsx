@@ -103,7 +103,8 @@ const Residents = () => {
 
     const columns: ColumnDef<ResidentForm>[] = [
         {
-            accessorKey: 'resident_fullname',
+            accessorFn: row => `${row.resident_firstname} ${row.resident_middlename}. ${row.resident_lastname}, ${row.resident_suffix} `.trim(),
+            id: "applicant_name",
             header: () => <div className='text-center'>Resident's Name</div>,
             cell: ({ row }) => {
                 const { resident_firstname, resident_middlename, resident_lastname, resident_suffix } = row.original;
@@ -209,8 +210,7 @@ const Residents = () => {
                                     </Button>
                                 } />
                         }
-                        filterColumn="resident_householdnum"
-                        searchPlaceHolder="Search bldg serial number"
+                        searchPlaceHolder="Search"
                         renderSheet={(trigger, row) => (
                             <CustomSheet
                                 onSubmit={updateSubmit}

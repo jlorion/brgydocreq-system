@@ -108,7 +108,8 @@ const OnProcess = () => {
   // columns for table
   const columns: ColumnDef<DocumentProcessingForm>[] = [
     {
-      accessorKey: "applicant_name",
+      accessorFn: row => `${row.resident_lastname}, ${row.resident_firstname}`.trim(),
+      id: "applicant_name",
       header: () => <div className='text-center'>Applicant's Name</div>,
       cell: ({ row }) => {
         const { resident_firstname, resident_lastname } = row.original
@@ -140,7 +141,8 @@ const OnProcess = () => {
       ),
     },
     {
-      accessorKey: "approved_by",
+      accessorFn: row => `${row.officer_lastname}, ${row.officer_firstname}`.trim(),
+      id: "approved_by",
       header: () => <div className='text-center'>Approved By</div>,
       cell: ({ row }) => {
         const { officer_firstname, officer_lastname } = row.original
@@ -153,23 +155,21 @@ const OnProcess = () => {
       },
     },
     {
-      accessorKey: "created_at",
+      accessorFn: row => row.created_at ? format(new Date(row.created_at), "MMM dd, yyyy hh:mm aa") : '',
+      id: "created_at",
       header: () => <div className='text-center'>Date Approved</div>,
       cell: ({ row }) => {
         const date = row.getValue('created_at') as string;
-        const formatDate = date ? format(new Date(date), "MMM. dd, yyyy '@' hh:mmaaa") : '';
-
-        return <div className="capitalize text-center">{formatDate}</div>
+        return <div className="capitalize text-center">{date}</div>;
       },
     },
     {
-      accessorKey: "updated_at",
-      header: () => <div className='text-center'>Date P/F/C</div>,
+      accessorFn: row => row.updated_at ? format(new Date(row.updated_at), "MMM dd, yyyy hh:mm aa") : '',
+      id: "updated_at",
+      header: () => <div className='text-center'>Date P/FP/C</div>,
       cell: ({ row }) => {
         const date = row.getValue('updated_at') as string;
-        const formatDate = date ? format(new Date(date), "MMM. dd, yyyy '@' hh:mmaaa") : '';
-
-        return <div className="capitalize text-center">{formatDate}</div>
+        return <div className="capitalize text-center">{date}</div>;
       },
     },
     {
@@ -208,6 +208,16 @@ const OnProcess = () => {
 
 
   } as const;
+  // automatically set notification when status changes
+  useEffect(() => {
+    const currentStatus = statusDialogMap[data.status_id as keyof typeof statusDialogMap];
+
+    if (currentStatus?.notification) {
+      setData('notification', currentStatus.notification);
+    } else {
+      setData('notification', 'Undefined');
+    }
+  }, [data.status_id]);
 
   return (
     <AdminLayout className='p-5' title='On Process'>
@@ -215,9 +225,8 @@ const OnProcess = () => {
       <CustomDataTable
         columns={columns}
         data={onProcessData}
-        filterColumn='applicant_name'
         onRowClick={(row: DocumentProcessingForm) => (populateSheet(row))}
-        searchPlaceHolder="Search applicant's name"
+        searchPlaceHolder="Search"
         renderSheet={(trigger, row) => {
 
           // map the dialog based on the selected status
@@ -225,17 +234,6 @@ const OnProcess = () => {
             title: 'Unknown Status',
             fields: ProcessingFields,
           };
-
-          // automatically set notification when status changes
-          useEffect(() => {
-            const currentStatus = statusDialogMap[data.status_id as keyof typeof statusDialogMap];
-
-            if (currentStatus?.notification) {
-              setData('notification', currentStatus.notification);
-            } else {
-              setData('notification', 'Undefined');
-            }
-          }, [data.status_id]);
 
           return (
             <CustomSheet
