@@ -84,22 +84,30 @@ class AdminAdminsController extends Controller
 
         $currentSuperAdmin = Auth::guard('admin')->user();
 
+        $currentAdmin = auth('admin')->user();
+
         if (
             $validate['admin_roleid'] == 1 &&
-            $admin->admin_id != $currentSuperAdmin->admin_id
+            $admin->admin_id != $currentAdmin->admin_id
         ) {
-            $currentSuperAdmin->update([
-                'role_id' => 2
+            $admin->update([
+                'role_id' => 1,
             ]);
-            return \to_route('admin.dashboard');
+
+            $currentAdmin->update([
+                'role_id' => 2,
+            ]);
+
+            return to_route('admin.dashboard');
         }
 
+        
         $admin->update([
             'admin_username' => $validate['admin_username'],
-            'admin_email' => $validate['admin_email'],
+            'email' => $validate['admin_email'],
             'admin_phonenum' => $validate['admin_phonenum'],
-            'role_id' => $validate['admin_roleid'],
         ]);
+
 
         $admin->barangayOfficer->update([
             'officer_firstname' => $validate['officer_firstname'],
