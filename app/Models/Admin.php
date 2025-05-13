@@ -21,7 +21,8 @@ class Admin extends Authenticatable
         'admin_phonenum',
         'email',
         'admin_password',
-        'admin_photopath'
+        'admin_photopath',
+        'status_id'
     ];
 
 

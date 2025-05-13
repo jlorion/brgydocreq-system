@@ -39,7 +39,7 @@ class AdminProfileController extends Controller
     {
         $validate = $request->validate([
             'admin_username' => 'required|unique:admins,admin_username,' . $request->user('admin')->admin_id . ',admin_id',
-            'admin_email' => 'required|email|unique:admins,admin_email,' . $request->user('admin')->admin_id . ',admin_id',
+            'admin_email' => 'required|email|unique:admins,email,' . $request->user('admin')->admin_id . ',admin_id',
             'admin_phonenum' => ['required', 'regex:/^09\d{9}$/']
         ]);
 

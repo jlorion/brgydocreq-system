@@ -79,10 +79,10 @@ export const AdminCustomCard = ({ image, title, content, alt, onClick, descripti
                 <CustomIcon imgSrc={image} alt={alt} className="h-full w-full rounded-t-md border border-gray-300 object-cover" />
                 <Card className="gap-2 rounded-b-md border border-gray-300 w-full pt-4">
                     <CardHeader>
-                        <CardTitle className="text-s3 text-center text-lg font-semibold">{title}</CardTitle>
-                        <CardDescription className="text-center text-md font-semibold text-black">{description}</CardDescription>
+                        <CardTitle className="text-s3 text-center text-md font-semibold">{title}</CardTitle>
+                        <CardDescription className="text-center text-md font-medium text-black">{description}</CardDescription>
                     </CardHeader>
-                    <CardContent className="text-center text-xs font-semibold text-black" >{content}</CardContent>
+                    <CardContent className="text-center text-xs font-medium text-black" >{content}</CardContent>
                 </Card>
             </button>
         </>

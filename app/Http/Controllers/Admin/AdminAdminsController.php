@@ -80,32 +80,34 @@ class AdminAdminsController extends Controller
             'officer_purokid' => 'required|exists:addresses,address_id',
         ]);
 
+        // return \response()->json($validate);
+
         $admin = Admin::findOrFail($validate['admin_id']);
+
 
         $currentSuperAdmin = Auth::guard('admin')->user();
 
-        $currentAdmin = auth('admin')->user();
-
         if (
             $validate['admin_roleid'] == 1 &&
-            $admin->admin_id != $currentAdmin->admin_id
+            $admin->admin_id != $currentSuperAdmin->admin_id
         ) {
             $admin->update([
                 'role_id' => 1,
             ]);
 
-            $currentAdmin->update([
+            $currentSuperAdmin->update([
                 'role_id' => 2,
             ]);
 
             return to_route('admin.dashboard');
         }
 
-        
+
         $admin->update([
             'admin_username' => $validate['admin_username'],
             'email' => $validate['admin_email'],
             'admin_phonenum' => $validate['admin_phonenum'],
+            'status_id' => $validate['admin_status']
         ]);
 
 

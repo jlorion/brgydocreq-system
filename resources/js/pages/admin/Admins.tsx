@@ -167,6 +167,7 @@ const Admins = () => {
                                 description={admin.officer_position}
                                 content={admin.admin_role}
                                 onClick={() => handleOpenDialog(admin)}
+                                
                             />
                         }
                         onSubmit={updateSubmit}

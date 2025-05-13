@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\Admin;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -41,16 +42,33 @@ class AdminLoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (!Auth::guard('admin')->attempt([
+        $credentials = [
             'admin_username' => $this->input('admin_username'),
             'password' => $this->input('admin_password'),
-        ], $this->boolean('remember'))) {
+        ];
+
+        $admin = Admin::where('admin_username', $credentials['admin_username'])->first();
+
+        if ($admin->status_id != 3) {
+            RateLimiter::hit($this->throttleKey());
+
+            throw ValidationException::withMessages([
+                'admin_username' => 'Your account is inactive. Please contact support.',
+            ]);
+        }
+
+
+        if (!Auth::guard('admin')->attempt(
+            $credentials,
+            $this->boolean('remember')
+        )) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
                 'admin_username' => __('auth.failed'),
             ]);
         }
+
 
         RateLimiter::clear($this->throttleKey());
     }
