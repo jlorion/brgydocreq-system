@@ -26,7 +26,7 @@ class AdminRegistrationController extends Controller
             'officer_birthdate' => 'required|date',
             'officer_householdnum' => 'required|string|max:255',
             'admin_phonenum' => 'required|regex:/^09\d{9}$/',
-            'admin_username' => 'required|string|unique:admins',
+            'admin_username' => 'required|string|unique:admins,admin_username',
             'admin_email' => 'exists:admin_invitations,email',
             'admin_role' => 'exists:roles,role_name',
             'invite_token' => 'required|string',

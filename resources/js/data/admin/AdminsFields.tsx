@@ -36,7 +36,13 @@ export const AccountInfo = (data: AdminForm, setData: (key: keyof AdminForm, val
 			id: 'phone_num',
 			value: data.admin_phonenum,
 			tabIndex: -3,
-			onChange: (e) => setData('admin_phonenum', e.target.value),
+			onChange: (e) => {
+				const value = e.target.value;
+				// Accept only digits, and trim if over 11
+				if (/^\d{0,11}$/.test(value)) {
+					setData('admin_phonenum', value);
+				}
+			},
 			errorMessage: errors.admin_phonenum,
 		},
 		{
@@ -139,7 +145,12 @@ export const BarangayOfficerInfo = (data: AdminForm, setData: (key: keyof AdminF
 			disabled: data.officer_precinct === null,
 			value: data.officer_precinct ?? 'N/A',
 			tabIndex: -11,
-			onChange: (e) => setData('officer_precinct', e.target.value),
+			onChange: (e) => {
+				const value = e.target.value;
+				if (/^\d{0,4}$/.test(value)) {
+					setData('admin_phonenum', value);
+				}
+			},
 			errorMessage: errors.officer_precinct,
 		},
 		{

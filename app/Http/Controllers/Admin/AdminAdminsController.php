@@ -64,7 +64,7 @@ class AdminAdminsController extends Controller
             'admin_id' => 'required|exists:admins,admin_id',
             'admin_username' => 'required|string|max:255',
             'admin_email' => 'required|email|max:255',
-            'admin_phonenum' => 'required|string|max:100',
+            'admin_phonenum' => 'required|regex:/^09\d{9}$/',
             'admin_roleid' => 'required|exists:roles,role_id',
             'officer_firstname' => 'required|string|max:255',
             'officer_middlename' => 'required|string|max:255',

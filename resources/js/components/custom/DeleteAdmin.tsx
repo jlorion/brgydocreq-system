@@ -1,4 +1,4 @@
-import { useForm } from '@inertiajs/react';
+import { useForm, usePage } from '@inertiajs/react';
 import { FormEventHandler, useRef } from 'react';
 import InputError from '@/components/custom/InputError';
 import { Button } from '@/components/ui/button';
@@ -7,8 +7,12 @@ import { Label } from '@/components/ui/label';
 import HeadingSmall from '@/components/custom/HeadingSmall';
 
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { SharedData } from '@/types';
+import { toast } from 'sonner';
 
 export default function DeleteAdmin() {
+    const { auth } = usePage<SharedData>().props;
+
     const passwordInput = useRef<HTMLInputElement>(null);
     const { data, setData, delete: destroy, processing, reset, errors, clearErrors } = useForm<Required<{ password: string }>>({ password: '' });
 
@@ -28,6 +32,7 @@ export default function DeleteAdmin() {
         reset();
     };
 
+
     return (
         <div className="space-y-6">
             <HeadingSmall title="Delete account" description="Delete your account and all of its resources" />
@@ -38,7 +43,13 @@ export default function DeleteAdmin() {
                 </div>
 
                 <Dialog>
-                    <DialogTrigger asChild>
+                    <DialogTrigger asChild onClick={(e) => {
+                        if (auth.admin.admin_roleid === 1) {
+                            e.preventDefault()
+                            toast.error('Superior Admin Account cannot be deleted.')
+                            return;
+                        }
+                    }}>
                         <Button variant="destructive">Delete account</Button>
                     </DialogTrigger>
                     <DialogContent className='w-1/2'>

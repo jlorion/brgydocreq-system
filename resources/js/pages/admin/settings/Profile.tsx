@@ -12,7 +12,6 @@ import { toast, Toaster } from 'sonner';
 
 export default function Profile() {
     const { auth } = usePage<SharedData>().props;
-    console.log(auth);
 
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm<Required<AdminForm>>({
         admin_id: auth.admin.admin_id,

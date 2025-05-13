@@ -32,9 +32,9 @@ class UserRegistrationController extends Controller
     {
 
         $validated = $request->validate([
-            'username' => 'required|string|max:255|unique:users',
+            'username' => 'required|string|unique:users',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'reference_number' => 'required|string|max:255|exists:resident_references,reference_number',
+            'reference_number' => 'required|string|exists:resident_references,reference_number',
         ]);
 
         $residentReference = ResidentReference::where('reference_number', $validated['reference_number'])->where('expires_at', '>', now())->first();
