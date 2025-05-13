@@ -37,7 +37,7 @@ class AdminResidentsController extends Controller
 
         $puroks = Address::get(['address_id', 'purok']);
         $status = Status::select(['status_id', 'status_name'])
-            ->whereIn('status_name', ['Active', 'Migrated', 'Deceased', 'Blacklisted'])
+            ->whereIn('status_name', ['Active', 'Inactive'])
             ->get();
 
         return  Inertia::render('admin/Residents', [

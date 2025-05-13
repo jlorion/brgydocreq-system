@@ -13,7 +13,7 @@ class StatusSeeder extends Seeder
      */
     public function run(): void
     {
-        $statuses = ['Rejected', 'Claimed', 'Active', 'Inactive', 'Under Review', 'Processing', 'For Pickup', 'Available', 'Cancelled', 'Suspended', 'Approved', 'Suspend', 'Revoke', 'Ban', 'Term ended', 'Resigned', 'Migrated', 'Deceased', 'Blacklisted', 'Unavailable'];
+        $statuses = ['Rejected', 'Claimed', 'Active', 'Inactive', 'Under Review', 'Processing', 'For Pickup', 'Available', 'Cancelled', 'Suspended', 'Approved', 'Term ended', 'Resigned', 'Unavailable'];
         foreach ($statuses as $status) {
             Status::create([
                 'status_name' => $status

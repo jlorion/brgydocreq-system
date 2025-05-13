@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import HeadingSmall from '@/components/custom/HeadingSmall';
-
+import { IoInformationCircle } from "react-icons/io5";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { SharedData } from '@/types';
 import { toast } from 'sonner';
@@ -36,6 +36,14 @@ export default function DeleteAdmin() {
     return (
         <div className="space-y-6">
             <HeadingSmall title="Delete account" description="Delete your account and all of its resources" />
+            <div className='bg-yellow-50 p-4 rounded-md text-amber-500 border-1 border-amber-300'>
+                <article className='flex text-justify text-sm'>
+                    <span>
+                        <IoInformationCircle size={25} className='mr-2 mt-1' />
+                    </span>
+                    Before deleting your account, you must promote another admin to Superior Admin. Your role will then be changed to Co-Admin, allowing you to proceed with the deletion.
+                </article>
+            </div>
             <div className="space-y-4 rounded-lg border border-red-100 bg-red-50 p-4 dark:border-red-200/10 dark:bg-red-700/10">
                 <div className="relative space-y-0.5 text-red-600 dark:text-red-100">
                     <p className="font-medium">Warning</p>

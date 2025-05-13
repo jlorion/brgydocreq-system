@@ -114,7 +114,6 @@ const Admins = () => {
 
 
     return (
-
         <AdminLayout title='Administrator'>
             <Head title="Administrator" />
             <div className='flex flex-row justify-end'>

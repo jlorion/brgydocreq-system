@@ -8,6 +8,7 @@ use App\Models\Admin;
 use App\Models\Role;
 use App\Models\Status;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class AdminAdminsController extends Controller
@@ -19,7 +20,7 @@ class AdminAdminsController extends Controller
         $roles = Role::select('role_id', 'role_name')->get();
         $puroks = Address::get(['address_id', 'purok']);
         $status = Status::select('status_id', 'status_name')
-            ->whereIn('status_name', ['Active', 'Inactive', 'Revoke', 'Suspend'])
+            ->whereIn('status_name', ['Active', 'Inactive'])
             ->get();
 
         $flattenAdmins = $admins->map(function ($admin) {
@@ -64,6 +65,7 @@ class AdminAdminsController extends Controller
             'admin_id' => 'required|exists:admins,admin_id',
             'admin_username' => 'required|string|max:255',
             'admin_email' => 'required|email|max:255',
+            'admin_status' => 'required|exists:statuses,status_id',
             'admin_phonenum' => 'required|regex:/^09\d{9}$/',
             'admin_roleid' => 'required|exists:roles,role_id',
             'officer_firstname' => 'required|string|max:255',
@@ -79,6 +81,18 @@ class AdminAdminsController extends Controller
         ]);
 
         $admin = Admin::findOrFail($validate['admin_id']);
+
+        $currentSuperAdmin = Auth::guard('admin')->user();
+
+        if (
+            $validate['admin_roleid'] == 1 &&
+            $admin->admin_id != $currentSuperAdmin->admin_id
+        ) {
+            $currentSuperAdmin->update([
+                'role_id' => 2
+            ]);
+            return \to_route('admin.dashboard');
+        }
 
         $admin->update([
             'admin_username' => $validate['admin_username'],
