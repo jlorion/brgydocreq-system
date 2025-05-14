@@ -59,6 +59,13 @@ class UserResidentReferenceController extends Controller
             ]);
         }
 
+        if ($resident->status_id != 3) {
+
+            throw ValidationException::withMessages([
+                'message' => 'The resident is inactive. Please contact your Barangay office.',
+            ]);
+        }
+
         $refNumber = rand(100000, 999999);
 
         ResidentReference::create([
@@ -67,7 +74,7 @@ class UserResidentReferenceController extends Controller
             'phone_number' => $validated['phone_number'],
             'reference_number' => $refNumber,
             'expires_at' => now()->addMinutes(10),
-        ]); 
+        ]);
 
         Mail::to($validated['email'])->send(new ReferenceNumberMail($refNumber));
     }

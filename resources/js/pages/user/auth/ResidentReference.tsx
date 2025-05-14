@@ -38,6 +38,9 @@ const ResidentReference = () => {
                 if (errors.message === 'This resident already has an account.') {
                     toast.error('This resident already has an account.')
                 }
+                if (errors.message === 'The resident is inactive. Please contact your Barangay office.') {
+                    toast.error('The resident is inactive. Please contact your Barangay office.')
+                }
             },
         })
     }
