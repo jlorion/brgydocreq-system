@@ -74,7 +74,7 @@ const Admins = () => {
             method: 'patch',
             forceFormData: true,
             onSuccess: () => {
-                toast.success('Succesfully updated')
+                toast.success("Admin's information updated successfully")
                 reset()
             },
             onError: (errors) => {

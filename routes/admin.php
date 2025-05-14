@@ -54,7 +54,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 		Route::post('/on-process/processing', [AdminOnProcessController::class, 'processing'])->name('processing');
 		Route::post('/documents/update', [AdminDocumentsController::class, 'updateDocumentInfo'])->name('documents.update');
 		Route::post('/documents/store', [AdminDocumentsController::class, 'storeDocumentInfo'])->name('documents.store');
-		Route::patch('/residents/{resident_id}', [AdminResidentsController::class, 'updateResidentInfo'])->name('residents.update');
+		Route::patch('/residents/update', [AdminResidentsController::class, 'updateResidentInfo'])->name('residents.update');
 		Route::post('/residents/store', [AdminResidentsController::class, 'storeResidentInfo'])->name('residents.store');
 		Route::post('logout', [AdminAuthSessionController::class, 'destroy'])->name('logout');
 

@@ -40,22 +40,6 @@ const Archives = () => {
     updated_at: new Date(),
   })
 
-  const onProcessSubmit: FormEventHandler = (e) => {
-    e.preventDefault();
-    post(route('admin.processing'), {
-      onSuccess: () => {
-        toast.success('Succesfully updated and send notification');
-        reset()
-      },
-      onError: (errors) => {
-        console.error("Form Validation error");
-        Object.entries(errors).forEach(([field, message]) => {
-          console.error(`Field: ${field}, Message: ${message}`);
-        })
-      }
-    });
-  }
-
 
   // populate sheet
   const populateSheet = (docprocessing: DocumentProcessingForm) => {
@@ -123,19 +107,7 @@ const Archives = () => {
     },
     {
       accessorKey: "document_name",
-      header: ({ column }) => {
-        return (
-          <div className='text-center'>
-            <Button
-              variant="ghost"
-              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            >
-              Type of Document
-              <ArrowUpDown />
-            </Button>
-          </div>
-        )
-      },
+      header: () => <div className='text-center'>Type of Document</div>,
       cell: ({ row }) => (
         <div className="capitalize text-center">{row.getValue("document_name")}</div>
       ),
@@ -165,10 +137,21 @@ const Archives = () => {
     },
     {
       accessorKey: "status_name",
-      header: () => <div className='text-center'>Status</div>,
+      header: ({ column }) => {
+        return (
+          <div className='text-center'>
+            <Button
+              variant="ghost"
+              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            >
+              Status
+              <ArrowUpDown />
+            </Button>
+          </div>
+        )
+      },
       cell: ({ row }) => {
         const status = row.getValue("status_name") as string;
-
         return (
           <div className='flex justify-center items-center'>
             <div className={`rounded w-28 py-1 capitalize text-center ${getStatusColors(status)}`}>

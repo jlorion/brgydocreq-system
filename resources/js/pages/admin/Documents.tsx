@@ -33,7 +33,7 @@ export default function Documents() {
             forceFormData: true,
             method: 'patch',
             onSuccess: () => {
-                toast.success('Updated Successfully.')
+                toast.success('Document Updated Successfully.')
             },
             onError: (errors) => {
                 console.error('Form submission failed. Validation errors:');

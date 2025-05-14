@@ -34,7 +34,35 @@ const Residents = () => {
         resident_birthdate: resident.resident_birthdate
     }));
 
-    const { data, setData, patch, post, processing, errors, reset } = useForm<Required<ResidentForm>>({
+    const {
+        data: addData,
+        setData: setAddData,
+        post: addPost,
+        processing: addProcessing,
+        errors: addErrors,
+        reset: resetAdd
+    } = useForm<Required<Omit<ResidentForm, 'resident_id'>>>({
+        resident_purokid: null,
+        resident_statusid: null,
+        resident_firstname: '',
+        resident_middlename: '',
+        resident_lastname: '',
+        resident_suffix: '',
+        resident_birthdate: '',
+        resident_gender: '',
+        resident_precinct: '',
+        resident_householdnum: '',
+        resident_status: '',
+        resident_purok: '',
+    });
+
+    const {
+        data: updateData,
+        setData: setUpdateData,
+        patch: updatePatch,
+        processing: updateProcessing,
+        errors: updateErrors,
+    } = useForm<Required<ResidentForm>>({
         resident_id: 0,
         resident_purokid: null,
         resident_statusid: null,
@@ -51,9 +79,10 @@ const Residents = () => {
     });
 
 
+
     const updateSubmit: FormEventHandler = (e) => {
         e.preventDefault();
-        patch(route('admin.residents.update', data.resident_id), {
+        updatePatch(route('admin.residents.update'), {
             onSuccess: () => {
                 toast.success("Resident's information updated successfully");
             },
@@ -68,10 +97,10 @@ const Residents = () => {
 
     const addSubmit: FormEventHandler = (e) => {
         e.preventDefault();
-        post(route('admin.residents.store'), {
+        addPost(route('admin.residents.store'), {
             onSuccess: () => {
-                toast.success('Resident successfully added')
-                reset()
+                toast.success('Resident successfully added.')
+                resetAdd()
             },
             onError: (errors) => {
                 console.error('Form submission failed. Validation errors:');
@@ -83,7 +112,7 @@ const Residents = () => {
     }
 
     const populateSheet = (resident: ResidentForm) => {
-        setData({
+        setUpdateData({
             resident_id: resident.resident_id,
             resident_purokid: resident.resident_purokid,
             resident_statusid: resident.resident_statusid,
@@ -105,7 +134,19 @@ const Residents = () => {
         {
             accessorFn: row => `${row.resident_firstname} ${row.resident_middlename}. ${row.resident_lastname}, ${row.resident_suffix} `.trim(),
             id: "applicant_name",
-            header: () => <div className='text-center'>Resident's Name</div>,
+            header: ({ column }) => {
+                return (
+                    <div className='text-center'>
+                        <Button
+                            variant="ghost"
+                            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                        >
+                            Resident's Name
+                            <ArrowUpDown />
+                        </Button>
+                    </div>
+                )
+            },
             cell: ({ row }) => {
                 const { resident_firstname, resident_middlename, resident_lastname, resident_suffix } = row.original;
                 const middleInitial = resident_middlename ? `${resident_middlename.charAt(0).toUpperCase()}.` : '';
@@ -129,19 +170,7 @@ const Residents = () => {
         },
         {
             accessorKey: "resident_householdnum",
-            header: ({ column }) => {
-                return (
-                    <div className='text-center'>
-                        <Button
-                            variant="ghost"
-                            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                        >
-                            Bldg Serial No.
-                            <ArrowUpDown />
-                        </Button>
-                    </div>
-                )
-            },
+            header: () => <div className='text-center'>Bldg House Number</div>,
             cell: ({ row }) => (
                 <div className="capitalize text-center">{row.getValue("resident_householdnum")}</div>
             ),
@@ -194,14 +223,15 @@ const Residents = () => {
                         data={dataResident}
                         additionalComponent={
                             <CustomDialog
+                                toaster={true}
                                 title='Add Resident'
                                 onSubmit={addSubmit}
                                 button={
-                                    <Button disabled={processing}>
+                                    <Button disabled={addProcessing}>
                                         Submit
                                     </Button>}
                                 children={
-                                    <CustomForm fields={AddResidentsFields(data, setData, errors)} className='grid grid-cols-3 gap-x-5' />
+                                    <CustomForm fields={AddResidentsFields(addData, setAddData, addErrors)} className='grid grid-cols-3 gap-x-5' />
                                 }
                                 trigger={
                                     <Button>
@@ -217,14 +247,14 @@ const Residents = () => {
                                 key={row}
                                 trigger={trigger}
                                 firstButton={
-                                    <Button disabled={processing} className='text-center w-full'>
+                                    <Button disabled={updateProcessing} className='text-center w-full'>
                                         Save
                                     </Button>}
-                                statusTitle={data.resident_status}
+                                statusTitle={updateData.resident_status}
                                 form={
                                     <>
-                                        <input type="text" hidden defaultValue={data.resident_id} />
-                                        <CustomForm fields={FetchUpdateResidentsFields(data, setData, errors)} className="grid grid-cols-2 gap-2" />
+                                        <input type="hidden" defaultValue={updateData.resident_id} />
+                                        <CustomForm fields={FetchUpdateResidentsFields(updateData, setUpdateData, updateErrors)} className="grid grid-cols-2 gap-2" />
                                     </>
                                 } />
                         )}
