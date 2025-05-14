@@ -76,7 +76,7 @@ export const fetchUpdateSecondHalve = (data: DocumentForm, setData: (key: keyof 
 	]
 }
 
-export const addFirstHalve = (data: Omit<DocumentForm, 'document_id'>, setData: (key: keyof Omit<DocumentForm, 'document_id'>, value: string | Date | number | null) => void, errors: Partial<Record<keyof Omit<DocumentForm, 'document_id'>, string>>): CustomFormField[] => {
+export const addFirstHalve = (data: Omit<DocumentForm, 'document_id'>, setData: (key: keyof Omit<DocumentForm, 'document_id'>, value: string | File | number | null) => void, errors: Partial<Record<keyof Omit<DocumentForm, 'document_id'>, string>>): CustomFormField[] => {
 	const { status } = usePage<SharedData>().props
 
 	return [
@@ -105,12 +105,18 @@ export const addFirstHalve = (data: Omit<DocumentForm, 'document_id'>, setData: 
 		},
 
 		{
-			label: 'DocumentForm Photo',
+			label: 'Document Photo',
 			type: 'file',
 			id: 'last_name',
 			value: data.document_photopath,
 			tabIndex: 3,
-			onChange: (e) => setData('document_photopath', e.target.value),
+			onChange: (e) => {
+				const file = e.target.files?.[0];
+				if (file) {
+					setData('document_photopath', file);
+				}
+			},
+			accept: "image/jpeg,image/png,image/jpg",
 			errorMessage: errors.document_photopath,
 		},
 		{
@@ -139,7 +145,7 @@ export const addSecondHalve = (data: Omit<DocumentForm, 'document_id'>, setData:
 			id: 'description',
 			value: data.description,
 			tabIndex: 4,
-			onChange: (e) => setData('status_id', e.target.value),
+			onChange: (e) => setData('description', e.target.value),
 			errorMessage: errors.description,
 			additionalProps: {
 				className: 'h-24',

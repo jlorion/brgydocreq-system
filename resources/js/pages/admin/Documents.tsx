@@ -25,11 +25,10 @@ export default function Documents() {
         document_photopath: null,
         price: '',
     })
-    console.log(updateData)
 
     const updateSubmit: FormEventHandler = (e) => {
         e.preventDefault();
-        updatePatch(route('admin.documents.update', updateData.document_id), {
+        updatePatch(route('admin.documents.update'), {
             preserveScroll: true,
             forceFormData: true,
             method: 'patch',
@@ -67,6 +66,7 @@ export default function Documents() {
 
     const addSubmit: FormEventHandler = (e) => {
         e.preventDefault();
+        console.log(addData)
         addPost(route('admin.documents.store'), {
             preserveScroll: true,
             onSuccess: () => {
@@ -123,7 +123,7 @@ export default function Documents() {
                         }
                         children={
                             <>
-                                <input type="text" hidden defaultValue={updateData.document_id} />
+                                <input type="hidden" value={updateData.document_id} />
                                 <CustomForm className='grid grid-cols-2 gap-x-10' fields={fetchUpdateFirstHalve(updateData, updateSetData, updateErrors)} />
                                 <CustomForm className='grid grid-cols-1' fields={fetchUpdateSecondHalve(updateData, updateSetData, updateErrors)} />
                             </>
