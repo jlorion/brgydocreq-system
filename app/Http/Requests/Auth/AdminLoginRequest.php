@@ -53,7 +53,7 @@ class AdminLoginRequest extends FormRequest
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'admin_username' => 'Your account is inactive. Please contact your Barangay office.',
+                'admin_username' => 'Your account is inactive. Please contact your Superior Admin.',
             ]);
         }
 

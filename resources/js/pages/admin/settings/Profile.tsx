@@ -8,12 +8,13 @@ import AdminSettingsLayout from '@/layouts/admin/AdminSettingsLayout';
 import CustomForm from '@/components/custom/CustomFormFields';
 import { NotebookPenIcon } from 'lucide-react';
 import { toast, Toaster } from 'sonner';
+import { IoInformationCircle } from 'react-icons/io5';
 
 
 export default function Profile() {
     const { auth } = usePage<SharedData>().props;
 
-    const { data, setData, patch, errors, processing, recentlySuccessful } = useForm<Required<AdminForm>>({
+    const { data, setData, patch, errors, processing } = useForm<Required<AdminForm>>({
         admin_id: auth.admin.admin_id,
         admin_username: auth.admin.admin_username,
         admin_status: auth.admin.admin_status,
@@ -56,14 +57,28 @@ export default function Profile() {
                         <Button disabled={processing}>Save</Button>
                     </div>
                 </form>
-                <div className='bg-amber-300 p-4 rounded-md'>
-                    <article className='flex text-justify '>
-                        <span>
-                            <NotebookPenIcon size={25} className='mr-2 mt-1' />
-                        </span>
-                        Your personal details below are based on official records provided by the Barangay and is managed by authorized personnel. For consistency and accuracy, this information cannot be edited by users.  If you need to make corrections or updates, please visit or contact the Barangay office directly. All updates will be reflected in the system once confirmed by the Barangay.
-                    </article>
-                </div>
+                {
+                    auth.admin.admin_roleid === 1 ? (
+                        <div className='bg-yellow-50 p-4 rounded-md text-amber-500 border-1 border-amber-300'>
+                            <article className='flex text-justify '>
+                                <span>
+                                    <IoInformationCircle size={25} className='mr-2 mt-1' />
+                                </span>
+                                As the Superior Administrator, you are authorized to update your personal information. However, to maintain consistency and accuracy, please ensure that any modifications align with the official records provided by the Barangay. You can make changes by navigating to Admins Menu.
+                            </article>
+                        </div>
+                    ) : (
+                        <div className='bg-yellow-50 p-4 rounded-md text-amber-500 border-1 border-amber-300'>
+                            <article className='flex text-justify '>
+                                <span>
+                                    <IoInformationCircle size={25} className='mr-2 mt-1' />
+                                </span>
+                                Your personal details below are based on official records provided by the Barangay and is managed by authorized personnel. For consistency and accuracy, this information cannot be edited. If you need to make corrections or updates, please contact the Superior Administrator of the system. All updates will be reflected in the system once confirmed.
+                            </article>
+                        </div>
+                    )
+                }
+
                 <CustomForm className='grid grid-cols-3 gap-x-5' fields={BarangayOfficerInfo(data, setData, errors)} />
                 <DeleteAdmin />
             </AdminSettingsLayout>
