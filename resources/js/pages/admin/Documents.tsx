@@ -9,6 +9,7 @@ import CustomForm from '@/components/custom/CustomFormFields';
 import { fetchUpdateFirstHalve, fetchUpdateSecondHalve, addFirstHalve, addSecondHalve } from '@/data/admin/DocumentFields'
 import { FormEventHandler } from 'react';
 import DefaultDocPic from '../../../assets/default_documentpic.svg'
+import { toast, Toaster } from 'sonner';
 
 export default function Documents() {
 
@@ -28,10 +29,13 @@ export default function Documents() {
 
     const updateSubmit: FormEventHandler = (e) => {
         e.preventDefault();
-        console.log(updateData)
         updatePatch(route('admin.documents.update', updateData.document_id), {
+            preserveScroll: true,
             forceFormData: true,
             method: 'patch',
+            onSuccess: () => {
+                toast.success('Updated Successfully.')
+            },
             onError: (errors) => {
                 console.error('Form submission failed. Validation errors:');
                 Object.entries(errors).forEach(([field, message]) => {
@@ -64,6 +68,10 @@ export default function Documents() {
     const addSubmit: FormEventHandler = (e) => {
         e.preventDefault();
         addPost(route('admin.documents.store'), {
+            preserveScroll: true,
+            onSuccess: () => {
+                toast.success('Document Added Successfully.')
+            },
             onError: (errors) => {
                 console.error('Form submission failed. Validation errors:');
                 Object.entries(errors).forEach(([field, message]) => {
@@ -74,10 +82,12 @@ export default function Documents() {
     }
 
     return (
+
         <AdminLayout title='Documents'>
             <Head title="Documents" />
             <div className='flex justify-end'>
                 <CustomDialog
+                    toaster={true}
                     title='Add Document'
                     onSubmit={addSubmit}
                     trigger={
@@ -97,6 +107,7 @@ export default function Documents() {
 
                 {documents.map((document, index) => (
                     <CustomDialog
+                        toaster={true}
                         onSubmit={updateSubmit}
                         key={index}
                         title={document.document_name}

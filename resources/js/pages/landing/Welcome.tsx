@@ -94,47 +94,51 @@ const Welcome = () => {
                     </div>
 
                     <div className="grid justify-center gap-y-8 pt-5 lg:grid-cols-3 lg:gap-x-26 lg:gap-y-18">
+                        {auth.user ? (documents
+                            .filter((document) => document.status_id !== 20)
+                            .map((document) => (
+                                <CustomDialog
+                                    key={document.document_id}
+                                    toaster={true}
+                                    title={document.document_name}
+                                    onSubmit={submitDocument}
+                                    trigger={
+                                        <DocumentCustomCard
+                                            image={document.document_photopath ? `/storage/${document.document_photopath}` : DefaultDocPic}
+                                            alt={document.document_name}
+                                            title={document.document_name}
+                                            onClick={() => {
+                                                setData('document_id', document.document_id);
+                                                setData('document_name', document.document_name);
+                                                setData('user_id', auth.user.user_id)
+                                            }}
+                                            content={document.description} />
+                                    }
+                                    button={<Button disabled={processing} variant="primary">Submit</Button>}
+                                    children={
+                                        <>
+                                            <input type='hidden' defaultValue={data.document_id} />
+                                            <input type='hidden' defaultValue={data.user_id} />
+                                            <input type='hidden' defaultValue={data.document_name} />
+                                            <CustomForm fields={DocumentRequestFields(data, setData, errors)} />
+                                        </>
+                                    }
+                                />
 
-                        {auth.user ? (documents.map((document) => (
-                            <CustomDialog
-                                key={document.document_id}
-                                toaster={true}
-                                title={document.document_name}
-                                onSubmit={submitDocument}
-                                trigger={
-                                    <DocumentCustomCard
-                                        image={document.document_photopath ? `/storage/${document.document_photopath}` : DefaultDocPic}
-                                        alt={document.document_name}
-                                        title={document.document_name}
-                                        onClick={() => {
-                                            setData('document_id', document.document_id);
-                                            setData('document_name', document.document_name);
-                                            setData('user_id', auth.user.user_id)
-                                        }}
-                                        content={document.description} />
-                                }
-                                button={<Button disabled={processing} variant="primary">Submit</Button>}
-                                children={
-                                    <>
-                                        <input type='hidden' defaultValue={data.document_id} />
-                                        <input type='hidden' defaultValue={data.user_id} />
-                                        <input type='hidden' defaultValue={data.document_name} />
-                                        <CustomForm fields={DocumentRequestFields(data, setData, errors)} />
-                                    </>
-                                }
-                            />
+                            ))) : (
 
-                        ))) : (
-                            (documents.map((document, index) => (
-                                <Link href={route('user.login')}>
-                                    <DocumentCustomCard
-                                        key={index}
-                                        image={document.document_photopath ? `/storage/${document.document_photopath}` : DefaultDocPic}
-                                        alt={document.document_name}
-                                        title={document.document_name}
-                                        content={document.description} />
-                                </Link>
-                            )))
+                            (documents
+                                .filter((document) => document.status_id !== 20)
+                                .map((document, index) => (
+                                    <Link href={route('user.login')}>
+                                        <DocumentCustomCard
+                                            key={index}
+                                            image={document.document_photopath ? `/storage/${document.document_photopath}` : DefaultDocPic}
+                                            alt={document.document_name}
+                                            title={document.document_name}
+                                            content={document.description} />
+                                    </Link>
+                                )))
                         )
                         }
                     </div>
