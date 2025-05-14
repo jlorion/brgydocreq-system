@@ -241,6 +241,7 @@ const OnProcess = () => {
               trigger={trigger}
               firstButton={
                 <CustomDialog
+                  toaster={true}
                   title={dialogProps.title}
                   onSubmit={onProcessSubmit}
                   width="w-150"

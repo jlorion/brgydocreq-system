@@ -213,6 +213,7 @@ const DocumentRequeset = () => {
         searchPlaceHolder="Search"
         renderSheet={(trigger, row) => (
           <CustomSheet
+            toaster={true}
             key={row}
             statusTitle={data.status_name}
             trigger={trigger}

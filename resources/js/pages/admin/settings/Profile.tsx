@@ -52,6 +52,7 @@ export default function Profile() {
             <Toaster richColors position='top-right' />
             <AdminSettingsLayout title='Profile information'>
                 <form onSubmit={submit} className="space-y-6">
+                    <h2 className='font-medium'>Account Information</h2>
                     <CustomForm className='grid grid-cols-3 gap-x-5' fields={AccountInfo(data, setData, errors)} />
                     <div className='flex justify-end'>
                         <Button disabled={processing}>Save</Button>
@@ -78,8 +79,10 @@ export default function Profile() {
                         </div>
                     )
                 }
-
-                <CustomForm className='grid grid-cols-3 gap-x-5' fields={BarangayOfficerInfo(data, setData, errors)} />
+                <div className='space-y-5'>
+                    <h2 className='font-medium'>Personal Information</h2>
+                    <CustomForm className='grid grid-cols-3 gap-x-5' fields={BarangayOfficerInfo(data, setData, errors)} />
+                </div>
                 <DeleteAdmin />
             </AdminSettingsLayout>
         </>

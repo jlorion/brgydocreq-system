@@ -12,6 +12,7 @@ interface CustomSheetProps {
     statusTitle?: string;
     form: React.ReactNode;
     onSubmit?: React.FormEventHandler<HTMLFormElement>
+    toaster?: boolean
 }
 
 const CustomSheet = ({
@@ -21,13 +22,18 @@ const CustomSheet = ({
     form,
     firstButton,
     secondButton,
+    toaster,
     onSubmit
 }: CustomSheetProps) => {
     return (
         <Sheet>
             <SheetTrigger asChild>{trigger}</SheetTrigger>
             <SheetContent side="right" className="flex w-120 flex-col p-4">
-                <Toaster richColors position='top-left' />
+                {
+                    toaster ? (
+                        <Toaster richColors position='top-left' />
+                    ) : null
+                }
                 <form onSubmit={onSubmit} className='flex flex-col h-full'>
                     <SheetHeader className="flex items-center justify-center">
                         {statusTitle ? (

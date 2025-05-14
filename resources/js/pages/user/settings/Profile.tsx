@@ -7,8 +7,8 @@ import { ResidentInfo } from '@/data/user/ProfileFields';
 import UserSettingsLayout from '@/layouts/user/UserSettingsLayout';
 import CustomForm from '@/components/custom/CustomFormFields';
 import { Button } from '@/components/ui/button';
-import { NotebookPenIcon } from 'lucide-react';
 import { toast, Toaster } from 'sonner';
+import { IoInformationCircle } from 'react-icons/io5';
 
 
 
@@ -63,10 +63,10 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
                     </div>
                 </form>
 
-                <div className='bg-amber-300 p-4 rounded-md'>
+                <div className='bg-yellow-50 p-4 rounded-md text-amber-500 border-1 border-amber-300'>
                     <article className='flex text-justify '>
                         <span>
-                            <NotebookPenIcon size={25} className='mr-2 mt-1' />
+                            <IoInformationCircle size={25} className='mr-2 mt-1' />
                         </span>
                         Your personal details below are based on official records provided by the Barangay and is managed by authorized personnel. For consistency and accuracy, this information cannot be edited by users.  If you need to make corrections or updates, please visit or contact the Barangay office directly. All updates will be reflected in the system once confirmed by the Barangay.
                     </article>
