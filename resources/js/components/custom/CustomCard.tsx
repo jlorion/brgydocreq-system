@@ -8,9 +8,7 @@ interface CustomCardProps {
     alt?: string;
     onClick?: () => void;
     description?: string;
-    statistics?: string;
-    increasePercentage?: string;
-    decreasePercentage?: string;
+    statistics?: React.ReactNode;
     icon?: React.ReactNode;
     className?: string;
 }
@@ -37,7 +35,7 @@ export const DocumentCustomCard = ({ image, title, content, alt, onClick, descri
     );
 };
 
-export const CustomDisplayCard = ({ title, description, statistics, increasePercentage, decreasePercentage, icon }: CustomCardProps) => {
+export const CustomDisplayCard = ({ title, description, statistics, icon }: CustomCardProps) => {
     return (
         <div className="*:data-[slot=card]:border *:data-[slot=card]:rounded-md *:data-[slot=card]:shadow-sm *:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card">
             <Card className="@container/card">
@@ -53,10 +51,6 @@ export const CustomDisplayCard = ({ title, description, statistics, increasePerc
                     </div>
                 </CardHeader>
                 <CardFooter className="flex items-start gap-1 text-sm">
-                    <span>
-                        {increasePercentage && <span className="text-teal-500">{increasePercentage}</span>}
-                        {decreasePercentage && <span className="text-red-500">{decreasePercentage}</span>}
-                    </span>
                     <div className="text-muted-foreground">
                         {statistics}
                     </div>

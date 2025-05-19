@@ -75,7 +75,13 @@ export const PersonalDetails = (data: AdminRegisterForm, setData: (key: keyof Ad
 			value: data.officer_householdnum,
 			tabIndex: 6,
 			autoComplete: 'address-line1',
-			onChange: (e) => setData('officer_householdnum', e.target.value),
+			onChange: (e) => {
+				const value = e.target.value;
+				// Accept only digits, and trim if over 11
+				if (/^\d{0,4}$/.test(value)) {
+					setData('officer_householdnum', value);
+				}
+			},
 			errorMessage: errors.officer_householdnum,
 		},
 	]

@@ -1,3 +1,4 @@
+
 import { Head, useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
@@ -52,8 +53,8 @@ export default function Login({ canResetPassword }: LoginProps) {
                             id="username"
                             type="text"
                             autoFocus
-                            required
                             tabIndex={1}
+                            required
                             autoComplete="username"
                             value={data.username}
                             onChange={(e) => setData('username', e.target.value)}
@@ -67,8 +68,8 @@ export default function Login({ canResetPassword }: LoginProps) {
                         <Input
                             id="password"
                             type="password"
-                            required
                             tabIndex={2}
+                            required
                             autoComplete="current-password"
                             value={data.user_password}
                             onChange={(e) => setData('user_password', e.target.value)}

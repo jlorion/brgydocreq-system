@@ -94,7 +94,13 @@ export interface DocumentReqForm {
     requested_purpose: string;
     attachment_path: File | null;
 }
-
+export interface DashboardColumn {
+    id: number;
+    metric: string;
+    count: number;
+    last_updated: string;
+    change: string;
+}
 export interface DocumentProcessingForm {
     requested_document_id: number;
     onprocess_id: number;

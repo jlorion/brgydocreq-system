@@ -1,92 +1,142 @@
 import { CustomDisplayCard } from '@/components/custom/CustomCard';
 import { CustomDataTable } from '@/components/custom/CustomDataTable';
+import CustomForm from '@/components/custom/CustomFormFields';
 import CustomIcon from '@/components/custom/CustomIcon';
 import CustomSheet from '@/components/custom/CustomSheet';
 import { Button } from '@/components/ui/button';
+import { FetchDashboard } from '@/data/admin/DashboardFields';
 import AdminLayout from '@/layouts/admin/AdminLayout';
-import { Head } from '@inertiajs/react';
+import { DashboardColumn } from '@/types';
+import { Head, useForm } from '@inertiajs/react';
 import { ColumnDef } from '@tanstack/react-table';
+import { format } from 'date-fns';
 import { Archive, ArrowUpDown, ChartSpline, FileText, Users } from 'lucide-react';
 
-export default function Dashboard() {
-    type Payment = {
-        id: string;
-        metric: string;
-        count: string;
-        last_updated: string;
-        updated_by: string;
-        change: string;
-    };
+interface Monthly {
+    month: string;
+    total: number;
+    total_revenue?: number;
+    last_updated?: string;
+    claimed?: number;
+    rejected?: number;
+    available?: number;
+    active?: number;
 
-    const data: Payment[] = [
+}
+
+interface DashboardProps {
+    totalRevenue: string;
+    totalRequest: string;
+    residentStats: Monthly;
+    adminStats: Monthly;
+    officerStats: Monthly;
+    archiveStats: Monthly;
+    documentStats: Monthly;
+    totalResidents: string;
+    totalUsers: string;
+    totalArchives: string;
+    totalBarangayOfficers: string;
+    monthlyArchives: Monthly[];
+    monthlyRequestAndRevenue: Monthly[];
+
+}
+export default function Dashboard(props: DashboardProps) {
+
+
+    const { data, setData, errors } = useForm<Required<DashboardColumn>>({
+        id: 0,
+        metric: '',
+        count: 0,
+        last_updated: '',
+        change: '',
+    })
+
+    // populate sheet
+    const populateSheet = (col: DashboardColumn) => {
+        setData({
+            id: col.id,
+            metric: col.metric,
+            count: col.count,
+            last_updated: col.last_updated,
+            change: col.change,
+        })
+    }
+
+    const columnData: DashboardColumn[] = [
         {
-            id: '8',
+            id: 1,
             metric: 'Registered Residents',
-            count: '11, 564',
-            last_updated: 'Apr 12, 2023 @ 12:00 PM',
-            updated_by: 'System',
-            change: '+20',
+            count: props.residentStats.total,
+            last_updated: props.residentStats.last_updated
+                ? format(new Date(props.residentStats.last_updated), "MMM dd, yyyy hh:mm aa")
+                : format(new Date(), "MMM dd, yyyy hh:mm aa"),
+            change: `+${props.residentStats.total}`,
         },
         {
-            id: '8',
+            id: 2,
             metric: 'Active Administrators',
-            count: '5',
-            last_updated: 'Nov 12, 2023 @ 12:00 PM',
-            updated_by: 'Super Admin',
-            change: '+1',
+            count: props.adminStats.active ?? 0,
+            last_updated: props.adminStats.last_updated
+                ? format(new Date(props.adminStats.last_updated), "MMM dd, yyyy hh:mm aa")
+                : format(new Date(), "MMM dd, yyyy hh:mm aa"),
+            change: `+${props.adminStats.active}`,
         },
         {
-            id: '10',
-            metric: 'Barangay Officers',
-            count: '15',
-            last_updated: 'Dec 12, 2023 @ 12:00 PM',
-            updated_by: 'Admin',
-            change: '0',
+            id: 3,
+            metric: 'Barangay Officer',
+            count: props.officerStats.total,
+            last_updated: props.officerStats.last_updated
+                ? format(new Date(props.officerStats.last_updated), "MMM dd, yyyy hh:mm aa")
+                : format(new Date(), "MMM dd, yyyy hh:mm aa"),
+            change: `+${props.officerStats.total}`,
         },
         {
-            id: '10',
-            metric: 'Avaible Documents',
-            count: '11',
-            last_updated: 'Dec 12, 2023 @ 12:00 PM',
-            updated_by: 'Admin',
-            change: '0',
+            id: 4,
+            metric: 'Available Documents',
+            count: props.documentStats.available ?? 0,
+            last_updated: props.documentStats.last_updated
+                ? format(new Date(props.documentStats.last_updated), "MMM dd, yyyy hh:mm aa")
+                : format(new Date(), "MMM dd, yyyy hh:mm aa"),
+            change: `+${props.documentStats.available}`,
         },
         {
-            id: '10',
+            id: 5,
             metric: 'Claimed Documents',
-            count: '500',
-            last_updated: 'Aug 12, 2023 @ 12:00 PM',
-            updated_by: 'System',
-            change: '9',
+            count: props.archiveStats.claimed ?? 0,
+            last_updated: props.archiveStats.last_updated
+                ? format(new Date(props.archiveStats.last_updated), "MMM dd, yyyy hh:mm aa")
+                : format(new Date(), "MMM dd, yyyy hh:mm aa"),
+            change: `+${props.archiveStats.claimed}`,
         },
         {
-            id: '11',
-            metric: 'Rejected Documents',
-            count: '300',
-            last_updated: 'Aug 12, 2023 @ 12:00 PM',
-            updated_by: 'System',
-            change: '+3',
+            id: 6,
+            metric: 'Barangay Officer',
+            count: props.archiveStats.rejected ?? 0,
+            last_updated: props.archiveStats.last_updated
+                ? format(new Date(props.archiveStats.last_updated), "MMM dd, yyyy hh:mm aa")
+                : format(new Date(), "MMM dd, yyyy hh:mm aa"),
+            change: `+${props.archiveStats.rejected}`,
         },
     ];
 
-    const columns: ColumnDef<Payment>[] = [
+    const columns: ColumnDef<DashboardColumn>[] = [
         {
             accessorKey: 'metric',
-            header: () => <div className="text-center">Metric</div>,
-            cell: ({ row }) => <div className="text-center capitalize">{row.getValue('metric')}</div>,
-        },
-        {
-            accessorKey: 'count',
             header: ({ column }) => {
                 return (
                     <div className="text-center">
                         <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
-                            Count
+                            Metric
                             <ArrowUpDown />
                         </Button>
                     </div>
                 );
             },
+            cell: ({ row }) => <div className="text-center capitalize">{row.getValue('metric')}</div>,
+        },
+        {
+            accessorKey: 'count',
+            header: () => <div className="text-center">Total Count</div>,
             cell: ({ row }) => <div className="text-center capitalize">{row.getValue('count')}</div>,
         },
         {
@@ -95,14 +145,10 @@ export default function Dashboard() {
             cell: ({ row }) => <div className="text-center capitalize">{row.getValue('last_updated')}</div>,
         },
         {
+
             accessorKey: 'change',
-            header: () => <div className="text-center">Change</div>,
+            header: () => <div className="text-center">This {format(new Date(), 'MMM YYY')}</div>,
             cell: ({ row }) => <div className="text-center capitalize">{row.getValue('change')}</div>,
-        },
-        {
-            accessorKey: 'updated_by',
-            header: () => <div className="text-center">Updated By</div>,
-            cell: ({ row }) => <div className="text-center capitalize">{row.getValue('updated_by')}</div>,
         },
     ];
     return (
@@ -110,10 +156,13 @@ export default function Dashboard() {
             <Head title="Dashboard" />
             <div className="grid grid-cols-1 @xl/main:grid-cols-2 @5xl/main:grid-cols-4 @5xl/main:gap-5">
                 <CustomDisplayCard
-                    title="8,689"
+                    title={props.totalUsers}
                     description="Total Users"
-                    increasePercentage="83%"
-                    statistics="of total resident population"
+                    statistics={
+                        <>
+                            Out of a total of <strong className='text-violet-600'>{props.totalResidents}</strong> residents
+                        </>
+                    }
                     icon={
                         <div className="rounded-2xl bg-violet-200 p-4">
                             <CustomIcon icon={Users} className="text-violet-700" />
@@ -122,10 +171,19 @@ export default function Dashboard() {
                 />
 
                 <CustomDisplayCard
-                    title="10,293"
+                    title={props.totalRequest}
                     description="Total Request"
-                    increasePercentage="1.3%"
-                    statistics="Up from past week"
+                    statistics={
+                        <>
+                            {
+                                props.monthlyRequestAndRevenue.map((requestAndREv, index) => (
+                                    <div key={index}>
+                                        <strong className='text-amber-400'>{requestAndREv.total}</strong> requests this <strong className='text-amber-400'>{requestAndREv.month}</strong>
+                                    </div>
+                                ))
+                            }
+                        </>
+                    }
                     icon={
                         <div className="rounded-2xl bg-amber-100 p-4">
                             <CustomIcon icon={FileText} className="text-amber-500" />
@@ -134,10 +192,19 @@ export default function Dashboard() {
                 />
 
                 <CustomDisplayCard
-                    title="₱ 5,989"
+                    title={`₱ ${props.totalRevenue}`}
                     description="Total Revenue"
-                    decreasePercentage="4.3%"
-                    statistics="Down from yesterday"
+                    statistics={
+                        <>
+                            {
+                                props.monthlyRequestAndRevenue.map((requestAndREv, index) => (
+                                    <div key={index}>
+                                        <strong className='text-green-400'>{`₱ ${props.totalRevenue}`}</strong> revenue this <strong className='text-green-400'>{requestAndREv.month}</strong>
+                                    </div>
+                                ))
+                            }
+                        </>
+                    }
                     icon={
                         <div className="rounded-2xl bg-green-200 p-4">
                             <CustomIcon icon={ChartSpline} className="text-green-600" />
@@ -146,10 +213,19 @@ export default function Dashboard() {
                 />
 
                 <CustomDisplayCard
-                    title="9,542"
+                    title={props.totalArchives}
                     description="Total Archives"
-                    increasePercentage="1.8%"
-                    statistics="Up from yesterday"
+                    statistics={
+                        <>
+                            {
+                                props.monthlyArchives.map((monthlyArchive, index) => (
+                                    <div key={index}>
+                                        <strong className='text-orange-400'>{monthlyArchive.total}</strong> archives this  <strong className='text-orange-400'>{monthlyArchive.month}</strong>
+                                    </div>
+                                ))
+                            }
+                        </>
+                    }
                     icon={
                         <div className="rounded-2xl bg-orange-200 p-4">
                             <CustomIcon icon={Archive} className="text-orange-500" />
@@ -159,18 +235,17 @@ export default function Dashboard() {
             </div>
 
             <CustomDataTable
+                onRowClick={(row: DashboardColumn) => (populateSheet(row))}
                 columns={columns}
-                data={data}
-                filterColumn="metric"
-                searchPlaceHolder="Search metric"
+                data={columnData}
+                searchPlaceHolder="Search"
                 renderSheet={(trigger, row) => (
                     <CustomSheet
+                        statusTitle='Details'
                         trigger={trigger}
-                        firstButton="View"
-                        statusTitle="Under Review"
                         form={
-                            <div>
-                                nigga
+                            <div className='mt-20'>
+                                <CustomForm fields={FetchDashboard(data, setData, errors)} />
                             </div>
                         }
                     />

@@ -9,6 +9,7 @@ export const DocumentRequestFields = (data: DocumentReqForm, setData: (key: keyo
 			label: 'Attachment',
 			type: 'file',
 			id: 'document_photo',
+			required: true,
 			tabIndex: -4,
 			onChange: (e) => {
 				const file = e.target.files?.[0];
@@ -22,6 +23,7 @@ export const DocumentRequestFields = (data: DocumentReqForm, setData: (key: keyo
 		{
 			label: 'Purpose of Filing',
 			type: 'textarea',
+			required: true,
 			id: 'request_purpose',
 			disabled: data.requested_purpose === null,
 			value: data.requested_purpose ?? 'N/A',
@@ -43,6 +45,7 @@ export const FetchFirstHalve = (data: DocumentProcessingForm, setData: (key: key
 		{
 			label: 'First Name',
 			type: 'text',
+
 			id: 'first_name',
 			disabled: true,
 			value: data.resident_firstname,
@@ -121,6 +124,7 @@ export const Resubmit = (data: DocumentProcessingForm, setData: (key: keyof Docu
 		{
 			label: 'Attachment',
 			type: 'file',
+			required: true,
 			id: 'document_photo',
 			tabIndex: -4,
 			onChange: (e) => {
@@ -136,6 +140,7 @@ export const Resubmit = (data: DocumentProcessingForm, setData: (key: keyof Docu
 			label: 'Purpose of Filing',
 			type: 'textarea',
 			id: 'request_purpose',
+			required: true,
 			disabled: data.requested_purpose === null,
 			value: data.requested_purpose ?? 'N/A',
 			tabIndex: -2,

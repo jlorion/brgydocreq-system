@@ -53,6 +53,7 @@ export default function Login({ canResetPassword }: LoginProps) {
 							id="username"
 							type="text"
 							autoFocus
+							required
 							tabIndex={1}
 							autoComplete="username"
 							value={data.admin_username}
@@ -68,6 +69,7 @@ export default function Login({ canResetPassword }: LoginProps) {
 							id="password"
 							type="password"
 							tabIndex={2}
+							required
 							autoComplete="current-password"
 							value={data.admin_password}
 							onChange={(e) => setData('admin_password', e.target.value)}

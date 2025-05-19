@@ -49,13 +49,7 @@ class AdminLoginRequest extends FormRequest
 
         $admin = Admin::where('admin_username', $credentials['admin_username'])->first();
 
-        if ($admin->status_id != 3) {
-            RateLimiter::hit($this->throttleKey());
 
-            throw ValidationException::withMessages([
-                'admin_username' => 'Your account is deactivated. Please contact your Superior Admin.',
-            ]);
-        }
 
 
         if (!Auth::guard('admin')->attempt(
@@ -69,6 +63,13 @@ class AdminLoginRequest extends FormRequest
             ]);
         }
 
+        if ($admin->status_id != 3) {
+            RateLimiter::hit($this->throttleKey());
+
+            throw ValidationException::withMessages([
+                'admin_username' => 'Your account is deactivated. Please contact your Superior Admin.',
+            ]);
+        }
 
         RateLimiter::clear($this->throttleKey());
     }

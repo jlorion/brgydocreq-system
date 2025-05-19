@@ -134,19 +134,7 @@ const Residents = () => {
         {
             accessorFn: row => `${row.resident_firstname} ${row.resident_middlename}. ${row.resident_lastname}, ${row.resident_suffix} `.trim(),
             id: "applicant_name",
-            header: ({ column }) => {
-                return (
-                    <div className='text-center'>
-                        <Button
-                            variant="ghost"
-                            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                        >
-                            Resident's Name
-                            <ArrowUpDown />
-                        </Button>
-                    </div>
-                )
-            },
+           header: () => <div className='text-center'>Resident's Name</div>,
             cell: ({ row }) => {
                 const { resident_firstname, resident_middlename, resident_lastname, resident_suffix } = row.original;
                 const middleInitial = resident_middlename ? `${resident_middlename.charAt(0).toUpperCase()}.` : '';
@@ -198,7 +186,19 @@ const Residents = () => {
         },
         {
             accessorKey: "resident_status",
-            header: () => <div className='text-center'>Status</div>,
+            header: ({ column }) => {
+                return (
+                    <div className='text-center'>
+                        <Button
+                            variant="ghost"
+                            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                        >
+                            Status
+                            <ArrowUpDown />
+                        </Button>
+                    </div>
+                )
+            },
             cell: ({ row }) => {
                 const status = row.getValue("resident_status") as string;
                 return (
@@ -245,6 +245,7 @@ const Residents = () => {
                             <CustomSheet
                                 onSubmit={updateSubmit}
                                 key={row}
+                                toaster={true}
                                 trigger={trigger}
                                 firstButton={
                                     <Button disabled={updateProcessing} className='text-center w-full'>

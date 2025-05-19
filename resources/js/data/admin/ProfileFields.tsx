@@ -10,6 +10,7 @@ export const AccountInfo = (data: AdminForm, setData: (key: keyof AdminForm, val
 		{
 			label: 'Username',
 			type: 'text',
+			required: true,
 			id: 'admin_username',
 			value: data.admin_username,
 			tabIndex: -1,
@@ -19,7 +20,7 @@ export const AccountInfo = (data: AdminForm, setData: (key: keyof AdminForm, val
 		{
 			label: 'Role',
 			type: 'select',
-			id: 'role',
+			id: 'role',	
 			disabled: true,
 			value: data.admin_roleid ?? 0,
 			tabIndex: -2,
@@ -33,6 +34,7 @@ export const AccountInfo = (data: AdminForm, setData: (key: keyof AdminForm, val
 		{
 			label: 'Email',
 			type: 'email',
+			required: true,
 			id: 'admin_email',
 			value: data.admin_email,
 			tabIndex: -2,
@@ -44,6 +46,7 @@ export const AccountInfo = (data: AdminForm, setData: (key: keyof AdminForm, val
 			label: 'Phone number',
 			type: 'text',
 			id: 'phone_num',
+			required: true,
 			maxLength: 11,
 			value: data.admin_phonenum,
 			tabIndex: -3,
