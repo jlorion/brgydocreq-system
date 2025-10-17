@@ -1,33 +1,34 @@
 server {
     listen 8080;
     listen [::]:8080;
-    root /home/site/wwwroot/public; # Azure default for Laravel
-
-    index index.php index.html index.htm;
-
     server_name brgy-sys-fbctb5abgbfffpah.southeastasia-01.azurewebsites.net;
+
+    root /home/site/wwwroot/public;
+    index index.php index.html index.htm;
 
     port_in_redirect off;
 
+    # Laravel routing
     location / {
-        index index.php index.html index.htm;
-        try_files $uri $uri/ /index.php?$args;
+        try_files $uri $uri/ /index.php?$query_string;
     }
 
-    # Block access to .env and other sensitive files
+    # Block access to .env and hidden files
     location ~ /\.(?!well-known).* {
         deny all;
     }
 
-    # PHP-FPM configuration
-    location ~ [^/]\.php(/|$) {
-        fastcgi_split_path_info ^(.+?\.php)(|/.*)$;
+    # PHP-FPM handler
+    location ~ \.php$ {
+        try_files $uri =404;
         fastcgi_pass 127.0.0.1:9000;
+        fastcgi_index index.php;
         include fastcgi_params;
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        fastcgi_param PATH_INFO $fastcgi_path_info;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
         fastcgi_param QUERY_STRING $query_string;
         fastcgi_intercept_errors on;
+
+        # optional performance tuning
         fastcgi_connect_timeout 300;
         fastcgi_send_timeout 3600;
         fastcgi_read_timeout 3600;
@@ -37,16 +38,20 @@ server {
         fastcgi_temp_file_write_size 256k;
     }
 
-    location ~* \.(?:ico|css|js|gif|jpe?g|png|woff2?|ttf|svg|eot)$ {
-            expires 30d;
-            access_log off;
-            add_header Cache-Control "public";
-            try_files $uri =404;
+    # Static assets (React, CSS, JS)
+    location ~* \.(?:ico|css|js|gif|jpe?g|png|woff2?|ttf|svg|eot|json)$ {
+        expires 30d;
+        access_log off;
+        add_header Cache-Control "public";
+        try_files $uri =404;
     }
 
     # Error page
-    #error_page 500 502 503 504 /50x.html;
     location = /50x.html {
-        root /html/;
+        root /home/site/wwwroot/public;
     }
+
+    # Security headers
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-Content-Type-Options "nosniff";
 }
