@@ -25,6 +25,25 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.4'
+          
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+    
+      - name: Check if package.json exists
+      - id: check_npm_files
+        uses: andstor/file-existence-action@v1
+        with:
+          files: 'package.json'
+
+      - name: Install npm dependencies if package.json exists
+        if: steps.check_npm_files.outputs.files_exists == 'true'
+        run: npm ci
+
+      - name: Run Vite build if package.json exists
+        if: steps.check_npm_files.outputs.files_exists == 'true'
+        run: npm run build
 
       - name: Check if composer.json exists
         id: check_files
@@ -62,3 +81,4 @@ jobs:
           package: .
 
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C5CEA79A49D049BBAC93D8A69A59066F }}
+
