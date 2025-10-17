@@ -40,7 +40,7 @@ jobs:
 
       - name: Install npm dependencies if package.json exists
         if: steps.check_npm_files.outputs.files_exists == 'true'
-        run: npm ci
+        run: npm ci --legacy-peer-deps
 
       - name: Run Vite build if package.json exists
         if: steps.check_npm_files.outputs.files_exists == 'true'
@@ -82,5 +82,6 @@ jobs:
           package: .
 
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C5CEA79A49D049BBAC93D8A69A59066F }}
+
 
 
