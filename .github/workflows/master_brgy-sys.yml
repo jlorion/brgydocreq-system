@@ -18,6 +18,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Write SSL CA Cert
+        run: echo "${{  secrets.MYSQL_CA_CERT  }}" | base64 --decode > CAcert.crt.pem
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -57,4 +60,5 @@ jobs:
           app-name: 'brgy-sys'
           slot-name: 'Production'
           package: .
+
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C5CEA79A49D049BBAC93D8A69A59066F }}
