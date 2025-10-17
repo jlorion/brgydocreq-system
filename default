@@ -10,10 +10,6 @@ server {
     port_in_redirect off;
 
     location / {
-            try_files $uri $uri/ /build/index.html;
-    }
-
-    location / {
         index index.php index.html index.htm;
         try_files $uri $uri/ /index.php?$args;
     }
@@ -45,6 +41,7 @@ server {
             expires 30d;
             access_log off;
             add_header Cache-Control "public";
+            try_files $uri =404;
     }
 
     # Error page
