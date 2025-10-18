@@ -37,5 +37,9 @@ class AppServiceProvider extends ServiceProvider
 
             return route('user.landing.home');
         });
+
+        if (config('app.env') !== 'local') {
+            URL::forceScheme('https');
+        }
     }
 }
